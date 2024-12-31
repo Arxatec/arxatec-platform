@@ -1,0 +1,424 @@
+/* Small text size (text-sm) */
+.sm-n {
+  @apply text-sm font-normal;
+}
+
+.sm-l {
+  @apply text-sm font-light;
+}
+
+.sm-m {
+  @apply text-sm font-medium;
+}
+
+.sm-s {
+  @apply text-sm font-semibold;
+}
+
+.sm-b {
+  @apply text-sm font-bold;
+}
+
+.sm-eb {
+  @apply text-sm font-extrabold;
+}
+
+/* Small text size in italics */
+.sm-ni {
+  @apply text-sm font-normal italic;
+}
+
+.sm-li {
+  @apply text-sm font-light italic;
+}
+
+.sm-mi {
+  @apply text-sm font-medium italic;
+}
+
+.sm-si {
+  @apply text-sm font-semibold italic;
+}
+
+.sm-bi {
+  @apply text-sm font-bold italic;
+}
+
+.sm-ebi {
+  @apply text-sm font-extrabold italic;
+}
+
+/* Medium text size (text-md) */
+.md-n {
+  @apply text-base font-normal;
+}
+
+.md-l {
+  @apply text-base font-light;
+}
+
+.md-m {
+  @apply text-base font-medium;
+}
+
+.md-s {
+  @apply text-base font-semibold;
+}
+
+.md-b {
+  @apply text-base font-bold;
+}
+
+.md-eb {
+  @apply text-base font-extrabold;
+}
+
+/* Medium text size in italics */
+.md-ni {
+  @apply text-base font-normal italic;
+}
+
+.md-li {
+  @apply text-base font-light italic;
+}
+
+.md-mi {
+  @apply text-base font-medium italic;
+}
+
+.md-si {
+  @apply text-base font-semibold italic;
+}
+
+.md-bi {
+  @apply text-base font-bold italic;
+}
+
+.md-ebi {
+  @apply text-base font-extrabold italic;
+}
+
+/* Large text size (text-lg) */
+.lg-n {
+  @apply text-lg font-normal;
+}
+
+.lg-l {
+  @apply text-lg font-light;
+}
+
+.lg-m {
+  @apply text-lg font-medium;
+}
+
+.lg-s {
+  @apply text-lg font-semibold;
+}
+
+.lg-b {
+  @apply text-lg font-bold;
+}
+
+.lg-eb {
+  @apply text-lg font-extrabold;
+}
+
+/* Large text size in italics */
+.lg-ni {
+  @apply text-lg font-normal italic;
+}
+
+.lg-li {
+  @apply text-lg font-light italic;
+}
+
+.lg-mi {
+  @apply text-lg font-medium italic;
+}
+
+.lg-si {
+  @apply text-lg font-semibold italic;
+}
+
+.lg-bi {
+  @apply text-lg font-bold italic;
+}
+
+.lg-ebi {
+  @apply text-lg font-extrabold italic;
+}
+
+/* Extra Large text size (text-xl) */
+.xl-n {
+  @apply text-xl font-normal;
+}
+
+.xl-l {
+  @apply text-xl font-light;
+}
+
+.xl-m {
+  @apply text-xl font-medium;
+}
+
+.xl-s {
+  @apply text-xl font-semibold;
+}
+
+.xl-b {
+  @apply text-xl font-bold;
+}
+
+.xl-eb {
+  @apply text-xl font-extrabold;
+}
+
+/* Extra Large text size in italics */
+.xl-ni {
+  @apply text-xl font-normal italic;
+}
+
+.xl-li {
+  @apply text-xl font-light italic;
+}
+
+.xl-mi {
+  @apply text-xl font-medium italic;
+}
+
+.xl-si {
+  @apply text-xl font-semibold italic;
+}
+
+.xl-bi {
+  @apply text-xl font-bold italic;
+}
+
+.xl-ebi {
+  @apply text-xl font-extrabold italic;
+}
+
+/* 2X Large text size (text-2xl) */
+.xl2-n {
+  @apply text-2xl font-normal;
+}
+
+.xl2-l {
+  @apply text-2xl font-light;
+}
+
+.xl2-m {
+  @apply text-2xl font-medium;
+}
+
+.xl2-s {
+  @apply text-2xl font-semibold;
+}
+
+.xl2-b {
+  @apply text-2xl font-bold;
+}
+
+.xl2-eb {
+  @apply text-2xl font-extrabold;
+}
+
+/* 2X Large text size in italics */
+.xl2-ni {
+  @apply text-2xl font-normal italic;
+}
+
+.xl2-li {
+  @apply text-2xl font-light italic;
+}
+
+.xl2-mi {
+  @apply text-2xl font-medium italic;
+}
+
+.xl2-si {
+  @apply text-2xl font-semibold italic;
+}
+
+.xl2-bi {
+  @apply text-2xl font-bold italic;
+}
+
+.xl2-ebi {
+  @apply text-2xl font-extrabold italic;
+}
+
+/* 3X Large text size (text-3xl) */
+.xl3-n {
+  @apply text-3xl font-normal;
+}
+
+.xl3-l {
+  @apply text-3xl font-light;
+}
+
+.xl3-m {
+  @apply text-3xl font-medium;
+}
+
+.xl3-s {
+  @apply text-3xl font-semibold;
+}
+
+.xl3-b {
+  @apply text-3xl font-bold;
+}
+
+.xl3-eb {
+  @apply text-3xl font-extrabold;
+}
+
+/* 3X Large text size in italics */
+.xl3-ni {
+  @apply text-3xl font-normal italic;
+}
+
+.xl3-li {
+  @apply text-3xl font-light italic;
+}
+
+.xl3-mi {
+  @apply text-3xl font-medium italic;
+}
+
+.xl3-si {
+  @apply text-3xl font-semibold italic;
+}
+
+.xl3-bi {
+  @apply text-3xl font-bold italic;
+}
+
+.xl3-ebi {
+  @apply text-3xl font-extrabold italic;
+}
+
+/* 4X Large text size (text-4xl) */
+.xl4-n {
+  @apply text-4xl font-normal;
+}
+
+.xl4-l {
+  @apply text-4xl font-light;
+}
+
+.xl4-m {
+  @apply text-4xl font-medium;
+}
+
+.xl4-s {
+  @apply text-4xl font-semibold;
+}
+
+.xl4-b {
+  @apply text-4xl font-bold;
+}
+
+.xl4-eb {
+  @apply text-4xl font-extrabold;
+}
+
+/* 4X Large text size in italics */
+.xl4-ni {
+  @apply text-4xl font-normal italic;
+}
+
+.xl4-li {
+  @apply text-4xl font-light italic;
+}
+
+.xl4-mi {
+  @apply text-4xl font-medium italic;
+}
+
+.xl4-si {
+  @apply text-4xl font-semibold italic;
+}
+
+.xl4-bi {
+  @apply text-4xl font-bold italic;
+}
+
+.xl4-ebi {
+  @apply text-4xl font-extrabold italic;
+}
+
+/* 5X Large text size (text-5xl) */
+.xl5-n {
+  @apply text-5xl font-normal;
+}
+
+.xl5-l {
+  @apply text-5xl font-light;
+}
+
+.xl5-m {
+  @apply text-5xl font-medium;
+}
+
+.xl5-s {
+  @apply text-5xl font-semibold;
+}
+
+.xl5-b {
+  @apply text-5xl font-bold;
+}
+
+.xl5-eb {
+  @apply text-5xl font-extrabold;
+}
+
+/* 5X Large text size in italics */
+.xl5-ni {
+  @apply text-5xl font-normal italic;
+}
+
+.xl5-li {
+  @apply text-5xl font-light italic;
+}
+
+.xl5-mi {
+  @apply text-5xl font-medium italic;
+}
+
+.xl5-si {
+  @apply text-5xl font-semibold italic;
+}
+
+.xl5-bi {
+  @apply text-5xl font-bold italic;
+}
+
+.xl5-ebi {
+  @apply text-5xl font-extrabold italic;
+}
+
+/* 6X Large text size (text-6xl) */
+.xl6-n {
+  @apply text-6xl font-normal;
+}
+
+.xl6-l {
+  @apply text-6xl font-light;
+}
+
+.xl6-m {
+  @apply text-6xl font-medium;
+}
+
+.xl6-s {
+  @apply text-6xl font-semibold;
+}
+
+.xl6-b {
+  @apply text-6xl font-bold;
+}
+
+.xl6-eb {
+  @apply text-6xl font-extrabold;
+}
