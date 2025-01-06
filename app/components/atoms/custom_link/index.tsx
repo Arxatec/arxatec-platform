@@ -7,7 +7,7 @@ export const CustomLink: React.FC<Props> = (props) => {
   return (
     <a
       href={props.to}
-      className={`font-semibold text-indigo-600 hover:text-indigo-500 ${props.classNames}`}
+      className={`font-semibold text-blue-600 hover:text-blue-500 ${props.classNames}`}
     >
       {props.text}
     </a>

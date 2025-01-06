@@ -1,0 +1,26 @@
+{
+  "translation": {
+    "auth": {
+      "login": {
+        "title": "Ingresa a tu cuenta",
+        "not_registered": "¿No tienes una cuenta?",
+        "start": "Empieza gratis por 14 días",
+        "form": {
+          "email": {
+            "label": "Correo electrónico",
+            "placeholder": "Ej. email@domain.com"
+          },
+          "password": {
+            "label": "Contraseña",
+            "placeholder": "Ej. AEcas2!3_aw*A"
+          },
+          "forget_password": "¿Olvidaste tu contraseña?",
+          "remember_me": "Recuerdame",
+          "submit": "Iniciar sesión",
+          "or": "O continua con",
+          "google": "Google"
+        }
+      }
+    }
+  }
+}

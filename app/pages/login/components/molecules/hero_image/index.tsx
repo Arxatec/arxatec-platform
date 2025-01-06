@@ -1,8 +1,8 @@
 export const HeroImage = () => (
-  <div className="relative hidden w-0 flex-1 lg:block">
+  <div className="relative hidden w-0 flex-1 lg:block rounded-md overflow-hidden">
     <img
-      alt=""
-      src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
+      alt="hero image"
+      src="https://images.pexels.com/photos/7876087/pexels-photo-7876087.jpeg"
       className="absolute inset-0 size-full object-cover"
     />
   </div>

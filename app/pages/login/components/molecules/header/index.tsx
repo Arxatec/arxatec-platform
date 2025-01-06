@@ -1,17 +1,20 @@
+import { useTranslation } from "react-i18next";
 import { CustomLink } from "~/components/atoms";
+import { LocaleKeys } from "~/lang";
+import logo from "~/assets/images/logo.png";
 
-export const Header = () => (
-  <div>
-    <img
-      alt="Your Company"
-      src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-      className="h-10 w-auto"
-    />
-    <h2 className="mt-8 xl2-b tracking-tight text-gray-900">
-      Sign in to your account
-    </h2>
-    <p className="mt-2 sm-n">
-      Not a member? <CustomLink text="Start a 14 a day free trial" to="" />
-    </p>
-  </div>
-);
+export const Header = () => {
+  const { t } = useTranslation();
+  return (
+    <div>
+      <img alt="Your Company" src={logo} className="h-12 w-auto" />
+      <h2 className="mt-4 xl2-b tracking-tight text-gray-900">
+        {t(LocaleKeys.auth_login_title)}
+      </h2>
+      <p className="mt-2 sm-n">
+        {t(LocaleKeys.auth_login_not_registered)}{" "}
+        <CustomLink text={t(LocaleKeys.auth_login_start)} to="" />
+      </p>
+    </div>
+  );
+};
