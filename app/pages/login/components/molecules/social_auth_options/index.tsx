@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { SecondaryButton } from "~/components/atoms";
 import { LocaleKeys } from "~/lang";
-import { Separator } from "../../atoms/separator";
+import { Separator } from "../../atoms";
 import googleIcon from "~/assets/icons/google.png";
 
 export const SocialAuthOptions = () => {
