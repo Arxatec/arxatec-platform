@@ -36,9 +36,9 @@ export default function Sidebar() {
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
           navigation={navigation}
+          logo={logo}
         />
-
-        <SidebarDesktop navigation={navigation} />
+        <SidebarDesktop navigation={navigation} logo={logo} />
         <div className="lg:pl-72">
           <Navigation setSidebarOpen={setSidebarOpen} />
           <main className="py-10">
