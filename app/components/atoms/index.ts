@@ -1,3 +1,4 @@
+export { LoadingImage } from "./loading_image";
 export { SecondaryButton } from "./secondary_button";
 export { SpinnerLoader } from "./spinner_loader";
 export { CustomLink } from "./custom_link";

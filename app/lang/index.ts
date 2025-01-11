@@ -10,5 +10,19 @@ export const LocaleKeys = {
   auth_login_form_remember_me: "auth.login.form.remember_me",
   auth_login_form_submit: "auth.login.form.submit",
   auth_login_form_or: "auth.login.form.or",
-  auth_login_form_google: "auth.login.form.google"
+  auth_login_form_google: "auth.login.form.google",
+  auth_register_title: "auth.register.title",
+  auth_register_not_registered: "auth.register.not_registered",
+  auth_register_start: "auth.register.start",
+  auth_register_form_name_label: "auth.register.form.name.label",
+  auth_register_form_name_placeholder: "auth.register.form.name.placeholder",
+  auth_register_form_lastname_label: "auth.register.form.lastname.label",
+  auth_register_form_lastname_placeholder: "auth.register.form.lastname.placeholder",
+  auth_register_form_email_label: "auth.register.form.email.label",
+  auth_register_form_email_placeholder: "auth.register.form.email.placeholder",
+  auth_register_form_password_label: "auth.register.form.password.label",
+  auth_register_form_password_placeholder: "auth.register.form.password.placeholder",
+  auth_register_form_submit: "auth.register.form.submit",
+  auth_register_form_or: "auth.register.form.or",
+  auth_register_form_google: "auth.register.form.google"
 };

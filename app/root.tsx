@@ -10,21 +10,12 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import englishContent from "./assets/lang/en.json";
 import spanishContent from "./assets/lang/es.json";
-
+import quechuaContent from "./assets/lang/qu.json";
 import type { Route } from "./+types/root";
 import stylesheet from "./app.css?url";
+import "~/styles/index.css";
 
 export const links: Route.LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
-  },
   { rel: "stylesheet", href: stylesheet },
 ];
 
@@ -32,8 +23,9 @@ i18n.use(initReactI18next).init({
   resources: {
     en: englishContent,
     es: spanishContent,
+    qu: quechuaContent,
   },
-  fallbackLng: "es",
+  fallbackLng: "en",
   interpolation: {
     escapeValue: false,
   },

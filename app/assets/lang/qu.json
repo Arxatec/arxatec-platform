@@ -1,0 +1,52 @@
+{
+  "translation": {
+    "auth": {
+      "login": {
+        "title": "Ñuqanchikpa ruwaspa",
+        "not_registered": "¿Manam kaykuykita niykunam kanchu?",
+        "start": "Ñawpaqmi 14 kutimanta ch'uchuy",
+        "form": {
+          "email": {
+            "label": "Ñawiwayku",
+            "placeholder": "Ñawpaqmi email@domain.com"
+          },
+          "password": {
+            "label": "Ñawpaq ch'usa",
+            "placeholder": "Ñawpaqmi AEcas2!3_aw*A"
+          },
+          "forget_password": "¿Ch'usa rikch'aykuchu?",
+          "remember_me": "Ñuqa ruwaspa",
+          "submit": "Kaykuy",
+          "or": "Ñuqayku chaymanta",
+          "google": "Google-qan"
+        }
+      },
+      "register": {
+        "title": "Kaykuy ruwachiy",
+        "not_registered": "¿Kaykuykita ruwaspa?",
+        "start": "Ñawpaq kaykuy churay",
+        "form": {
+          "name": {
+            "label": "Ñawi",
+            "placeholder": "Ñawpaqmi Juan"
+          },
+          "lastname": {
+            "label": "Ñawi kanan",
+            "placeholder": "Ñawpaqmi Velasquez"
+          },
+          "email": {
+            "label": "Ñawiwayku",
+            "placeholder": "Ñawpaqmi email@domain.com"
+          },
+          "password": {
+            "label": "Ñawpaq ch'usa",
+            "placeholder": "Ñawpaqmi AEcas2!3_aw*A"
+          },
+          "submit": "Kaykuy ruwachiy",
+          "or": "Ñuqayku chaymanta",
+          "google": "Google-qan"
+        }
+      }
+    }
+  }
+}

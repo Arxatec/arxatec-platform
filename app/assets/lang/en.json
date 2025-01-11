@@ -8,15 +8,41 @@
         "form": {
           "email": {
             "label": "Email",
-            "placeholder": "Ej. email@domain.com"
+            "placeholder": "Ex. email@domain.com"
           },
           "password": {
             "label": "Password",
-            "placeholder": "Ej. AEcas2!3_aw*A"
+            "placeholder": "Ex. AEcas2!3_aw*A"
           },
           "forget_password": "Forget your password?",
           "remember_me": "Remember me",
           "submit": "Sign in",
+          "or": "Or continue with",
+          "google": "Google"
+        }
+      },
+      "register": {
+        "title": "Create an account",
+        "not_registered": "Already have an account?",
+        "start": "Sign in",
+        "form": {
+          "name": {
+            "label": "First name",
+            "placeholder": "Ex. John"
+          },
+          "lastname": {
+            "label": "Last name",
+            "placeholder": "Ex. Velasquez"
+          },
+          "email": {
+            "label": "Email",
+            "placeholder": "Ex. email@domain.com"
+          },
+          "password": {
+            "label": "Password",
+            "placeholder": "Ex. AEcas2!3_aw*A"
+          },
+          "submit": "Create an account",
           "or": "Or continue with",
           "google": "Google"
         }
