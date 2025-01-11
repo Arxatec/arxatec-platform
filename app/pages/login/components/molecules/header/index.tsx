@@ -9,11 +9,11 @@ export const Header = () => {
     <div>
       <img alt="Arxatec" src={logo} className="h-12 w-auto" />
       <h2 className="mt-4 xl2-b tracking-tight text-gray-900">
-        {t(LocaleKeys.auth_login_title)}
+        {t(LocaleKeys.pages_auth_login_title)}
       </h2>
       <p className="mt-2 sm-n">
-        {t(LocaleKeys.auth_login_not_registered)}{" "}
-        <CustomLink text={t(LocaleKeys.auth_login_start)} to="" />
+        {t(LocaleKeys.pages_auth_login_not_registered)}{" "}
+        <CustomLink text={t(LocaleKeys.pages_auth_login_start)} to="" />
       </p>
     </div>
   );

@@ -10,19 +10,19 @@ export const LoginForm = () => {
       <div className="space-y-6">
         <CustomInput
           type="text"
-          label={t(LocaleKeys.auth_login_form_email_label)}
-          placeholder={t(LocaleKeys.auth_login_form_email_placeholder)}
+          label={t(LocaleKeys.pages_auth_login_form_email_label)}
+          placeholder={t(LocaleKeys.pages_auth_login_form_email_placeholder)}
           isRequired
         />
         <CustomInput
           type="password"
-          label={t(LocaleKeys.auth_login_form_password_label)}
-          placeholder={t(LocaleKeys.auth_login_form_password_placeholder)}
+          label={t(LocaleKeys.pages_auth_login_form_password_label)}
+          placeholder={t(LocaleKeys.pages_auth_login_form_password_placeholder)}
           isRequired
         />
         <RememberSection />
         <PrimaryButton
-          text={t(LocaleKeys.auth_login_form_submit)}
+          text={t(LocaleKeys.pages_auth_login_form_submit)}
           classNames="w-full"
         />
       </div>

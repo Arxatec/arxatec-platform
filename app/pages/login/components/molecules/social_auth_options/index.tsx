@@ -11,7 +11,7 @@ export const SocialAuthOptions = () => {
       <Separator />
       <div className="mt-6 ">
         <SecondaryButton
-          text={t(LocaleKeys.auth_login_form_google)}
+          text={t(LocaleKeys.pages_auth_login_form_google)}
           classNames="w-full"
           leading={<img src={googleIcon} alt="Google" className="size-4" />}
         />

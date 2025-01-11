@@ -10,7 +10,7 @@ export const Separator = () => {
       </div>
       <div className="relative flex justify-center text-sm/6 font-medium">
         <span className="bg-white px-6 text-gray-900">
-          {t(LocaleKeys.auth_login_form_or)}
+          {t(LocaleKeys.pages_auth_login_form_or)}
         </span>
       </div>
     </div>

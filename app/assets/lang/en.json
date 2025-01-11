@@ -1,50 +1,52 @@
 {
   "translation": {
-    "auth": {
-      "login": {
-        "title": "Sign in to your account",
-        "not_registered": "Not registered?",
-        "start": "Start free for 14 days",
-        "form": {
-          "email": {
-            "label": "Email",
-            "placeholder": "Ex. email@domain.com"
-          },
-          "password": {
-            "label": "Password",
-            "placeholder": "Ex. AEcas2!3_aw*A"
-          },
-          "forget_password": "Forget your password?",
-          "remember_me": "Remember me",
-          "submit": "Sign in",
-          "or": "Or continue with",
-          "google": "Google"
-        }
-      },
-      "register": {
-        "title": "Create an account",
-        "not_registered": "Already have an account?",
-        "start": "Sign in",
-        "form": {
-          "name": {
-            "label": "First name",
-            "placeholder": "Ex. John"
-          },
-          "lastname": {
-            "label": "Last name",
-            "placeholder": "Ex. Velasquez"
-          },
-          "email": {
-            "label": "Email",
-            "placeholder": "Ex. email@domain.com"
-          },
-          "password": {
-            "label": "Password",
-            "placeholder": "Ex. AEcas2!3_aw*A"
-          },
-          "submit": "Create an account",
-          "or": "Or continue with",
-          "google": "Google"
+    "pages": {
+      "auth": {
+        "login": {
+          "title": "Sign in to your account",
+          "not_registered": "Not registered?",
+          "start": "Start free for 14 days",
+          "form": {
+            "email": {
+              "label": "Email",
+              "placeholder": "Ex. email@domain.com"
+            },
+            "password": {
+              "label": "Password",
+              "placeholder": "Ex. AEcas2!3_aw*A"
+            },
+            "forget_password": "Forget your password?",
+            "remember_me": "Remember me",
+            "submit": "Sign in",
+            "or": "Or continue with",
+            "google": "Google"
+          }
+        },
+        "register": {
+          "title": "Create an account",
+          "not_registered": "Already have an account?",
+          "start": "Sign in",
+          "form": {
+            "name": {
+              "label": "First name",
+              "placeholder": "Ex. John"
+            },
+            "lastname": {
+              "label": "Last name",
+              "placeholder": "Ex. Velasquez"
+            },
+            "email": {
+              "label": "Email",
+              "placeholder": "Ex. email@domain.com"
+            },
+            "password": {
+              "label": "Password",
+              "placeholder": "Ex. AEcas2!3_aw*A"
+            },
+            "submit": "Create an account",
+            "or": "Or continue with",
+            "google": "Google"
+          }
         }
       }
     }

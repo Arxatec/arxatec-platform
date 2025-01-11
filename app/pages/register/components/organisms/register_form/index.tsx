@@ -1,7 +1,6 @@
 import { CustomInput, PrimaryButton } from "~/components/atoms";
 import { useTranslation } from "react-i18next";
 import { LocaleKeys } from "~/lang";
-import { Separator } from "../../atoms";
 import { SocialAuthOptions } from "../../molecules";
 
 export const RegisterForm = () => {
@@ -12,31 +11,37 @@ export const RegisterForm = () => {
         <div className="grid grid-cols-2 gap-4">
           <CustomInput
             type="text"
-            label={t(LocaleKeys.auth_register_form_name_label)}
-            placeholder={t(LocaleKeys.auth_register_form_name_placeholder)}
+            label={t(LocaleKeys.pages_auth_register_form_name_label)}
+            placeholder={t(
+              LocaleKeys.pages_auth_register_form_name_placeholder
+            )}
             isRequired
           />
           <CustomInput
             type="text"
-            label={t(LocaleKeys.auth_register_form_lastname_label)}
-            placeholder={t(LocaleKeys.auth_register_form_lastname_placeholder)}
+            label={t(LocaleKeys.pages_auth_register_form_lastname_label)}
+            placeholder={t(
+              LocaleKeys.pages_auth_register_form_lastname_placeholder
+            )}
             isRequired
           />
         </div>
         <CustomInput
           type="text"
-          label={t(LocaleKeys.auth_register_form_email_label)}
-          placeholder={t(LocaleKeys.auth_register_form_email_placeholder)}
+          label={t(LocaleKeys.pages_auth_register_form_email_label)}
+          placeholder={t(LocaleKeys.pages_auth_register_form_email_placeholder)}
           isRequired
         />
         <CustomInput
           type="password"
-          label={t(LocaleKeys.auth_register_form_password_label)}
-          placeholder={t(LocaleKeys.auth_register_form_password_placeholder)}
+          label={t(LocaleKeys.pages_auth_register_form_password_label)}
+          placeholder={t(
+            LocaleKeys.pages_auth_register_form_password_placeholder
+          )}
           isRequired
         />
         <PrimaryButton
-          text={t(LocaleKeys.auth_register_form_submit)}
+          text={t(LocaleKeys.pages_auth_register_form_submit)}
           classNames="w-full"
         />
 

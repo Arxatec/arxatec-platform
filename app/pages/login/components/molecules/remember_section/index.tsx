@@ -26,13 +26,13 @@ export const RememberSection = () => {
           </div>
         </div>
         <label htmlFor="remember-me" className="block text-sm/6 text-gray-900">
-          {t(LocaleKeys.auth_login_form_remember_me)}
+          {t(LocaleKeys.pages_auth_login_form_remember_me)}
         </label>
       </div>
 
       <div className="text-sm/6">
         <CustomLink
-          text={t(LocaleKeys.auth_login_form_forget_password)}
+          text={t(LocaleKeys.pages_auth_login_form_forget_password)}
           to="#"
         />
       </div>

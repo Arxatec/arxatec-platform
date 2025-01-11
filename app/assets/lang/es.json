@@ -1,50 +1,52 @@
 {
   "translation": {
-    "auth": {
-      "login": {
-        "title": "Ingresa a tu cuenta",
-        "not_registered": "¿No tienes una cuenta?",
-        "start": "Empieza gratis por 14 días",
-        "form": {
-          "email": {
-            "label": "Correo electrónico",
-            "placeholder": "Ej. email@domain.com"
-          },
-          "password": {
-            "label": "Contraseña",
-            "placeholder": "Ej. AEcas2!3_aw*A"
-          },
-          "forget_password": "¿Olvidaste tu contraseña?",
-          "remember_me": "Recuerdame",
-          "submit": "Iniciar sesión",
-          "or": "O continua con",
-          "google": "Google"
-        }
-      },
-      "register": {
-        "title": "Crea una cuenta",
-        "not_registered": "¿Ya tienes una cuenta?",
-        "start": "Ingresar",
-        "form": {
-          "name": {
-            "label": "Nombre",
-            "placeholder": "Ej. Juan"
-          },
-          "lastname": {
-            "label": "Apellido",
-            "placeholder": "Ej. Velasquez"
-          },
-          "email": {
-            "label": "Correo electrónico",
-            "placeholder": "Ej. email@domain.com"
-          },
-          "password": {
-            "label": "Contraseña",
-            "placeholder": "Ej. AEcas2!3_aw*A"
-          },
-          "submit": "Crear cuenta",
-          "or": "O continua con",
-          "google": "Google"
+    "pages": {
+      "auth": {
+        "login": {
+          "title": "Ingresa a tu cuenta",
+          "not_registered": "¿No tienes una cuenta?",
+          "start": "Empieza gratis por 14 días",
+          "form": {
+            "email": {
+              "label": "Correo electrónico",
+              "placeholder": "Ej. email@domain.com"
+            },
+            "password": {
+              "label": "Contraseña",
+              "placeholder": "Ej. AEcas2!3_aw*A"
+            },
+            "forget_password": "¿Olvidaste tu contraseña?",
+            "remember_me": "Recuerdame",
+            "submit": "Iniciar sesión",
+            "or": "O continua con",
+            "google": "Google"
+          }
+        },
+        "register": {
+          "title": "Crea una cuenta",
+          "not_registered": "¿Ya tienes una cuenta?",
+          "start": "Ingresar",
+          "form": {
+            "name": {
+              "label": "Nombre",
+              "placeholder": "Ej. Juan"
+            },
+            "lastname": {
+              "label": "Apellido",
+              "placeholder": "Ej. Velasquez"
+            },
+            "email": {
+              "label": "Correo electrónico",
+              "placeholder": "Ej. email@domain.com"
+            },
+            "password": {
+              "label": "Contraseña",
+              "placeholder": "Ej. AEcas2!3_aw*A"
+            },
+            "submit": "Crear cuenta",
+            "or": "O continua con",
+            "google": "Google"
+          }
         }
       }
     }
