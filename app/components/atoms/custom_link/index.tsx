@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 interface Props {
   text: string;
   to: string;
@@ -5,11 +7,11 @@ interface Props {
 }
 export const CustomLink: React.FC<Props> = (props) => {
   return (
-    <a
-      href={props.to}
+    <Link
+      to={props.to}
       className={`font-semibold text-blue-600 hover:text-blue-500 ${props.classNames}`}
     >
       {props.text}
-    </a>
+    </Link>
   );
 };

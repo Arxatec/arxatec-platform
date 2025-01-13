@@ -1,51 +1,66 @@
 {
   "translation": {
+    "common": {
+      "terms": "Términos y condiciones",
+      "privacy": "Política de privacidad"
+    },
+    "lang": {
+      "es": "Español",
+      "en": "Ingles",
+      "qu": "Quechua"
+    },
     "pages": {
       "auth": {
+        "fields": {
+          "email": {
+            "label": "Correo electrónico",
+            "placeholder": "Ej. email@domain.com"
+          },
+          "password": {
+            "label": "Contraseña",
+            "placeholder": "Ej. AEcas2!3_aw*A"
+          },
+          "name": {
+            "label": "Nombre",
+            "placeholder": "Ej. Juan"
+          },
+          "lastname": {
+            "label": "Apellido",
+            "placeholder": "Ej. Velasquez"
+          }
+        },
+        "social": {
+          "or": "O continua con",
+          "google": "Google"
+        },
         "login": {
           "title": "Ingresa a tu cuenta",
+          "text": "Inicia sesión ahora y accede a tu cuenta para gestionar tus casos de manera eficiente, con herramientas avanzadas y toda la información al alcance de tu mano.",
           "not_registered": "¿No tienes una cuenta?",
           "start": "Empieza gratis por 14 días",
+          "testimonial": {
+            "title": "Revolucionamos la forma en que los abogados gestionan sus casos",
+            "text": "Arxatec ofrece una plataforma integral que simplifica la administración de casos, mejora la comunicación con los clientes y optimiza los procesos legales. Con herramientas avanzadas y una interfaz intuitiva, Arxatec empodera a los abogados a gestionar su práctica con eficacia y precisión.",
+            "author": "Laura Martínez - Abogada"
+          },
           "form": {
-            "email": {
-              "label": "Correo electrónico",
-              "placeholder": "Ej. email@domain.com"
-            },
-            "password": {
-              "label": "Contraseña",
-              "placeholder": "Ej. AEcas2!3_aw*A"
-            },
             "forget_password": "¿Olvidaste tu contraseña?",
             "remember_me": "Recuerdame",
-            "submit": "Iniciar sesión",
-            "or": "O continua con",
-            "google": "Google"
+            "submit": "Iniciar sesión"
           }
         },
         "register": {
           "title": "Crea una cuenta",
+          "text": "Regístrate ahora y comienza a gestionar tus casos de manera más eficiente, con herramientas intuitivas y funcionalidades avanzadas.",
           "not_registered": "¿Ya tienes una cuenta?",
           "start": "Ingresar",
+          "testimonial": {
+            "title": "Transformamos la manera de entender y acceder a los servicios legales",
+            "text": "Todo en un único lugar, diseñado para mejorar la eficiencia, reducir la complejidad y potenciar la relación entre abogados y clientes. Con Arxatec, llevamos la práctica legal al siguiente nivel, facilitando una experiencia legal moderna, accesible y completamente integrada.",
+            "author": "Rafael Aguirre - Abogado"
+          },
           "form": {
-            "name": {
-              "label": "Nombre",
-              "placeholder": "Ej. Juan"
-            },
-            "lastname": {
-              "label": "Apellido",
-              "placeholder": "Ej. Velasquez"
-            },
-            "email": {
-              "label": "Correo electrónico",
-              "placeholder": "Ej. email@domain.com"
-            },
-            "password": {
-              "label": "Contraseña",
-              "placeholder": "Ej. AEcas2!3_aw*A"
-            },
-            "submit": "Crear cuenta",
-            "or": "O continua con",
-            "google": "Google"
+            "submit": "Crear cuenta"
           }
         }
       }

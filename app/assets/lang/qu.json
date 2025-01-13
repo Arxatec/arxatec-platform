@@ -1,51 +1,66 @@
 {
   "translation": {
+    "common": {
+      "terms": "Kamachiykuna & ruraykuna",
+      "privacy": "Sapanchasqa willakuy"
+    },
+    "lang": {
+      "es": "Español",
+      "en": "Ingles Simi",
+      "qu": "Runasimi"
+    },
     "pages": {
       "auth": {
+        "fields": {
+          "email": {
+            "label": "Ñawiwayku",
+            "placeholder": "Ñawpaqmi email@domain.com"
+          },
+          "password": {
+            "label": "Ñawpaq ch'usa",
+            "placeholder": "Ñawpaqmi AEcas2!3_aw*A"
+          },
+          "name": {
+            "label": "Ñawi",
+            "placeholder": "Ñawpaqmi Juan"
+          },
+          "lastname": {
+            "label": "Ñawi kanan",
+            "placeholder": "Ñawpaqmi Velasquez"
+          }
+        },
+        "social": {
+          "or": "Ñuqayku chaymanta",
+          "google": "Google-qan"
+        },
         "login": {
           "title": "Ñuqanchikpa ruwaspa",
+          "text": "Kunanpacha yaykuy chaymanta yupayniykiman yaykuy casoykikunata allinta kamachinaykipaq, ñawpaq yanapakuykunawan chaymanta llapa willakuykunawan makiykipi.",
           "not_registered": "¿Manam kaykuykita niykunam kanchu?",
           "start": "Ñawpaqmi 14 kutimanta ch'uchuy",
+          "testimonial": {
+            "title": "Abogadokuna imayna casonkuta kamachinku chayta revolucionarqayku",
+            "text": "Arxatec huk tukuypaq plataformata qun mayqinchus caso kamachiyta pisiyachin, cliente willayta allinchan chaymanta kamachiy ruwaykunata agilizar. Ñawpaqman puriq yanapakuykunawan chaymanta huk interfaz intuitiva kaqwan, Arxatec abogadokunaman atiyta qun ruwayninkuta allinta chaymanta chiqan kamachinankupaq. .",
+            "Author": "Laura Martínez - Abogada"
+          },
           "form": {
-            "email": {
-              "label": "Ñawiwayku",
-              "placeholder": "Ñawpaqmi email@domain.com"
-            },
-            "password": {
-              "label": "Ñawpaq ch'usa",
-              "placeholder": "Ñawpaqmi AEcas2!3_aw*A"
-            },
             "forget_password": "¿Ch'usa rikch'aykuchu?",
             "remember_me": "Ñuqa ruwaspa",
-            "submit": "Kaykuy",
-            "or": "Ñuqayku chaymanta",
-            "google": "Google-qan"
+            "submit": "Kaykuy"
           }
         },
         "register": {
           "title": "Kaykuy ruwachiy",
+          "text": "Kunanpacha qillqakuy chaymanta aswan allinta casoykikunata kamachiyta qallariy, intuitivo yanapakuykunawan chaymanta ñawpaq ruwanakunawan.",
           "not_registered": "¿Kaykuykita ruwaspa?",
           "start": "Ñawpaq kaykuy churay",
+          "testimonial": {
+            "title": "Imaynatachus hamut'ayku chaymanta servicios legales nisqaman yaykuyniyku tikrayku",
+            "text": "Tukuy ima huk sitiollapi, ruwasqa allin ruway allin kananpaq, pisiyachinapaq complejidadta chaymanta aswan allinta ruwanapaq abogadokuna chaymanta clientekunapura. Arxatec kaqwan, ruway kamachiyta huk pataman apayku, huk moderna, chayay atiy chaymanta hunt'asqa tinkisqa experiencia jurídica kaqwan.",
+            "author": "Rafael Aguirre - Amachaq"
+          },
           "form": {
-            "name": {
-              "label": "Ñawi",
-              "placeholder": "Ñawpaqmi Juan"
-            },
-            "lastname": {
-              "label": "Ñawi kanan",
-              "placeholder": "Ñawpaqmi Velasquez"
-            },
-            "email": {
-              "label": "Ñawiwayku",
-              "placeholder": "Ñawpaqmi email@domain.com"
-            },
-            "password": {
-              "label": "Ñawpaq ch'usa",
-              "placeholder": "Ñawpaqmi AEcas2!3_aw*A"
-            },
-            "submit": "Kaykuy ruwachiy",
-            "or": "Ñuqayku chaymanta",
-            "google": "Google-qan"
+            "submit": "Kaykuy ruwachiy"
           }
         }
       }

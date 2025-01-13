@@ -1,51 +1,66 @@
 {
   "translation": {
+    "common": {
+      "terms": "Terms & conditions",
+      "privacy": "Privacy policy"
+    },
+    "lang": {
+      "es": "Spanish",
+      "en": "English",
+      "qu": "Quechua"
+    },
     "pages": {
       "auth": {
+        "fields": {
+          "email": {
+            "label": "Email",
+            "placeholder": "Ex. email@domain.com"
+          },
+          "password": {
+            "label": "Password",
+            "placeholder": "Ex. AEcas2!3_aw*A"
+          },
+          "name": {
+            "label": "First name",
+            "placeholder": "Ex. John"
+          },
+          "lastname": {
+            "label": "Last name",
+            "placeholder": "Ex. Velasquez"
+          }
+        },
+        "social": {
+          "or": "Or continue with",
+          "google": "Google"
+        },
         "login": {
           "title": "Sign in to your account",
+          "text": "Sign in now and access your account to manage your cases efficiently, with advanced tools and all the information at your fingertips.",
           "not_registered": "Not registered?",
           "start": "Start free for 14 days",
+          "testimonial": {
+            "title": "We revolutionize the way lawyers manage their cases",
+            "text": "Arxatec offers a comprehensive platform that simplifies case management, improves communication with clients and optimizes legal processes. With advanced tools and an intuitive interface, Arxatec empowers lawyers to manage their practice effectively and accurately.",
+            "author": "Laura Martínez - Lawyer"
+          },
           "form": {
-            "email": {
-              "label": "Email",
-              "placeholder": "Ex. email@domain.com"
-            },
-            "password": {
-              "label": "Password",
-              "placeholder": "Ex. AEcas2!3_aw*A"
-            },
             "forget_password": "Forget your password?",
             "remember_me": "Remember me",
-            "submit": "Sign in",
-            "or": "Or continue with",
-            "google": "Google"
+            "submit": "Sign in"
           }
         },
         "register": {
           "title": "Create an account",
+          "text": "Sign up now and start managing your cases more efficiently, with intuitive tools and advanced features.",
           "not_registered": "Already have an account?",
           "start": "Sign in",
+          "testimonial": {
+            "title": "We transform the way we understand and access legal services",
+            "text": "Everything in one place, designed to improve efficiency, reduce complexity and enhance the relationship between lawyers and clients. With Arxatec, we take legal practice to the next level, facilitating a modern, accessible and fully integrated legal experience.",
+            "author": "Rafael Aguirre - Lawyer"
+          },
           "form": {
-            "name": {
-              "label": "First name",
-              "placeholder": "Ex. John"
-            },
-            "lastname": {
-              "label": "Last name",
-              "placeholder": "Ex. Velasquez"
-            },
-            "email": {
-              "label": "Email",
-              "placeholder": "Ex. email@domain.com"
-            },
-            "password": {
-              "label": "Password",
-              "placeholder": "Ex. AEcas2!3_aw*A"
-            },
-            "submit": "Create an account",
-            "or": "Or continue with",
-            "google": "Google"
+            "submit": "Create an account"
           }
         }
       }
