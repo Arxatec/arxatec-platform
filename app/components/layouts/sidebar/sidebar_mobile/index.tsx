@@ -14,7 +14,8 @@ interface Props {
   navigation: {
     name: string;
     href: string;
-    icon: React.ElementType;
+    iconInactive: React.ElementType;
+    iconActive: React.ElementType;
   }[];
   logo: string;
 }
@@ -74,7 +75,7 @@ export const SidebarMobile: React.FC<Props> = ({
                             "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                           )}
                         >
-                          <item.icon
+                          <item.iconInactive
                             aria-hidden="true"
                             className={classNames(
                               item.href === location.pathname

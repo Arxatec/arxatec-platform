@@ -8,10 +8,17 @@ import { ROUTES } from "./routes/routes";
 
 export default [
   layout("components/layouts/sidebar/index.tsx", [
-    index("modules/dashboard/components/pages/dashboard_page.tsx"),
     route(
       ROUTES.COMMUNITY,
       "modules/community/components/pages/community_page.tsx"
+    ),
+    route(
+      ROUTES.DASHBOARD,
+      "modules/dashboard/components/pages/dashboard_page.tsx"
+    ),
+    route(
+      ROUTES.CALENDAR,
+      "modules/calendar/components/pages/calendar_page.tsx"
     ),
   ]),
   route(

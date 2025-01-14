@@ -2,27 +2,52 @@ import { useState } from "react";
 import { Outlet } from "react-router";
 import {
   CalendarIcon,
-  DocumentDuplicateIcon,
   FolderIcon,
   HomeIcon,
   UsersIcon,
 } from "@heroicons/react/24/outline";
+import {
+  CalendarIcon as CalendarIconActive,
+  DocumentDuplicateIcon as DocumentDuplicateIconActive,
+  FolderIcon as FolderIconActive,
+  HomeIcon as HomeIconActive,
+  UsersIcon as UsersIconActive,
+} from "@heroicons/react/24/solid";
 import logo from "~/assets/images/logo.png";
 
 import { SidebarMobile } from "./sidebar_mobile";
 import { SidebarDesktop } from "./sidebar_desktop";
 import { Navigation } from "./navigation";
+import { ROUTES } from "~/routes/routes";
 
 const navigation = [
-  { name: "Comunidad", href: "#", icon: HomeIcon, current: true },
-  { name: "Dashboard", href: "#", icon: UsersIcon, current: false },
-  { name: "Calendario", href: "#", icon: FolderIcon, current: false },
-  { name: "Mis casos", href: "#", icon: CalendarIcon, current: false },
   {
-    name: "Documentos",
-    href: "#",
-    icon: DocumentDuplicateIcon,
+    name: "Dashboard",
+    href: ROUTES.DASHBOARD,
+    iconInactive: HomeIcon,
+    iconActive: HomeIconActive,
     current: false,
+  },
+  {
+    name: "Comunidad",
+    href: ROUTES.COMMUNITY,
+    current: true,
+    iconInactive: UsersIcon,
+    iconActive: UsersIconActive,
+  },
+  {
+    name: "Mis casos",
+    href: "#",
+    iconInactive: FolderIcon,
+    current: false,
+    iconActive: FolderIconActive,
+  },
+  {
+    name: "Calendario",
+    href: ROUTES.CALENDAR,
+    iconInactive: CalendarIcon,
+    current: false,
+    iconActive: CalendarIconActive,
   },
 ];
 

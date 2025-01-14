@@ -1,3 +1,4 @@
+export { CustomAvatar } from "./custom_avatar";
 export { CustomDropdown } from "./custom_dropdown";
 export { CustomSelector } from "./custom_selector";
 export { LoadingImage } from "./loading_image";

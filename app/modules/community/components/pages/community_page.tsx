@@ -1,3 +1,5 @@
+import { LastPost } from "../molecules";
+import { CustomTextArea } from "../molecules/custom_text_area";
 import { Post } from "../molecules/post";
 
 export const legalPosts = [
@@ -11,7 +13,8 @@ export const legalPosts = [
     datePosted: "2024-01-10",
     likes: 1240,
     comments: 89,
-    image: "/api/placeholder/600/400",
+    image:
+      "https://images.pexels.com/photos/6694547/pexels-photo-6694547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     id: 2,
@@ -25,7 +28,6 @@ Debes saber que tienes derecho a una orden de protección inmediata, que puede t
     datePosted: "2024-01-11",
     likes: 2350,
     comments: 156,
-    image: "/api/placeholder/600/400",
   },
   {
     id: 3,
@@ -53,7 +55,7 @@ Existen ayudas disponibles para estas situaciones, como el Fondo de Garantía de
     datePosted: "2024-01-08",
     likes: 1567,
     comments: 289,
-    image: "/api/placeholder/600/400",
+    image: "https://images.pexels.com/photos/6603350/pexels-photo-6603350.jpeg",
   },
   {
     id: 5,
@@ -67,7 +69,8 @@ En el ámbito legal, denuncia el caso en la policía, específicamente en la uni
     datePosted: "2024-01-07",
     likes: 2890,
     comments: 445,
-    image: "/api/placeholder/600/400",
+    image:
+      "https://images.pexels.com/photos/5380586/pexels-photo-5380586.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     id: 6,
@@ -95,7 +98,6 @@ Recuerda que tu banco nunca pedirá tus claves por teléfono, y no debes hacer c
     datePosted: "2024-01-05",
     likes: 3456,
     comments: 567,
-    image: "/api/placeholder/600/400",
   },
   {
     id: 8,
@@ -122,7 +124,6 @@ Comunica el caso por escrito al tutor y exige la activación del protocolo antib
     datePosted: "2024-01-03",
     likes: 2345,
     comments: 445,
-    image: "/api/placeholder/600/400",
   },
   {
     id: 23,
@@ -134,7 +135,6 @@ Comunica el caso por escrito al tutor y exige la activación del protocolo antib
     datePosted: "2024-01-12",
     likes: 2341,
     comments: 567,
-    image: "/api/placeholder/600/400",
   },
   {
     id: 24,
@@ -157,7 +157,6 @@ Comunica el caso por escrito al tutor y exige la activación del protocolo antib
     datePosted: "2024-01-10",
     likes: 3456,
     comments: 678,
-    image: "/api/placeholder/600/400",
   },
   {
     id: 26,
@@ -180,24 +179,100 @@ Comunica el caso por escrito al tutor y exige la activación del protocolo antib
     datePosted: "2024-01-08",
     likes: 1567,
     comments: 234,
-    image: "/api/placeholder/600/400",
+    image: "https://images.pexels.com/photos/8057073/pexels-photo-8057073.jpeg",
+  },
+];
+
+const lastLegalPost = [
+  {
+    avatar:
+      "https://images.pexels.com/photos/12396627/pexels-photo-12396627.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    username: "Rafael Aguirre",
+    idUser: "user",
+    idPost: "post",
+    likes: 8,
+    comments: 10,
+    post: "Problemas actuales acerca de las herencias",
+  },
+  {
+    avatar: "https://images.pexels.com/photos/874158/pexels-photo-874158.jpeg",
+    username: "Laura Quiñonez",
+    idUser: "user",
+    idPost: "post",
+    likes: 22,
+    comments: 8,
+    post: "La cruda sin embargo realidad sobre los accidentes de tráfico",
+  },
+  {
+    avatar: "sadadsa",
+    username: "Mario Espinoza",
+    idUser: "user",
+    idPost: "post",
+    likes: 56,
+    comments: 98,
+    post: "Las nuevas estafas bancarias que te pueden suceder",
   },
 ];
 
 export default function CommunityPage() {
   return (
-    <div className="w-full max-w-3xl bg-white h-full px-4 py-4 rounded-lg mx-auto ">
-      {legalPosts.map((item) => (
-        <Post
-          avatar={item.avatar}
-          username={item.username}
-          title={item.title}
-          content={item.content}
-          datePosted={item.datePosted}
-          likes={item.likes}
-          comments={item.likes}
-        />
-      ))}
+    <div className="w-full max-w-5xl  h-full  mx-auto ">
+      <div className="grid grid-cols-[70%_28%] justify-between">
+        <div className="w-full">
+          <div className="w-full bg-white rounded-lg p-4 mb-4">
+            <h2 className="mb-4 text-gray-900 font-bold text-lg">
+              Crea un nuevo post
+            </h2>
+            <CustomTextArea />
+          </div>
+          <div className="w-full bg-white px-4 py-4 rounded-lg">
+            <div className="mb-4">
+              <p className="text-lg text-gray-900 font-semibold">Popular</p>
+              <div className=""></div>
+            </div>
+            <div className="grid divide-y">
+              {legalPosts.map((item) => (
+                <div>
+                  <Post
+                    avatar={item.avatar}
+                    username={item.username}
+                    title={item.title}
+                    content={item.content}
+                    datePosted={item.datePosted}
+                    likes={item.likes}
+                    image={item.image}
+                    comments={item.likes}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="bg-white rounded-lg w-full h-fit">
+          <div className="flex items-center justify-between px-4 pt-4">
+            <h2 className="text-[12px] font-bold uppercase text-gray-800">
+              publicaciones recientes
+            </h2>
+            <a href="" className="text-sm text-blue-600">
+              Borrar
+            </a>
+          </div>
+          <div className="grid divide-y  pb-4">
+            {lastLegalPost.map((item, idx) => (
+              <LastPost
+                key={idx}
+                avatar={item.avatar}
+                username={item.username}
+                idPost={item.idPost}
+                idUser={item.idUser}
+                likes={item.likes}
+                comments={item.comments}
+                post={item.post}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
