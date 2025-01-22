@@ -1,8 +1,10 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { Bars3Icon, BellIcon } from "@heroicons/react/16/solid";
+import { Bars3Icon, BellAlertIcon, BellIcon } from "@heroicons/react/16/solid";
+import { InboxArrowDownIcon } from "@heroicons/react/20/solid";
 import {
   ChevronDownIcon,
   MagnifyingGlassIcon,
+  PlusIcon,
 } from "@heroicons/react/24/outline";
 import type React from "react";
 
@@ -45,12 +47,22 @@ export const Navigation: React.FC<Props> = ({ setSidebarOpen }) => {
           />
         </div>
         <div className="flex items-center gap-x-4 lg:gap-x-6">
-          <div
-            aria-hidden="true"
-            className="hidden lg:block lg:h-10 lg:w-px lg:bg-gray-200"
-          />
+          <div className="flex items-center justify-start gap-4">
+            <button className=" rounded-full p-2 bg-gray-100">
+              <PlusIcon className="size-5 text-gray-700" strokeWidth={2.5} />
+            </button>
+            <button className=" rounded-full p-2 bg-gray-100">
+              <BellIcon className="size-5 text-gray-700" />
+            </button>
+            <button className=" rounded-full p-2 bg-gray-100">
+              <InboxArrowDownIcon className="size-5 text-gray-700" />
+            </button>
+            <div
+              aria-hidden="true"
+              className="hidden lg:block lg:h-10 lg:w-px lg:bg-gray-200"
+            />
+          </div>
 
-          {/* Profile dropdown */}
           <Menu as="div" className="relative">
             <MenuButton className="-m-1.5 flex items-center p-1.5">
               <span className="sr-only">Open user menu</span>

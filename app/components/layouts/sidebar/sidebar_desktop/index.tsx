@@ -1,4 +1,9 @@
-import { Cog6ToothIcon } from "@heroicons/react/16/solid";
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from "@headlessui/react";
+import { ChevronRightIcon, Cog6ToothIcon } from "@heroicons/react/16/solid";
 import { Link, useLocation } from "react-router";
 import { classNames } from "~/utilities/string_utilities";
 
@@ -9,6 +14,13 @@ interface Props {
     href: string;
     iconInactive: React.ElementType;
     iconActive: React.ElementType;
+    children?: {
+      name: string;
+      href: string;
+      current: boolean;
+      iconInactive: React.ElementType;
+      iconActive: React.ElementType;
+    }[];
   }[];
 }
 
@@ -27,32 +39,73 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
               <ul role="list" className="-mx-2">
                 {navigation.map((item) => (
                   <li key={item.name}>
-                    <Link
-                      to={item.href}
-                      className={classNames(
-                        location.pathname.includes(item.href)
-                          ? "bg-blue-100 text-blue-600"
-                          : "text-gray-600 hover:bg-slate-100 hover:text-gray-700",
-                        "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
-                      )}
-                    >
-                      {!location.pathname.includes(item.href) ? (
-                        <item.iconInactive
-                          aria-hidden="true"
-                          className={
-                            "text-gray-600 group-hover:text-gray-700 size-6 shrink-0"
-                          }
-                        />
-                      ) : (
-                        <item.iconActive
-                          aria-hidden="true"
-                          className={
-                            " group-hover:text-blue-600 size-6 shrink-0 text-blue-600"
-                          }
-                        />
-                      )}
-                      {item.name}
-                    </Link>
+                    {!item.children ? (
+                      <Link
+                        to={item.href}
+                        className={classNames(
+                          location.pathname.includes(item.href)
+                            ? "bg-blue-100 text-blue-600"
+                            : "text-gray-600 hover:bg-slate-100 hover:text-gray-700",
+                          "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
+                        )}
+                      >
+                        {!location.pathname.includes(item.href) ? (
+                          <item.iconInactive
+                            aria-hidden="true"
+                            className={
+                              "text-gray-600 group-hover:text-gray-700 size-6 shrink-0"
+                            }
+                          />
+                        ) : (
+                          <item.iconActive
+                            aria-hidden="true"
+                            className={
+                              " group-hover:text-blue-600 size-6 shrink-0 text-blue-600"
+                            }
+                          />
+                        )}
+                        {item.name}
+                      </Link>
+                    ) : (
+                      <Disclosure
+                        as="div"
+                        className="border-t border-gray-300 my-2 pt-2"
+                      >
+                        <DisclosureButton
+                          className={classNames(
+                            location.pathname.includes(item.href)
+                              ? "bg-blue-100 text-blue-600"
+                              : "text-gray-600 hover:bg-slate-100 hover:text-gray-700",
+                            " flex gap-x-3 rounded-md p-2 text-xs tracking-widest font-semibold w-full group transition-all uppercase"
+                          )}
+                        >
+                          {item.name}
+                          <ChevronRightIcon
+                            aria-hidden="true"
+                            className="ml-auto transition-all size-5 shrink-0 text-gray-400 group-data-[open]:rotate-90 group-data-[open]:text-gray-500"
+                          />
+                        </DisclosureButton>
+                        <DisclosurePanel as="ul" className="mt-1 px-2">
+                          {item.children.map((subItem) => (
+                            <li key={subItem.name}>
+                              {/* 44px */}
+                              <DisclosureButton
+                                as="a"
+                                href={subItem.href}
+                                className={classNames(
+                                  subItem.current
+                                    ? "bg-gray-50"
+                                    : "hover:bg-gray-50",
+                                  "block rounded-md py-2 pl-9 pr-2 text-sm/6 text-gray-700 hover:bg-slate-100"
+                                )}
+                              >
+                                {subItem.name}
+                              </DisclosureButton>
+                            </li>
+                          ))}
+                        </DisclosurePanel>
+                      </Disclosure>
+                    )}
                   </li>
                 ))}
               </ul>
