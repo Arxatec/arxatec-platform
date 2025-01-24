@@ -54,42 +54,44 @@ export const CustomSelector = <T extends Record<string, any>>({
   ].join(" ");
 
   return (
-    <Listbox value={selected} onChange={onChange}>
-      {label && (
-        <label
-          className={`block text-sm font-medium text-gray-900 ${labelClassName}`}
-        >
-          {label}
-        </label>
-      )}
-      <div className="relative mt-2">
-        <ListboxButton className={computedButtonClasses}>
-          <span className="col-start-1 row-start-1 truncate pr-6">
-            {selected[displayKey] as string}
-          </span>
-          <ChevronUpDownIcon
-            aria-hidden="true"
-            className="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4"
-          />
-        </ListboxButton>
+    <div>
+      <Listbox value={selected} onChange={onChange}>
+        {label && (
+          <label
+            className={`block text-sm font-medium text-gray-900 ${labelClassName}`}
+          >
+            {label}
+          </label>
+        )}
+        <div className="relative mt-2">
+          <ListboxButton className={computedButtonClasses}>
+            <span className="col-start-1 row-start-1 truncate pr-6">
+              {selected[displayKey] as string}
+            </span>
+            <ChevronUpDownIcon
+              aria-hidden="true"
+              className="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+            />
+          </ListboxButton>
 
-        <ListboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none text-sm">
-          {options.map((option) => (
-            <ListboxOption
-              key={option.id}
-              value={option}
-              className={`group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-blue-600 data-[focus]:text-white data-[focus]:outline-none ${optionClassName}`}
-            >
-              <span className="block truncate font-normal group-data-[selected]:font-semibold">
-                {option[displayKey] as string}
-              </span>
-              <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-600 group-[&:not([data-selected])]:hidden group-data-[focus]:text-white">
-                <CheckIcon aria-hidden="true" className="size-5" />
-              </span>
-            </ListboxOption>
-          ))}
-        </ListboxOptions>
-      </div>
-    </Listbox>
+          <ListboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none text-sm">
+            {options.map((option) => (
+              <ListboxOption
+                key={option.id}
+                value={option}
+                className={`group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-blue-600 data-[focus]:text-white data-[focus]:outline-none ${optionClassName}`}
+              >
+                <span className="block truncate font-normal group-data-[selected]:font-semibold">
+                  {option[displayKey] as string}
+                </span>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-600 group-[&:not([data-selected])]:hidden group-data-[focus]:text-white">
+                  <CheckIcon aria-hidden="true" className="size-5" />
+                </span>
+              </ListboxOption>
+            ))}
+          </ListboxOptions>
+        </div>
+      </Listbox>
+    </div>
   );
 };

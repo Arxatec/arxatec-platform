@@ -6,14 +6,26 @@ import {
   HomeIcon,
   UsersIcon,
   ChatBubbleBottomCenterIcon,
+  InformationCircleIcon,
+  QuestionMarkCircleIcon,
+  PencilSquareIcon,
+  DocumentTextIcon,
+  ShieldCheckIcon,
+  DocumentDuplicateIcon,
+  PlusIcon,
 } from "@heroicons/react/24/outline";
 import {
   CalendarIcon as CalendarIconActive,
-  DocumentDuplicateIcon as DocumentDuplicateIconActive,
   FolderIcon as FolderIconActive,
   HomeIcon as HomeIconActive,
   UsersIcon as UsersIconActive,
   ChatBubbleBottomCenterIcon as ChatBubbleBottomCenterIconActive,
+  InformationCircleIcon as InformationCircleIconActive,
+  QuestionMarkCircleIcon as QuestionMarkCircleIconActive,
+  PencilSquareIcon as PencilSquareIconActive,
+  DocumentTextIcon as DocumentTextIconActive,
+  ShieldCheckIcon as ShieldCheckIconActive,
+  DocumentDuplicateIcon as DocumentDuplicateIconActive,
 } from "@heroicons/react/24/solid";
 import logo from "~/assets/images/logo.png";
 
@@ -93,30 +105,29 @@ const navigationTest = [
     name: "Comunidades",
     href: "#",
     iconInactive: CalendarIcon,
-    current: true,
     iconActive: CalendarIconActive,
+    current: true,
     children: [
       {
         name: "Crear comunidad",
         href: "#",
         current: false,
-
-        iconInactive: CalendarIcon,
-        iconActive: CalendarIconActive,
+        iconInactive: PlusIcon,
+        iconActive: PlusIcon,
       },
       {
         name: "Desarrollo legal",
         href: "#",
         current: false,
-        iconInactive: CalendarIcon,
-        iconActive: CalendarIconActive,
+        image:
+          "https://images.pexels.com/photos/5727885/pexels-photo-5727885.jpeg",
       },
       {
         name: "Derechos laborales",
         href: "#",
         current: false,
-        iconInactive: CalendarIcon,
-        iconActive: CalendarIconActive,
+        image:
+          "https://images.pexels.com/photos/5648040/pexels-photo-5648040.jpeg",
       },
     ],
   },
@@ -126,49 +137,49 @@ const navigationTest = [
     iconInactive: CalendarIcon,
     current: true,
     iconActive: CalendarIconActive,
+
     children: [
       {
         name: "Acerca de Arxatec",
         href: "#",
         current: false,
-
-        iconInactive: CalendarIcon,
-        iconActive: CalendarIconActive,
+        iconInactive: InformationCircleIcon,
+        iconActive: InformationCircleIconActive,
       },
       {
         name: "Ayuda",
         href: "#",
         current: false,
-        iconInactive: CalendarIcon,
-        iconActive: CalendarIconActive,
+        iconInactive: QuestionMarkCircleIcon,
+        iconActive: QuestionMarkCircleIconActive,
       },
       {
         name: "Nuestro blog",
         href: "#",
         current: false,
-        iconInactive: CalendarIcon,
-        iconActive: CalendarIconActive,
+        iconInactive: PencilSquareIcon,
+        iconActive: PencilSquareIconActive,
       },
       {
         name: "Reglas de Arxatec",
         href: "#",
         current: false,
-        iconInactive: CalendarIcon,
-        iconActive: CalendarIconActive,
+        iconInactive: DocumentTextIcon,
+        iconActive: DocumentTextIconActive,
       },
       {
         name: "Politica de privacidad",
         href: "#",
         current: false,
-        iconInactive: CalendarIcon,
-        iconActive: CalendarIconActive,
+        iconInactive: ShieldCheckIcon,
+        iconActive: ShieldCheckIconActive,
       },
       {
         name: "Terminos y condiciones",
         href: "#",
         current: false,
-        iconInactive: CalendarIcon,
-        iconActive: CalendarIconActive,
+        iconInactive: DocumentDuplicateIcon,
+        iconActive: DocumentDuplicateIconActive,
       },
     ],
   },
@@ -189,8 +200,8 @@ export default function Sidebar() {
         <SidebarDesktop navigation={navigationTest} logo={logo} />
         <div className="lg:pl-72">
           <Navigation setSidebarOpen={setSidebarOpen} />
-          <main className="py-10 bg-slate-100">
-            <div className="px-4 sm:px-6 lg:px-8">
+          <main className="bg-slate-100 py-10 h-full">
+            <div className="px-4 sm:px-6 lg:px-8 h-full">
               <Outlet />
             </div>
           </main>

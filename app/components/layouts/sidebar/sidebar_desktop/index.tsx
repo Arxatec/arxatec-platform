@@ -18,8 +18,9 @@ interface Props {
       name: string;
       href: string;
       current: boolean;
-      iconInactive: React.ElementType;
-      iconActive: React.ElementType;
+      image?: string;
+      iconInactive?: React.ElementType;
+      iconActive?: React.ElementType;
     }[];
   }[];
 }
@@ -85,7 +86,7 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
                             className="ml-auto transition-all size-5 shrink-0 text-gray-400 group-data-[open]:rotate-90 group-data-[open]:text-gray-500"
                           />
                         </DisclosureButton>
-                        <DisclosurePanel as="ul" className="mt-1 px-2">
+                        <DisclosurePanel as="ul" className="mt-1 px-1">
                           {item.children.map((subItem) => (
                             <li key={subItem.name}>
                               {/* 44px */}
@@ -96,9 +97,22 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
                                   subItem.current
                                     ? "bg-gray-50"
                                     : "hover:bg-gray-50",
-                                  "block rounded-md py-2 pl-9 pr-2 text-sm/6 text-gray-700 hover:bg-slate-100"
+                                  "flex items-center gap-x-2 rounded-md py-2 pl-4 pr-2 text-sm/6 text-gray-700 hover:bg-slate-100"
                                 )}
                               >
+                                {subItem.image ? (
+                                  <img
+                                    src={subItem.image}
+                                    alt="avatar"
+                                    className="size-8 rounded-full"
+                                  />
+                                ) : null}
+                                {subItem.iconInactive ? (
+                                  <subItem.iconInactive
+                                    aria-hidden="true"
+                                    className={"size-6 shrink-0 text-gray-600"}
+                                  />
+                                ) : null}
                                 {subItem.name}
                               </DisclosureButton>
                             </li>

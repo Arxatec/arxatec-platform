@@ -29,9 +29,13 @@ const quickActions = [
   { name: "Add label...", icon: TagIcon, shortcut: "L", url: "#" },
 ];
 
-export default function Example() {
+interface Props {
+  open: boolean;
+  setOpen: (value: boolean) => void;
+}
+
+export const CommandPalettes: React.FC<Props> = ({ open, setOpen }) => {
   const [query, setQuery] = useState("");
-  const [open, setOpen] = useState(true);
 
   const filteredProjects =
     query === ""
@@ -42,7 +46,7 @@ export default function Example() {
 
   return (
     <Dialog
-      className="relative z-10"
+      className="relative z-[60]"
       open={open}
       onClose={() => {
         setOpen(false);
@@ -51,7 +55,7 @@ export default function Example() {
     >
       <DialogBackdrop
         transition
-        className="fixed inset-0 bg-gray-500/25 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
+        className="fixed inset-0 bg-gray-900/60 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
       />
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto p-4 sm:p-6 md:p-20">
@@ -99,7 +103,7 @@ export default function Example() {
                           as="li"
                           key={project.id}
                           value={project}
-                          className="group flex cursor-default select-none items-center rounded-md px-3 py-2 data-[focus]:bg-indigo-600 data-[focus]:text-white data-[focus]:outline-none"
+                          className="group flex cursor-default select-none items-center rounded-md px-3 py-2 data-[focus]:bg-blue-600 data-[focus]:text-white data-[focus]:outline-none"
                         >
                           <FolderIcon
                             className="size-6 flex-none text-gray-400 group-data-[focus]:text-white forced-colors:group-data-[focus]:text-[Highlight]"
@@ -108,7 +112,7 @@ export default function Example() {
                           <span className="ml-3 flex-auto truncate">
                             {project.name}
                           </span>
-                          <span className="ml-3 hidden flex-none text-indigo-100 group-data-[focus]:inline">
+                          <span className="ml-3 hidden flex-none text-blue-100 group-data-[focus]:inline">
                             Jump to...
                           </span>
                         </ComboboxOption>
@@ -125,7 +129,7 @@ export default function Example() {
                           as="li"
                           key={action.shortcut}
                           value={action}
-                          className="group flex cursor-default select-none items-center rounded-md px-3 py-2 data-[focus]:bg-indigo-600 data-[focus]:text-white data-[focus]:outline-none"
+                          className="group flex cursor-default select-none items-center rounded-md px-3 py-2 data-[focus]:bg-blue-600 data-[focus]:text-white data-[focus]:outline-none"
                         >
                           <action.icon
                             className="size-6 flex-none text-gray-400 group-data-[focus]:text-white forced-colors:group-data-[focus]:text-[Highlight]"
@@ -134,7 +138,7 @@ export default function Example() {
                           <span className="ml-3 flex-auto truncate">
                             {action.name}
                           </span>
-                          <span className="ml-3 flex-none text-xs font-semibold text-gray-400 group-data-[focus]:text-indigo-100">
+                          <span className="ml-3 flex-none text-xs font-semibold text-gray-400 group-data-[focus]:text-blue-100">
                             <kbd className="font-sans">⌘</kbd>
                             <kbd className="font-sans">{action.shortcut}</kbd>
                           </span>
@@ -163,4 +167,4 @@ export default function Example() {
       </div>
     </Dialog>
   );
-}
+};

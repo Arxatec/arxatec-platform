@@ -7,8 +7,10 @@ import {
 
 export default function CalendarPage() {
   return (
-    <div className="mx-auto bg-white rounded-lg p-4 max-w-5xl w-full h-fit">
-      <CalendarDay />
+    <div className=" px-4 block" style={{ height: "calc(100vh - 144px)" }}>
+      <div className="mx-auto bg-white rounded-lg px-4  max-w-5xl w-full h-full ">
+        <CalendarDay />
+      </div>
     </div>
   );
 }

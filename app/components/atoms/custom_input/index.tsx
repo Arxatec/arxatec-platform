@@ -14,7 +14,7 @@ export const CustomInput: React.FC<Props> = (props) => {
       {props.label && (
         <label
           htmlFor={id}
-          className="block text-sm/6 font-medium text-gray-900 mb-2"
+          className="block text-sm font-medium text-gray-900 mb-2"
         >
           {props.label}
         </label>

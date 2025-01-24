@@ -7,6 +7,8 @@ import {
   PlusIcon,
 } from "@heroicons/react/24/outline";
 import type React from "react";
+import { CommandPalettes } from "../command_palettes";
+import { useState } from "react";
 
 const userNavigation = [
   { name: "Your profile", href: "#" },
@@ -17,8 +19,11 @@ interface Props {
   setSidebarOpen: (value: boolean) => void;
 }
 export const Navigation: React.FC<Props> = ({ setSidebarOpen }) => {
+  const [open, setOpen] = useState(false);
+  const toggleOpen = () => setOpen(!open);
   return (
     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4  sm:gap-x-6 sm:px-6 lg:px-8">
+      <CommandPalettes open={open} setOpen={setOpen} />
       <button
         type="button"
         onClick={() => setSidebarOpen(true)}
@@ -40,6 +45,7 @@ export const Navigation: React.FC<Props> = ({ setSidebarOpen }) => {
             placeholder="Buscar..."
             aria-label="Search"
             className="flex rounded-md pl-4 w-full text-base text-gray-900 outline-none placeholder:text-gray-400 sm:text-sm/6  bg-transparent"
+            onClick={toggleOpen}
           />
           <MagnifyingGlassIcon
             aria-hidden="true"

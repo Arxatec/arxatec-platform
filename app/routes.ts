@@ -2,16 +2,22 @@ import {
   type RouteConfig,
   index,
   layout,
+  prefix,
   route,
 } from "@react-router/dev/routes";
 import { ROUTES } from "./routes/routes";
 
 export default [
   layout("components/layouts/sidebar/index.tsx", [
-    route(
-      ROUTES.COMMUNITY,
-      "modules/community/components/pages/community_page.tsx"
-    ),
+    ...prefix(ROUTES.COMMUNITY, [
+      index(
+        "modules/community/features/posts/components/pages/community_page.tsx"
+      ),
+      route(
+        ROUTES.CREATE_POST,
+        "modules/community/features/create_post/components/pages/create_post_page.tsx"
+      ),
+    ]),
     route(
       ROUTES.DASHBOARD,
       "modules/dashboard/components/pages/dashboard_page.tsx"
