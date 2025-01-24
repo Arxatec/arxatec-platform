@@ -1,3 +1,8 @@
-export default function ForgetPasswordPage() {
-  return <h2>Esta es la pagina de olvidaste tu contraseña</h2>;
-}
+import React from "react";
+import ForgotPassword from "../organisms/ForgotPassword/ForgotPassword";
+
+const ForgotPasswordPage: React.FC = () => {
+  return <ForgotPassword />;
+};
+
+export default ForgotPasswordPage;
