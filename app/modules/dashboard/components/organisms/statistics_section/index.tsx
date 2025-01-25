@@ -7,7 +7,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { Card } from "../atoms/Card";
+import { Card } from "../../atoms/card";
 
 interface DataPoint {
   month: string;

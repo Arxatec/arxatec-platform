@@ -1,6 +1,6 @@
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "../atoms/Card";
-import { Avatar, AvatarFallback } from "../atoms/Avatar";
+import { Card, CardContent, CardHeader, CardTitle } from "../../atoms/card";
+import { Avatar, AvatarFallback } from "../../atoms/avatar";
 
 interface AvatarProps {
   bgColor: string;

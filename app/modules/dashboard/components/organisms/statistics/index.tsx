@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-} from "../atoms/Card";
+} from "../../atoms/card";
 import {
   AreaChart,
   Area,

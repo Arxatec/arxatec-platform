@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "../atoms/Card";
+import { Card } from "../../atoms/card";
 
 interface MetricCardProps {
   title: string;

@@ -6,9 +6,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../atoms/Table";
-import { Checkbox } from "../atoms/Checkbox";
-import { Button } from "../atoms/Button";
+} from "../../atoms/table";
+import { Checkbox } from "../../atoms/checkbox";
+import { Button } from "../../atoms/button";
 import { MoreHorizontal, Filter } from "lucide-react";
 import * as ReactLazyLoadImageComponent from "react-lazy-load-image-component";
 const { LazyLoadImage } = ReactLazyLoadImageComponent;

@@ -1,12 +1,12 @@
 import React from "react";
 import Layout from "./Layout";
-import { Card } from "../atoms/Card";
-import MetricCard from "../molecules/MetricCard";
-import ReminderList from "../organisms/ReminderList";
-import StatisticsSection from "../organisms/StatisticsSection";
-import MapView from "../organisms/MapView";
-import Statistics from "../organisms/Statistics";
-import InvoiceTable from "../organisms/InvoiceTable";
+import { Card } from "../atoms/card";
+import MetricCard from "../molecules/metric_card";
+import ReminderList from "../organisms/reminder_list";
+import StatisticsSection from "../organisms/statistics_section";
+import MapView from "../organisms/map_view";
+import Statistics from "../organisms/statistics";
+import InvoiceTable from "../organisms/invoice_table";
 
 const Dashboard: React.FC = () => {
   return (
