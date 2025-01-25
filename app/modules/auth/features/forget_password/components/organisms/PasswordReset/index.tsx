@@ -1,6 +1,6 @@
 import React, { useState, useRef, type JSX } from "react";
-import { IconMail } from "../../atoms/Icon/Icon";
-import { Button } from "../../atoms/Button/Button";
+import { IconMail } from "../../atoms/Icon";
+import { Button } from "../../atoms/Button";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { LocaleKeys } from "~/lang";

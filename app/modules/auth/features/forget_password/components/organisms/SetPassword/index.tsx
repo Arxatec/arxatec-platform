@@ -1,8 +1,8 @@
 import React, { useState, type JSX } from "react";
 import { Lock } from "lucide-react";
-import { Button } from "../../atoms/Button/Button";
-import { Input } from "../../atoms/Input/Input";
-import { Label } from "../../atoms/Label/Label";
+import { Button } from "../../atoms/Button";
+import { Input } from "../../atoms/Input";
+import { Label } from "../../atoms/Label";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { LocaleKeys } from "~/lang";

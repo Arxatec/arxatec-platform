@@ -1,5 +1,5 @@
 import React from "react";
-import AllDone from "../organisms/AllDone/AllDone";
+import AllDone from "../organisms/AllDone";
 import { useTranslation } from "react-i18next";
 import { LocaleKeys } from "~/lang";
 import { LanguageSelector } from "~/modules/auth/components/molecules";

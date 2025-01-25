@@ -1,6 +1,6 @@
 import React, { type JSX } from "react";
-import { IconCheck, IconQrCode } from "../../atoms/Icon/Icon";
-import { Button } from "../../atoms/Button/Button";
+import { IconCheck, IconQrCode } from "../../atoms/Icon";
+import { Button } from "../../atoms/Button";
 import { useTranslation } from "react-i18next";
 import { LocaleKeys } from "~/lang";
 

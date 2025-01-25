@@ -1,7 +1,7 @@
 import React, { type JSX } from "react";
-import { Button } from "../../atoms/Button/Button";
-import { Input } from "../../atoms/Input/Input";
-import { IconFingerprint, IconArrowLeft } from "../../atoms/Icon/Icon";
+import { Button } from "../../atoms/Button";
+import { Input } from "../../atoms/Input";
+import { IconFingerprint, IconArrowLeft } from "../../atoms/Icon";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { LocaleKeys } from "~/lang";
