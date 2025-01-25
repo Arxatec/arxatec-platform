@@ -88,6 +88,12 @@
           "error_match": "Las contraseñas no coinciden.",
           "button_submit": "Restablecer contraseña",
           "back_to_login": "← Volver a iniciar sesión"
+        },
+        "todo_ready": {
+          "title": "¡Todo listo!",
+          "description": "Tu contraseña ha sido restablecida. ¿Te gustaría configurar Face ID también?",
+          "button_face_id": "Configurar Face ID",
+          "button_later": "Lo haré más tarde"
         }
       }
     }

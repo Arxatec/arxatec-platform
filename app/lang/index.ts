@@ -47,21 +47,36 @@ export const LocaleKeys = {
   pages_auth_forgot_password_back_to_login:
     "pages.auth.forgot_password.back_to_login",
 
-  pages_auth_reset_password_title: "reset_password.title",
-  pages_auth_reset_password_description: "reset_password.description",
-  pages_auth_reset_password_code_input_label: "reset_password.code_input_label",
-  pages_auth_reset_password_button_submit: "reset_password.button_submit",
-  pages_auth_reset_password_resend_text: "reset_password.resend_text",
-  pages_auth_reset_password_resend_action: "reset_password.resend_action",
-  pages_auth_reset_password_back_to_login: "reset_password.back_to_login",
+  pages_auth_reset_password_title: "pages.auth.reset_password.title",
+  pages_auth_reset_password_description:
+    "pages.auth.reset_password.description",
+  pages_auth_reset_password_code_input_label:
+    "pages.auth.reset_password.code_input_label",
+  pages_auth_reset_password_button_submit:
+    "pages.auth.reset_password.button_submit",
+  pages_auth_reset_password_resend_text:
+    "pages.auth.reset_password.resend_text",
+  pages_auth_reset_password_resend_action:
+    "pages.auth.reset_password.resend_action",
+  pages_auth_reset_password_back_to_login:
+    "pages.auth.reset_password.back_to_login",
 
-  pages_auth_set_password_title: "set_password.title",
-  pages_auth_set_password_description: "set_password.description",
-  pages_auth_set_password_label_password: "set_password.label_password",
+  pages_auth_set_password_title: "pages.auth.set_password.title",
+  pages_auth_set_password_description: "pages.auth.set_password.description",
+  pages_auth_set_password_label_password:
+    "pages.auth.set_password.label_password",
   pages_auth_set_password_label_confirm_password:
-    "set_password.label_confirm_password",
-  pages_auth_set_password_error_min_length: "set_password.error_min_length",
-  pages_auth_set_password_error_match: "set_password.error_match",
-  pages_auth_set_password_button_submit: "set_password.button_submit",
-  pages_auth_set_password_back_to_login: "set_password.back_to_login",
+    "pages.auth.set_password.label_confirm_password",
+  pages_auth_set_password_error_min_length:
+    "pages.auth.set_password.error_min_length",
+  pages_auth_set_password_error_match: "pages.auth.set_password.error_match",
+  pages_auth_set_password_button_submit:
+    "pages.auth.set_password.button_submit",
+  pages_auth_set_password_back_to_login:
+    "pages.auth.set_password.back_to_login",
+
+  pages_auth_todo_ready_title: "pages.auth.todo_ready.title",
+  pages_auth_todo_ready_description: "pages.auth.todo_ready.description",
+  pages_auth_todo_ready_button_face_id: "pages.auth.todo_ready.button_face_id",
+  pages_auth_todo_ready_button_later: "pages.auth.todo_ready.button_later",
 };

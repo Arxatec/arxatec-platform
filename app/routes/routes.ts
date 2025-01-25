@@ -4,7 +4,7 @@ export enum ROUTES {
   FORGOT_PASSWORD = "recuperar-contraseña",
   PASSWORD_RESET = "restablecer-contraseña",
   SET_PASSWORD = "establecer-contraseña",
-  ALL_DONE = "contraseña-lista",
+  ALL_DONE = "contraseña-cambiada",
   DASHBOARD = "dashboard",
   COMMUNITY = "comunidad",
   CALENDAR = "calendario",

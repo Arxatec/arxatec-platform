@@ -88,6 +88,12 @@
           "error_match": "Passwords do not match.",
           "button_submit": "Reset Password",
           "back_to_login": "← Back to login"
+        },
+        "todo_ready": {
+          "title": "All set!",
+          "description": "Your password has been reset. Would you like to set up Face ID as well?",
+          "button_face_id": "Set up Face ID",
+          "button_later": "I'll do it later"
         }
       }
     }

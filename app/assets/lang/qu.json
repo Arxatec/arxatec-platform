@@ -88,6 +88,12 @@
           "error_match": "Qelqananakuna manam kasunchu.",
           "button_submit": "Qelqana churay qispiy",
           "back_to_login": "← Ñawpaq qispimuykuy"
+        },
+        "todo_ready": {
+          "title": "Hukchasqa!",
+          "description": "Qelqeyniña washasqaña. Face ID nisqata kipuypa suyasqaykichu?",
+          "button_face_id": "Face ID qipuy",
+          "button_later": "Qhepa ruwasaq"
         }
       }
     }
