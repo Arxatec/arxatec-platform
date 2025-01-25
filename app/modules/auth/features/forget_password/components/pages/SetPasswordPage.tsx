@@ -1,18 +1,16 @@
 import React from "react";
-import ForgotPassword from "../organisms/ForgotPassword";
+import SetPassword from "../organisms/SetPassword";
 import { useTranslation } from "react-i18next";
 import { LocaleKeys } from "~/lang";
 import { LanguageSelector } from "~/modules/auth/components/molecules";
 
-const ForgotPasswordPage: React.FC = () => {
-  const { t } = useTranslation();
-
+const SetPasswordPage: React.FC = () => {
   return (
     <div>
       <LanguageSelector />
-      <ForgotPassword />
+      <SetPassword />
     </div>
   );
 };
 
-export default ForgotPasswordPage;
+export default SetPasswordPage;

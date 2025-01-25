@@ -33,4 +33,16 @@ export default [
     ROUTES.FORGOT_PASSWORD,
     "modules/auth/features/forget_password/components/pages/forget_password_page.tsx"
   ),
+  route(
+    ROUTES.PASSWORD_RESET,
+    "modules/auth/features/forget_password/components/pages/PasswordResetPage.tsx"
+  ),
+  route(
+    ROUTES.SET_PASSWORD,
+    "modules/auth/features/forget_password/components/pages/SetPasswordPage.tsx"
+  ),
+  route(
+    ROUTES.ALL_DONE,
+    "modules/auth/features/forget_password/components/pages/AllDonePage.tsx"
+  ),
 ] satisfies RouteConfig;
