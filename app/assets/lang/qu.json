@@ -62,6 +62,32 @@
           "form": {
             "submit": "Kaykuy ruwachiy"
           }
+        },
+        "forgot_password": {
+          "title": "¿Pasñachkanki tukuy punchawniykita?",
+          "description": "Ama suwa, qanchik watukuykachiqta qhawayta qhawachinanchikpaq.",
+          "email_placeholder": "Qelqay qampaq correo electrónico",
+          "submit": "Qatiriy tukuy punchawniykita",
+          "back_to_login": "Kutiy yaykuykunaman"
+        },
+        "reset_password": {
+          "title": "Qatiriy tukuy punchawniykita",
+          "description": "Qanchik apachiykuykita waqachiy {{email}}",
+          "code_input_label": "Dígitu",
+          "button_submit": "Qatiykuy",
+          "resend_text": "¿Manan qamqa apachiyta charichkankichu?",
+          "resend_action": "Churay hikunanchikpaq",
+          "back_to_login": "← Kutiy yaykuykunaman"
+        },
+        "set_password": {
+          "title": "Musuqñan ñawpaq qelqana churay",
+          "description": "Jujwan musuqchawan 8 qelqananakuna ruraykuna karqan.",
+          "label_password": "Qelqana churay",
+          "label_confirm_password": "Qelqana churay tikray",
+          "error_min_length": "Qelqana churaynin 8 qelqananakuna rurayninta riksiy.",
+          "error_match": "Qelqananakuna manam kasunchu.",
+          "button_submit": "Qelqana churay qispiy",
+          "back_to_login": "← Ñawpaq qispimuykuy"
         }
       }
     }

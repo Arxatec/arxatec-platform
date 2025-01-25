@@ -62,6 +62,32 @@
           "form": {
             "submit": "Create an account"
           }
+        },
+        "forgot_password": {
+          "title": "Forgot your password?",
+          "description": "Don't worry, we'll send you instructions to reset it.",
+          "email_placeholder": "Enter your email address",
+          "submit": "Reset password",
+          "back_to_login": "Back to login"
+        },
+        "reset_password": {
+          "title": "Reset Password",
+          "description": "Enter the code sent to your email.",
+          "code_input_label": "Digit",
+          "button_submit": "Continue",
+          "resend_text": "Didn't receive the email?",
+          "resend_action": "Click to resend",
+          "back_to_login": "Back to login"
+        },
+        "set_password": {
+          "title": "Set New Password",
+          "description": "It must be at least 8 characters long.",
+          "label_password": "Password",
+          "label_confirm_password": "Confirm Password",
+          "error_min_length": "The password must be at least 8 characters long.",
+          "error_match": "Passwords do not match.",
+          "button_submit": "Reset Password",
+          "back_to_login": "← Back to login"
         }
       }
     }

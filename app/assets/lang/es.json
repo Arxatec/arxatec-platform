@@ -62,6 +62,32 @@
           "form": {
             "submit": "Crear cuenta"
           }
+        },
+        "forgot_password": {
+          "title": "¿Olvidaste tu contraseña?",
+          "description": "No te preocupes, te enviaremos instrucciones para restablecerla.",
+          "email_placeholder": "Ingresa tu correo electrónico",
+          "submit": "Restablecer contraseña",
+          "back_to_login": "Volver a iniciar sesión"
+        },
+        "reset_password": {
+          "title": "Restablecer contraseña",
+          "description": "Introduce el código enviado a tu correo.",
+          "code_input_label": "Dígito",
+          "button_submit": "Continuar",
+          "resend_text": "¿No recibiste el correo?",
+          "resend_action": "Haz clic para reenviar",
+          "back_to_login": "Volver a iniciar sesión"
+        },
+        "set_password": {
+          "title": "Establecer nueva contraseña",
+          "description": "Debe tener al menos 8 caracteres.",
+          "label_password": "Contraseña",
+          "label_confirm_password": "Confirmar contraseña",
+          "error_min_length": "La contraseña debe tener al menos 8 caracteres.",
+          "error_match": "Las contraseñas no coinciden.",
+          "button_submit": "Restablecer contraseña",
+          "back_to_login": "← Volver a iniciar sesión"
         }
       }
     }

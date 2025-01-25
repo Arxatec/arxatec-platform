@@ -4,24 +4,27 @@ import { Button } from "../../atoms/Button/Button";
 import { Input } from "../../atoms/Input/Input";
 import { Label } from "../../atoms/Label/Label";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { LocaleKeys } from "~/lang";
 
 export default function EstablecerContraseña(): JSX.Element {
   const [contraseña, setContraseña] = useState<string>("");
   const [confirmarContraseña, setConfirmarContraseña] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const { t } = useTranslation();
 
   const manejarEnvio = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (contraseña.length < 8) {
-      setError("La contraseña debe tener al menos 8 caracteres.");
+      setError(t(LocaleKeys.pages_auth_set_password_error_min_length));
       return;
     }
     if (contraseña !== confirmarContraseña) {
-      setError("Las contraseñas no coinciden.");
+      setError(t(LocaleKeys.pages_auth_set_password_error_match));
       return;
     }
     setError("");
-    alert("¡Contraseña establecida con éxito!");
+    alert(t(LocaleKeys.pages_auth_set_password_button_submit));
   };
 
   return (
@@ -32,16 +35,18 @@ export default function EstablecerContraseña(): JSX.Element {
             <Lock className="w-6 h-6 text-blue-600" />
           </div>
           <h1 className="mt-6 text-2xl font-semibold text-gray-900">
-            Establecer nueva contraseña
+            {t(LocaleKeys.pages_auth_set_password_title)}
           </h1>
           <p className="mt-2 text-sm text-gray-600">
-            Debe tener al menos 8 caracteres.
+            {t(LocaleKeys.pages_auth_set_password_description)}
           </p>
         </div>
         <form onSubmit={manejarEnvio} className="mt-8 space-y-6">
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="password">Contraseña</Label>
+              <Label htmlFor="password">
+                {t(LocaleKeys.pages_auth_set_password_label_password)}
+              </Label>
               <Input
                 id="password"
                 type="password"
@@ -52,7 +57,9 @@ export default function EstablecerContraseña(): JSX.Element {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="confirm-password">Confirmar contraseña</Label>
+              <Label htmlFor="confirm-password">
+                {t(LocaleKeys.pages_auth_set_password_label_confirm_password)}
+              </Label>
               <Input
                 id="confirm-password"
                 type="password"
@@ -68,7 +75,7 @@ export default function EstablecerContraseña(): JSX.Element {
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
-            Restablecer contraseña
+            {t(LocaleKeys.pages_auth_set_password_button_submit)}
           </Button>
         </form>
         <div className="text-center">
@@ -76,7 +83,7 @@ export default function EstablecerContraseña(): JSX.Element {
             to="/login"
             className="text-sm text-gray-600 hover:text-gray-900 flex items-center justify-center gap-2"
           >
-            ← Volver a iniciar sesión
+            {t(LocaleKeys.pages_auth_set_password_back_to_login)}
           </Link>
         </div>
       </div>
