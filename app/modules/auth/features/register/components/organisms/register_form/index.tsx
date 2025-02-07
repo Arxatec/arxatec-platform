@@ -2,6 +2,7 @@ import { CustomInput, CustomLink, PrimaryButton } from "~/components/atoms";
 import { useTranslation } from "react-i18next";
 import { LocaleKeys } from "~/lang";
 import { SocialAuthOptions } from "../../molecules";
+import { ROUTES } from "~/routes/routes";
 
 export const RegisterForm = () => {
   const { t } = useTranslation();
@@ -41,9 +42,12 @@ export const RegisterForm = () => {
 
         <SocialAuthOptions />
 
-        <p className="mt-2 sm-n text-center">
+        <p className="mt-10 sm-n text-center">
           {t(LocaleKeys.pages_auth_register_not_registered)}{" "}
-          <CustomLink text={t(LocaleKeys.pages_auth_register_start)} to="" />
+          <CustomLink
+            text={t(LocaleKeys.pages_auth_register_start)}
+            to={`/${ROUTES.LOGIN}`}
+          />
         </p>
       </div>
     </div>

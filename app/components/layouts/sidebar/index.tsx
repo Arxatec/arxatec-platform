@@ -96,7 +96,7 @@ const navigationTest = [
   },
   {
     name: "Mensajes",
-    href: "#",
+    href: ROUTES.CHATS,
     iconInactive: ChatBubbleBottomCenterIcon,
     current: false,
     iconActive: ChatBubbleBottomCenterIconActive,

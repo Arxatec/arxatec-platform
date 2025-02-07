@@ -23,7 +23,7 @@ export default function CreatePostPage() {
       <div className="max-w-3xl mx-auto bg-white rounded-lg">
         <div className="flex items-center justify-between px-6 pt-6 ">
           <h1 className="text-lg font-bold text-gray-900">Crear publicación</h1>
-          <button className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 transition-colors">
+          <button className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 transition-colors hover:bg-gray-100 rounded-lg">
             Borradores
           </button>
         </div>

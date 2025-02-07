@@ -4,6 +4,7 @@ import { CheckIcon } from "@heroicons/react/24/outline";
 import { CustomLink } from "~/components/atoms";
 import { useTranslation } from "react-i18next";
 import { LocaleKeys } from "~/lang";
+import { ROUTES } from "~/routes/routes";
 
 export const RememberSection = () => {
   const { t } = useTranslation();
@@ -33,7 +34,7 @@ export const RememberSection = () => {
       <div className="text-sm/6">
         <CustomLink
           text={t(LocaleKeys.pages_auth_login_form_forget_password)}
-          to="#"
+          to={`/${ROUTES.FORGOT_PASSWORD}`}
         />
       </div>
     </div>

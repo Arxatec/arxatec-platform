@@ -62,6 +62,36 @@
           "form": {
             "submit": "Create an account"
           }
+        },
+        "forgot_password": {
+          "title": "Forgot your password?",
+          "description": "Don't worry, we'll send you instructions to reset it.",
+          "email_placeholder": "Enter your email",
+          "submit": "Reset password",
+          "back_to_login": "Log back in",
+          "reset_password": {
+            "title": "Reset password",
+            "description": "Enter the code sent to your email.",
+            "code_input_label": "Digit",
+            "button_submit": "Continue",
+            "resend_text": "Didn't receive the email?",
+            "resend_action": "Click to resend"
+          },
+          "set_password": {
+            "title": "Set new password",
+            "description": "Must be at least 8 characters.",
+            "label_password": "Password",
+            "label_confirm_password": "Confirm Password",
+            "error_min_length": "Password must be at least 8 characters.",
+            "error_match": "Passwords do not match.",
+            "button_submit": "Reset Password"
+          },
+          "ready": {
+            "title": "All set!",
+            "description": "Your password has been reset. Would you like to set up Face ID as well?",
+            "button_face_id": "Set up Face ID",
+            "button_later": "I'll do it later"
+          }
         }
       }
     }

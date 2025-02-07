@@ -62,6 +62,36 @@
           "form": {
             "submit": "Kaykuy ruwachiy"
           }
+        },
+        "forgot_password": {
+          "title": "¿Qonqarqankichu contraseñaykita?",
+          "description": "Ama llakikuychu, kamachiykunata apachisqaykiku chayta musuqmanta churanaykipaq.",
+          "email_placeholder": "E-mail nisqaykiman qillqay",
+          "submit": "Contraseñata kutichiy",
+          "back_to_login": "Yaykuyman kutiy",
+          "reset_password": {
+            "title": "Siminchayta kutichiy",
+            "description": "Qillqapak kodigo qarqusqayki emailman churay.",
+            "code_input_label": "Llimp’ina",
+            "button_submit": "Ñawpaqman",
+            "resend_text": "¿Manaraq emailta nispachu?",
+            "resend_action": "Click ch’ariyta qutuchiy"
+          },
+          "set_password": {
+            "title": "Musuq siminchayta churay",
+            "description": "Jukllaña 8 siq’i kapunan.",
+            "label_password": "Siminchay",
+            "label_confirm_password": "Siminchayta rikuchiy",
+            "error_min_length": "Siminchay jukllaña 8 siq’i kapunan.",
+            "error_match": "Siminchaykunawan mana huñunakunchu.",
+            "button_submit": "Siminchayta kutichiy"
+          },
+          "ready": {
+            "title": "Tukuyta ruwasqayki!",
+            "description": "Siminchayta kutichisqayki. ¿Face IDta ruwana munankichu?",
+            "button_face_id": "Face IDta churay",
+            "button_later": "Qhipan ruwasaq"
+          }
         }
       }
     }

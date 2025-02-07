@@ -124,19 +124,6 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
                 ))}
               </ul>
             </li>
-
-            <li className="mt-auto">
-              <a
-                href="#"
-                className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-blue-600"
-              >
-                <Cog6ToothIcon
-                  aria-hidden="true"
-                  className="size-6 shrink-0 text-gray-400 group-hover:text-blue-600"
-                />
-                Settings
-              </a>
-            </li>
           </ul>
         </nav>
       </div>

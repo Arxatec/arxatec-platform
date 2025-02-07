@@ -1,9 +1,10 @@
 export enum ROUTES {
-  LOGIN = "ingresar",
-  REGISTER = "registrarse",
-  FORGOT_PASSWORD = "recuperar-contraseña",
+  LOGIN = "login",
+  REGISTER = "register",
+  FORGOT_PASSWORD = "forgot-password",
   DASHBOARD = "dashboard",
   COMMUNITY = "comunidad",
-  CREATE_POST = "crear-publicacion",
-  CALENDAR = "calendario",
+  CREATE_POST = "create-post",
+  CALENDAR = "calendar",
+  CHATS = "chats",
 }

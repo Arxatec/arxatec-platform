@@ -26,6 +26,10 @@ export default [
       ROUTES.CALENDAR,
       "modules/calendar/components/pages/calendar_page.tsx"
     ),
+    route(
+      ROUTES.CHATS,
+      "modules/communication/features/chats/components/pages/chats_page.tsx"
+    ),
   ]),
   route(
     ROUTES.LOGIN,
