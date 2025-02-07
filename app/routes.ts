@@ -20,7 +20,7 @@ export default [
     ]),
     route(
       ROUTES.DASHBOARD,
-      "modules/dashboard/components/pages/dashboard_page.tsx"
+      "modules/dashboard/features/components/pages/dashboard_page.tsx"
     ),
     route(
       ROUTES.CALENDAR,
@@ -29,6 +29,10 @@ export default [
     route(
       ROUTES.CHATS,
       "modules/communication/features/chats/components/pages/chats_page.tsx"
+    ),
+    route(
+      ROUTES.CASES,
+      "modules/cases/features/view_cases/components/pages/view_cases_page.tsx"
     ),
   ]),
   route(

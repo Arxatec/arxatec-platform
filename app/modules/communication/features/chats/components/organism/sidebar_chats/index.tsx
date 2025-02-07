@@ -35,7 +35,7 @@ export const SidebarChats = ({
             <img
               src={user.avatar || "/placeholder.svg"}
               alt={user.name}
-              className="w-12 h-12 rounded-full"
+              className="w-12 h-12 rounded-full object-cover"
             />
             <div className="flex-1 text-left">
               <div className="font-semibold text-sm">{user.name}</div>

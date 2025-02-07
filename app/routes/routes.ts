@@ -7,4 +7,5 @@ export enum ROUTES {
   CREATE_POST = "create-post",
   CALENDAR = "calendar",
   CHATS = "chats",
+  CASES = "casos",
 }

@@ -2,11 +2,11 @@ import { PaperAirplaneIcon, MicrophoneIcon } from "@heroicons/react/24/solid";
 import type { Message, User } from "../../../types";
 import { CustomInput } from "~/components/atoms";
 import {
-  EllipsisHorizontalIcon,
   EllipsisVerticalIcon,
   PhoneIcon,
   VideoCameraIcon,
 } from "@heroicons/react/16/solid";
+import { InboxIcon } from "@heroicons/react/24/outline";
 
 interface ChatAreaProps {
   messages: Message[];
@@ -16,7 +16,10 @@ interface ChatAreaProps {
 export const ChatArea = ({ messages, selectedChat }: ChatAreaProps) => {
   if (!selectedChat) {
     return (
-      <div className="flex-1 flex items-center justify-center text-gray-500">
+      <div className="flex-1 flex items-center flex-col justify-center text-gray-500">
+        <div className="p-4 bg-gray-200 rounded-full mb-4">
+          <InboxIcon className="size-8 text-gray-700" />
+        </div>
         Selecciona un chat para comenzar a enviar mensajes
       </div>
     );
@@ -29,7 +32,7 @@ export const ChatArea = ({ messages, selectedChat }: ChatAreaProps) => {
           <img
             src={selectedChat.avatar || "/placeholder.svg"}
             alt={selectedChat.name}
-            className="size-12 rounded-full"
+            className="size-12 rounded-full object-cover"
           />
           <div>
             <span className="font-bold text-base text-gray-700 block">

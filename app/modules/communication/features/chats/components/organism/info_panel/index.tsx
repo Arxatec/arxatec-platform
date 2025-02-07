@@ -34,21 +34,14 @@ export const InfoPanel = ({ chat, mediaItems }: InfoPanelProps) => {
         <p className="text-sm">{chat.description}</p>
       </div>
 
-      <div className="flex justify-center space-x-4 mb-6">
-        <button className="p-2 text-gray-600 hover:text-blue-600 hover:bg-gray-100 rounded-lg">
-          <VideoCameraIcon className="w-6 h-6" />
-        </button>
-        <button className="p-2 text-gray-600 hover:text-blue-600 hover:bg-gray-100 rounded-lg">
-          <PhoneIcon className="w-6 h-6" />
-        </button>
-        <button className="p-2 text-gray-600 hover:text-blue-600 hover:bg-gray-100 rounded-lg">
-          <InformationCircleIcon className="w-6 h-6" />
-        </button>
-      </div>
-
-      <div className="mb-6">
-        <div className="flex justify-between items-center mb-2">
-          <h3 className="text-sm text-gray-500">MEDIA (29)</h3>
+      <div className="my-6">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1 mb-2">
+            <DocumentIcon className="size-4 text-gray-700" />
+            <p className="text-xs font-bold text-gray-700 tracking-wider">
+              MEDIA (29)
+            </p>
+          </div>
           <button className="text-sm text-blue-600">Show All</button>
         </div>
         <div className="grid grid-cols-3 gap-2">
