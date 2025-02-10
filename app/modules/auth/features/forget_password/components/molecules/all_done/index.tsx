@@ -22,8 +22,8 @@ export const AllDone = () => {
           </p>
         </div>
         <PrimaryButton
-          classNames="w-full"
-          text={t(LocaleKeys.pages_auth_forgot_password_back_to_login)}
+          className="w-full"
+          children={t(LocaleKeys.pages_auth_forgot_password_back_to_login)}
         />
       </div>
     </div>

@@ -63,10 +63,10 @@ export const EnterResetPasswordStep = () => {
           </div>
           {error && <p className="text-sm text-red-600">{error}</p>}
           <PrimaryButton
-            text={t(
+            children={t(
               LocaleKeys.pages_auth_forgot_password_set_password_button_submit
             )}
-            classNames="w-full"
+            className="w-full"
           />
         </form>
         <div className="text-center">

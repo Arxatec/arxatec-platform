@@ -23,8 +23,8 @@ export const LoginForm = () => {
         />
         <RememberSection />
         <PrimaryButton
-          text={t(LocaleKeys.pages_auth_login_form_submit)}
-          classNames="w-full"
+          children={t(LocaleKeys.pages_auth_login_form_submit)}
+          className="w-full"
         />
       </div>
 

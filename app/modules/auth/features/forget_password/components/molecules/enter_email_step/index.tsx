@@ -32,9 +32,9 @@ export const EnterEmailStep = () => {
             />
           </div>
           <PrimaryButton
-            classNames="w-full"
-            text={t(LocaleKeys.pages_auth_forgot_password_submit)}
-          ></PrimaryButton>
+            className="w-full"
+            children={t(LocaleKeys.pages_auth_forgot_password_submit)}
+          />
         </form>
         <div className="text-center">
           <Link

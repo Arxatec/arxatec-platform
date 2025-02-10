@@ -24,7 +24,7 @@ export default [
     ),
     route(
       ROUTES.CALENDAR,
-      "modules/calendar/components/pages/calendar_page.tsx"
+      "modules/calendar/features/calendar/components/pages/calendar_page.tsx"
     ),
     route(
       ROUTES.CHATS,

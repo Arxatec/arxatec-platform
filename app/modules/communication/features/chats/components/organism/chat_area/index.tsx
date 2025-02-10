@@ -8,15 +8,20 @@ import {
 } from "@heroicons/react/16/solid";
 import { InboxIcon } from "@heroicons/react/24/outline";
 
-interface ChatAreaProps {
+interface Props {
   messages: Message[];
   selectedChat: User | null;
+  handleOpenInfo: () => void;
 }
 
-export const ChatArea = ({ messages, selectedChat }: ChatAreaProps) => {
+export const ChatArea: React.FC<Props> = ({
+  messages,
+  selectedChat,
+  handleOpenInfo,
+}) => {
   if (!selectedChat) {
     return (
-      <div className="flex-1 flex items-center flex-col justify-center text-gray-500">
+      <div className="flex-1 flex items-center flex-col justify-center text-gray-500 bg-white rounded-lg shadow-lg">
         <div className="p-4 bg-gray-200 rounded-full mb-4">
           <InboxIcon className="size-8 text-gray-700" />
         </div>
@@ -26,8 +31,8 @@ export const ChatArea = ({ messages, selectedChat }: ChatAreaProps) => {
   }
 
   return (
-    <div className="flex-1 flex flex-col">
-      <div className="p-4 border-b border-gray-200 flex items-center justify-between">
+    <div className="flex-1 flex flex-col ">
+      <div className="p-4 flex items-center justify-between mb-2 bg-white rounded-lg shadow-sm">
         <div className="flex items-center space-x-2">
           <img
             src={selectedChat.avatar || "/placeholder.svg"}
@@ -44,19 +49,16 @@ export const ChatArea = ({ messages, selectedChat }: ChatAreaProps) => {
           </div>
         </div>
         <div className="flex items-center gap-x-1">
-          <button className="p-1 hover:bg-gray-100 rounded-full transition-all">
-            <PhoneIcon className="size-5 text-gray-600" />
-          </button>
-          <button className="p-1 hover:bg-gray-100 rounded-full transition-all">
-            <VideoCameraIcon className="size-5 text-gray-600" />
-          </button>
-          <button className="p-1 hover:bg-gray-100 rounded-full transition-all">
+          <button
+            className="p-1 hover:bg-gray-100 rounded-full transition-all"
+            onClick={handleOpenInfo}
+          >
             <EllipsisVerticalIcon className="size-5 text-gray-600" />
           </button>
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white rounded-lg shadow-sm">
         {messages.map((message) => (
           <div
             key={message.id}
@@ -89,7 +91,7 @@ export const ChatArea = ({ messages, selectedChat }: ChatAreaProps) => {
         ))}
       </div>
 
-      <div className="p-4 border-t border-gray-200">
+      <div className="p-4 bg-white rounded-lg shadow-sm mt-2">
         <div className="flex items-center space-x-2">
           <div className="w-full">
             <CustomInput type="text" placeholder="Escribe tu mensaje..." />

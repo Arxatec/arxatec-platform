@@ -217,15 +217,15 @@ const lastLegalPost = [
 export default function CommunityPage() {
   return (
     <div className="w-full max-w-5xl  h-full  mx-auto ">
-      <div className="grid grid-cols-[70%_28%] justify-between">
+      <div className="grid grid-cols-[69.7%_30%] gap-2 justify-between">
         <div className="w-full">
-          <div className="w-full bg-white rounded-lg p-4 mb-4">
+          <div className="w-full bg-white rounded-lg p-4 mb-2 shadow-sm">
             <h2 className="mb-4 text-gray-900 font-bold text-lg">
               Crea un nuevo post
             </h2>
             <CustomTextArea />
           </div>
-          <div className="w-full bg-white px-4 py-4 rounded-lg">
+          <div className="w-full bg-white px-4 py-4 rounded-lg shadow-sm">
             <div className="mb-4">
               <p className="text-lg text-gray-900 font-semibold">Popular</p>
               <div className=""></div>
@@ -248,7 +248,7 @@ export default function CommunityPage() {
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-lg w-full h-fit">
+        <div className="bg-white rounded-lg w-full h-fit shadow-sm">
           <div className="flex items-center justify-between px-4 pt-4">
             <h2 className="text-[12px] font-bold uppercase text-gray-800">
               publicaciones recientes

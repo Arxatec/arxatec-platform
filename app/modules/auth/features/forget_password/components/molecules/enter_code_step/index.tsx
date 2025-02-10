@@ -70,8 +70,8 @@ export const EnterCodeStep = () => {
             ))}
           </div>
           <PrimaryButton
-            classNames="w-full"
-            text={t(
+            className="w-full"
+            children={t(
               LocaleKeys.pages_auth_forgot_password_reset_password_button_submit
             )}
           />

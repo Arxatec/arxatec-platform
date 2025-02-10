@@ -16,7 +16,7 @@ export const InfoPanel = ({ chat, mediaItems }: InfoPanelProps) => {
   if (!chat) return null;
 
   return (
-    <div className="w-80 border-l border-gray-200 p-4">
+    <div className="w-80 shadow-sm bg-white ml-2 rounded-lg p-4">
       <div className="mb-6 flex items-center justify-between">
         <h2 className="text-base font-bold text-left">{chat.name}</h2>
         <button className="p-1 hover:bg-gray-100 rounded-full transition-all">

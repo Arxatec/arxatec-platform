@@ -36,8 +36,8 @@ export const RegisterForm = () => {
           isRequired
         />
         <PrimaryButton
-          text={t(LocaleKeys.pages_auth_register_form_submit)}
-          classNames="w-full"
+          children={t(LocaleKeys.pages_auth_register_form_submit)}
+          className="w-full"
         />
 
         <SocialAuthOptions />

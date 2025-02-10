@@ -1,4 +1,6 @@
+import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
+import { CustomInput } from "~/components/atoms";
 
 const SearchIcon = () => (
   <svg
@@ -127,99 +129,106 @@ export default function ViewCasesPage() {
   };
 
   return (
-    <div className="p-6 bg-white rounded-md max-w-7xl mx-auto">
+    <div className=" rounded-md max-w-7xl mx-auto">
       <div className=" mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Casos</h2>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm font-semibold">
-            Nuevo caso
-          </button>
-        </div>
-
-        <div className="flex justify-between items-center mb-6">
-          <div className="relative flex-1 max-w-xl">
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-              <SearchIcon />
-            </div>
-            <input
-              type="text"
-              placeholder="Search cases or clients"
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-            />
+        <div className="bg-white p-6 rounded-lg shadow-sm">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold text-gray-900">Casos</h2>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm font-semibold">
+              Nuevo caso
+            </button>
           </div>
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={() => setViewMode("list")}
-                className={`p-2 rounded ${
-                  viewMode === "list" ? "bg-gray-100" : ""
-                }`}
-              >
-                <ListIcon />
-              </button>
-              <button
-                onClick={() => setViewMode("grid")}
-                className={`p-2 rounded ${
-                  viewMode === "grid" ? "bg-gray-100" : ""
-                }`}
-              >
-                <GridIcon />
-              </button>
-            </div>
-            <div className="flex items-center space-x-2">
-              <span className="text-sm text-gray-600">Viewing:</span>
-              <select
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
-                className="border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option>Open Cases</option>
-                <option>Closed Cases</option>
-                <option>All Cases</option>
-              </select>
-            </div>
-          </div>
-        </div>
 
-        <div className="grid gap-4">
-          {cases.map((case_, index) => (
-            <div key={index} className="bg-white p-4 rounded-lg shadow-sm">
-              <div className="flex justify-between items-start">
-                <div>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm text-gray-600">{case_.id}</span>
-                    {case_.isNew && (
-                      <span className="px-2 py-1 text-xs font-semibold text-white bg-green-500 rounded">
-                        New
-                      </span>
-                    )}
-                  </div>
-                  <h3 className="text-lg font-semibold mt-1">{case_.title}</h3>
-                  <div className="mt-2 space-y-1">
-                    <div className="flex items-center text-sm text-gray-600">
-                      <span className="w-24">Client:</span>
-                      <span className="font-medium">{case_.client}</span>
-                    </div>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <span className="w-24">Next Court Date:</span>
-                      <span className="font-medium">{case_.nextCourtDate}</span>
-                    </div>
-                    <div className="flex items-center text-sm text-gray-600">
-                      <span className="w-24">Created:</span>
-                      <span>{case_.created}</span>
-                    </div>
-                  </div>
-                </div>
-                <span
-                  className={`px-3 py-1 text-xs font-bold text-white rounded ${getStatusColor(
-                    case_.status
-                  )}`}
+          <div className="flex justify-between items-center">
+            <div className="relative flex-1 max-w-xl">
+              <CustomInput
+                type="text"
+                placeholder="Buscar..."
+                startAdornment={
+                  <MagnifyingGlassIcon className="size-4 text-gray-500" />
+                }
+              />
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => setViewMode("list")}
+                  className={`p-2 rounded ${
+                    viewMode === "list" ? "bg-gray-100" : ""
+                  }`}
                 >
-                  {case_.status}
-                </span>
+                  <ListIcon />
+                </button>
+                <button
+                  onClick={() => setViewMode("grid")}
+                  className={`p-2 rounded ${
+                    viewMode === "grid" ? "bg-gray-100" : ""
+                  }`}
+                >
+                  <GridIcon />
+                </button>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-gray-600">Viewing:</span>
+                <select
+                  value={filter}
+                  onChange={(e) => setFilter(e.target.value)}
+                  className="border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option>Open Cases</option>
+                  <option>Closed Cases</option>
+                  <option>All Cases</option>
+                </select>
               </div>
             </div>
-          ))}
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-sm mt-2">
+          <div className="grid gap-4">
+            {cases.map((case_, index) => (
+              <div key={index} className="bg-white p-4 rounded-lg shadow-sm">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-sm text-gray-600">{case_.id}</span>
+                      {case_.isNew && (
+                        <span className="px-2 py-1 text-xs font-semibold text-white bg-green-500 rounded">
+                          New
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="text-lg font-semibold mt-1">
+                      {case_.title}
+                    </h3>
+                    <div className="mt-2 space-y-1">
+                      <div className="flex items-center text-sm text-gray-600">
+                        <span className="w-24">Client:</span>
+                        <span className="font-medium">{case_.client}</span>
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <span className="w-24">Next Court Date:</span>
+                        <span className="font-medium">
+                          {case_.nextCourtDate}
+                        </span>
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <span className="w-24">Created:</span>
+                        <span>{case_.created}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <span
+                    className={`px-3 py-1 text-xs font-bold text-white rounded ${getStatusColor(
+                      case_.status
+                    )}`}
+                  >
+                    {case_.status}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

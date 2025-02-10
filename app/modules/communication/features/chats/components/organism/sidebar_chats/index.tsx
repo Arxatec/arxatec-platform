@@ -14,21 +14,24 @@ export const SidebarChats = ({
   onSelectChat,
 }: SidebarProps) => {
   return (
-    <div className="w-80 border-r border-gray-200">
+    <div className="w-80 shadow-sm  bg-white rounded-lg mr-2 overflow-hidden">
       <div className="p-4">
         <h1 className="text-xl font-bold mb-4">Mensajes</h1>
-        <CustomInput type="text" placeholder="Buscar..." />
+        <CustomInput
+          type="text"
+          placeholder="Buscar..."
+          startAdornment={
+            <MagnifyingGlassIcon className="size-4 text-gray-500" />
+          }
+        />
       </div>
 
-      <div className="px-2">
-        <div className="text-xs font-bold text-gray-700 tracking-wider px-2 py-2">
-          PINNED
-        </div>
+      <div className="px-2 overflow-auto h-full">
         {users.map((user) => (
           <button
             key={user.id}
             onClick={() => onSelectChat(user)}
-            className={`w-full p-3 flex items-center space-x-3 rounded-lg ${
+            className={`w-full p-3 flex items-center space-x-3 rounded-lg transition-all ${
               selectedChat?.id === user.id ? "bg-blue-100" : "hover:bg-gray-100"
             }`}
           >

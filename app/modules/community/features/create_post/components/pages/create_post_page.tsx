@@ -66,7 +66,7 @@ export default function CreatePostPage() {
         {/* Footer */}
         <div className="flex justify-end gap-2 px-6 pb-6 ">
           <SecondaryButton text="Guardar borrador" />
-          <PrimaryButton text="Publicar" />
+          <PrimaryButton children="Publicar" />
         </div>
       </div>
     </div>
