@@ -92,6 +92,34 @@
             "button_face_id": "Configurar Face ID",
             "button_later": "Lo haré más tarde"
           }
+        },
+        "account_verification": {
+          "title": "Verificación de cuenta",
+          "description": "Introduce el código enviado a tu correo.",
+          "button_submit": "Continuar",
+          "resend_text": "¿No recibiste el correo?",
+          "resend_action": "Haz clic para reenviar",
+          "back_to_create_account": "Volver a crear cuenta"
+        }
+      },
+      "onboarding": {
+        "general": {
+          "question_1": {
+            "errors": {
+              "error_1": "Selecciona un rol para seguir. Queremos ofrecerte la mejor experiencia posible."
+            },
+            "question": "Elige tu rol y accede a tu espacio",
+            "description": "Selecciona cómo quieres ingresar para disfrutar de una experiencia personalizada hecha para ti.",
+            "answer_1": {
+              "label": "Cliente",
+              "value": "Encuentra al abogado ideal para tu caso, accede a comunidades y obtén el asesoramiento que necesitas."
+            },
+            "answer_2": {
+              "label": "Abogado",
+              "value": "Gestiona los casos de tus clientes, conéctate con otros profesionales y amplía tu red legal."
+            },
+            "button_next": "Continuar"
+          }
         }
       }
     }

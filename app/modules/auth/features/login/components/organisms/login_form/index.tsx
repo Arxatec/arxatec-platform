@@ -3,9 +3,18 @@ import { RememberSection, SocialAuthOptions } from "../../molecules";
 import { useTranslation } from "react-i18next";
 import { LocaleKeys } from "~/lang";
 import { ROUTES } from "~/routes/routes";
+import { ToastManager } from "~/components/molecules/toast_manager";
 
 export const LoginForm = () => {
   const { t } = useTranslation();
+
+  const handleSuccess = () => {
+    ToastManager.warning(
+      "Información",
+      "Aquí tienes un dato importante. Ya puedes usar esta funcionalidad porque ya esta activado desde tu cuenta de configurción."
+    );
+  };
+
   return (
     <div className="mt-10">
       <div className="space-y-6">
@@ -13,16 +22,17 @@ export const LoginForm = () => {
           type="text"
           label={t(LocaleKeys.pages_auth_fields_email_label)}
           placeholder={t(LocaleKeys.pages_auth_fields_email_placeholder)}
-          isRequired
+          required
         />
         <CustomInput
           type="password"
           label={t(LocaleKeys.pages_auth_fields_password_label)}
           placeholder={t(LocaleKeys.pages_auth_fields_password_placeholder)}
-          isRequired
+          required
         />
         <RememberSection />
         <PrimaryButton
+          onClick={handleSuccess}
           children={t(LocaleKeys.pages_auth_login_form_submit)}
           className="w-full"
         />

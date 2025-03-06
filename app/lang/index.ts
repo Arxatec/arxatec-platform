@@ -53,5 +53,19 @@ export const LocaleKeys = {
   pages_auth_forgot_password_ready_title: "pages.auth.forgot_password.ready.title",
   pages_auth_forgot_password_ready_description: "pages.auth.forgot_password.ready.description",
   pages_auth_forgot_password_ready_button_face_id: "pages.auth.forgot_password.ready.button_face_id",
-  pages_auth_forgot_password_ready_button_later: "pages.auth.forgot_password.ready.button_later"
+  pages_auth_forgot_password_ready_button_later: "pages.auth.forgot_password.ready.button_later",
+  pages_auth_account_verification_title: "pages.auth.account_verification.title",
+  pages_auth_account_verification_description: "pages.auth.account_verification.description",
+  pages_auth_account_verification_button_submit: "pages.auth.account_verification.button_submit",
+  pages_auth_account_verification_resend_text: "pages.auth.account_verification.resend_text",
+  pages_auth_account_verification_resend_action: "pages.auth.account_verification.resend_action",
+  pages_auth_account_verification_back_to_create_account: "pages.auth.account_verification.back_to_create_account",
+  pages_onboarding_general_question_1_errors_error_1: "pages.onboarding.general.question_1.errors.error_1",
+  pages_onboarding_general_question_1_question: "pages.onboarding.general.question_1.question",
+  pages_onboarding_general_question_1_description: "pages.onboarding.general.question_1.description",
+  pages_onboarding_general_question_1_answer_1_label: "pages.onboarding.general.question_1.answer_1.label",
+  pages_onboarding_general_question_1_answer_1_value: "pages.onboarding.general.question_1.answer_1.value",
+  pages_onboarding_general_question_1_answer_2_label: "pages.onboarding.general.question_1.answer_2.label",
+  pages_onboarding_general_question_1_answer_2_value: "pages.onboarding.general.question_1.answer_2.value",
+  pages_onboarding_general_question_1_button_next: "pages.onboarding.general.question_1.button_next"
 };

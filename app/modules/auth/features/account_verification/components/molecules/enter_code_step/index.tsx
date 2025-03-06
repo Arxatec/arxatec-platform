@@ -40,12 +40,10 @@ export const EnterCodeStep = () => {
             <EnvelopeIcon className="size-5 text-gray-900" />
           </div>
           <h1 className="text-xl text-center font-semibold tracking-tight mb-2 text-gray-900">
-            {t(LocaleKeys.pages_auth_forgot_password_reset_password_title)}
+            {t(LocaleKeys.pages_auth_account_verification_title)}
           </h1>
           <p className="text-sm text-gray-500 text-center">
-            {t(
-              LocaleKeys.pages_auth_forgot_password_reset_password_description
-            )}
+            {t(LocaleKeys.pages_auth_account_verification_description)}
           </p>
         </div>
         <div className="space-y-6">
@@ -77,25 +75,23 @@ export const EnterCodeStep = () => {
           />
           <div className="text-center space-y-4">
             <p className="text-sm text-gray-500">
-              {t(
-                LocaleKeys.pages_auth_forgot_password_reset_password_resend_text
-              )}{" "}
+              {t(LocaleKeys.pages_auth_account_verification_resend_text)}{" "}
               <Link
                 to="#"
                 className="text-[#2563EB] hover:text-[#1D4ED8] font-medium"
               >
-                {t(
-                  LocaleKeys.pages_auth_forgot_password_reset_password_resend_action
-                )}
+                {t(LocaleKeys.pages_auth_account_verification_resend_action)}
               </Link>
             </p>
             <div className="text-center">
               <Link
-                to={`/${ROUTES.LOGIN}`}
+                to={`/${ROUTES.REGISTER}`}
                 className="flex gap-2 justify-center items-center text-sm text-gray-500 hover:text-gray-900"
               >
                 <ArrowLeftIcon className="size-4 " />
-                {t(LocaleKeys.pages_auth_forgot_password_back_to_login)}
+                {t(
+                  LocaleKeys.pages_auth_account_verification_back_to_create_account
+                )}
               </Link>
             </div>
           </div>

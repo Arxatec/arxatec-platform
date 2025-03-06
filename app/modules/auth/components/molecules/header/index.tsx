@@ -1,4 +1,4 @@
-import logo from "~/assets/images/logo.png";
+import { logo } from "~/utilities/assets_utilities";
 
 interface Props {
   title: string;

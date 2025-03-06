@@ -7,6 +7,7 @@ import {
 import { LoginForm } from "../organisms/login_form";
 import { useTranslation } from "react-i18next";
 import { LocaleKeys } from "~/lang";
+import { bannerLogin } from "~/utilities/assets_utilities";
 
 export function meta() {
   return [{ title: "Ingresar - Arxatec" }];
@@ -28,7 +29,7 @@ export default function LoginPage() {
         <FooterInfo />
       </div>
       <HeroImage
-        image="https://images.pexels.com/photos/8074612/pexels-photo-8074612.jpeg"
+        image={bannerLogin}
         title={t(LocaleKeys.pages_auth_login_testimonial_title)}
         text={t(LocaleKeys.pages_auth_login_testimonial_text)}
         author={t(LocaleKeys.pages_auth_login_testimonial_author)}

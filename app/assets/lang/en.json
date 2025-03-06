@@ -92,6 +92,34 @@
             "button_face_id": "Set up Face ID",
             "button_later": "I'll do it later"
           }
+        },
+        "account_verification": {
+          "title": "Account Verification",
+          "description": "Enter the code sent to your email.",
+          "button_submit": "Continue",
+          "resend_text": "Didn't receive the email?",
+          "resend_action": "Click to resend",
+          "back_to_create_account": "Back to create account"
+        }
+      },
+      "onboarding": {
+        "general": {
+          "question_1": {
+            "errors": {
+              "error_1": "Select a role to continue. We want to offer you the best experience possible."
+            },
+            "question": "Choose your role and access your space",
+            "description": "Select how you want to log in to enjoy a personalized experience made for you.",
+            "answer_1": {
+              "label": "Client",
+              "value": "Find the ideal lawyer for your case, join communities, and get the legal advice you need."
+            },
+            "answer_2": {
+              "label": "Lawyer",
+              "value": "Manage your clients' cases, connect with other professionals, and expand your legal network."
+            },
+            "button_next": "Continue"
+          }
         }
       }
     }

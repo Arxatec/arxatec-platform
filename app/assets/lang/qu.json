@@ -92,6 +92,34 @@
             "button_face_id": "Face IDta churay",
             "button_later": "Qhipan ruwasaq"
           }
+        },
+        "account_verification": {
+          "title": "Cuenta Rikuchiy",
+          "description": "Qillqay huk yachachiy kamayoq willaykuykiman apachisqa.",
+          "button_submit": "Saraq",
+          "resend_text": "Manam willaykuyta chaskirqankichu?",
+          "resend_action": "T'uqrayta click churay willaykuyta qhipaq",
+          "back_to_create_account": "Kutimuy cuenta ruwarisqanman"
+        }
+      },
+      "onboarding": {
+        "general": {
+          "question_1": {
+            "errors": {
+              "error_1": "Akllay huk ruwaykiwan ñawpaqman riq. Noqayku munanchik qusiykita aswan allin ruwayta."
+            },
+            "question": "Akllay ruwaykiwan yaykuy wasiykita",
+            "description": "Akllay imamanta yaykuykichik kachun kipukusqa rikch’ayninta kuyaykichikpaq.",
+            "answer_1": {
+              "label": "Rantiq",
+              "value": "Taripay aswan allin llamaqta hukmanta, ayllupi rantiy, hinaqa llamk'apuy aswan allin yachayta."
+            },
+            "answer_2": {
+              "label": "Llamaq",
+              "value": "Qhawariy runakunapa rimanakuynin, tantakuy huk runakunawan, hinaqa puñuy huk aswan hatun llamk'aypi."
+            },
+            "button_next": "Qhispikuy"
+          }
         }
       }
     }

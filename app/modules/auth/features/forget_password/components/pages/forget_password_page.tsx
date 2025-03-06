@@ -1,6 +1,6 @@
 import { LanguageSelector } from "~/modules/auth/components/molecules";
 import { ForgotPasswordContent } from "../organism";
-import logo from "~/assets/images/logo.png";
+import { bannerForgotPassword, logo } from "~/utilities/assets_utilities";
 
 export default function ForgetPasswordPage() {
   return (
@@ -14,7 +14,7 @@ export default function ForgetPasswordPage() {
       </div>
       <div className="w-full h-full p-2 overflow-hidden rounded-lg">
         <img
-          src="https://images.pexels.com/photos/26646636/pexels-photo-26646636/free-photo-of-blanco-y-negro-arte-edificio-estatua.png"
+          src={bannerForgotPassword}
           className="w-full h-full object-cover rounded-lg"
           alt="image"
         />
