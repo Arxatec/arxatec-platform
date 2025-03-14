@@ -14,6 +14,7 @@ import quechuaContent from "./assets/lang/qu.json";
 import type { Route } from "./+types/root";
 import stylesheet from "./app.css?url";
 import "~/styles/index.css";
+import 'react-circular-progressbar/dist/styles.css';
 
 export const links: Route.LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -25,7 +26,7 @@ i18n.use(initReactI18next).init({
     es: spanishContent,
     qu: quechuaContent,
   },
-  fallbackLng: "en",
+  fallbackLng: "es",
   interpolation: {
     escapeValue: false,
   },
@@ -37,6 +38,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="shortcut icon" href="favicon.svg" type="image/x-icon" />
         <Meta />
         <Links />
       </head>

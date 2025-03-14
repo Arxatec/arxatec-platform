@@ -103,22 +103,76 @@
         }
       },
       "onboarding": {
+        "button_back_choice_role": "Kutiy role akllaykipaq",
         "general": {
-          "question_1": {
+          "choice_role": {
+            "title": "Roleykita akllay huk pacha yaykuykipaq",
+            "description": "Imaynataq yaykuyta munanki akllay, qampa tukuykunaykipaq ruwanaypaq.",
             "errors": {
-              "error_1": "Akllay huk ruwaykiwan ñawpaqman riq. Noqayku munanchik qusiykita aswan allin ruwayta."
+              "error_not_selected_role": "Role akllayta munaykiñachu. Aswan allin ruwanayta munanchik."
             },
-            "question": "Akllay ruwaykiwan yaykuy wasiykita",
-            "description": "Akllay imamanta yaykuykichik kachun kipukusqa rikch’ayninta kuyaykichikpaq.",
-            "answer_1": {
-              "label": "Rantiq",
-              "value": "Taripay aswan allin llamaqta hukmanta, ayllupi rantiy, hinaqa llamk'apuy aswan allin yachayta."
-            },
-            "answer_2": {
-              "label": "Llamaq",
-              "value": "Qhawariy runakunapa rimanakuynin, tantakuy huk runakunawan, hinaqa puñuy huk aswan hatun llamk'aypi."
-            },
-            "button_next": "Qhispikuy"
+            "questions": {
+              "question_1": {
+                "answer_1": {
+                  "label": "Cliente",
+                  "value": "Allin abogado tukuyta tariy, ayllukunaman yaykuy, asiraykipaq yanapakuqta tariy."
+                },
+                "answer_2": {
+                  "label": "Abogado",
+                  "value": "Qampaq kasukunaykita ruwapay, huk abogado kunawan tinkuy, tukuykunaykita huchuychay."
+                }
+              }
+            }
+          }
+        },
+        "customer": {
+          "client_profile": {
+            "title": "Qampaq willanakuy",
+            "description": "Tukuy ima ruway, rikch'aykipata qhaway, llaqtaykipata, ruwasaykipata, yuyaykipata. Kayqa abogado kunapaq allin kasunchikpaq yanapani.",
+            "questions": {
+              "question_1": {
+                "label": "Rikch'ay",
+                "placeholder": "Huk foto apkachiy"
+              },
+              "question_2": {
+                "label": "Llaqtay",
+                "placeholder": "Ñawpaqpi: Lima, Perú"
+              },
+              "question_3": {
+                "label": "Ruwasay",
+                "placeholder": "Ñawpaqpi: Hampikamayuq"
+              },
+              "question_4": {
+                "label": "Watay",
+                "answer_1": "18-25 watakunapi",
+                "answer_2": "26-35 watakunapi",
+                "answer_3": "36-45 watakunapi",
+                "answer_4": "46-55 watakunapi",
+                "answer_5": "56-65 watakunapi",
+                "answer_6": "65 watakunapas aswan"
+              }
+            }
+          },
+          "legal_preferences": {
+            "title": "Qampaq rikhuy",
+            "description": "Munayniykita qillqay, hinaptin ch'usaq rikhuyta, imaynataq rimayta munanki. Kay willakuykunawan, abogadokunata yanapanayta atinchik.",
+            "questions": {
+              "question_1": {
+                "label": "Munayniykipaq qillqa"
+              },
+              "question_2": {
+                "label": "Ch'usaq",
+                "answer_1": "Ñawpaqta",
+                "answer_2": "Aswan simanakunapi",
+                "answer_3": "Akaq ima rikhuyta munani"
+              },
+              "question_3": {
+                "label": "Munayniykipaq rimay",
+                "answer_1": "Willakuy",
+                "answer_2": "Rikch'ay rimay",
+                "answer_3": "Qillqakuy"
+              }
+            }
           }
         }
       }

@@ -8,6 +8,7 @@ import {
 import { ROUTES } from "./routes/routes";
 
 export default [
+  index("modules/root/features/root/components/pages/root_page.tsx"),
   layout("components/layouts/root/index.tsx", [
     layout("components/layouts/sidebar/index.tsx", [
       ...prefix(ROUTES.COMMUNITY, [

@@ -103,22 +103,76 @@
         }
       },
       "onboarding": {
+        "button_back_choice_role": "Go back to choose role",
         "general": {
-          "question_1": {
-            "errors": {
-              "error_1": "Select a role to continue. We want to offer you the best experience possible."
-            },
-            "question": "Choose your role and access your space",
+          "choice_role": {
+            "title": "Choose your role and access your space",
             "description": "Select how you want to log in to enjoy a personalized experience made for you.",
-            "answer_1": {
-              "label": "Client",
-              "value": "Find the ideal lawyer for your case, join communities, and get the legal advice you need."
+            "errors": {
+              "error_not_selected_role": "Select a role to continue. We want to offer you the best possible experience."
             },
-            "answer_2": {
-              "label": "Lawyer",
-              "value": "Manage your clients' cases, connect with other professionals, and expand your legal network."
-            },
-            "button_next": "Continue"
+            "questions": {
+              "question_1": {
+                "answer_1": {
+                  "label": "Client",
+                  "value": "Find the ideal lawyer for your case, access communities, and get the advice you need."
+                },
+                "answer_2": {
+                  "label": "Lawyer",
+                  "value": "Manage your clients' cases, connect with other professionals, and expand your legal network."
+                }
+              }
+            }
+          }
+        },
+        "customer": {
+          "client_profile": {
+            "title": "Tell us a little about yourself",
+            "description": "Upload a profile picture, indicate your location, profession, and age. This will help lawyers get to know you better and offer a more personalized service.",
+            "questions": {
+              "question_1": {
+                "label": "Profile picture",
+                "placeholder": "Upload a photo"
+              },
+              "question_2": {
+                "label": "Location",
+                "placeholder": "E.g. Mexico City, Mexico"
+              },
+              "question_3": {
+                "label": "Profession",
+                "placeholder": "E.g. Doctor"
+              },
+              "question_4": {
+                "label": "Age",
+                "answer_1": "Between 18 and 25 years",
+                "answer_2": "Between 26 and 35 years",
+                "answer_3": "Between 36 and 45 years",
+                "answer_4": "Between 46 and 55 years",
+                "answer_5": "Between 56 and 65 years",
+                "answer_6": "Over 65 years"
+              }
+            }
+          },
+          "legal_preferences": {
+            "title": "Detail your case",
+            "description": "Indicate your budget, urgency level, and preferred communication method. With this information, we can connect you with the lawyers that best suit your needs.",
+            "questions": {
+              "question_1": {
+                "label": "Ideal price range"
+              },
+              "question_2": {
+                "label": "Urgency",
+                "answer_1": "Immediate",
+                "answer_2": "In the coming weeks",
+                "answer_3": "Just exploring options"
+              },
+              "question_3": {
+                "label": "Preferred communication",
+                "answer_1": "Messaging",
+                "answer_2": "Video call",
+                "answer_3": "Email"
+              }
+            }
           }
         }
       }

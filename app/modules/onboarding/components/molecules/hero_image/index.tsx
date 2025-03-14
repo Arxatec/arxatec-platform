@@ -2,12 +2,9 @@ import { LoadingImage } from "~/components/atoms";
 
 interface Props {
   image: string;
-  title: string;
-  text: string;
-  author: string;
 }
-export const HeroImage: React.FC<Props> = ({ image, title, text, author }) => (
-  <div className="order-1 lg:order-2">
+export const HeroImage: React.FC<Props> = ({ image,}) => (
+  <div className="order-1 lg:order-2 lg:block hidden">
     <div />
     <div className="lg:fixed p-2 w-full h-full grid grid-cols-1 lg:grid-cols-2 top-0 left-0 pointer-events-none">
       <div />

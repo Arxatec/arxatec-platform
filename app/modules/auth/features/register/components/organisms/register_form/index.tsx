@@ -3,41 +3,45 @@ import { useTranslation } from "react-i18next";
 import { LocaleKeys } from "~/lang";
 import { SocialAuthOptions } from "../../molecules";
 import { ROUTES } from "~/routes/routes";
+import { useNavigate } from "react-router";
 
 export const RegisterForm = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const navigateToVerifyAccount = () => navigate(`/${ROUTES.VERIFY_ACCOUNT}`);
   return (
     <div className="mt-10">
-      <div className="space-y-6">
+      <form className="space-y-6">
         <div className="grid grid-cols-2 gap-4">
           <CustomInput
             type="text"
             label={t(LocaleKeys.pages_auth_fields_name_label)}
             placeholder={t(LocaleKeys.pages_auth_fields_name_placeholder)}
-            isRequired
+            required
           />
           <CustomInput
             type="text"
             label={t(LocaleKeys.pages_auth_fields_lastname_label)}
             placeholder={t(LocaleKeys.pages_auth_fields_lastname_placeholder)}
-            isRequired
+            required
           />
         </div>
         <CustomInput
           type="text"
           label={t(LocaleKeys.pages_auth_fields_email_label)}
           placeholder={t(LocaleKeys.pages_auth_fields_email_placeholder)}
-          isRequired
+          required
         />
         <CustomInput
           type="password"
           label={t(LocaleKeys.pages_auth_fields_password_label)}
           placeholder={t(LocaleKeys.pages_auth_fields_password_placeholder)}
-          isRequired
+          required
         />
         <PrimaryButton
           children={t(LocaleKeys.pages_auth_register_form_submit)}
           className="w-full"
+          onClick={navigateToVerifyAccount}
         />
 
         <SocialAuthOptions />
@@ -49,7 +53,7 @@ export const RegisterForm = () => {
             to={`/${ROUTES.LOGIN}`}
           />
         </p>
-      </div>
+      </form>
     </div>
   );
 };

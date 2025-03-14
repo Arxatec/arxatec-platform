@@ -4,6 +4,10 @@
       "terms": "Términos y condiciones",
       "privacy": "Política de privacidad"
     },
+    "shared": {
+      "next": "Continuar",
+      "back": "Atrás"
+    },
     "lang": {
       "es": "Español",
       "en": "Ingles",
@@ -103,22 +107,76 @@
         }
       },
       "onboarding": {
+        "button_back_choice_role": "Volver a elegir rol",
         "general": {
-          "question_1": {
-            "errors": {
-              "error_1": "Selecciona un rol para seguir. Queremos ofrecerte la mejor experiencia posible."
-            },
-            "question": "Elige tu rol y accede a tu espacio",
+          "choice_role": {
+            "title": "Elige tu rol y accede a tu espacio",
             "description": "Selecciona cómo quieres ingresar para disfrutar de una experiencia personalizada hecha para ti.",
-            "answer_1": {
-              "label": "Cliente",
-              "value": "Encuentra al abogado ideal para tu caso, accede a comunidades y obtén el asesoramiento que necesitas."
+            "errors": {
+              "error_not_selected_role": "Selecciona un rol para seguir. Queremos ofrecerte la mejor experiencia posible."
             },
-            "answer_2": {
-              "label": "Abogado",
-              "value": "Gestiona los casos de tus clientes, conéctate con otros profesionales y amplía tu red legal."
-            },
-            "button_next": "Continuar"
+            "questions": {
+              "question_1": {
+                "answer_1": {
+                  "label": "Cliente",
+                  "value": "Encuentra al abogado ideal para tu caso, accede a comunidades y obtén el asesoramiento que necesitas."
+                },
+                "answer_2": {
+                  "label": "Abogado",
+                  "value": "Gestiona los casos de tus clientes, conéctate con otros profesionales y amplía tu red legal."
+                }
+              }
+            }
+          }
+        },
+        "customer": {
+          "client_profile": {
+            "title": "Cuéntanos un poco sobre ti",
+            "description": "Sube una foto de perfil, indica tu ubicación, tu profesión y tu edad. Esto ayudará a los abogados a conocerte mejor y ofrecerte un servicio más personalizado.",
+            "questions": {
+              "question_1": {
+                "label": "Foto de perfil",
+                "placeholder": "Sube una foto"
+              },
+              "question_2": {
+                "label": "Ubicación",
+                "placeholder": "Ej. Ciudad de México, México"
+              },
+              "question_3": {
+                "label": "Profesión",
+                "placeholder": "Ej. Médico"
+              },
+              "question_4": {
+                "label": "Edad",
+                "answer_1": "Entre 18 y 25 años",
+                "answer_2": "Entre 26 y 35 años",
+                "answer_3": "Entre 36 y 45 años",
+                "answer_4": "Entre 46 y 55 años",
+                "answer_5": "Entre 56 y 65 años",
+                "answer_6": "Mayor de 65 años"
+              }
+            }
+          },
+          "legal_preferences": {
+            "title": "Detalla tu caso",
+            "description": "Indica tu presupuesto, el nivel de urgencia y cómo prefieres comunicarte. Con esta información, podremos conectarte con los abogados que mejor se adapten a tus necesidades.",
+            "questions": {
+              "question_1": {
+                "label": "Rango de precio ideal"
+              },
+              "question_2": {
+                "label": "Urgencia",
+                "answer_1": "Inmediato",
+                "answer_2": "En las próximas semanas",
+                "answer_3": "Solo explorando opciones"
+              },
+              "question_3": {
+                "label": "Comunicación preferida",
+                "answer_1": "Mensajeria",
+                "answer_2": "Videollamada",
+                "answer_3": "Correo electrónico"
+              }
+            }
           }
         }
       }
