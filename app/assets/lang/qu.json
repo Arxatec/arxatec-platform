@@ -4,10 +4,29 @@
       "terms": "Kamachiykuna & ruraykuna",
       "privacy": "Sapanchasqa willakuy"
     },
+    "shared": {
+      "next": "Siguiyta",
+      "back": "Qayta",
+      "day_of_week": {
+        "monday": "Killachaw",
+        "tuesday": "Atichaw",
+        "wednesday": "Quyllurchaw",
+        "thursday": "Illapachaw",
+        "friday": "Ch'askachaw",
+        "saturday": "K'uychichaw",
+        "sunday": "Intichaw"
+      }
+    },
     "lang": {
       "es": "Español",
       "en": "Ingles Simi",
       "qu": "Runasimi"
+    },
+    "components": {
+      "schedule": {
+        "add_button": "Yapay pacha suti",
+        "to": "kayman"
+      }
     },
     "pages": {
       "auth": {
@@ -171,6 +190,91 @@
                 "answer_1": "Willakuy",
                 "answer_2": "Rikch'ay rimay",
                 "answer_3": "Qillqakuy"
+              }
+            }
+          }
+        },
+        "lawyer": {
+          "lawyer_profile": {
+            "title": "Qhawariy profesiona kayki",
+            "description": "Yapay biografía-yki, ima rikuq foto nisqayki, ubicación-yki, hina clientes-qa qhawakusunki, willakusunchispa, y confianza ruwaykusunmi ñawpaq ñawpaqta.",
+            "questions": {
+              "question_1": {
+                "label": "Rikuq foto",
+                "placeholder": "Foto uray"
+              },
+              "question_2": {
+                "label": "Biografía",
+                "placeholder": "Kay. Ñuqaqa abogado kani, derecho laboralpi llamk'ayta yachaykuspa, 10 watakuna ruwaspa."
+              },
+              "question_3": {
+                "label": "Ubicación",
+                "placeholder": "Kay. México Llaqta, México"
+              }
+            }
+          },
+          "professional_info": {
+            "title": "Riqsichiy llamk'ayki y yachayki",
+            "description": "Yapay profesiona información-yki, hina clientes-qa qhawakusunki y willakusunchispa, confianza ruwaykusunmi ñawpaqta.",
+            "questions": {
+              "question_1": {
+                "label": "Especialidad",
+                "answer_1": "Abogado laboral",
+                "answer_2": "Abogado civil",
+                "answer_3": "Abogado penal"
+              },
+              "question_2": {
+                "label": "Yachay",
+                "answer_1": "1 wata",
+                "answer_2": "2 wata",
+                "answer_3": "3 watakunamanta aswan",
+                "answer_4": "5 watakunamanta aswan",
+                "answer_5": "7 watakunamanta aswan",
+                "answer_6": "10 watakunamanta aswan llamk'aypi"
+              },
+              "question_3": {
+                "label": "LinkedIn perfil",
+                "placeholder": "Kay. https://www.linkedin.com/in/juanperez/"
+              }
+            }
+          },
+          "availability": {
+            "title": "Ruwariy disponible tukuy",
+            "description": "Sumaqta waktay llamk'ay horas-yki, mana pisi mana achka, hinataq yachachiy y aswan allin servicio ruway."
+          },
+          "preferences": {
+            "title": "Kustumasun experiencia-yki",
+            "description": "Configuray preferencia-yki y yachay yachaypi kikinpa kaq, hina consulta-ta yaykusunki tukuy ruwaykunaykipaq.",
+            "questions": {
+              "question_1": {
+                "label": "Aswan allin qullqi kutichiq",
+                "answer_1": "Banco traspaso",
+                "answer_2": "Tarjeta de crédito",
+                "answer_3": "Tarjeta de débito",
+                "answer_4": "Criptomonedas",
+                "answer_5": "Contrafactura",
+                "answer_6": "Débito automático"
+              },
+              "question_2": {
+                "label": "Aswan allin willay kasqa",
+                "answer_1": "Willaykuna",
+                "answer_2": "Videollamada",
+                "answer_3": "Llamada",
+                "answer_4": "Correo electrónico"
+              },
+              "question_3": {
+                "label": "Allin kasqa cliente-yki",
+                "answer_1": "Empresa-kuna",
+                "answer_2": "Sumaq rikchaq yachay",
+                "answer_3": "Sapa runa",
+                "answer_4": "Mayqinpis"
+              },
+              "question_4": {
+                "label": "¿Qullqita churanki ñawpaqta willanakuy?"
+              },
+              "question_5": {
+                "label": "¿Notifación-ta munanki?",
+                "description": "Notifación-ta chaskinki mana clientes willayta apachispa o clientes huk musuq asuntu-ta ruwaykuspa."
               }
             }
           }

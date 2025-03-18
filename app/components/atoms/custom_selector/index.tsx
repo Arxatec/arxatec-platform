@@ -20,7 +20,7 @@ interface Props<T> {
 }
 
 const baseButtonClasses = {
-  layout: "flex items-center justify-between relative py-1.5",
+  layout: "flex cursor-pointer items-center justify-between relative py-1.5",
   appearance: "rounded-md bg-white py-1.5 pl-3 pr-2",
   text: "text-left text-gray-900 text-sm",
   cursor: "cursor-default",
@@ -63,7 +63,7 @@ export const CustomSelector = <T extends Record<string, any>>({
             {label}
           </label>
         )}
-        <div className="relative">
+        <div className="relative cursor-pointer">
           <ListboxButton className={computedButtonClasses}>
             <span className=" truncate pr-6">
               {selected[displayKey] as string}
@@ -79,7 +79,7 @@ export const CustomSelector = <T extends Record<string, any>>({
               <ListboxOption
                 key={option.id}
                 value={option}
-                className={`group relative cursor-default select-none py-1 pl-3 pr-9 text-gray-900 data-[focus]:bg-blue-600 data-[focus]:text-white data-[focus]:outline-none ${optionClassName}`}
+                className={`group relative cursor-default select-none py-1 pl-3 pr-9 text-gray-900 data-[focus]:bg-blue-600 data-[focus]:text-white data-[focus]:outline-none ${optionClassName} cursor-pointer`}
               >
                 <span className="block truncate font-normal group-data-[selected]:font-semibold">
                   {option[displayKey] as string}

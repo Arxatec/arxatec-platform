@@ -1,35 +1,45 @@
-import {
-  AcademicCapIcon,
-  MapPinIcon,
-  UserIcon,
-} from "@heroicons/react/16/solid";
+import { AcademicCapIcon, MapPinIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CustomInput, CustomSelector, PrimaryButton } from "~/components/atoms";
 import { LocaleKeys } from "~/lang";
 
-const rangeAges = [
+const rangeAgesData = [
   {
     id: 0,
-    name: "Entre 18 - 25",
+    name: LocaleKeys.pages_onboarding_customer_client_profile_questions_question_4_answer_1,
   },
   {
     id: 1,
-    name: "Entre 26 - 35",
+    name: LocaleKeys.pages_onboarding_customer_client_profile_questions_question_4_answer_2,
   },
   {
     id: 2,
-    name: "Entre 36 - 50",
+    name: LocaleKeys.pages_onboarding_customer_client_profile_questions_question_4_answer_3,
   },
   {
     id: 3,
-    name: "Más 51",
+    name: LocaleKeys.pages_onboarding_customer_client_profile_questions_question_4_answer_4,
+  },
+  {
+    id: 4,
+    name: LocaleKeys.pages_onboarding_customer_client_profile_questions_question_4_answer_5,
+  },
+  {
+    id: 5,
+    name: LocaleKeys.pages_onboarding_customer_client_profile_questions_question_4_answer_6,
   },
 ];
 
 export const ClientProfileStep = () => {
-  const [rangeAge, setRangeAge] = useState(rangeAges[0]);
   const { t } = useTranslation();
+  const rangeAges = rangeAgesData.map((item) => {
+    return {
+      id: item.id,
+      name: t(item.name),
+    };
+  });
+  const [rangeAge, setRangeAge] = useState(rangeAges[0]);
   return (
     <>
       <div>
@@ -82,7 +92,9 @@ export const ClientProfileStep = () => {
             htmlFor={"age"}
             className="block text-sm font-medium text-gray-900 mb-2"
           >
-            Edad
+            {t(
+              LocaleKeys.pages_onboarding_customer_client_profile_questions_question_4_label
+            )}
           </label>
           <CustomSelector
             options={rangeAges}

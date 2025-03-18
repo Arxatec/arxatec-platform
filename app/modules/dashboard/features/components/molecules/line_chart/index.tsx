@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { CustomSelector } from "~/components/atoms";
 
 const options = {
   chart: {
@@ -49,13 +50,21 @@ const options = {
   },
   series: [
     {
-      name: "New users",
-      data: [6500, 6418, 6456, 6526, 6356, 6456, 6242, 7611],
+      name: "Pagos",
+      data: [1200, 2151, 1510, 1510, 2020, 4020, 1000],
       color: "#1A56DB",
     },
   ],
   xaxis: {
-    categories: ["01", "02", "03", "04", "05", "06", "07", "08", "09"],
+    categories: [
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves",
+      "Viernes",
+      "Sábado",
+      "Domingo",
+    ],
     labels: {
       show: true,
     },
@@ -71,8 +80,32 @@ const options = {
   },
 };
 
+const filterBy = [
+  {
+    id: 5,
+    name: "Última semana",
+  },
+  {
+    id: 1,
+    name: "Último mes",
+  },
+  {
+    id: 2,
+    name: "Últimos 3 meses",
+  },
+  {
+    id: 3,
+    name: "Últimos 6 meses",
+  },
+  {
+    id: 4,
+    name: "Último año",
+  },
+];
+
 export const LineChart: React.FC = () => {
   const chartRef = useRef<HTMLDivElement>(null);
+  const [filter, setFilter] = useState(filterBy[0]);
 
   useEffect(() => {
     let chartInstance: any;
@@ -93,9 +126,16 @@ export const LineChart: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-white rounded-lg w-full shadow-sm">
-      <div className="px-4 pt-4 flex items-center justify-between">
-        <h2 className="font-semibold text-lg">Ganancias</h2>
+    <div className="bg-white rounded-lg w-full shadow-sm hover:shadow-md transition-all">
+      <div className="px-4 pt-4 flex items-center justify-between flex-wrap gap-4">
+        <h2 className="font-bold text-lg">Tus ganancias</h2>
+        <div className="w-40">
+          <CustomSelector
+            options={filterBy}
+            selected={filter}
+            onChange={setFilter}
+          />
+        </div>
       </div>
       <div className="w-full h-[350px] overflow-hidden px-2 pb-2">
         <div id="line-chart" ref={chartRef} className="w-full" />

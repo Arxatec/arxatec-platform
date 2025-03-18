@@ -6,12 +6,27 @@
     },
     "shared": {
       "next": "Continuar",
-      "back": "Atrás"
+      "back": "Atrás",
+      "day_of_week": {
+        "monday": "Lunes",
+        "tuesday": "Martes",
+        "wednesday": "Miércoles",
+        "thursday": "Jueves",
+        "friday": "Viernes",
+        "saturday": "Sábado",
+        "sunday": "Domingo"
+      }
     },
     "lang": {
       "es": "Español",
       "en": "Ingles",
       "qu": "Quechua"
+    },
+    "components": {
+      "schedule": {
+        "add_button": "Agregar espacio",
+        "to": "a"
+      }
     },
     "pages": {
       "auth": {
@@ -175,6 +190,91 @@
                 "answer_1": "Mensajeria",
                 "answer_2": "Videollamada",
                 "answer_3": "Correo electrónico"
+              }
+            }
+          }
+        },
+        "lawyer": {
+          "lawyer_profile": {
+            "title": "Presenta tu identidad profesional",
+            "description": "Agrega tu biografía, una foto de perfil y tu ubicación para que los clientes te conozcan y generes confianza desde el primer contacto.",
+            "questions": {
+              "question_1": {
+                "label": "Foto de perfil",
+                "placeholder": "Sube una foto"
+              },
+              "question_2": {
+                "label": "Biografía",
+                "placeholder": "Ej. Soy abogado especializado en derecho laboral, con más de 10 años de experiencia en la área."
+              },
+              "question_3": {
+                "label": "Ubicación",
+                "placeholder": "Ej. Ciudad de México, México"
+              }
+            }
+          },
+          "professional_info": {
+            "title": "Destaca tu experiencia y especialización",
+            "description": "Agrega tu información profesional para que los clientes te conozcan y generes confianza desde el primer contacto.",
+            "questions": {
+              "question_1": {
+                "label": "Especialidad",
+                "answer_1": "Abogado laboral",
+                "answer_2": "Abogado civil",
+                "answer_3": "Abogado penal"
+              },
+              "question_2": {
+                "label": "Experiencia",
+                "answer_1": "1 año",
+                "answer_2": "2 año",
+                "answer_3": "Más de 3 años",
+                "answer_4": "Más de 5 años",
+                "answer_5": "Más de 7 años",
+                "answer_6": "Más de 10 años de experiencia"
+              },
+              "question_3": {
+                "label": "Perfil de LinkedIn",
+                "placeholder": "Ej. https://www.linkedin.com/in/juanperez/"
+              }
+            }
+          },
+          "availability": {
+            "title": "Organiza tu disponibilidad",
+            "description": "Establece tus horarios de atención de manera flexible para optimizar tu tiempo y brindar un mejor servicio."
+          },
+          "preferences": {
+            "title": "Personaliza tu experiencia",
+            "description": "Configura tus preferencias y criterios para recibir consultas alineadas con tu especialidad y estilo de trabajo.",
+            "questions": {
+              "question_1": {
+                "label": "Metodo de pago favorito",
+                "answer_1": "Transferencia bancaria",
+                "answer_2": "Tarjeta de crédito",
+                "answer_3": "Tarjeta de débito",
+                "answer_4": "Criptomonedas",
+                "answer_5": "Contrafactura",
+                "answer_6": "Débito automático"
+              },
+              "question_2": {
+                "label": "Medio de comunicación preferido",
+                "answer_1": "Mensajeria",
+                "answer_2": "Videollamada",
+                "answer_3": "Llamada",
+                "answer_4": "Correo electrónico"
+              },
+              "question_3": {
+                "label": "Tu cliente ideal",
+                "answer_1": "Empresas",
+                "answer_2": "Casos específicos",
+                "answer_3": "Individuos",
+                "answer_4": "Cualquiera"
+              },
+              "question_4": {
+                "label": "¿Cobras consulta inicial?"
+              },
+              "question_5": {
+                "label": "¿Quieres recibir notificaciones?",
+                "description": "Recibe notificaciones cuando un cliente te envía un mensaje o cada vez que un cliente crea un nuevo caso."
               }
             }
           }

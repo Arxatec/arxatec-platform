@@ -13,8 +13,9 @@ import spanishContent from "./assets/lang/es.json";
 import quechuaContent from "./assets/lang/qu.json";
 import type { Route } from "./+types/root";
 import stylesheet from "./app.css?url";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import "~/styles/index.css";
-import 'react-circular-progressbar/dist/styles.css';
+import "react-circular-progressbar/dist/styles.css";
 
 export const links: Route.LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -52,7 +53,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <GoogleOAuthProvider clientId="16579426384-hcu4blgpob121572ud505r6bsl8csi0l.apps.googleusercontent.com">
+      <Outlet />
+    </GoogleOAuthProvider>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

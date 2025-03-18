@@ -1,5 +1,9 @@
-import { TimeSelector } from "../../molecules";
+import { Schedule } from "~/components/atoms";
 
 export const AvailabilityStep = () => {
-  return <TimeSelector />;
+  return (
+    <div>
+      <Schedule onChange={() => {}}></Schedule>
+    </div>
+  );
 };

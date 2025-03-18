@@ -23,12 +23,16 @@ export const Stats: React.FC<Props> = ({
   iconTextColor = "text-purple-500",
 }) => {
   return (
-    <div className={`${bgColor} p-6 rounded-xl shadow-sm ${textColor}`}>
+    <div
+      className={`${bgColor} p-6 rounded-xl transition-all shadow-sm group hover:shadow-md cursor-pointer ${textColor}`}
+    >
       <div className="flex justify-between items-start mb-4">
         <div className={`p-2 ${iconBgColor} rounded-lg`}>
           {icon || <ArrowUpRightIcon className={`w-5 h-5 ${iconTextColor}`} />}
         </div>
-        <ArrowUpRightIcon className="w-5 h-5 text-gray-400" />
+        <button className="transition-all">
+          <ArrowUpRightIcon className="w-5 h-5 border-0 text-gray-400 group-hover:bottom-1 group-hover:left-1 transition-all relative " />
+        </button>
       </div>
       <p className="text-sm opacity-80 mb-1">{title}</p>
       <h3 className="text-2xl font-bold mb-1">{value}</h3>

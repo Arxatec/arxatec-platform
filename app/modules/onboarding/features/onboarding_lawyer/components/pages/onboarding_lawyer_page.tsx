@@ -1,10 +1,9 @@
-import { use, useEffect, useState } from "react";
-import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PrimaryButton } from "~/components/atoms";
 import { LocaleKeys } from "~/lang";
 import { Header, HeroImage } from "~/modules/onboarding/components/molecules";
-import { bannerOnboardingGeneral, logo } from "~/utilities/assets_utilities";
+import { bannerOnboardingGeneral } from "~/utilities/assets_utilities";
 import {
   AvailabilityStep,
   LawyerProfileStep,
@@ -18,30 +17,27 @@ import { useNavigate } from "react-router";
 const steps = [
   {
     id: 1,
-    title: "Presenta tu identidad profesional",
-    description:
-      "Agrega tu biografía, una foto de perfil y tu ubicación para que los clientes te conozcan y generes confianza desde el primer contacto.",
+    title: LocaleKeys.pages_onboarding_lawyer_lawyer_profile_title,
+    description: LocaleKeys.pages_onboarding_lawyer_lawyer_profile_description,
     component: <LawyerProfileStep />,
   },
   {
     id: 4,
-    title: "Destaca tu experiencia y especialización",
+    title: LocaleKeys.pages_onboarding_lawyer_professional_info_title,
     description:
-      "Indica tu especialidad, vincula tu perfil de LinkedIn y comparte tus años de experiencia para demostrar tu trayectoria profesional.",
+      LocaleKeys.pages_onboarding_lawyer_professional_info_description,
     component: <ProfessionalInfoStep />,
   },
   {
     id: 3,
-    title: "Organiza tu disponibilidad",
-    description:
-      "Establece tus horarios de atención de manera flexible para optimizar tu tiempo y brindar un mejor servicio.",
+    title: LocaleKeys.pages_onboarding_lawyer_availability_title,
+    description: LocaleKeys.pages_onboarding_lawyer_availability_description,
     component: <AvailabilityStep />,
   },
   {
     id: 2,
-    title: "Personaliza tu experiencia",
-    description:
-      "Configura tus preferencias y criterios para recibir consultas alineadas con tu especialidad y estilo de trabajo.",
+    title: LocaleKeys.pages_onboarding_lawyer_preferences_title,
+    description: LocaleKeys.pages_onboarding_lawyer_preferences_description,
     component: <PreferencesStep />,
   },
 ];
@@ -78,10 +74,10 @@ export default function OnboardingLawyer() {
         {/* Content Form */}
         <div className="mx-auto w-full ">
           <h1 className="text-2xl font-bold text-gray-900">
-            {steps[step].title}
+            {t(steps[step].title)}
           </h1>
           <p className="text-gray-500 text-base mt-2">
-            {steps[step].description}
+            {t(steps[step].description)}
           </p>
           <div className="w-full mt-8 gap-4 grid">{steps[step].component}</div>
         </div>

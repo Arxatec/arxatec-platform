@@ -4,10 +4,29 @@
       "terms": "Terms & conditions",
       "privacy": "Privacy policy"
     },
+    "shared": {
+      "next": "Next",
+      "back": "Back",
+      "day_of_week": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday"
+      }
+    },
     "lang": {
       "es": "Spanish",
       "en": "English",
       "qu": "Quechua"
+    },
+    "components": {
+      "schedule": {
+        "add_button": "Add slot",
+        "to": "to"
+      }
     },
     "pages": {
       "auth": {
@@ -171,6 +190,91 @@
                 "answer_1": "Messaging",
                 "answer_2": "Video call",
                 "answer_3": "Email"
+              }
+            }
+          }
+        },
+        "lawyer": {
+          "lawyer_profile": {
+            "title": "Present your professional identity",
+            "description": "Add your biography, a profile picture, and your location so that clients can get to know you and build trust from the first contact.",
+            "questions": {
+              "question_1": {
+                "label": "Profile picture",
+                "placeholder": "Upload a photo"
+              },
+              "question_2": {
+                "label": "Biography",
+                "placeholder": "E.g. I am a lawyer specialized in labor law, with more than 10 years of experience in the field."
+              },
+              "question_3": {
+                "label": "Location",
+                "placeholder": "E.g. Mexico City, Mexico"
+              }
+            }
+          },
+          "professional_info": {
+            "title": "Highlight your experience and specialization",
+            "description": "Add your professional information so that clients can get to know you and build trust from the first contact.",
+            "questions": {
+              "question_1": {
+                "label": "Specialty",
+                "answer_1": "Labor lawyer",
+                "answer_2": "Civil lawyer",
+                "answer_3": "Criminal lawyer"
+              },
+              "question_2": {
+                "label": "Experience",
+                "answer_1": "1 year",
+                "answer_2": "2 years",
+                "answer_3": "More than 3 years",
+                "answer_4": "More than 5 years",
+                "answer_5": "More than 7 years",
+                "answer_6": "More than 10 years of experience"
+              },
+              "question_3": {
+                "label": "LinkedIn profile",
+                "placeholder": "E.g. https://www.linkedin.com/in/juanperez/"
+              }
+            }
+          },
+          "availability": {
+            "title": "Organize your availability",
+            "description": "Set your working hours flexibly to optimize your time and provide better service."
+          },
+          "preferences": {
+            "title": "Customize your experience",
+            "description": "Set your preferences and criteria to receive consultations aligned with your specialty and work style.",
+            "questions": {
+              "question_1": {
+                "label": "Preferred payment method",
+                "answer_1": "Bank transfer",
+                "answer_2": "Credit card",
+                "answer_3": "Debit card",
+                "answer_4": "Cryptocurrencies",
+                "answer_5": "Invoice payment",
+                "answer_6": "Automatic debit"
+              },
+              "question_2": {
+                "label": "Preferred communication method",
+                "answer_1": "Messaging",
+                "answer_2": "Video call",
+                "answer_3": "Phone call",
+                "answer_4": "Email"
+              },
+              "question_3": {
+                "label": "Your ideal client",
+                "answer_1": "Businesses",
+                "answer_2": "Specific cases",
+                "answer_3": "Individuals",
+                "answer_4": "Anyone"
+              },
+              "question_4": {
+                "label": "Do you charge an initial consultation?"
+              },
+              "question_5": {
+                "label": "Do you want to receive notifications?",
+                "description": "Receive notifications when a client sends you a message or whenever a client creates a new case."
               }
             }
           }

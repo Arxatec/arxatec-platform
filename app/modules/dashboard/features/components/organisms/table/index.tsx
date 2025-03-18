@@ -1,274 +1,299 @@
-"use client";
-
-import { useLayoutEffect, useRef, useState } from "react";
+import {
+  ClockIcon,
+  DocumentIcon,
+  IdentificationIcon,
+  UserIcon,
+} from "@heroicons/react/24/outline";
+import { FolderIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
+import { CustomInput, CustomSelector, PrimaryButton } from "~/components/atoms";
 import { classNames } from "~/utilities/string_utilities";
 
 type Person = { name: string; title: string; email: string; role: string }; // Define la estructura de los elementos en people
 
-const people = [
+const statuses = {
+  Completed: "text-green-400 bg-green-400/10",
+  Error: "text-rose-400 bg-rose-400/10",
+  Progress: "text-yellow-400 bg-yellow-400/10",
+};
+
+const activityItems = [
   {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
+    user: {
+      name: "Michael Foster",
+      imageUrl:
+        "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    },
+    commit: "2d89f0c8",
+    folder: "penal",
+    status: "Completed",
+    case: "Defensa de un empresario acusado de evasión fiscal tras una auditoría sorpresa.",
+    date: "45 minutes ago",
+    dateTime: "2023-01-23T11:00",
   },
   {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
+    user: {
+      name: "Lindsay Walton",
+      imageUrl:
+        "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    },
+    commit: "249df660",
+    folder: "laboral",
+    status: "Completed",
+    case: "Demanda contra una empresa por despido injustificado de una empleada con 15 años de antigüedad.",
+    date: "3 hours ago",
+    dateTime: "2023-01-23T09:00",
   },
   {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
+    user: {
+      name: "Courtney Henry",
+      imageUrl:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    },
+    commit: "11464223",
+    folder: "civil",
+    status: "Error",
+    case: "Conflicto vecinal por ruidos molestos y construcción ilegal de una ampliación.",
+    date: "12 hours ago",
+    dateTime: "2023-01-23T00:00",
   },
   {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
+    user: {
+      name: "Courtney Henry",
+      imageUrl:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    },
+    commit: "dad28e95",
+    folder: "familiar",
+    status: "Completed",
+    case: "Proceso de divorcio con disputa por la custodia de dos hijos menores.",
+    date: "2 days ago",
+    dateTime: "2023-01-21T13:00",
   },
   {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
+    user: {
+      name: "Michael Foster",
+      imageUrl:
+        "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    },
+    commit: "624bc94c",
+    folder: "mercantil",
+    status: "Progress",
+    case: "Demanda por incumplimiento de contrato entre dos empresas tecnológicas.",
+    date: "5 days ago",
+    dateTime: "2023-01-18T12:34",
   },
   {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
+    user: {
+      name: "Courtney Henry",
+      imageUrl:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    },
+    commit: "e111f80e",
+    folder: "penal",
+    status: "Completed",
+    case: "Defensa de una empresa acusada de contaminación ambiental en una reserva natural.",
+    date: "1 week ago",
+    dateTime: "2023-01-16T15:54",
   },
   {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
+    user: {
+      name: "Michael Foster",
+      imageUrl:
+        "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    },
+    commit: "5e136005",
+    folder: "civil",
+    status: "Progress",
+    case: "Reclamación de daños tras un accidente de tráfico con un conductor sin seguro.",
+    date: "1 week ago",
+    dateTime: "2023-01-16T11:31",
   },
   {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
+    user: {
+      name: "Whitney Francis",
+      imageUrl:
+        "https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    },
+    commit: "5c1fd07f",
+    folder: "laboral",
+    status: "Completed",
+    case: "Negociación de indemnización para un grupo de empleados despedidos sin justificación.",
+    date: "2 weeks ago",
+    dateTime: "2023-01-09T08:45",
   },
-  // More people...
+];
+
+const categories = [
+  {
+    id: 1,
+    name: "Consultas",
+  },
+  {
+    id: 2,
+    name: "Asesoria legal",
+  },
+  {
+    id: 3,
+    name: "Representación legal",
+  },
+  {
+    id: 4,
+    name: "Laboral",
+  },
+];
+const filterBy = [
+  {
+    id: 5,
+    name: "Última semana",
+  },
+  {
+    id: 1,
+    name: "Último mes",
+  },
+  {
+    id: 2,
+    name: "Últimos 3 meses",
+  },
+  {
+    id: 3,
+    name: "Últimos 6 meses",
+  },
+  {
+    id: 4,
+    name: "Último año",
+  },
 ];
 
 export const Table = () => {
-  const checkbox = useRef<HTMLInputElement>(null);
-  const [checked, setChecked] = useState<boolean>(false);
-  const [indeterminate, setIndeterminate] = useState<boolean>(false);
-  const [selectedPeople, setSelectedPeople] = useState<Person[]>([]);
-
-  useLayoutEffect(() => {
-    const isIndeterminate =
-      selectedPeople.length > 0 && selectedPeople.length < people.length;
-    setChecked(selectedPeople.length === people.length);
-    setIndeterminate(isIndeterminate);
-
-    if (checkbox.current) {
-      checkbox.current.indeterminate = isIndeterminate;
-    }
-  }, [selectedPeople]);
-
-  function toggleAll() {
-    setSelectedPeople(checked || indeterminate ? [] : people);
-    setChecked(!checked && !indeterminate);
-    setIndeterminate(false);
-  }
+  const [category, setCategory] = useState(categories[0]);
+  const [filter, setFilter] = useState(filterBy[0]);
 
   return (
     <div className=" w-full mt-2">
-      <div className="sm:flex sm:items-center bg-white px-4 py-4 rounded-lg shadow-sm ">
-        <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold text-gray-900">Users</h1>
-          <p className="mt-2 text-sm text-gray-700">
-            A list of all the users in your account including their name, title,
-            email and role.
-          </p>
-        </div>
-        <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <button
-            type="button"
-            className="block rounded-md bg-blue-600 px-3 py-1.5 text-center text-sm/6 font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-          >
-            Add user
-          </button>
-        </div>
-      </div>
-      <div className="mt-2 bg-white rounded-lg overflow-hidden shadow-sm">
-        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-            <div className="relative">
-              {selectedPeople.length > 0 && (
-                <div className="absolute left-14 top-0 flex h-12 items-center space-x-3 bg-white sm:left-12">
-                  <button
-                    type="button"
-                    className="inline-flex items-center rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white"
-                  >
-                    Bulk edit
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex items-center rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white"
-                  >
-                    Delete all
-                  </button>
-                </div>
-              )}
-              <table className="min-w-full table-fixed divide-y divide-gray-300">
-                <thead>
-                  <tr>
-                    <th scope="col" className="relative px-7 sm:w-12 sm:px-6">
-                      <div className="group absolute left-4 top-1/2 -mt-2 grid size-4 grid-cols-1">
-                        <input
-                          type="checkbox"
-                          className="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-blue-600 checked:bg-blue-600 indeterminate:border-blue-600 indeterminate:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
-                          ref={checkbox}
-                          checked={checked}
-                          onChange={toggleAll}
-                        />
-                        <svg
-                          className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25"
-                          viewBox="0 0 14 14"
-                          fill="none"
-                        >
-                          <path
-                            className="opacity-0 group-has-[:checked]:opacity-100"
-                            d="M3 8L6 11L11 3.5"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            className="opacity-0 group-has-[:indeterminate]:opacity-100"
-                            d="M3 7H11"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </div>
-                    </th>
-                    <th
-                      scope="col"
-                      className="min-w-[12rem] py-3.5 pr-3 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Title
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Email
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Role
-                    </th>
-                    <th
-                      scope="col"
-                      className="relative py-3.5 pl-3 pr-4 sm:pr-3"
-                    >
-                      <span className="sr-only">Edit</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 bg-white">
-                  {people.map((person) => (
-                    <tr
-                      key={person.email}
-                      className={
-                        selectedPeople.includes(person)
-                          ? "bg-gray-50"
-                          : undefined
-                      }
-                    >
-                      <td className="relative px-7 sm:w-12 sm:px-6">
-                        {selectedPeople.includes(person) && (
-                          <div className="absolute inset-y-0 left-0 w-0.5 bg-blue-600" />
-                        )}
-                        <div className="group absolute left-4 top-1/2 -mt-2 grid size-4 grid-cols-1">
-                          <input
-                            type="checkbox"
-                            className="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-blue-600 checked:bg-blue-600 indeterminate:border-blue-600 indeterminate:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
-                            value={person.email}
-                            checked={selectedPeople.includes(person)}
-                            onChange={(e) =>
-                              setSelectedPeople(
-                                e.target.checked
-                                  ? [...selectedPeople, person]
-                                  : selectedPeople.filter((p) => p !== person)
-                              )
-                            }
-                          />
-                          <svg
-                            className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25"
-                            viewBox="0 0 14 14"
-                            fill="none"
-                          >
-                            <path
-                              className="opacity-0 group-has-[:checked]:opacity-100"
-                              d="M3 8L6 11L11 3.5"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                            <path
-                              className="opacity-0 group-has-[:indeterminate]:opacity-100"
-                              d="M3 7H11"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-                        </div>
-                      </td>
-                      <td
-                        className={classNames(
-                          "whitespace-nowrap py-4 pr-3 text-sm font-medium",
-                          selectedPeople.includes(person)
-                            ? "text-blue-600"
-                            : "text-gray-900"
-                        )}
-                      >
-                        {person.name}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {person.title}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {person.email}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {person.role}
-                      </td>
-                      <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                        <a
-                          href="#"
-                          className="text-blue-600 hover:text-blue-900"
-                        >
-                          Edit<span className="sr-only">, {person.name}</span>
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+      <div className=" bg-white px-4 py-4 rounded-lg shadow-sm transition-all hover:shadow-md">
+        <div className="flex lg:items-center justify-between flex-col lg:flex-row gap-4 flex-wrap">
+          <div className="">
+            <h1 className="text-lg font-bold text-gray-900 text-left">
+              Tus casos recientes
+            </h1>
+          </div>
+          <div className="flex items-center gap-4 flex-wrap">
+            <div className="md:w-96 w-full">
+              <CustomInput
+                startAdornment={
+                  <MagnifyingGlassIcon className="size-4 text-gray-500" />
+                }
+                placeholder="Buscar caso..."
+              />
             </div>
+            <CustomSelector
+              options={categories}
+              selected={category}
+              onChange={setCategory}
+            />
           </div>
         </div>
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="w-full text-left whitespace-nowrap mt-2 bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all">
+          <colgroup>
+            <col className="w-1/12" />
+            <col className="w-4/12" />
+            <col className="w-2/12" />
+            <col className="w-1/12" />
+            <col className="w-1/12" />
+          </colgroup>
+          <thead className="border-b border-gray-100 text-sm/6 text-gray-500">
+            <tr>
+              <th scope="col" className="py-4 px-4 font-semibold">
+                <div className="flex items-center gap-2">
+                  <IdentificationIcon className="size-5 text-gray-500" />
+                  Identificador
+                </div>
+              </th>
+              <th scope="col" className="py-2 px-4 font-semibold">
+                <div className="flex items-center gap-2">
+                  <DocumentIcon className="size-5 text-gray-500" />
+                  Caso
+                </div>
+              </th>
+              <th scope="col" className="py-2 px-4 font-semibold">
+                <div className="flex items-center gap-2">
+                  <UserIcon className="size-5 text-gray-500" />
+                  Usuario
+                </div>
+              </th>
+              <th
+                scope="col"
+                className="py-2 pr-4 pl-0 text-right font-semibold lg:pr-20"
+              >
+                <div className="flex items-center gap-2">
+                  <FolderIcon className="size-5 text-gray-500" />
+                  Estado
+                </div>
+              </th>
+              <th
+                scope="col"
+                className="py-2 pr-4 pl-0 text-right font-semibold lg:pr-8"
+              >
+                <div className="flex items-center gap-2">
+                  <ClockIcon className="size-5 text-gray-500" />
+                  Última actualización
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100">
+            {activityItems.map((item) => (
+              <tr key={item.commit} className="divide-x divide-gray-100">
+                <td className="py-4 pr-4 pl-4">
+                  <div className="flex gap-x-3">
+                    <div className="font-mono text-sm text-gray-700">
+                      {item.commit}
+                    </div>
+                    <div className="rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-white/10 ring-inset">
+                      {item.folder}
+                    </div>
+                  </div>
+                </td>
+                <td className="py-4 pr-8 pl-4 text-sm/6 text-gray-700 whitespace-pre-line">
+                  {item.case}
+                </td>
+                <td className="py-4 pr-8 pl-4">
+                  <div className="flex items-center gap-x-4">
+                    <img
+                      alt="avatar"
+                      src={item.user.imageUrl}
+                      className="size-8 rounded-full bg-gray-700"
+                    />
+                    <div className="truncate text-sm/6 font-medium text-gray-700">
+                      {item.user.name}
+                    </div>
+                  </div>
+                </td>
+                <td className="py-4 pr-4 pl-4 text-sm/6 lg:pr-20">
+                  <div className="flex items-center justify-end gap-x-2 sm:justify-start">
+                    <div
+                      className={classNames(
+                        statuses[item.status as keyof typeof statuses],
+                        "flex-none rounded-full p-1"
+                      )}
+                    >
+                      <div className="size-1.5 rounded-full bg-current" />
+                    </div>
+                    <div className="text-gray-700">{item.status}</div>
+                  </div>
+                </td>
+                <td className="py-4 pr-4 pl-4 text-left text-sm/6 text-gray-700 lg:pr-8">
+                  <time dateTime={item.dateTime}>{item.date}</time>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

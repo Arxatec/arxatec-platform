@@ -10,8 +10,8 @@ interface Props {
 export const TimeSelect: React.FC<Props> = ({ value, options, onChange }) => {
   return (
     <Listbox value={value} onChange={onChange}>
-      <div className="relative">
-        <Listbox.Button className="relative w-32 py-1.5 pl-3 pr-10 text-left rounded-md border cursor-pointer focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 bg-white">
+      <div className="relative w-full">
+        <Listbox.Button className="relative w-full py-1.5 pl-3 pr-10 text-left rounded-md border cursor-pointer focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 bg-white">
           <span className="block truncate text-gray-500 text-sm">{value}</span>
           <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
             <ClockIcon className="size-5 text-gray-400" aria-hidden="true" />

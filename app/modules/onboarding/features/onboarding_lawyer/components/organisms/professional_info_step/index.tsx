@@ -1,48 +1,64 @@
 import { BuildingLibraryIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { CustomInput, CustomSelector } from "~/components/atoms";
+import { LocaleKeys } from "~/lang";
 
-const specialities = [
+const specialitiesData = [
   {
     id: 1,
-    name: "Abogado laboral",
+    name: LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_1_answer_1,
   },
   {
     id: 2,
-    name: "Abogado civil",
+    name: LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_1_answer_2,
   },
   {
     id: 3,
-    name: "Abogado penal",
+    name: LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_1_answer_3,
   },
 ];
 
-const experiences = [
+const experiencesData = [
   {
     id: 1,
-    name: "1 año",
+    name: LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_2_answer_1,
   },
   {
     id: 2,
-    name: "2 años",
+    name: LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_2_answer_2,
   },
   {
     id: 3,
-    name: "3 años",
+    name: LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_2_answer_3,
   },
   {
     id: 4,
-    name: "4 años",
+    name: LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_2_answer_4,
   },
   {
     id: 5,
-    name: "5 años",
+    name: LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_2_answer_5,
+  },
+  {
+    id: 6,
+    name: LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_2_answer_6,
   },
 ];
 
 export const ProfessionalInfoStep = () => {
+  const { t } = useTranslation();
+  const experiences = experiencesData.map((experience) => ({
+    id: experience.id,
+    name: t(experience.name),
+  }));
+  const specialities = specialitiesData.map((speciality) => ({
+    id: speciality.id,
+    name: t(speciality.name),
+  }));
   const [speciality, setSpeciality] = useState(specialities[0]);
   const [experience, setExperience] = useState(experiences[0]);
+
   return (
     <>
       <div className="grid grid-cols-2 gap-4">
@@ -51,7 +67,9 @@ export const ProfessionalInfoStep = () => {
             htmlFor={"speciality"}
             className="block text-sm font-medium text-gray-900 mb-2"
           >
-            Especialidad
+            {t(
+              LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_1_label
+            )}
           </label>
           <CustomSelector
             options={specialities}
@@ -64,7 +82,9 @@ export const ProfessionalInfoStep = () => {
             htmlFor={"experience"}
             className="block text-sm font-medium text-gray-900 mb-2"
           >
-            Experiencia
+            {t(
+              LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_2_label
+            )}
           </label>
           <CustomSelector
             options={experiences}
@@ -78,8 +98,12 @@ export const ProfessionalInfoStep = () => {
           <BuildingLibraryIcon className="size-5 text-gray-400" />
         }
         type="text"
-        label={"Perfil de Linkedin"}
-        placeholder={"Ej: https://www.linkedin.com/in/juan-perez/"}
+        label={t(
+          LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_3_label
+        )}
+        placeholder={t(
+          LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_3_placeholder
+        )}
         required
       />
     </>

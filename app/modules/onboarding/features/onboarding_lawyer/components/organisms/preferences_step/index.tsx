@@ -1,71 +1,87 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { CustomSelector, CustomToggle } from "~/components/atoms";
+import { LocaleKeys } from "~/lang";
 
-const idealClients = [
+const idealClientsData = [
   {
     id: 1,
-    name: "Empresas",
+    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_2_answer_1,
   },
   {
     id: 2,
-    name: "Casos específicos",
+    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_2_answer_2,
   },
   {
     id: 3,
-    name: "Individuos",
+    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_2_answer_3,
   },
   {
     id: 4,
-    name: "Cualquiera",
+    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_2_answer_4,
   },
 ];
 
-const communicationPreferences = [
+const communicationPreferencesData = [
   {
     id: 1,
-    name: "Mensajeria",
+    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_3_answer_1,
   },
   {
     id: 2,
-    name: "Videollamada",
+    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_3_answer_2,
   },
   {
     id: 3,
-    name: "Llamada",
+    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_3_answer_3,
   },
   {
     id: 4,
-    name: "Correo electrónico",
+    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_3_answer_4,
   },
 ];
 
-const paymentMethods = [
+const paymentMethodsData = [
   {
     id: 2,
-    name: "Transferencia bancaria",
+    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_1_answer_1,
   },
   {
     id: 3,
-    name: "Tarjeta de crédito/débito ",
+    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_1_answer_2,
   },
   {
     id: 5,
-    name: "Tarjeta de crédito",
+    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_1_answer_3,
   },
   {
     id: 5,
-    name: "Criptomonedas",
+    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_1_answer_4,
   },
   {
     id: 6,
-    name: "Contra factura",
+    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_1_answer_5,
   },
   {
     id: 7,
-    name: "Débito automático",
+    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_1_answer_6,
   },
 ];
 export const PreferencesStep = () => {
+  const { t } = useTranslation();
+  const paymentMethods = paymentMethodsData.map((item) => ({
+    id: item.id,
+    name: t(item.name),
+  }));
+  const communicationPreferences = communicationPreferencesData.map((item) => ({
+    id: item.id,
+    name: t(item.name),
+  }));
+  const idealClients = idealClientsData.map((item) => ({
+    id: item.id,
+    name: t(item.name),
+  }));
+
   const [idealClient, setIdealClient] = useState(idealClients[0]);
   const [communicationPreference, setCommunicationPreference] = useState(
     communicationPreferences[0]
@@ -78,7 +94,9 @@ export const PreferencesStep = () => {
           htmlFor={"experience"}
           className="block text-sm font-medium text-gray-900 mb-2"
         >
-          Metodo de pago favorito
+          {t(
+            LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_1_label
+          )}
         </label>
         <CustomSelector
           options={paymentMethods}
@@ -92,7 +110,9 @@ export const PreferencesStep = () => {
             htmlFor={"speciality"}
             className="block text-sm font-medium text-gray-900 mb-2"
           >
-            Tu cliente ideal
+            {t(
+              LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_2_label
+            )}
           </label>
           <CustomSelector
             options={idealClients}
@@ -105,7 +125,9 @@ export const PreferencesStep = () => {
             htmlFor={"experience"}
             className="block text-sm font-medium text-gray-900 mb-2"
           >
-            Comunicación preferida
+            {t(
+              LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_3_label
+            )}
           </label>
           <CustomSelector
             options={communicationPreferences}
@@ -114,10 +136,18 @@ export const PreferencesStep = () => {
           />
         </div>
       </div>
-      <CustomToggle label="¿Cobras consulta inicial?" />
       <CustomToggle
-        label="¿Quieres recibir notificaciones?"
-        description="Recibe notificaciones cuando un cliente te envía un mensaje o cada vez que un cliente crea un nuevo caso."
+        label={t(
+          LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_4_label
+        )}
+      />
+      <CustomToggle
+        label={t(
+          LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_5_label
+        )}
+        description={t(
+          LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_5_description
+        )}
       />
     </>
   );

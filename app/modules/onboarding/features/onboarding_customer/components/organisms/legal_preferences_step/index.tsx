@@ -1,44 +1,52 @@
-import { BuildingLibraryIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
-import { CustomInput, CustomRange, CustomSelector } from "~/components/atoms";
+import { useTranslation } from "react-i18next";
+import { CustomRange, CustomSelector } from "~/components/atoms";
+import { LocaleKeys } from "~/lang";
 
-const communicationPreferences = [
+const communicationPreferencesData = [
   {
     id: 1,
-    name: "Mensajeria",
+    name: LocaleKeys.pages_onboarding_customer_legal_preferences_questions_question_3_answer_1,
   },
   {
     id: 2,
-    name: "Videollamada",
+    name: LocaleKeys.pages_onboarding_customer_legal_preferences_questions_question_3_answer_2,
   },
   {
     id: 3,
-    name: "Llamada",
-  },
-  {
-    id: 4,
-    name: "Correo electrónico",
+    name: LocaleKeys.pages_onboarding_customer_legal_preferences_questions_question_3_answer_3,
   },
 ];
-const urgencies = [
+
+const urgenciesData = [
   {
     id: 1,
-    name: "Inmediato",
+    name: LocaleKeys.pages_onboarding_customer_legal_preferences_questions_question_2_answer_1,
   },
   {
     id: 2,
-    name: "En las próximas semanas",
+    name: LocaleKeys.pages_onboarding_customer_legal_preferences_questions_question_2_answer_2,
   },
   {
     id: 3,
-    name: "Solo explorando opciones",
+    name: LocaleKeys.pages_onboarding_customer_legal_preferences_questions_question_2_answer_3,
   },
 ];
 
 export const LegalPreferencesStep = () => {
+  const { t } = useTranslation();
+  const communicationPreferences = communicationPreferencesData.map((item) => ({
+    id: item.id,
+    name: t(item.name),
+  }));
+  const urgencies = urgenciesData.map((item) => ({
+    id: item.id,
+    name: t(item.name),
+  }));
   const [communicationPreference, setCommunicationPreference] = useState(
     communicationPreferences[0]
   );
+
   const [urgency, setUrgency] = useState(urgencies[0]);
   const [priceRange, setPriceRange] = useState(100);
   return (
@@ -48,21 +56,22 @@ export const LegalPreferencesStep = () => {
           htmlFor={"experience"}
           className="block text-sm font-medium text-gray-900 mb-2"
         >
-          Rango de precio ideal
+          {t(
+            LocaleKeys.pages_onboarding_customer_legal_preferences_questions_question_1_label
+          )}
         </label>
 
         <div className="w-full ">
-      
           <div className="flex items-center justify-between gap-4">
             <p className="text-gray-500 text-sm">${priceRange}.00</p>
             <CustomRange
               min={0}
-              max={100}
+              max={1000}
               step={1}
               defaultValue={50}
               onChange={setPriceRange}
             />
-            <p className="text-gray-500 text-sm">$100.00</p>
+            <p className="text-gray-500 text-sm">$1000.00</p>
           </div>
         </div>
       </div>
@@ -72,7 +81,9 @@ export const LegalPreferencesStep = () => {
             htmlFor={"speciality"}
             className="block text-sm font-medium text-gray-900 mb-2"
           >
-            Urgencia
+            {t(
+              LocaleKeys.pages_onboarding_customer_legal_preferences_questions_question_2_label
+            )}
           </label>
           <CustomSelector
             options={urgencies}
@@ -85,7 +96,9 @@ export const LegalPreferencesStep = () => {
             htmlFor={"experience"}
             className="block text-sm font-medium text-gray-900 mb-2"
           >
-            Comunicación preferida
+            {t(
+              LocaleKeys.pages_onboarding_customer_legal_preferences_questions_question_3_label
+            )}
           </label>
           <CustomSelector
             options={communicationPreferences}
