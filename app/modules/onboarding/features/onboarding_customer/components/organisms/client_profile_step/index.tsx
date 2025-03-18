@@ -69,8 +69,12 @@ export const ClientProfileStep = () => {
         <CustomInput
           startAdornment={<AcademicCapIcon className="size-5 text-gray-400" />}
           type="text"
-          label={"Profesión"}
-          placeholder={"Ej: Médico"}
+          label={t(
+            LocaleKeys.pages_onboarding_customer_client_profile_questions_question_3_label
+          )}
+          placeholder={t(
+            LocaleKeys.pages_onboarding_customer_client_profile_questions_question_3_placeholder
+          )}
           required
         />
         <div>
