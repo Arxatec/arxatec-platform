@@ -1,11 +1,9 @@
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { Multimedia, SaveLinks } from "../molecules";
 import {
   CustomInput,
   CustomSelector,
   PrimaryButton,
-  SecondaryButton,
 } from "~/components/atoms";
 
 const communities = [
@@ -65,7 +63,6 @@ export default function CreatePostPage() {
 
         {/* Footer */}
         <div className="flex justify-end gap-2 px-6 pb-6 ">
-          <SecondaryButton text="Guardar borrador" />
           <PrimaryButton children="Publicar" />
         </div>
       </div>

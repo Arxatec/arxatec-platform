@@ -1,16 +1,18 @@
+import type React from "react";
 import { useState } from "react";
-import { avatarError } from "~/utilities/assets_utilities";
 
 interface Props {
   avatar: string;
   size: string;
   altText?: string;
+  username?: string;
 }
 
 export const CustomAvatar: React.FC<Props> = ({
   avatar,
   size,
   altText = "Avatar",
+  username = "Anonymous",
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
@@ -21,12 +23,28 @@ export const CustomAvatar: React.FC<Props> = ({
     setHasError(true);
   };
 
+  const getColorFromUsername = (username: string) => {
+    const colors = [
+      "bg-blue-500",
+      "bg-gray-500",
+      "bg-slate-500",
+      "bg-sky-500",
+      "bg-cyan-500",
+      "bg-indigo-500",
+    ];
+    let sum = 0;
+    for (let i = 0; i < username.length; i++) {
+      sum += username.charCodeAt(i);
+    }
+    return colors[sum % colors.length];
+  };
+
+  const avatarColor = getColorFromUsername(username);
+  const initials = username.charAt(0).toUpperCase();
+
   return (
     <div
-      style={{
-        width: size,
-        height: size,
-      }}
+      style={{ width: size, height: size }}
       className="relative inline-block"
     >
       {isLoading && (
@@ -39,15 +57,15 @@ export const CustomAvatar: React.FC<Props> = ({
       )}
 
       {hasError ? (
-        <img
-          src={avatarError}
-          alt="error"
-          className="rounded-full object-cover"
+        <div
+          className={`flex items-center justify-center rounded-full text-white font-medium ${avatarColor}`}
           style={{ width: size, height: size }}
-        />
+        >
+          {initials}
+        </div>
       ) : (
         <img
-          src={avatar}
+          src={avatar || "/placeholder.svg"}
           alt={altText}
           onLoad={handleImageLoad}
           onError={handleImageError}

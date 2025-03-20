@@ -3,28 +3,51 @@ import {
   HandThumbDownIcon,
   HandThumbUpIcon,
   ShareIcon,
-} from "@heroicons/react/16/solid";
+} from "@heroicons/react/20/solid";
 
 interface Props {
-  likes: number;
-  comments: number;
+  upvotes: number;
+  commentCount: number;
+  onUpvote: () => void;
+  onDownvote: () => void;
 }
 
-export const PostFooter: React.FC<Props> = ({ likes, comments }) => {
+export const PostActions: React.FC<Props> = ({
+  upvotes,
+  commentCount,
+  onUpvote,
+  onDownvote,
+}) => {
+  const formatUpvotes = (value: number) => {
+    if (value >= 1) {
+      return `${value.toFixed(1)} mil`;
+    }
+    return value.toString();
+  };
+
   return (
-    <div className="flex items-center justify-start gap-4 mt-4">
+    <div className="flex px-3 py-2 gap-4">
       <div className="bg-slate-200 flex items-center rounded-lg overflow-hidden">
-        <button className="p-2 hover:bg-slate-300 group transition-all">
+        <button
+          onClick={onUpvote}
+          className="p-2 hover:bg-slate-300 group transition-all"
+        >
           <HandThumbUpIcon className="size-4 text-gray-400 group-hover:text-indigo-600" />
         </button>
-        <p className="text-sm text-gray-700 px-1">{likes}</p>
-        <button className="p-2 hover:bg-slate-300 group transition-all">
+        <span className="text-sm font-medium px-1 text-gray-700">
+          {formatUpvotes(upvotes)}
+        </span>
+        <button
+          onClick={onDownvote}
+          className="p-2 hover:bg-slate-300 group transition-all"
+        >
           <HandThumbDownIcon className="size-4 text-gray-400 group-hover:text-orange-600" />
         </button>
       </div>
+
       <button className="flex items-center justify-start bg-slate-200  rounded-lg  py-1.5 px-3 gap-2 text-sm  hover:bg-slate-300 text-gray-600">
         <ChatBubbleOvalLeftIcon className="size-4 text-gray-400" />
-        {comments}
+        {commentCount}
       </button>
       <button className="flex items-center justify-start bg-slate-200  rounded-lg  py-1.5 px-3 gap-2 text-sm  hover:bg-slate-300 text-gray-600">
         <ShareIcon className="size-4 text-gray-400" />

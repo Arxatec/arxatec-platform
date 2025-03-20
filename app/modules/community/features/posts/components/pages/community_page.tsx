@@ -1,6 +1,5 @@
-import { LastPost } from "../molecules";
-import { CustomTextArea } from "../molecules/custom_text_area";
-import { Post } from "../molecules/post";
+import { CompactPost } from "~/modules/community/components/molecules";
+import { CustomTextArea, Post } from "../molecules/";
 
 export const legalPosts = [
   {
@@ -218,37 +217,26 @@ export default function CommunityPage() {
   return (
     <div className="w-full max-w-5xl  h-full  mx-auto ">
       <div className="grid grid-cols-[69.7%_30%] gap-2 justify-between">
-        <div className="w-full">
-          <div className="w-full bg-white rounded-lg p-4 mb-2 shadow-sm">
-            <h2 className="mb-4 text-gray-900 font-bold text-lg">
-              Crea un nuevo post
-            </h2>
-            <CustomTextArea />
-          </div>
-          <div className="w-full bg-white px-4 py-4 rounded-lg shadow-sm">
-            <div className="mb-4">
-              <p className="text-lg text-gray-900 font-semibold">Popular</p>
-              <div className=""></div>
-            </div>
-            <div className="grid divide-y">
-              {legalPosts.map((item) => (
-                <div>
-                  <Post
-                    avatar={item.avatar}
-                    username={item.username}
-                    title={item.title}
-                    content={item.content}
-                    datePosted={item.datePosted}
-                    likes={item.likes}
-                    image={item.image}
-                    comments={item.likes}
-                  />
-                </div>
-              ))}
-            </div>
+        <div className="w-full bg-white px-4 py-4 rounded-lg shadow-sm">
+          <div className="grid divide-y">
+            {legalPosts.map((item) => (
+              <div>
+                <Post
+                  avatar={item.avatar}
+                  username={item.username}
+                  title={item.title}
+                  content={item.content}
+                  datePosted={item.datePosted}
+                  likes={item.likes}
+                  image={item.image}
+                  comments={item.likes}
+                />
+              </div>
+            ))}
           </div>
         </div>
-        <div className="bg-white rounded-lg w-full h-fit shadow-sm">
+
+        <div className="bg-white rounded-lg w-full h-fit shadow-sm sticky top-[72px]">
           <div className="flex items-center justify-between px-4 pt-4">
             <h2 className="text-[12px] font-bold uppercase text-gray-800">
               publicaciones recientes
@@ -259,7 +247,7 @@ export default function CommunityPage() {
           </div>
           <div className="grid divide-y  pb-4">
             {lastLegalPost.map((item, idx) => (
-              <LastPost
+              <CompactPost
                 key={idx}
                 avatar={item.avatar}
                 username={item.username}

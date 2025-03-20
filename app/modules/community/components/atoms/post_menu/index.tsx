@@ -1,8 +1,4 @@
-import {
-  ArchiveBoxIcon,
-  EllipsisHorizontalCircleIcon,
-  EllipsisHorizontalIcon,
-} from "@heroicons/react/16/solid";
+import { EllipsisHorizontalIcon } from "@heroicons/react/16/solid";
 import {
   BookmarkIcon,
   EyeSlashIcon,

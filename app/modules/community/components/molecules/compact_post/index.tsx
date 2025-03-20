@@ -10,7 +10,7 @@ interface Props {
   post: string;
 }
 
-export const LastPost: React.FC<Props> = ({
+export const CompactPost: React.FC<Props> = ({
   avatar,
   username,
   idUser,

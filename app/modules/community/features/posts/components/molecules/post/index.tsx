@@ -1,6 +1,5 @@
-import { PostContent } from "../../atoms/post_content";
-import { PostFooter } from "../../atoms/post_footer";
-import { PostHeader } from "../../atoms/post_header";
+import { PostFooter } from "~/modules/community/components/atoms";
+import { PostContent, PostHeader } from "./components";
 
 interface Props {
   avatar: string;

@@ -1,4 +1,4 @@
-import { PostMenu } from "../post_menu";
+import { PostMenu } from "~/modules/community/components/atoms";
 
 interface Props {
   avatar: string;

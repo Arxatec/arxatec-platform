@@ -13,11 +13,19 @@ export default [
     layout("components/layouts/sidebar/index.tsx", [
       ...prefix(ROUTES.COMMUNITY, [
         index(
+          "modules/community/features/communities/components/pages/communities_page.tsx"
+        ),
+        route(
+          ROUTES.POSTS,
           "modules/community/features/posts/components/pages/community_page.tsx"
         ),
         route(
           ROUTES.CREATE_POST,
           "modules/community/features/create_post/components/pages/create_post_page.tsx"
+        ),
+        route(
+          ROUTES.POST,
+          "modules/community/features/post/components/pages/post_page.tsx"
         ),
       ]),
       route(
