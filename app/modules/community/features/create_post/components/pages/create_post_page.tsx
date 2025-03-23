@@ -3,6 +3,8 @@ import { Multimedia, SaveLinks, Tabs } from "../molecules";
 import { CustomInput, CustomSelector, PrimaryButton } from "~/components/atoms";
 import { DocumentIcon } from "@heroicons/react/16/solid";
 import { DocumentArrowUpIcon } from "@heroicons/react/24/solid";
+import { LegalDisclamer } from "~/modules/community/components/atoms";
+import { CreatePostForm } from "../organisms";
 
 const communities = [
   { name: "Legal profesional", id: 1 },
@@ -34,34 +36,11 @@ export default function CreatePostPage() {
               onChange={setSelected}
             />
           </div>
-
-          <Tabs />
-
-          <CustomInput
-            label="Título de la publicación"
-            type="text"
-            placeholder="Ej. Título"
-          />
-
           <div>
-            <label
-              htmlFor=""
-              className="block text-sm/6 font-medium text-gray-900 mb-2"
-            >
-              Contenido de la publicación
-            </label>
-            <div className="border border-gray-200 rounded-md overflow-hidden">
-              <textarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Escribe tu contenido aquí..."
-                className="w-full min-h-[200px] px-3 py-2 bg-white text-gray-900 placeholder-gray-400 focus:outline-none resize-none border-none text-sm"
-              />
-            </div>
+            <CreatePostForm />
           </div>
         </div>
 
-        {/* Footer */}
         <div className="flex justify-end gap-2 px-6 pb-6 ">
           <PrimaryButton
             children="Cancelar"
@@ -69,6 +48,9 @@ export default function CreatePostPage() {
           />
           <PrimaryButton children="Publicar" />
         </div>
+      </div>
+      <div className="max-w-2xl w-full mx-auto mt-2">
+        <LegalDisclamer />
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ export default function PostPage() {
           <Post />
           <Comments />
         </div>
-        <div className="">
+        <div>
           <RelatedPost />
           <CommunityCard
             name="Derebro Laboral"
@@ -17,7 +17,9 @@ export default function PostPage() {
             memberCount={"100"}
             onlineCount={"50"}
           />
-          <LegalDisclamer />
+          <div className="mt-2">
+            <LegalDisclamer />
+          </div>
         </div>
       </div>
     </div>
