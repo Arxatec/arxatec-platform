@@ -27,12 +27,13 @@ export const CommunitiesCard: React.FC<Props> = ({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
-        {communities.map((community) => (
+        {communities.map((community, idx) => (
           <CommunityCard
+            key={idx}
             name={community.name}
             description={community.description}
-            id={community.id}
-            icon={community.icon}
+            id={idx + 1}
+            icon={community.name}
             members={community.members}
           />
         ))}

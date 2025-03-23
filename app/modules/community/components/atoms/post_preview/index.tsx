@@ -1,5 +1,5 @@
 import { PostFooter } from "~/modules/community/components/atoms";
-import { PostContent, PostHeader } from "./components";
+import { PostPreviewContent, PostPreviewHeader } from "./components";
 
 interface Props {
   avatar: string;
@@ -12,7 +12,7 @@ interface Props {
   comments: number;
 }
 
-export const Post: React.FC<Props> = ({
+export const PostPreview: React.FC<Props> = ({
   avatar,
   username,
   title,
@@ -23,9 +23,13 @@ export const Post: React.FC<Props> = ({
   comments,
 }) => {
   return (
-    <a className="px-4 py-4 my-1  rounded-md block cursor-pointer hover:bg-slate-100 transition-all">
-      <PostHeader avatar={avatar} username={username} datePosted={datePosted} />
-      <PostContent title={title} text={content} image={image} />
+    <a className="px-4 py-4 my-1  rounded-md block cursor-pointer hover:bg-slate-50 transition-all">
+      <PostPreviewHeader
+        avatar={avatar}
+        username={username}
+        datePosted={datePosted}
+      />
+      <PostPreviewContent title={title} text={content} image={image} />
       <PostFooter likes={likes} comments={comments} />
     </a>
   );

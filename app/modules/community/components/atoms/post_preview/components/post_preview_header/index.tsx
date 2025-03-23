@@ -6,7 +6,7 @@ interface Props {
   datePosted: string;
 }
 
-export const PostHeader: React.FC<Props> = ({ avatar, username }) => {
+export const PostPreviewHeader: React.FC<Props> = ({ avatar, username }) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center justify-start gap-2">

@@ -15,7 +15,7 @@ export const PostFooter: React.FC<Props> = ({ likes, comments }) => {
     <div className="flex items-center justify-start gap-2 mt-4">
       <div className="bg-slate-50 flex items-center rounded-lg overflow-hidden">
         <button className="p-2 hover:bg-slate-100 group transition-all">
-          <HandThumbUpIcon className="size-4 text-gray-400 group-hover:text-indigo-600" />
+          <HandThumbUpIcon className="size-4 text-gray-400 group-hover:text-blue-600" />
         </button>
         <p className="text-sm text-gray-700 px-1">{likes}</p>
         <button className="p-2 hover:bg-slate-100 group transition-all">

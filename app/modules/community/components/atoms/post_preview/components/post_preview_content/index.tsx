@@ -5,7 +5,7 @@ interface Props {
   text: string;
   image?: string;
 }
-export const PostContent: React.FC<Props> = ({ title, text, image }) => {
+export const PostPreviewContent: React.FC<Props> = ({ title, text, image }) => {
   return (
     <div className="mt-2">
       <p className="text-lg font-bold text-gray-700">{title}</p>

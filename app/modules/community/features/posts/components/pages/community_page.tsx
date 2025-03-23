@@ -1,5 +1,5 @@
 import { CompactPost } from "~/modules/community/components/molecules";
-import { CustomTextArea, Post } from "../molecules/";
+import { PostPreviewCollection } from "~/modules/community/components/organisms";
 
 export const legalPosts = [
   {
@@ -217,24 +217,8 @@ export default function CommunityPage() {
   return (
     <div className="w-full max-w-5xl  h-full  mx-auto ">
       <div className="grid grid-cols-[69.7%_30%] gap-2 justify-between">
-        <div className="w-full bg-white px-4 py-4 rounded-lg shadow-sm">
-          <div className="grid divide-y">
-            {legalPosts.map((item) => (
-              <div>
-                <Post
-                  avatar={item.avatar}
-                  username={item.username}
-                  title={item.title}
-                  content={item.content}
-                  datePosted={item.datePosted}
-                  likes={item.likes}
-                  image={item.image}
-                  comments={item.likes}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
+
+        <PostPreviewCollection posts={legalPosts} />
 
         <div className="bg-white rounded-lg w-full h-fit shadow-sm sticky top-[72px]">
           <div className="flex items-center justify-between px-4 pt-4">

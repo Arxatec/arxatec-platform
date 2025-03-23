@@ -11,9 +11,13 @@ export default [
   index("modules/root/features/root/components/pages/root_page.tsx"),
   layout("components/layouts/root/index.tsx", [
     layout("components/layouts/sidebar/index.tsx", [
-      ...prefix(ROUTES.COMMUNITY, [
+      ...prefix(ROUTES.COMMUNITIES, [
         index(
           "modules/community/features/communities/components/pages/communities_page.tsx"
+        ),
+        route(
+          ROUTES.COMMUNITY,
+          "modules/community/features/community/components/pages/community_page.tsx"
         ),
         route(
           ROUTES.POSTS,
