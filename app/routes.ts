@@ -21,7 +21,7 @@ export default [
         ),
         route(
           ROUTES.POSTS,
-          "modules/community/features/posts/components/pages/community_page.tsx"
+          "modules/community/features/posts/components/pages/posts_page.tsx"
         ),
         route(
           ROUTES.CREATE_POST,

@@ -224,7 +224,6 @@ const rules = [
   },
 ];
 
-// Datos de moderadores
 const moderators = [
   {
     username: "JustitiaLex",
@@ -241,7 +240,6 @@ const moderators = [
   },
 ];
 
-// Marcadores de la comunidad
 const communityMarkers = [
   { title: "REGLAMENTO" },
   { title: "DIRECTORIO DE ABOGADOS" },
