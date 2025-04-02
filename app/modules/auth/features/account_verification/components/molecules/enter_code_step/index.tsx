@@ -4,14 +4,14 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router";
 import { PrimaryButton } from "~/components/atoms";
 import { LocaleKeys } from "~/lang";
-import { ROUTES } from "~/routes/routes";
+import { APP_PATHS} from "~/routes/routes";
 
 export const EnterCodeStep = () => {
   const [code, setCode] = useState<string[]>(["", "", "", ""]);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const { t } = useTranslation();
   const navigate = useNavigate()
-  const navigateToOnboarding = () => navigate(`/${ROUTES.ONBOARDING}`)
+  const navigateToOnboarding = () => navigate(APP_PATHS.ONBOARDING)
 
   const handleChange = (index: number, value: string) => {
     if (value.length <= 1 && /^\d*$/.test(value)) {
@@ -88,7 +88,7 @@ export const EnterCodeStep = () => {
             </p>
             <div className="text-center">
               <Link
-                to={`/${ROUTES.REGISTER}`}
+                to={APP_PATHS.REGISTER}
                 className="flex gap-2 justify-center items-center text-sm text-gray-500 hover:text-gray-900"
               >
                 <ArrowLeftIcon className="size-4 " />

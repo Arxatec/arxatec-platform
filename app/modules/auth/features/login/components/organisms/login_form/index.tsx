@@ -2,7 +2,7 @@ import { CustomInput, CustomLink, PrimaryButton } from "~/components/atoms";
 import { RememberSection, SocialAuthOptions } from "../../molecules";
 import { useTranslation } from "react-i18next";
 import { LocaleKeys } from "~/lang";
-import { ROUTES } from "~/routes/routes";
+import { APP_PATHS} from "~/routes/routes";
 import { ToastManager } from "~/components/molecules/toast_manager";
 
 export const LoginForm = () => {
@@ -43,7 +43,7 @@ export const LoginForm = () => {
         {t(LocaleKeys.pages_auth_login_not_registered)}{" "}
         <CustomLink
           text={t(LocaleKeys.pages_auth_login_start)}
-          to={`/${ROUTES.REGISTER}`}
+          to={APP_PATHS.REGISTER}
         />
       </p>
     </div>

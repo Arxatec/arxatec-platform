@@ -1,13 +1,9 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import {
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  EllipsisHorizontalIcon,
-} from "@heroicons/react/16/solid";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
 import { calendars } from "../../../types";
-import { CustomSelector } from "~/components/atoms";
+import { CustomSelector, PrimaryButton } from "~/components/atoms";
 import { useState } from "react";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import { getDayName, getMonthName } from "~/utilities/date_utilities";
 
 const viewCalendars = [
   { name: "Día", id: calendars.DAY },
@@ -15,6 +11,10 @@ const viewCalendars = [
   { name: "Mes", id: calendars.MONTH },
   { name: "Año", id: calendars.YEAR },
 ];
+const year = new Date().getFullYear();
+const month = getMonthName(new Date().getMonth() + 1);
+const day = new Date().getDate();
+const dayName = getDayName(new Date().getDay());
 
 interface Props {
   changeCalendar: (newCalendar: calendars) => void;
@@ -28,17 +28,17 @@ export const HeaderCalendar: React.FC<Props> = ({ changeCalendar }) => {
   };
 
   return (
-    <header className="flex flex-none items-center justify-between px-6 py-4 bg-white rounded-lg shadow-sm">
+    <header className="flex flex-none items-center justify-between px-6 py-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all">
       <div>
         <h1 className="text-base font-semibold text-gray-900">
           <time dateTime="2022-01-22" className="sm:hidden">
-            Jan 22, 2022
+            {month} {day}, {year}
           </time>
           <time dateTime="2022-01-22" className="hidden sm:inline">
-            January 22, 2022
+            {month} {day}, {year}
           </time>
         </h1>
-        <p className="mt-1 text-sm text-gray-500">Saturday</p>
+        <p className="mt-1 text-sm text-gray-500">{dayName}</p>
       </div>
       <div className="flex items-center gap-4">
         <div className="relative flex items-center rounded-md bg-white shadow-sm md:items-stretch ">
@@ -73,12 +73,10 @@ export const HeaderCalendar: React.FC<Props> = ({ changeCalendar }) => {
           />
 
           <div className="ml-6 h-6 w-px bg-gray-300" />
-          <button
-            type="button"
-            className="ml-6 rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-          >
-            Add event
-          </button>
+          <PrimaryButton className="ml-6 rounded-md bg-blue-600 flex items-center gap-2 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+            <PlusIcon className="size-5 text-white" />
+            Añadir evento
+          </PrimaryButton>
         </div>
       </div>
     </header>

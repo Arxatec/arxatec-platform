@@ -2,13 +2,11 @@ import { useTranslation } from "react-i18next";
 import { bannerOnboardingGeneral, logo } from "~/utilities/assets_utilities";
 import { PrimaryButton } from "~/components/atoms";
 import { LocaleKeys } from "~/lang";
-import { BuildingLibraryIcon, UserIcon } from "@heroicons/react/20/solid";
 import { useEffect, useRef, useState } from "react";
 import { ROLE, type Form } from "../../types";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { Header, HeroImage } from "~/modules/onboarding/components/molecules";
 import { useNavigate } from "react-router";
-import { ROUTES } from "~/routes/routes";
+import { APP_PATHS } from "~/routes/routes";
 import { useTitle } from "~/hooks";
 import { Title } from "~/modules/onboarding/components/atoms";
 import { SelectRoleStep } from "../organisms/select_role_step";
@@ -34,9 +32,9 @@ export default function OnboardingGeneral() {
     }
     const nextRoute =
       form.role === ROLE.LAWYER
-        ? ROUTES.ONBOARDING_LAWYER
-        : ROUTES.ONBOARDING_CUSTOMER;
-    navigate(`/${nextRoute}`);
+        ? APP_PATHS.ONBOARDING_LAWYER
+        : APP_PATHS.ONBOARDING_CUSTOMER;
+    navigate(nextRoute);
   };
 
   useEffect(() => {

@@ -1,4 +1,6 @@
+import { Link } from "react-router";
 import { CustomAvatar } from "~/components/atoms";
+import { APP_PATHS } from "~/routes/routes";
 
 interface Props {
   idUser: string;
@@ -28,12 +30,12 @@ export const CompactPost: React.FC<Props> = ({
         </p>
       </a>
       <div className="mt-2">
-        <a
-          href={idPost}
+        <Link
+          to={`${APP_PATHS.POSTS}/${idPost} `}
           className="text-sm block font-semibold text-gray-900 hover:underline cursor-pointer transition-all leading-[20px]"
         >
           {post}
-        </a>
+        </Link>
         <div className="flex items-center gap-2 mt-2">
           <p className="text-sm text-gray-500">{likes} me gusta</p>
           <span className="size-1 bg-slate-500 rounded-full" />

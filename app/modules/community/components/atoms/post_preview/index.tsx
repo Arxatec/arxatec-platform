@@ -1,5 +1,7 @@
 import { PostFooter } from "~/modules/community/components/atoms";
 import { PostPreviewContent, PostPreviewHeader } from "./components";
+import { APP_PATHS } from "~/routes/routes";
+import { Link } from "react-router";
 
 interface Props {
   avatar: string;
@@ -23,7 +25,10 @@ export const PostPreview: React.FC<Props> = ({
   comments,
 }) => {
   return (
-    <a className="px-4 py-4 my-1  rounded-md block cursor-pointer hover:bg-slate-50 transition-all">
+    <Link
+      to={`${APP_PATHS.POSTS}/${title}`}
+      className="px-4 py-4 my-1  rounded-md block cursor-pointer hover:bg-slate-50 transition-all"
+    >
       <PostPreviewHeader
         avatar={avatar}
         username={username}
@@ -31,6 +36,6 @@ export const PostPreview: React.FC<Props> = ({
       />
       <PostPreviewContent title={title} text={content} image={image} />
       <PostFooter likes={likes} comments={comments} />
-    </a>
+    </Link>
   );
 };

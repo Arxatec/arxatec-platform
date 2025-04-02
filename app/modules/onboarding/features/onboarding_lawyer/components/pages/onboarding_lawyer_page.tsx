@@ -11,7 +11,7 @@ import {
   PreferencesStep,
 } from "../organisms";
 import { useTitle } from "~/hooks";
-import { ROUTES } from "~/routes/routes";
+import { APP_PATHS} from "~/routes/routes";
 import { useNavigate } from "react-router";
 
 const steps = [
@@ -49,7 +49,7 @@ export default function OnboardingLawyer() {
   const { changeTitle } = useTitle();
   const navigate = useNavigate();
 
-  const navigateToOnboarding = () => navigate(`/${ROUTES.ONBOARDING}`);
+  const navigateToOnboarding = () => navigate(APP_PATHS.ONBOARDING);
 
   const handleNextStep = () => {
     if (steps.length == step) return;

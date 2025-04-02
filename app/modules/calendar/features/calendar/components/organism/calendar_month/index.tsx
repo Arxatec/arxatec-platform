@@ -131,7 +131,10 @@ const selectedDay = days.find((day) => day.isSelected);
 
 export const CalendarMonth = () => {
   return (
-    <div className="lg:flex lg:h-full lg:flex-col">
+    <div
+      className="lg:flex lg:h-full lg:flex-col h-full overflow-hidden bg-white shadow-sm hover:shadow-md rounded-lg transition-all"
+      style={{ height: "calc(100vh - 235px)" }}
+    >
       <div className="shadow ring-1 ring-black/5 lg:flex lg:flex-auto lg:flex-col">
         <div className="grid grid-cols-7 gap-px border-b border-gray-300 bg-gray-200 text-center text-xs/6 font-semibold text-gray-700 lg:flex-none">
           <div className="bg-white py-2">
@@ -252,7 +255,7 @@ export const CalendarMonth = () => {
         </div>
       </div>
       {selectedDay!.events.length > 0 && (
-        <div className="px-4 py-10 sm:px-6 lg:hidden">
+        <div className="px-4 py-10 sm:px-6 lg:hidden overflow-auto">
           <ol className="divide-y divide-gray-100 overflow-hidden rounded-lg bg-white text-sm shadow ring-1 ring-black/5">
             {selectedDay?.events.map((event) => (
               <li

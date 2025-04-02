@@ -5,69 +5,79 @@ import {
   ChevronRightIcon,
   EllipsisHorizontalIcon,
 } from "@heroicons/react/20/solid";
+import Scrollbars from "react-custom-scrollbars-2";
 import { classNames } from "~/utilities/string_utilities";
 
-const months = [
-  {
-    name: "January",
-    days: [
-      { date: "2021-12-27" },
-      { date: "2021-12-28" },
-      { date: "2021-12-29" },
-      { date: "2021-12-30" },
-      { date: "2021-12-31" },
-      { date: "2022-01-01", isCurrentMonth: true },
-      { date: "2022-01-02", isCurrentMonth: true },
-      { date: "2022-01-03", isCurrentMonth: true },
-      { date: "2022-01-04", isCurrentMonth: true },
-      { date: "2022-01-05", isCurrentMonth: true },
-      { date: "2022-01-06", isCurrentMonth: true },
-      { date: "2022-01-07", isCurrentMonth: true },
-      { date: "2022-01-08", isCurrentMonth: true },
-      { date: "2022-01-09", isCurrentMonth: true },
-      { date: "2022-01-10", isCurrentMonth: true },
-      { date: "2022-01-11", isCurrentMonth: true },
-      { date: "2022-01-12", isCurrentMonth: true, isToday: true },
-      { date: "2022-01-13", isCurrentMonth: true },
-      { date: "2022-01-14", isCurrentMonth: true },
-      { date: "2022-01-15", isCurrentMonth: true },
-      { date: "2022-01-16", isCurrentMonth: true },
-      { date: "2022-01-17", isCurrentMonth: true },
-      { date: "2022-01-18", isCurrentMonth: true },
-      { date: "2022-01-19", isCurrentMonth: true },
-      { date: "2022-01-20", isCurrentMonth: true },
-      { date: "2022-01-21", isCurrentMonth: true },
-      { date: "2022-01-22", isCurrentMonth: true },
-      { date: "2022-01-23", isCurrentMonth: true },
-      { date: "2022-01-24", isCurrentMonth: true },
-      { date: "2022-01-25", isCurrentMonth: true },
-      { date: "2022-01-26", isCurrentMonth: true },
-      { date: "2022-01-27", isCurrentMonth: true },
-      { date: "2022-01-28", isCurrentMonth: true },
-      { date: "2022-01-29", isCurrentMonth: true },
-      { date: "2022-01-30", isCurrentMonth: true },
-      { date: "2022-01-31", isCurrentMonth: true },
-      { date: "2022-02-01" },
-      { date: "2022-02-02" },
-      { date: "2022-02-03" },
-      { date: "2022-02-04" },
-      { date: "2022-02-05" },
-      { date: "2022-02-06" },
-    ],
-  },
-];
+function generateCalendar(year: number) {
+  const months = [];
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const today = new Date().toISOString().split("T")[0];
+
+  for (let month = 0; month < 12; month++) {
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const days = [];
+
+    // Días del mes anterior
+    const prevMonthDays = firstDay.getDay();
+    for (let i = prevMonthDays; i > 0; i--) {
+      const date = new Date(year, month, 1 - i);
+      days.push({ date: date.toISOString().split("T")[0] });
+    }
+
+    // Días del mes actual
+    for (let day = 1; day <= lastDay.getDate(); day++) {
+      const date = new Date(year, month, day).toISOString().split("T")[0];
+      days.push({
+        date,
+        isCurrentMonth: true,
+        ...(date === today ? { isToday: true } : {}),
+      });
+    }
+
+    // Días del siguiente mes
+    const remainingDays = 42 - days.length; // Asegura una cuadrícula de 6 semanas (42 días)
+    for (let i = 1; i <= remainingDays; i++) {
+      const date = new Date(year, month + 1, i);
+      days.push({ date: date.toISOString().split("T")[0] });
+    }
+
+    months.push({ name: monthNames[month], days });
+  }
+
+  return months;
+}
+
+const months = generateCalendar(2025);
 
 export const CalendarYear = () => {
   return (
-    <div>
-      <div className="bg-white">
-        <div className="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-16 px-4 py-16 sm:grid-cols-2 sm:px-6 xl:max-w-none xl:grid-cols-3 xl:px-8 2xl:grid-cols-4">
+    <div className="h-full flex w-full  flex-col">
+      <div className="">
+        <div className="mx-auto grid max-w-3xl grid-cols-1 gap-x-2 gap-y-2  sm:grid-cols-2 xl:max-w-none xl:grid-cols-3  2xl:grid-cols-4 h-full">
           {months.map((month) => (
-            <section key={month.name} className="text-center">
+            <section
+              key={month.name}
+              className="text-center bg-white overflow-hidden rounded-lg pt-2 shadow-sm hover:shadow-md transition-all"
+            >
               <h2 className="text-sm font-semibold text-gray-900">
                 {month.name}
               </h2>
-              <div className="mt-6 grid grid-cols-7 text-xs/6 text-gray-500">
+              <div className="mt-2 grid grid-cols-7 text-xs/6 text-gray-500">
                 <div>M</div>
                 <div>T</div>
                 <div>W</div>
@@ -76,7 +86,7 @@ export const CalendarYear = () => {
                 <div>S</div>
                 <div>S</div>
               </div>
-              <div className="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200">
+              <div className="isolate grid grid-cols-7 gap-px  bg-gray-200 text-sm shadow border-t border-gray-100">
                 {month.days.map((day, dayIdx) => (
                   <button
                     key={day.date}
@@ -84,12 +94,9 @@ export const CalendarYear = () => {
                     className={classNames(
                       day.isCurrentMonth === true
                         ? "bg-white text-gray-900"
-                        : "bg-gray-50 text-gray-400",
-                      dayIdx === 0 ? "rounded-tl-lg" : "",
-                      dayIdx === 6 ? "rounded-tr-lg" : "",
-                      dayIdx === month.days.length - 7 ? "rounded-bl-lg" : "",
-                      dayIdx === month.days.length - 1 ? "rounded-br-lg" : "",
-                      "py-1.5 hover:bg-gray-100 focus:z-10"
+                        : "bg-gray-50 text-gray-300",
+
+                      "py-1.5 hover:bg-gray-100 focus:z-10 transition-all"
                     )}
                   >
                     <time

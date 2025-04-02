@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { CustomInput, PrimaryButton } from "~/components/atoms";
 import { LocaleKeys } from "~/lang";
-import { ROUTES } from "~/routes/routes";
+import { APP_PATHS } from "~/routes/routes";
 
 export const EnterEmailStep = () => {
   const { t } = useTranslation();
@@ -38,7 +38,7 @@ export const EnterEmailStep = () => {
         </form>
         <div className="text-center">
           <Link
-            to={`/${ROUTES.LOGIN}`}
+            to={APP_PATHS.LOGIN}
             className="flex gap-2 justify-center items-center text-sm text-gray-500 hover:text-gray-900"
           >
             <ArrowLeftIcon className="size-4 " />

@@ -32,71 +32,40 @@ import logo from "~/assets/images/logo.png";
 import { SidebarMobile } from "./sidebar_mobile";
 import { SidebarDesktop } from "./sidebar_desktop";
 import { Navigation } from "./navigation";
-import { ROUTES } from "~/routes/routes";
-
-const navigation = [
-  {
-    name: "Dashboard",
-    href: ROUTES.DASHBOARD,
-    iconInactive: HomeIcon,
-    iconActive: HomeIconActive,
-    current: false,
-  },
-  {
-    name: "Comunidad",
-    href: ROUTES.COMMUNITY,
-    current: true,
-    iconInactive: UsersIcon,
-    iconActive: UsersIconActive,
-  },
-  {
-    name: "Mis casos",
-    href: "#",
-    iconInactive: FolderIcon,
-    current: false,
-    iconActive: FolderIconActive,
-  },
-  {
-    name: "Calendario",
-    href: ROUTES.CALENDAR,
-    iconInactive: CalendarIcon,
-    current: false,
-    iconActive: CalendarIconActive,
-  },
-];
+import { APP_PATHS } from "~/routes/routes";
 
 const navigationTest = [
   {
     name: "Dashboard",
-    href: ROUTES.DASHBOARD,
+    href: APP_PATHS.DASHBOARD,
     iconInactive: HomeIcon,
     iconActive: HomeIconActive,
     current: false,
   },
   {
     name: "Comunidad",
-    href: ROUTES.COMMUNITY,
+    href: APP_PATHS.POSTS,
     current: true,
     iconInactive: UsersIcon,
     iconActive: UsersIconActive,
   },
   {
     name: "Mis casos",
-    href: ROUTES.CASES,
+    href: APP_PATHS.CASES,
     iconInactive: FolderIcon,
     current: false,
     iconActive: FolderIconActive,
   },
   {
     name: "Calendario",
-    href: ROUTES.CALENDAR,
+    href: APP_PATHS.CALENDAR,
     iconInactive: CalendarIcon,
     current: false,
     iconActive: CalendarIconActive,
   },
   {
     name: "Mensajes",
-    href: ROUTES.CHATS,
+    href: APP_PATHS.CHATS,
     iconInactive: ChatBubbleBottomCenterIcon,
     current: false,
     iconActive: ChatBubbleBottomCenterIconActive,
@@ -194,7 +163,7 @@ export default function Sidebar() {
         <SidebarMobile
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
-          navigation={navigation}
+          navigation={navigationTest}
           logo={logo}
         />
         <SidebarDesktop navigation={navigationTest} logo={logo} />

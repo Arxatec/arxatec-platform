@@ -3,6 +3,7 @@ import { PrimaryButton } from "~/components/atoms";
 import { LegalDisclamer } from "~/modules/community/components/atoms";
 import { PostPreviewCollection } from "~/modules/community/components/organisms";
 import { CommunityInfoCard } from "../organisms";
+import { CommunityHeader } from "../molecules";
 
 export const legalPosts = [
   {
@@ -249,35 +250,7 @@ const communityMarkers = [
 export default function CommunityPage() {
   return (
     <div className="w-full max-w-5xl h-full mx-auto">
-      <img
-        src="https://images.pexels.com/photos/2908984/pexels-photo-2908984.jpeg"
-        alt="Community"
-        className="w-full h-48 object-cover rounded-lg shadow-sm hover:shadow-md transition-all"
-      />
-      <div className="grid grid-cols-[160px_1fr] items-center justify-between mt-2 h-full">
-        <div className="w-fit h-full flex relative">
-          <span className="w-40 h-40 absolute bottom-0 rounded-tr-md rounded-br-md border-t-8 border-r-8 border-slate-100 overflow-hidden bg-slate-100">
-            <img
-              src="https://images.pexels.com/photos/4427430/pexels-photo-4427430.jpeg"
-              alt="image"
-              className="w-full h-full rounded-md overflow-hidden block object-cover"
-            />
-          </span>
-        </div>
-        <div className="shadow-sm hover:shadow-md transition-all rounded-lg overflow-hidden bg-white flex w-full">
-          <div className="p-4 flex items-center justify-between w-full">
-            <h2 className="text-lg font-bold text-gray-900">Foro Jurídico</h2>
-
-            <div className="flex items-center gap-2">
-              <PrimaryButton className="bg-white border-gray-300 border text-gray-700 hover:bg-gray-50 gap-2">
-                <PlusIcon className="size-4" />
-                Crear publicación
-              </PrimaryButton>
-              <PrimaryButton>Unirse</PrimaryButton>
-            </div>
-          </div>
-        </div>
-      </div>
+      <CommunityHeader title="Foro Jurídico" />
       <div className="grid grid-cols-[69.7%_30%] gap-2 justify-between mt-2">
         <div>
           <PostPreviewCollection posts={legalPosts} />

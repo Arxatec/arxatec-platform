@@ -3,7 +3,7 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react";
-import { ChevronRightIcon, Cog6ToothIcon } from "@heroicons/react/16/solid";
+import { ChevronRightIcon, Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { Link, useLocation } from "react-router";
 import { classNames } from "~/utilities/string_utilities";
 
@@ -29,7 +29,6 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
   const location = useLocation();
   return (
     <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col ">
-      {/* Sidebar component, swap this element with another sidebar if you like */}
       <div className="flex grow flex-col  overflow-y-auto  bg-white   ">
         <div className="flex h-16 items-center border-b border-gray-200 px-6">
           <img alt="Arxatec" src={logo} className="h-10 w-auto" />
@@ -46,8 +45,8 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
                         className={classNames(
                           location.pathname.includes(item.href)
                             ? "bg-blue-100 text-blue-600"
-                            : "text-gray-600 hover:bg-slate-100 hover:text-gray-700",
-                          "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
+                            : "text-gray-600 hover:bg-slate-50 hover:text-gray-700",
+                          "group flex gap-x-3 rounded-md p-2 text-sm font-semibold items-center"
                         )}
                       >
                         {!location.pathname.includes(item.href) ? (
@@ -70,13 +69,13 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
                     ) : (
                       <Disclosure
                         as="div"
-                        className="border-t border-gray-300 my-2 pt-2"
+                        className="border-t border-gray-100 my-2 pt-2"
                       >
                         <DisclosureButton
                           className={classNames(
                             location.pathname.includes(item.href)
                               ? "bg-blue-100 text-blue-600"
-                              : "text-gray-600 hover:bg-slate-100 hover:text-gray-700",
+                              : "text-gray-600 hover:bg-slate-50 hover:text-gray-700",
                             " flex gap-x-3 rounded-md p-2 text-xs tracking-widest font-semibold w-full group transition-all uppercase"
                           )}
                         >
@@ -89,7 +88,6 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
                         <DisclosurePanel as="ul" className="mt-1 px-1">
                           {item.children.map((subItem) => (
                             <li key={subItem.name}>
-                              {/* 44px */}
                               <DisclosureButton
                                 as="a"
                                 href={subItem.href}
@@ -97,7 +95,7 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
                                   subItem.current
                                     ? "bg-gray-50"
                                     : "hover:bg-gray-50",
-                                  "flex items-center gap-x-2 rounded-md py-2 pl-4 pr-2 text-sm/6 text-gray-700 hover:bg-slate-100"
+                                  "flex items-center gap-x-2 rounded-md py-2 pl-4 pr-2 text-sm text-gray-700 hover:bg-slate-50"
                                 )}
                               >
                                 {subItem.image ? (
@@ -110,7 +108,7 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
                                 {subItem.iconInactive ? (
                                   <subItem.iconInactive
                                     aria-hidden="true"
-                                    className={"size-6 shrink-0 text-gray-600"}
+                                    className="size-6 shrink-0 text-gray-600"
                                   />
                                 ) : null}
                                 {subItem.name}

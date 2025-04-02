@@ -2,13 +2,13 @@ import { CustomInput, CustomLink, PrimaryButton } from "~/components/atoms";
 import { useTranslation } from "react-i18next";
 import { LocaleKeys } from "~/lang";
 import { SocialAuthOptions } from "../../molecules";
-import { ROUTES } from "~/routes/routes";
+import { APP_PATHS} from "~/routes/routes";
 import { useNavigate } from "react-router";
 
 export const RegisterForm = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const navigateToVerifyAccount = () => navigate(`/${ROUTES.VERIFY_ACCOUNT}`);
+  const navigateToVerifyAccount = () => navigate(APP_PATHS.VERIFY_ACCOUNT);
   return (
     <div className="mt-10">
       <form className="space-y-6">
@@ -50,7 +50,7 @@ export const RegisterForm = () => {
           {t(LocaleKeys.pages_auth_register_not_registered)}{" "}
           <CustomLink
             text={t(LocaleKeys.pages_auth_register_start)}
-            to={`/${ROUTES.LOGIN}`}
+            to={APP_PATHS.LOGIN}
           />
         </p>
       </form>

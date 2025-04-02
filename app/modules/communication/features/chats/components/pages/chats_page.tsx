@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { User, MediaItem } from "../../types";
 import { ChatArea, InfoPanel, SidebarChats } from "../organism";
+import { avatarLexor } from "~/utilities/assets_utilities";
 
 export default function ChatsPage() {
   const [selectedChat, setSelectedChat] = useState<User | null>(null);
@@ -22,6 +23,14 @@ export default function ChatsPage() {
   ];
 
   const users: User[] = [
+    {
+      id: 0,
+      name: "Asistente Lexor",
+      avatar: avatarLexor,
+      isGroup: false,
+      members: 1,
+      online: 1,
+    },
     {
       id: 1,
       name: "Contratos laborales",
@@ -125,6 +134,67 @@ export default function ChatsPage() {
   ];
 
   const chatData = [
+    {
+      userId: 0,
+      messages: [
+        {
+          id: 1,
+          content:
+            "Hola, Lexor. Necesito ayuda para redactar un contrato de prestación de servicios.",
+          timestamp: "10:00 AM",
+          sender: "You",
+        },
+        {
+          id: 2,
+          content:
+            "¡Hola! Claro, ¿qué tipo de servicios estás ofreciendo y cuáles son las condiciones clave que deseas incluir?",
+          timestamp: "10:02 AM",
+          sender: "Lexor",
+        },
+        {
+          id: 3,
+          content:
+            "Es un contrato para desarrollo de software. Quiero especificar entregables, plazos y una cláusula de confidencialidad.",
+          timestamp: "10:05 AM",
+          sender: "You",
+        },
+        {
+          id: 4,
+          content:
+            "Entendido. ¿Tienes algún modelo de contrato previo o referencias sobre términos específicos que prefieras?",
+          timestamp: "10:07 AM",
+          sender: "Lexor",
+        },
+        {
+          id: 5,
+          content:
+            "No, pero quiero asegurarme de que el pago sea por hitos y que se especifiquen revisiones antes de la entrega final.",
+          timestamp: "10:10 AM",
+          sender: "You",
+        },
+        {
+          id: 6,
+          content:
+            "Perfecto. Basado en lo que mencionas, redactaré un borrador de contrato con esas condiciones. ¿Algo más que quieras incluir?",
+          timestamp: "10:12 AM",
+          sender: "Lexor",
+        },
+        {
+          id: 7,
+          content:
+            "Sí, me gustaría agregar una penalización si el cliente cancela el contrato sin justificación.",
+          timestamp: "10:15 AM",
+          sender: "You",
+        },
+        {
+          id: 8,
+          content:
+            "Buena idea. Incluiré una cláusula de cancelación con penalizaciones proporcionales al avance del trabajo. Te enviaré el borrador en breve.",
+          timestamp: "10:17 AM",
+          sender: "Lexor",
+        },
+      ],
+    },
     {
       userId: 1,
       messages: [
@@ -465,15 +535,21 @@ export default function ChatsPage() {
       ],
     },
   ];
+
+  useEffect(() => {
+    setSelectedChat(users[0]);
+  }, []);
+
   return (
     <div
       style={{ height: "calc(100vh - 144px)" }}
-      className="flex w-full h-screen rounded-md mx-auto max-w-7xl text-gray-700"
+      className="flex w-full h-screen rounded-md mx-auto max-w-6xl text-gray-700"
     >
       <SidebarChats
         users={users}
         onSelectChat={setSelectedChat}
         selectedChat={selectedChat}
+        messages={chatData}
       />
       <ChatArea
         messages={
@@ -483,7 +559,13 @@ export default function ChatsPage() {
         selectedChat={selectedChat}
         handleOpenInfo={handleOpenInfo}
       />
-      {openInfo && <InfoPanel chat={selectedChat} mediaItems={mediaItems} />}
+      {openInfo && (
+        <InfoPanel
+          chat={selectedChat}
+          mediaItems={mediaItems}
+          handleOpenInfo={handleOpenInfo}
+        />
+      )}
     </div>
   );
 }

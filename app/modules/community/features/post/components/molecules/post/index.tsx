@@ -1,11 +1,8 @@
-import {
-  ArrowLeftIcon,
-  EllipsisHorizontalIcon,
-} from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { PostActions, PostContent } from "./components";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { PostContent } from "./components";
 import { CustomAvatar } from "~/components/atoms";
-import { ROUTES } from "~/routes/routes";
+import { APP_PATHS } from "~/routes/routes";
 import { useNavigate } from "react-router";
 import { PostFooter, PostMenu } from "~/modules/community/components/atoms";
 
@@ -14,9 +11,7 @@ export const Post = () => {
   const [commentCount, setCommentCount] = useState(514);
   const navigate = useNavigate();
 
-  const navigateToCommunity = () => {
-    navigate(`/${ROUTES.COMMUNITY}`);
-  };
+  const navigateToCommunity = () => navigate(APP_PATHS.POSTS);
 
   const post = {
     subreddit: "r/Advice",

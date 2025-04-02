@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
-import { ROUTES } from "~/routes/routes";
+import { APP_PATHS} from "~/routes/routes";
 
 export default function Root() {
   const navigate = useNavigate();
   useEffect(() => {
-    navigate(`/${ROUTES.LOGIN}`);
+    navigate(APP_PATHS.LOGIN);
   }, []);
   return <div></div>;
 }

@@ -9,6 +9,7 @@ import {
 import type React from "react";
 import { CommandPalettes } from "../command_palettes";
 import { useState } from "react";
+import { NotificationDrawer } from "~/components/molecules";
 
 const userNavigation = [
   { name: "Your profile", href: "#" },
@@ -20,9 +21,14 @@ interface Props {
 }
 export const Navigation: React.FC<Props> = ({ setSidebarOpen }) => {
   const [open, setOpen] = useState(false);
+  const [openNotification, setOpenNotification] = useState(false);
   const toggleOpen = () => setOpen(!open);
   return (
     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4  sm:gap-x-6 sm:px-6 lg:px-8">
+      <NotificationDrawer
+        open={openNotification}
+        setOpen={setOpenNotification}
+      />
       <CommandPalettes open={open} setOpen={setOpen} />
       <button
         type="button"
@@ -57,12 +63,13 @@ export const Navigation: React.FC<Props> = ({ setSidebarOpen }) => {
             <button className=" rounded-full p-2 bg-gray-100">
               <PlusIcon className="size-5 text-gray-700" strokeWidth={2.5} />
             </button>
-            <button className=" rounded-full p-2 bg-gray-100">
+            <button
+              className=" rounded-full p-2 bg-gray-100"
+              onClick={() => setOpenNotification(!openNotification)}
+            >
               <BellIcon className="size-5 text-gray-700" />
             </button>
-            <button className=" rounded-full p-2 bg-gray-100">
-              <InboxArrowDownIcon className="size-5 text-gray-700" />
-            </button>
+
             <div
               aria-hidden="true"
               className="hidden lg:block lg:h-10 lg:w-px lg:bg-gray-200"

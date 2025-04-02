@@ -5,7 +5,7 @@ import { PrimaryButton } from "~/components/atoms";
 import { useTitle } from "~/hooks";
 import { LocaleKeys } from "~/lang";
 import { Header, HeroImage } from "~/modules/onboarding/components/molecules";
-import { ROUTES } from "~/routes/routes";
+import { APP_PATHS} from "~/routes/routes";
 import { bannerOnboardingGeneral, logo } from "~/utilities/assets_utilities";
 import { ClientProfileStep, LegalPreferencesStep } from "../organisms";
 
@@ -33,8 +33,8 @@ export default function OnboardingCustomer() {
   const { changeTitle } = useTitle();
   const navigate = useNavigate();
 
-  const navigateToOnboarding = () => navigate(`/${ROUTES.ONBOARDING}`);
-  const navigateToDashboard = () => navigate(`/${ROUTES.DASHBOARD}`);
+  const navigateToOnboarding = () => navigate(APP_PATHS.ONBOARDING);
+  const navigateToDashboard = () => navigate(APP_PATHS.DASHBOARD);
 
   const handleNextStep = () => {
     if (steps.length == step + 1) {

@@ -1,4 +1,6 @@
+import { useNavigate } from "react-router";
 import { CustomAvatar } from "~/components/atoms";
+import { APP_PATHS } from "~/routes/routes";
 
 interface Props {
   id: number;
@@ -14,8 +16,12 @@ export const CommunityCard: React.FC<Props> = ({
   description,
   members,
 }) => {
+  const navigate = useNavigate();
+  const navigateToCommunity = () => navigate(`${APP_PATHS.COMMUNITIES}/${id}`);
+
   return (
     <button
+      onClick={navigateToCommunity}
       key={id}
       className="flex items-start gap-3 p-3 rounded-md cursor-pointer justify-start bg-white shadow-sm transition-all hover:shadow-md"
     >
