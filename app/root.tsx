@@ -17,6 +17,9 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import "~/styles/index.css";
 import "react-circular-progressbar/dist/styles.css";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 export const links: Route.LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
@@ -32,6 +35,8 @@ i18n.use(initReactI18next).init({
     escapeValue: false,
   },
 });
+// Create a client
+const queryClient = new QueryClient();
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -44,9 +49,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
+        <QueryClientProvider client={queryClient}>
+          {children}
+          <ScrollRestoration />
+          <Scripts />
+          <ReactQueryDevtools />
+        </QueryClientProvider>
       </body>
     </html>
   );

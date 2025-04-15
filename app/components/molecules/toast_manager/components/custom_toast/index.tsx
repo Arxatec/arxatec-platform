@@ -5,50 +5,49 @@ import {
   XCircleIcon,
 } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
-import { CustomProgressBar } from "..";
+import { CustomProgressBar } from "../custom_progress_bar";
+
+interface ToastData {
+  title: string;
+  content: string;
+  type: "success" | "error" | "warning" | "info";
+}
 
 interface Props {
   toastProps: any;
-  data: {
-    title: string;
-    content: string;
-    type: "success" | "error" | "warning" | "info";
-  };
+  data: ToastData;
 }
+
+const toastConfig = {
+  success: { color: "#22c55e", Icon: CheckCircleIcon },
+  error: { color: "#ef4444", Icon: XCircleIcon },
+  warning: { color: "#eab308", Icon: ExclamationTriangleIcon },
+  info: { color: "#3b82f6", Icon: InformationCircleIcon },
+  default: { color: "#6b7280", Icon: InformationCircleIcon },
+};
+
 export const CustomToast = ({ toastProps, data }: Props) => {
   const [progress, setProgress] = useState(100);
+
+  const config = data.type
+    ? toastConfig[data.type] || toastConfig.default
+    : toastConfig.default;
 
   useEffect(() => {
     setProgress(0);
   }, []);
 
-  const getToastConfig = () => {
-    switch (data.type) {
-      case "success":
-        return { color: "#22c55e", Icon: CheckCircleIcon };
-      case "error":
-        return { color: "#ef4444", Icon: XCircleIcon };
-      case "warning":
-        return { color: "#eab308", Icon: ExclamationTriangleIcon };
-      case "info":
-        return { color: "#3b82f6", Icon: InformationCircleIcon };
-      default:
-        return { color: "#6b7280", Icon: InformationCircleIcon };
-    }
-  };
-
-  const { color, Icon } = getToastConfig();
   return (
     <div className="pb-2">
       <div className="grid items-center grid-cols-[auto_1fr] gap-y-1">
-        <Icon className={`size-6 my-auto`} color={color} />
+        <config.Icon className={`size-6 my-auto`} color={config.color} />
         <h3 className="text-sm font-semibold text-gray-900 font-sans ml-2">
           {data.title}
         </h3>
         <div></div>
         <p className="text-sm font-sans text-gray-500 ml-2">{data.content}</p>
       </div>
-      <CustomProgressBar progress={progress} color={color} />
+      <CustomProgressBar progress={progress} color={config.color} />
     </div>
   );
 };
