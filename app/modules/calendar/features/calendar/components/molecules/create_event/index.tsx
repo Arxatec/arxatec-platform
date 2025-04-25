@@ -7,6 +7,7 @@ import {
 } from "@headlessui/react";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import {
+  CustomCalendar,
   CustomInput,
   CustomTextArea,
   PrimaryButton,
@@ -29,6 +30,10 @@ const generateTimeOptions = (): string[] => {
 };
 
 export const CreateEvent = () => {
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    new Date()
+  );
+
   const [open, setOpen] = useState(true);
 
   const [selectedTimeStart, setSelectedTimeStart] = useState<string>("08:00");
@@ -77,8 +82,20 @@ export const CreateEvent = () => {
                   label="Descripción"
                   placeholder="Escribe aquí..."
                 />
+
                 <div>
                   <div className="flex items-center justify-between gap-4">
+                    <div className="w-full">
+                      <label className="block text-sm font-semibold mb-2">
+                        Fecha
+                      </label>
+                      <CustomCalendar
+                        value={selectedDate}
+                        onChange={(date) => setSelectedDate(date)}
+                        placeholder="Seleccionar fecha"
+                        format="dd/MM/yyyy"
+                      />
+                    </div>
                     <div className="w-full">
                       <label className="block text-sm font-semibold mb-2">
                         Inicio

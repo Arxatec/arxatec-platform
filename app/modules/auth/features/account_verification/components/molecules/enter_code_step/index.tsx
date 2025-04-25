@@ -4,14 +4,18 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router";
 import { PrimaryButton } from "~/components/atoms";
 import { LocaleKeys } from "~/lang";
-import { APP_PATHS} from "~/routes/routes";
+import { APP_PATHS } from "~/routes/routes";
 
 export const EnterCodeStep = () => {
   const [code, setCode] = useState<string[]>(["", "", "", ""]);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const { t } = useTranslation();
-  const navigate = useNavigate()
-  const navigateToOnboarding = () => navigate(APP_PATHS.ONBOARDING)
+  const navigate = useNavigate();
+  const navigateToOnboarding = () => navigate(APP_PATHS.ONBOARDING);
+
+  const verifyCode = () => {
+    console.log(code);
+  };
 
   const handleChange = (index: number, value: string) => {
     if (value.length <= 1 && /^\d*$/.test(value)) {
@@ -74,7 +78,8 @@ export const EnterCodeStep = () => {
             children={t(
               LocaleKeys.pages_auth_forgot_password_reset_password_button_submit
             )}
-            onClick={navigateToOnboarding}
+            disabled={code.some((value) => value === "")}
+            onClick={verifyCode}
           />
           <div className="text-center space-y-4">
             <p className="text-sm text-gray-500">
