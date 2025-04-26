@@ -33,6 +33,7 @@ export const RegisterForm = () => {
 
   const onSubmit = (data: RegisterFormData) => {
     setError(null);
+    localStorage.setItem("EMAIL_REGISTER", data.email);
     mutation.mutate(data);
   };
 
@@ -42,6 +43,7 @@ export const RegisterForm = () => {
   };
 
   const onError = (error: AxiosError) => {
+    localStorage.removeItem("EMAIL_REGISTER");
     const statusCode = error.response?.status;
     setError({
       title: messages[statusCode as keyof typeof messages].title,
@@ -62,7 +64,7 @@ export const RegisterForm = () => {
               {...register("name", validation.name)}
             />
             {errors.name && (
-              <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
+              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
             )}
           </div>
           <div>
@@ -74,7 +76,7 @@ export const RegisterForm = () => {
               {...register("lastname", validation.lastname)}
             />
             {errors.lastname && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-red-500 text-sm mt-1">
                 {errors.lastname.message}
               </p>
             )}
@@ -89,7 +91,7 @@ export const RegisterForm = () => {
             {...register("email", validation.email)}
           />
           {errors.email && (
-            <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
           )}
         </div>
         <div>
@@ -101,7 +103,7 @@ export const RegisterForm = () => {
             {...register("password", validation.password)}
           />
           {errors.password && (
-            <p className="text-red-500 text-xs mt-1">
+            <p className="text-red-500 text-sm mt-1">
               {errors.password.message}
             </p>
           )}

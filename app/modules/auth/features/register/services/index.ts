@@ -15,7 +15,7 @@ export const register = async (
       confirm_password: password,
     };
     const response = await axiosInstance.post(
-      "/api/v1/auth/register",
+      "/api/v1/auth/register/request",
       createUser
     );
     return response.data;

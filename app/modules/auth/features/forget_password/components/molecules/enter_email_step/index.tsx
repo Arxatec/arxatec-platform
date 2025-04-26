@@ -1,12 +1,61 @@
 import { ArrowLeftIcon, FingerPrintIcon } from "@heroicons/react/24/outline";
+import { useMutation } from "@tanstack/react-query";
+import type { AxiosError } from "axios";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { CustomInput, PrimaryButton } from "~/components/atoms";
 import { LocaleKeys } from "~/lang";
 import { APP_PATHS } from "~/routes/routes";
+import { requestPasswordReset } from "../../../services";
+import { RequestPasswordResetMessages } from "../../../messages";
 
-export const EnterEmailStep = () => {
+interface Props {
+  handleNextStep: () => void;
+}
+
+export const EnterEmailStep = ({ handleNextStep }: Props) => {
   const { t } = useTranslation();
+  const [error, setError] = useState<any>(null);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<{ email: string }>();
+
+  const mutation = useMutation({
+    mutationFn: (data: { email: string }) => requestPasswordReset(data.email),
+    onSuccess: () => onSuccess(),
+    onError: (error: AxiosError) => onError(error),
+  });
+
+  const onSubmit = (data: { email: string }) => {
+    setError(null);
+    localStorage.setItem("EMAIL_PASSWORD_RESET", data.email);
+    mutation.mutate(data);
+  };
+
+  const onSuccess = () => {
+    setError(null);
+    handleNextStep();
+  };
+
+  const onError = (error: AxiosError) => {
+    localStorage.removeItem("EMAIL_PASSWORD_RESET");
+    const statusCode = error.response?.status;
+    setError({
+      title:
+        RequestPasswordResetMessages[
+          statusCode as keyof typeof RequestPasswordResetMessages
+        ].title,
+      description:
+        RequestPasswordResetMessages[
+          statusCode as keyof typeof RequestPasswordResetMessages
+        ].description,
+    });
+  };
 
   return (
     <div className="h-full flex items-center justify-center p-4 w-full">
@@ -22,18 +71,39 @@ export const EnterEmailStep = () => {
             {t(LocaleKeys.pages_auth_forgot_password_description)}
           </p>
         </div>
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
             <CustomInput
               type="text"
               placeholder={t(
                 LocaleKeys.pages_auth_forgot_password_email_placeholder
               )}
+              {...register("email", {
+                required: {
+                  value: true,
+                  message: "El correo electrónico es requerido",
+                },
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "El correo electrónico es inválido",
+                },
+              })}
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
+            )}
+
+            {error !== null && (
+              <div className="flex flex-col bg-red-50 py-2 px-4 rounded-md border border-red-100">
+                <p className="text-red-500 text-sm">{error.description}</p>
+              </div>
+            )}
           </div>
           <PrimaryButton
             className="w-full"
             children={t(LocaleKeys.pages_auth_forgot_password_submit)}
+            disabled={mutation.isPending}
+            loader={mutation.isPending}
           />
         </form>
         <div className="text-center">

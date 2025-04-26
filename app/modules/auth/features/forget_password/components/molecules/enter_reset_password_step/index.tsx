@@ -1,33 +1,88 @@
 import { ArrowLeftIcon, LockClosedIcon } from "@heroicons/react/24/outline";
-import React, { useState, type JSX } from "react";
+import { useMutation } from "@tanstack/react-query";
+import type { AxiosError } from "axios";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { CustomInput, PrimaryButton } from "~/components/atoms";
 import { LocaleKeys } from "~/lang";
-import { APP_PATHS} from "~/routes/routes";
+import { APP_PATHS } from "~/routes/routes";
+import { ResetPasswordMessages } from "../../../messages";
+import { resetPassword } from "../../../services";
 
-export const EnterResetPasswordStep = () => {
-  const [contraseña, setContraseña] = useState<string>("");
-  const [confirmarContraseña, setConfirmarContraseña] = useState<string>("");
-  const [error, setError] = useState<string>("");
+interface Props {
+  handleNextStep: () => void;
+}
+
+interface FormData {
+  password: string;
+  confirmPassword: string;
+}
+
+export const EnterResetPasswordStep = ({ handleNextStep }: Props) => {
+  const [apiError, setApiError] = useState<any>(null);
   const { t } = useTranslation();
 
-  const manejarEnvio = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (contraseña.length < 8) {
-      setError(
-        t(LocaleKeys.pages_auth_forgot_password_set_password_error_min_length)
-      );
-      return;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm<FormData>({
+    mode: "onChange",
+    defaultValues: {
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
+  const password = watch("password");
+
+  const mutation = useMutation({
+    mutationKey: ["resetPassword"],
+    mutationFn: (data: FormData) =>
+      resetPassword(
+        data.password,
+        data.confirmPassword,
+        localStorage.getItem("EMAIL_PASSWORD_RESET") || ""
+      ),
+    onSuccess: () => onSuccess(),
+    onError: (error: AxiosError) => onError(error),
+  });
+
+  const onSuccess = () => {
+    setApiError(null);
+    localStorage.removeItem("EMAIL_PASSWORD_RESET");
+    handleNextStep();
+  };
+
+  const onError = (error: AxiosError) => {
+    console.log(error);
+    const statusCode = error.response?.status;
+    if (statusCode) {
+      setApiError({
+        title:
+          ResetPasswordMessages[
+            statusCode as keyof typeof ResetPasswordMessages
+          ]?.title,
+        description:
+          ResetPasswordMessages[
+            statusCode as keyof typeof ResetPasswordMessages
+          ]?.description,
+      });
+    } else {
+      setApiError({
+        title: "Error",
+        description:
+          "Ha ocurrido un error inesperado. Por favor, intenta nuevamente.",
+      });
     }
-    if (contraseña !== confirmarContraseña) {
-      setError(
-        t(LocaleKeys.pages_auth_forgot_password_set_password_error_match)
-      );
-      return;
-    }
-    setError("");
-    alert(t(LocaleKeys.pages_auth_forgot_password_set_password_button_submit));
+  };
+
+  const onSubmit = (data: FormData) => {
+    setApiError(null);
+    mutation.mutate(data);
   };
 
   return (
@@ -44,29 +99,74 @@ export const EnterResetPasswordStep = () => {
             {t(LocaleKeys.pages_auth_forgot_password_set_password_description)}
           </p>
         </div>
-        <form onSubmit={manejarEnvio} className="mt-8 space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
           <div className="space-y-4">
-            <CustomInput
-              type="password"
-              placeholder={t(LocaleKeys.pages_auth_fields_password_placeholder)}
-              label={t(
-                LocaleKeys.pages_auth_forgot_password_set_password_label_password
+            <div>
+              <CustomInput
+                type="password"
+                placeholder={t(
+                  LocaleKeys.pages_auth_fields_password_placeholder
+                )}
+                label={t(
+                  LocaleKeys.pages_auth_forgot_password_set_password_label_password
+                )}
+                {...register("password", {
+                  required: "La contraseña es requerida",
+                  minLength: {
+                    value: 8,
+                    message: t(
+                      LocaleKeys.pages_auth_forgot_password_set_password_error_min_length
+                    ),
+                  },
+                })}
+              />
+              {errors.password && (
+                <p className="mt-1 text-sm text-red-600">
+                  {errors.password.message}
+                </p>
               )}
-            />
-            <CustomInput
-              type="password"
-              placeholder={t(LocaleKeys.pages_auth_fields_password_placeholder)}
-              label={t(
-                LocaleKeys.pages_auth_forgot_password_set_password_label_confirm_password
+            </div>
+
+            <div>
+              <CustomInput
+                type="password"
+                placeholder={t(
+                  LocaleKeys.pages_auth_fields_password_placeholder
+                )}
+                label={t(
+                  LocaleKeys.pages_auth_forgot_password_set_password_label_confirm_password
+                )}
+                {...register("confirmPassword", {
+                  required: "La confirmación de contraseña es requerida",
+                  validate: (value) =>
+                    value === password ||
+                    t(
+                      LocaleKeys.pages_auth_forgot_password_set_password_error_match
+                    ),
+                })}
+              />
+              {errors.confirmPassword && (
+                <p className="mt-1 text-sm text-red-600">
+                  {errors.confirmPassword.message}
+                </p>
               )}
-            />
+            </div>
           </div>
-          {error && <p className="text-sm text-red-600">{error}</p>}
+
+          {apiError !== null && (
+            <div className="flex flex-col bg-red-50 py-2 px-4 rounded-md border border-red-100">
+              <p className="text-red-500 text-sm">{apiError.description}</p>
+            </div>
+          )}
+
           <PrimaryButton
             children={t(
               LocaleKeys.pages_auth_forgot_password_set_password_button_submit
             )}
             className="w-full"
+            type="submit"
+            disabled={mutation.isPending}
+            loader={mutation.isPending}
           />
         </form>
         <div className="text-center">

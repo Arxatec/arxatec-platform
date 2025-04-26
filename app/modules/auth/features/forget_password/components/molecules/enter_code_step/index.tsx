@@ -1,22 +1,96 @@
 import { ArrowLeftIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
-import React, { useState, useRef, type JSX } from "react";
+import { useMutation } from "@tanstack/react-query";
+import type { AxiosError } from "axios";
+import React, { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
-import { PrimaryButton } from "~/components/atoms";
+import { PrimaryButton, SpinnerLoader } from "~/components/atoms";
 import { LocaleKeys } from "~/lang";
 import { APP_PATHS } from "~/routes/routes";
+import { VerifyResetCodeMessages, ResendCodeMessages } from "../../../messages";
+import { verifyResetCode, requestPasswordReset } from "../../../services";
+import type { VerifyResetCodeFormData } from "../../../models";
 
-export const EnterCodeStep = () => {
+interface Props {
+  handleNextStep: () => void;
+}
+
+export const EnterCodeStep = ({ handleNextStep }: Props) => {
   const [code, setCode] = useState<string[]>(["", "", "", ""]);
+  const [error, setError] = useState<any>(null);
+  const [errorResendCode, setErrorResendCode] = useState<any>(null);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const { t } = useTranslation();
+  const isCodeComplete = code.every((digit) => digit !== "");
+
+  const mutation = useMutation({
+    mutationKey: ["verifyResetCode"],
+    mutationFn: (data: VerifyResetCodeFormData) =>
+      verifyResetCode(data.code, data.email),
+    onSuccess: () => onSuccess(),
+    onError: (error: AxiosError) => onError(error),
+  });
+
+  const mutationResendCode = useMutation({
+    mutationKey: ["resendCode"],
+    mutationFn: () =>
+      requestPasswordReset(localStorage.getItem("EMAIL_PASSWORD_RESET") || ""),
+    onSuccess: () => onSuccessResendCode(),
+    onError: (error: AxiosError) => onErrorResendCode(error),
+  });
+
+  const handleResendCode = () => {
+    setErrorResendCode(null);
+    mutationResendCode.mutate();
+  };
+
+  const onSuccessResendCode = () => {
+    setErrorResendCode(null);
+  };
+
+  const onErrorResendCode = (error: AxiosError) => {
+    const statusCode = error.response?.status;
+    setErrorResendCode({
+      title:
+        ResendCodeMessages[statusCode as keyof typeof ResendCodeMessages].title,
+      description:
+        ResendCodeMessages[statusCode as keyof typeof ResendCodeMessages]
+          .description,
+    });
+  };
+
+  const onSuccess = () => {
+    setError(null);
+    handleNextStep();
+  };
+
+  const onError = (error: AxiosError) => {
+    const statusCode = error.response?.status;
+    setError({
+      title:
+        VerifyResetCodeMessages[
+          statusCode as keyof typeof VerifyResetCodeMessages
+        ].title,
+      description:
+        VerifyResetCodeMessages[
+          statusCode as keyof typeof VerifyResetCodeMessages
+        ].description,
+    });
+  };
+
+  const handleVerifyCode = () => {
+    setError(null);
+    mutation.mutate({
+      code: code.join(""),
+      email: localStorage.getItem("EMAIL_PASSWORD_RESET") || "",
+    });
+  };
 
   const handleChange = (index: number, value: string) => {
     if (value.length <= 1 && /^\d*$/.test(value)) {
       const newCode = [...code];
       newCode[index] = value;
       setCode(newCode);
-
       if (value && index < 3) {
         inputRefs.current[index + 1]?.focus();
       }
@@ -69,26 +143,45 @@ export const EnterCodeStep = () => {
               />
             ))}
           </div>
+
+          {error !== null && (
+            <div className="flex flex-col bg-red-50 py-2 px-4 rounded-md border border-red-100">
+              <p className="text-red-500 text-sm">{error.description}</p>
+            </div>
+          )}
+
           <PrimaryButton
             className="w-full"
             children={t(
               LocaleKeys.pages_auth_forgot_password_reset_password_button_submit
             )}
+            disabled={!isCodeComplete || mutation.isPending}
+            onClick={handleVerifyCode}
+            loader={mutation.isPending}
           />
           <div className="text-center space-y-4">
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 inline-flex items-center gap-1">
               {t(
                 LocaleKeys.pages_auth_forgot_password_reset_password_resend_text
               )}{" "}
-              <Link
-                to="#"
-                className="text-[#2563EB] hover:text-[#1D4ED8] font-medium"
-              >
-                {t(
-                  LocaleKeys.pages_auth_forgot_password_reset_password_resend_action
-                )}
-              </Link>
+              {mutationResendCode.isPending ? (
+                <SpinnerLoader size={18} color="#2563EB" />
+              ) : (
+                <button
+                  className="text-[#2563EB] hover:tet-[#1D4ED8] font-medium items-center inline"
+                  onClick={handleResendCode}
+                >
+                  {t(
+                    LocaleKeys.pages_auth_forgot_password_reset_password_resend_action
+                  )}
+                </button>
+              )}
             </p>
+            {errorResendCode && (
+              <p className="text-sm text-red-500">
+                {errorResendCode.description}
+              </p>
+            )}
             <div className="text-center">
               <Link
                 to={APP_PATHS.LOGIN}
