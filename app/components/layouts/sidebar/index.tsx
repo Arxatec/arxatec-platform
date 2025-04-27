@@ -13,6 +13,8 @@ import {
   ShieldCheckIcon,
   DocumentDuplicateIcon,
   PlusIcon,
+  GlobeAltIcon,
+  BuildingLibraryIcon,
 } from "@heroicons/react/24/outline";
 import {
   CalendarIcon as CalendarIconActive,
@@ -26,6 +28,8 @@ import {
   DocumentTextIcon as DocumentTextIconActive,
   ShieldCheckIcon as ShieldCheckIconActive,
   DocumentDuplicateIcon as DocumentDuplicateIconActive,
+  GlobeAltIcon as GlobeAltIconActive,
+  BuildingLibraryIcon as BuildingLibraryIconActive,
 } from "@heroicons/react/24/solid";
 import logo from "~/assets/images/logo.png";
 
@@ -40,12 +44,10 @@ const navigationTest = [
     href: APP_PATHS.DASHBOARD,
     iconInactive: HomeIcon,
     iconActive: HomeIconActive,
-    current: false,
   },
   {
     name: "Comunidad",
     href: APP_PATHS.POSTS,
-    current: true,
     iconInactive: UsersIcon,
     iconActive: UsersIconActive,
   },
@@ -53,48 +55,61 @@ const navigationTest = [
     name: "Mis casos",
     href: APP_PATHS.CASES,
     iconInactive: FolderIcon,
-    current: false,
     iconActive: FolderIconActive,
   },
   {
     name: "Calendario",
     href: APP_PATHS.CALENDAR,
     iconInactive: CalendarIcon,
-    current: false,
     iconActive: CalendarIconActive,
   },
   {
     name: "Mensajes",
     href: APP_PATHS.CHATS,
     iconInactive: ChatBubbleBottomCenterIcon,
-    current: false,
     iconActive: ChatBubbleBottomCenterIconActive,
+  },
+  {
+    name: "Articulos",
+    href: APP_PATHS.ARTICLES,
+    iconInactive: DocumentTextIcon,
+    iconActive: DocumentTextIconActive,
+  },
+  {
+    name: "Abogados",
+    href: APP_PATHS.LAWYERS,
+    iconInactive: BuildingLibraryIcon,
+    iconActive: BuildingLibraryIconActive,
   },
   {
     name: "Comunidades",
     href: "#",
     iconInactive: CalendarIcon,
     iconActive: CalendarIconActive,
-    current: true,
     children: [
       {
         name: "Crear comunidad",
-        href: "#",
-        current: false,
         iconInactive: PlusIcon,
         iconActive: PlusIcon,
+        action: () => {
+          console.log("crear comunidad");
+        },
       },
       {
         name: "Desarrollo legal",
-        href: "#",
-        current: false,
+        href: `${APP_PATHS.COMMUNITIES}/development-law`,
         image:
           "https://images.pexels.com/photos/5727885/pexels-photo-5727885.jpeg",
       },
       {
         name: "Derechos laborales",
-        href: "#",
-        current: false,
+        href: `${APP_PATHS.COMMUNITIES}/labor-law`,
+        image:
+          "https://images.pexels.com/photos/5648040/pexels-photo-5648040.jpeg",
+      },
+      {
+        name: "Derechos de la familia",
+        href: `${APP_PATHS.COMMUNITIES}/family-law`,
         image:
           "https://images.pexels.com/photos/5648040/pexels-photo-5648040.jpeg",
       },
@@ -104,49 +119,48 @@ const navigationTest = [
     name: "Recursos",
     href: "#",
     iconInactive: CalendarIcon,
-    current: true,
     iconActive: CalendarIconActive,
 
     children: [
       {
         name: "Acerca de Arxatec",
-        href: "#",
-        current: false,
+        href: "https://www.arxatec.net/es/",
         iconInactive: InformationCircleIcon,
         iconActive: InformationCircleIconActive,
       },
       {
         name: "Ayuda",
-        href: "#",
-        current: false,
+        href: "https://www.arxatec.net/es/support",
         iconInactive: QuestionMarkCircleIcon,
         iconActive: QuestionMarkCircleIconActive,
       },
       {
+        name: "Comunidades",
+        href: APP_PATHS.COMMUNITIES,
+        iconInactive: GlobeAltIcon,
+        iconActive: GlobeAltIconActive,
+      },
+      {
         name: "Nuestro blog",
-        href: "#",
-        current: false,
+        href: "https://www.arxatec.net/es/blog",
         iconInactive: PencilSquareIcon,
         iconActive: PencilSquareIconActive,
       },
       {
-        name: "Reglas de Arxatec",
-        href: "#",
-        current: false,
+        name: "Planes de Arxatec",
+        href: "https://www.arxatec.net/es/pricing",
         iconInactive: DocumentTextIcon,
         iconActive: DocumentTextIconActive,
       },
       {
         name: "Politica de privacidad",
-        href: "#",
-        current: false,
+        href: "https://www.arxatec.net/es/privacy",
         iconInactive: ShieldCheckIcon,
         iconActive: ShieldCheckIconActive,
       },
       {
         name: "Terminos y condiciones",
-        href: "#",
-        current: false,
+        href: "https://www.arxatec.net/es/terms",
         iconInactive: DocumentDuplicateIcon,
         iconActive: DocumentDuplicateIconActive,
       },

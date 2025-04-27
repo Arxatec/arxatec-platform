@@ -4,6 +4,7 @@ import { CustomSelector, PrimaryButton } from "~/components/atoms";
 import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { getDayName, getMonthName } from "~/utilities/date_utilities";
+import { CreateEvent } from "../create_event";
 
 const viewCalendars = [
   { name: "Día", id: calendars.DAY },
@@ -21,7 +22,7 @@ interface Props {
 }
 export const HeaderCalendar: React.FC<Props> = ({ changeCalendar }) => {
   const [selected, setSelected] = useState(viewCalendars[0]);
-
+  const [open, setOpen] = useState(false);
   const handleChangeCalendar = (select: { name: string; id: calendars }) => {
     changeCalendar(select.id);
     setSelected(select);
@@ -29,6 +30,7 @@ export const HeaderCalendar: React.FC<Props> = ({ changeCalendar }) => {
 
   return (
     <header className="flex flex-none items-center justify-between px-6 py-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all">
+      <CreateEvent open={open} setOpen={setOpen} />
       <div>
         <h1 className="text-base font-semibold text-gray-900">
           <time dateTime="2022-01-22" className="sm:hidden">
@@ -73,7 +75,10 @@ export const HeaderCalendar: React.FC<Props> = ({ changeCalendar }) => {
           />
 
           <div className="ml-6 h-6 w-px bg-gray-300" />
-          <PrimaryButton className="ml-6 rounded-md bg-blue-600 flex items-center gap-2 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+          <PrimaryButton
+            onClick={() => setOpen(!open)}
+            className="ml-6 rounded-md bg-blue-600 flex items-center gap-2 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          >
             <PlusIcon className="size-5 text-white" />
             Añadir evento
           </PrimaryButton>

@@ -1,9 +1,9 @@
-import { EllipsisHorizontalIcon } from "@heroicons/react/16/solid";
 import {
   BookmarkIcon,
   EyeSlashIcon,
   FlagIcon,
-} from "@heroicons/react/20/solid";
+  EllipsisHorizontalIcon,
+} from "@heroicons/react/24/solid";
 import { CustomDropdown } from "~/components/atoms";
 
 export const PostMenu = () => {

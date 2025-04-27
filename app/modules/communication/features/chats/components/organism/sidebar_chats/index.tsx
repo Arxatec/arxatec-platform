@@ -31,7 +31,7 @@ export const SidebarChats = ({
           />
         </div>
 
-        <div className="px-2 overflow-auto h-full">
+        <div className="px-2 overflow-hidden h-full">
           {users.map((user) => (
             <button
               key={user.id}

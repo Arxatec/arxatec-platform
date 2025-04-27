@@ -15,7 +15,6 @@ export default function CalendarPage() {
   return (
     <div className="flex flex-col">
       <div className="mx-auto px-4 max-w-7xl w-full h-full flex flex-col gap-2">
-        <CreateEvent />
         <HeaderCalendar changeCalendar={changeCalendar} />
         {calendar == calendars.DAY && <CalendarDay />}
         {calendar == calendars.MONTH && <CalendarMonth />}

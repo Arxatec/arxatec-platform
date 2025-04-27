@@ -9,24 +9,39 @@ import {
 } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import {
+  BookOpenIcon,
+  CalendarDaysIcon,
+  DocumentIcon,
   DocumentPlusIcon,
   FolderIcon,
   FolderPlusIcon,
-  HashtagIcon,
-  TagIcon,
-} from "@heroicons/react/24/outline";
+  UserGroupIcon,
+} from "@heroicons/react/24/solid";
 import { useState } from "react";
+import Scrollbars from "react-custom-scrollbars-2";
 
 const projects = [
-  { id: 1, name: "Workflow Inc. / Website Redesign", url: "#" },
-  // More projects...
+  { id: 1, name: "Caso de violencia", url: "#" },
+  { id: 2, name: "Caso de abuso", url: "#" },
+  { id: 3, name: "Caso de acoso", url: "#" },
+  { id: 4, name: "Caso de discriminación", url: "#" },
+  { id: 5, name: "Caso de discapacidad", url: "#" },
+  { id: 6, name: "Caso de lesiones", url: "#" },
+  { id: 7, name: "Caso de bienes y servicios", url: "#" },
 ];
-const recent = [projects[0]];
+const recent = [projects[0], projects[1], projects[2], projects[3]];
 const quickActions = [
-  { name: "Add new file...", icon: DocumentPlusIcon, shortcut: "N", url: "#" },
-  { name: "Add new folder...", icon: FolderPlusIcon, shortcut: "F", url: "#" },
-  { name: "Add hashtag...", icon: HashtagIcon, shortcut: "H", url: "#" },
-  { name: "Add label...", icon: TagIcon, shortcut: "L", url: "#" },
+  { name: "Mis casos", icon: DocumentIcon, shortcut: "C", url: "#" },
+  { name: "Mis clientes", icon: UserGroupIcon, shortcut: "U", url: "#" },
+  {
+    name: "Agregar publicación",
+    icon: DocumentPlusIcon,
+    shortcut: "N",
+    url: "#",
+  },
+  { name: "Agregar evento", icon: CalendarDaysIcon, shortcut: "F", url: "#" },
+  { name: "Agregar caso", icon: FolderPlusIcon, shortcut: "H", url: "#" },
+  { name: "Agregar articulo", icon: BookOpenIcon, shortcut: "L", url: "#" },
 ];
 
 interface Props {
@@ -55,7 +70,7 @@ export const CommandPalettes: React.FC<Props> = ({ open, setOpen }) => {
     >
       <DialogBackdrop
         transition
-        className="fixed inset-0 bg-gray-900/60 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
+        className="fixed inset-0 bg-gray-950/75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
       />
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto p-4 sm:p-6 md:p-20">
@@ -73,8 +88,8 @@ export const CommandPalettes: React.FC<Props> = ({ open, setOpen }) => {
             <div className="grid grid-cols-1">
               <ComboboxInput
                 autoFocus
-                className="col-start-1 row-start-1 h-12 w-full pl-11 pr-4 text-base text-gray-900 outline-none placeholder:text-gray-400 sm:text-sm"
-                placeholder="Search..."
+                className="col-start-1 row-start-1 h-12 w-full pl-11 pr-4 text-gray-900 outline-none placeholder:text-gray-400 sm:text-sm"
+                placeholder="Buscar..."
                 onChange={(event) => setQuery(event.target.value)}
                 onBlur={() => setQuery("")}
               />
@@ -85,80 +100,85 @@ export const CommandPalettes: React.FC<Props> = ({ open, setOpen }) => {
             </div>
 
             {(query === "" || filteredProjects.length > 0) && (
-              <ComboboxOptions
-                static
-                as="ul"
-                className="max-h-80 scroll-py-2 divide-y divide-gray-100 overflow-y-auto"
-              >
-                <li className="p-2">
-                  {query === "" && (
-                    <h2 className="mb-2 mt-4 px-3 text-xs font-semibold text-gray-500">
-                      Recent searches
-                    </h2>
-                  )}
-                  <ul className="text-sm text-gray-700">
-                    {(query === "" ? recent : filteredProjects).map(
-                      (project) => (
-                        <ComboboxOption
-                          as="li"
-                          key={project.id}
-                          value={project}
-                          className="group flex cursor-default select-none items-center rounded-md px-3 py-2 data-[focus]:bg-blue-600 data-[focus]:text-white data-[focus]:outline-none"
-                        >
-                          <FolderIcon
-                            className="size-6 flex-none text-gray-400 group-data-[focus]:text-white forced-colors:group-data-[focus]:text-[Highlight]"
-                            aria-hidden="true"
-                          />
-                          <span className="ml-3 flex-auto truncate">
-                            {project.name}
-                          </span>
-                          <span className="ml-3 hidden flex-none text-blue-100 group-data-[focus]:inline">
-                            Jump to...
-                          </span>
-                        </ComboboxOption>
-                      )
-                    )}
-                  </ul>
-                </li>
-                {query === "" && (
+              <Scrollbars autoHeight autoHeightMax={320} height={320} autoHide>
+                <ComboboxOptions
+                  static
+                  as="ul"
+                  className=" h-full scroll-py-2 divide-y divide-gray-100 overflow-hidden"
+                >
                   <li className="p-2">
-                    <h2 className="sr-only">Quick actions</h2>
+                    {query === "" && (
+                      <h2 className="mb-2 mt-4 px-3 text-xs font-semibold text-gray-500">
+                        Últimos casos
+                      </h2>
+                    )}
                     <ul className="text-sm text-gray-700">
-                      {quickActions.map((action) => (
-                        <ComboboxOption
-                          as="li"
-                          key={action.shortcut}
-                          value={action}
-                          className="group flex cursor-default select-none items-center rounded-md px-3 py-2 data-[focus]:bg-blue-600 data-[focus]:text-white data-[focus]:outline-none"
-                        >
-                          <action.icon
-                            className="size-6 flex-none text-gray-400 group-data-[focus]:text-white forced-colors:group-data-[focus]:text-[Highlight]"
-                            aria-hidden="true"
-                          />
-                          <span className="ml-3 flex-auto truncate">
-                            {action.name}
-                          </span>
-                          <span className="ml-3 flex-none text-xs font-semibold text-gray-400 group-data-[focus]:text-blue-100">
-                            <kbd className="font-sans">⌘</kbd>
-                            <kbd className="font-sans">{action.shortcut}</kbd>
-                          </span>
-                        </ComboboxOption>
-                      ))}
+                      {(query === "" ? recent : filteredProjects).map(
+                        (project) => (
+                          <ComboboxOption
+                            as="li"
+                            key={project.id}
+                            value={project}
+                            className="group flex cursor-default select-none items-center rounded-md px-3 py-2 data-[focus]:bg-blue-600 data-[focus]:text-white data-[focus]:outline-none"
+                          >
+                            <FolderIcon
+                              className="size-5 flex-none text-gray-700 group-data-[focus]:text-white forced-colors:group-data-[focus]:text-[Highlight]"
+                              aria-hidden="true"
+                            />
+                            <span className="ml-3 flex-auto truncate">
+                              {project.name}
+                            </span>
+                            <span className="ml-3 hidden flex-none text-blue-100 group-data-[focus]:inline">
+                              Ir a...
+                            </span>
+                          </ComboboxOption>
+                        )
+                      )}
                     </ul>
                   </li>
-                )}
-              </ComboboxOptions>
+                  {query === "" && (
+                    <li className="p-2">
+                      <h2 className="sr-only">Quick actions</h2>
+                      <ul className="text-sm text-gray-700">
+                        {quickActions.map((action) => (
+                          <ComboboxOption
+                            as="li"
+                            key={action.shortcut}
+                            value={action}
+                            className="group transition-all cursor-pointer flex select-none items-center rounded-md px-3 py-2 data-[focus]:bg-blue-600 data-[focus]:text-white data-[focus]:outline-none"
+                          >
+                            <action.icon
+                              className="size-5 flex-none text-gray-700 group-data-[focus]:text-white forced-colors:group-data-[focus]:text-[Highlight]"
+                              aria-hidden="true"
+                            />
+                            <span className="ml-3 flex-auto truncate">
+                              {action.name}
+                            </span>
+                            <span className="ml-3 flex-none text-xs font-semibold text-gray-400 group-data-[focus]:text-blue-100">
+                              <kbd className="font-sans">⌘</kbd>
+                              <kbd className="font-sans">{action.shortcut}</kbd>
+                            </span>
+                          </ComboboxOption>
+                        ))}
+                      </ul>
+                    </li>
+                  )}
+                </ComboboxOptions>
+              </Scrollbars>
             )}
 
             {query !== "" && filteredProjects.length === 0 && (
-              <div className="px-6 py-14 text-center sm:px-14">
+              <div className="px-6 py-14 text-center sm:px-14 max-w-lg mx-auto">
                 <FolderIcon
                   className="mx-auto size-6 text-gray-400"
                   aria-hidden="true"
                 />
-                <p className="mt-4 text-sm text-gray-900">
-                  We couldn't find any projects with that term. Please try
-                  again.
+                <p className="mt-2 text-sm font-semibold text-gray-600">
+                  No se encontraron casos{" "}
+                </p>
+                <p className="text-sm text-gray-500">
+                  Intenta buscando en tus casos propios en la sección de casos
+                  propios, o intenta con otro término.
                 </p>
               </div>
             )}

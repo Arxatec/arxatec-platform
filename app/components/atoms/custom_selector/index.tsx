@@ -74,7 +74,7 @@ export const CustomSelector = <T extends Record<string, any>>({
             />
           </ListboxButton>
 
-          <ListboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1.5 shadow-lg ring-1 ring-black/5 focus:outline-none text-sm">
+          <ListboxOptions className="absolute z-10 mt-1 max-h-64 w-full overflow-auto rounded-md bg-white py-1.5 shadow-lg ring-1 ring-black/5 focus:outline-none text-sm">
             {options.map((option) => (
               <ListboxOption
                 key={option.id}

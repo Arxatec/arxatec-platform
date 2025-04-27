@@ -12,7 +12,7 @@ export default function DrawerHorizontal({ open, setOpen, children }: Props) {
     <Dialog open={open} onClose={setOpen} className="relative z-[60]">
       <DialogBackdrop
         transition
-        className="fixed inset-0 bg-gray-900/75 transition-opacity duration-500 ease-in-out data-[closed]:opacity-0"
+        className="fixed inset-0 bg-gray-950/75 transition-opacity duration-500 ease-in-out data-[closed]:opacity-0"
       />
 
       <div className="fixed inset-0 overflow-hidden">

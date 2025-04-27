@@ -53,6 +53,19 @@ export default [
         ROUTE_NAMES.SETTINGS,
         "modules/settings/features/settings_lawyer/components/pages/settings_lawyer_page.tsx"
       ),
+      route(
+        ROUTE_NAMES.LAWYERS,
+        "modules/lawyers/features/view_lawyers/components/pages/view_lawyers_page.tsx"
+      ),
+      ...prefix(ROUTE_NAMES.ARTICLES, [
+        index(
+          "modules/article/features/view_articles/components/pages/view_articles_page.tsx"
+        ),
+        route(
+          ROUTE_NAMES.CREATE_ARTICLE,
+          "modules/article/features/create_article/components/pages/create_article_page.tsx"
+        ),
+      ]),
     ]),
     route(
       ROUTE_NAMES.LOGIN,

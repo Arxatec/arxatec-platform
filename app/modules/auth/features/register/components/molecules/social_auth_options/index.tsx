@@ -16,11 +16,13 @@ export const SocialAuthOptions = () => {
       <Separator />
       <div className="mt-6 ">
         <PrimaryButton
-          className="w-full border border-gray-100 bg-white text-gray-900 flex items-center justify-center hover:bg-gray-50 gap-2"
+          className="rounded-md gap-3 bg-white px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50  text-center flex items-center justify-center text-gray-900 w-full"
           onClick={() => login()}
         >
           <img src={googleIcon} alt="Google" className="size-4" />
-          {t(LocaleKeys.pages_auth_social_google)}
+          <p className="text-gray-900">
+            {t(LocaleKeys.pages_auth_social_google)}
+          </p>
         </PrimaryButton>
       </div>
     </div>

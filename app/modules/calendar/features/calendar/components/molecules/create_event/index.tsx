@@ -29,12 +29,14 @@ const generateTimeOptions = (): string[] => {
   return timeOptions;
 };
 
-export const CreateEvent = () => {
+interface Props {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}
+export const CreateEvent: React.FC<Props> = ({ open, setOpen }) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     new Date()
   );
-
-  const [open, setOpen] = useState(true);
 
   const [selectedTimeStart, setSelectedTimeStart] = useState<string>("08:00");
   const [selectedTimeEnd, setSelectedTimeEnd] = useState<string>("18:00");
@@ -52,7 +54,7 @@ export const CreateEvent = () => {
     <Dialog open={open} onClose={setOpen} className="relative z-[60]">
       <DialogBackdrop
         transition
-        className="fixed inset-0 bg-gray-950/55 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
+        className="fixed inset-0 bg-gray-950/75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
       />
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -69,7 +71,10 @@ export const CreateEvent = () => {
                 >
                   Crear evento
                 </DialogTitle>
-                <button className="rounded-full p-1 group focus:ring focus:ring-blue-600 hover:bg-gray-100 transition-all outline-none">
+                <button
+                  onClick={() => setOpen(!open)}
+                  className="rounded-full p-1 group focus:ring focus:ring-blue-600 hover:bg-gray-100 transition-all outline-none"
+                >
                   <XMarkIcon className="size-5 text-gray-400" />
                 </button>
               </div>

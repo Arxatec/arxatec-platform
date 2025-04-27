@@ -3,8 +3,8 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react";
-import { ChevronRightIcon, Cog6ToothIcon } from "@heroicons/react/24/outline";
-import { Link, useLocation } from "react-router";
+import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import { Link, useLocation, useNavigate } from "react-router";
 import { classNames } from "~/utilities/string_utilities";
 
 interface Props {
@@ -16,9 +16,9 @@ interface Props {
     iconActive: React.ElementType;
     children?: {
       name: string;
-      href: string;
-      current: boolean;
+      href?: string;
       image?: string;
+      action?: () => void;
       iconInactive?: React.ElementType;
       iconActive?: React.ElementType;
     }[];
@@ -27,6 +27,7 @@ interface Props {
 
 export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   return (
     <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col ">
       <div className="flex grow flex-col  overflow-y-auto  bg-white   ">
@@ -89,13 +90,23 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
                           {item.children.map((subItem) => (
                             <li key={subItem.name}>
                               <DisclosureButton
-                                as="a"
-                                href={subItem.href}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  if (subItem.action !== undefined) {
+                                    subItem.action();
+                                    return;
+                                  }
+
+                                  if (subItem.href !== undefined) {
+                                    if (subItem.href.includes("http")) {
+                                      window.open(subItem.href, "_blank");
+                                    } else {
+                                      navigate(subItem.href);
+                                    }
+                                  }
+                                }}
                                 className={classNames(
-                                  subItem.current
-                                    ? "bg-gray-50"
-                                    : "hover:bg-gray-50",
-                                  "flex items-center gap-x-2 rounded-md py-2 pl-4 pr-2 text-sm text-gray-700 hover:bg-slate-50"
+                                  "flex items-center gap-x-2 rounded-md py-2 pl-4 pr-2 text-sm text-gray-700 hover:bg-slate-50 w-full"
                                 )}
                               >
                                 {subItem.image ? (
