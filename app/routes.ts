@@ -46,10 +46,6 @@ export default [
         "modules/communication/features/chats/components/pages/chats_page.tsx"
       ),
       route(
-        ROUTE_NAMES.CASES,
-        "modules/cases/features/view_cases/components/pages/view_cases_page.tsx"
-      ),
-      route(
         ROUTE_NAMES.SETTINGS,
         "modules/settings/features/settings_lawyer/components/pages/settings_lawyer_page.tsx"
       ),
@@ -57,6 +53,27 @@ export default [
         ROUTE_NAMES.LAWYERS,
         "modules/lawyers/features/view_lawyers/components/pages/view_lawyers_page.tsx"
       ),
+      ...prefix(ROUTE_NAMES.CASES, [
+        index(
+          "modules/cases/features/view_cases/components/pages/view_cases_page.tsx"
+        ),
+        route(
+          ROUTE_NAMES.PERSONAL_CASES,
+          "modules/cases/features/personal_cases/components/pages/personal_cases_page.tsx"
+        ),
+        route(
+          ROUTE_NAMES.EXPLORER_CASES,
+          "modules/cases/features/explorer_cases/components/pages/explorer_cases_page.tsx"
+        ),
+        route(
+          ROUTE_NAMES.CASE,
+          "modules/cases/features/view_case/components/pages/view_case_page.tsx"
+        ),
+        route(
+          ROUTE_NAMES.CREATE_CASE,
+          "modules/cases/features/create_case/components/pages/create_case_page.tsx"
+        ),
+      ]),
       ...prefix(ROUTE_NAMES.ARTICLES, [
         index(
           "modules/article/features/view_articles/components/pages/view_articles_page.tsx"

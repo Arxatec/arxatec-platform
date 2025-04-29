@@ -4,7 +4,7 @@ import { CardArticle } from "../molecules";
 
 export default function ViewArticles() {
   return (
-    <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 w-full">
+    <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 w-full min-h-screen">
       <div className="bg-white px-4 py-4 rounded-md mb-2">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold text-gray-900">

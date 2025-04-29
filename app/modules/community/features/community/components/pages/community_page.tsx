@@ -249,7 +249,7 @@ const communityMarkers = [
 
 export default function CommunityPage() {
   return (
-    <div className="w-full max-w-5xl h-full mx-auto">
+    <div className="w-full max-w-5xl h-full mx-auto min-h-screen">
       <CommunityHeader title="Foro Jurídico" />
       <div className="grid grid-cols-[69.7%_30%] gap-2 justify-between mt-2">
         <div>

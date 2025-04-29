@@ -241,21 +241,21 @@ export const Table = () => {
               >
                 <div className="flex items-center gap-2">
                   <ClockIcon className="size-5 text-gray-500" />
-                  Última actualización
+                  Reciente
                 </div>
               </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
             {activityItems.map((item) => (
-              <tr key={item.commit} className="divide-x divide-gray-100">
+              <tr
+                key={item.commit}
+                className="divide-x divide-gray-100 hover:bg-gray-50 cursor-pointer transition-all"
+              >
                 <td className="py-4 pr-4 pl-4">
-                  <div className="flex gap-x-3">
+                  <div className="flex gap-x-3 flex-wrap">
                     <div className="font-mono text-sm text-gray-700">
                       {item.commit}
-                    </div>
-                    <div className="rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-white/10 ring-inset">
-                      {item.folder}
                     </div>
                   </div>
                 </td>
@@ -274,7 +274,7 @@ export const Table = () => {
                     </div>
                   </div>
                 </td>
-                <td className="py-4 pr-4 pl-4 text-sm/6 lg:pr-20">
+                <td className="py-4 pr-4 pl-4 text-sm/6">
                   <div className="flex items-center justify-end gap-x-2 sm:justify-start">
                     <div
                       className={classNames(
@@ -287,7 +287,7 @@ export const Table = () => {
                     <div className="text-gray-700">{item.status}</div>
                   </div>
                 </td>
-                <td className="py-4 pr-4 pl-4 text-left text-sm/6 text-gray-700 lg:pr-8">
+                <td className="py-4 pr-4 pl-4 text-left text-sm/6 text-gray-700">
                   <time dateTime={item.dateTime}>{item.date}</time>
                 </td>
               </tr>

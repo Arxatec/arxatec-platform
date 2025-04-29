@@ -46,16 +46,16 @@ const navigationTest = [
     iconActive: HomeIconActive,
   },
   {
-    name: "Comunidad",
-    href: APP_PATHS.POSTS,
-    iconInactive: UsersIcon,
-    iconActive: UsersIconActive,
-  },
-  {
     name: "Mis casos",
     href: APP_PATHS.CASES,
     iconInactive: FolderIcon,
     iconActive: FolderIconActive,
+  },
+  {
+    name: "Mensajes",
+    href: APP_PATHS.CHATS,
+    iconInactive: ChatBubbleBottomCenterIcon,
+    iconActive: ChatBubbleBottomCenterIconActive,
   },
   {
     name: "Calendario",
@@ -64,10 +64,10 @@ const navigationTest = [
     iconActive: CalendarIconActive,
   },
   {
-    name: "Mensajes",
-    href: APP_PATHS.CHATS,
-    iconInactive: ChatBubbleBottomCenterIcon,
-    iconActive: ChatBubbleBottomCenterIconActive,
+    name: "Comunidad",
+    href: APP_PATHS.POSTS,
+    iconInactive: UsersIcon,
+    iconActive: UsersIconActive,
   },
   {
     name: "Articulos",
@@ -92,7 +92,7 @@ const navigationTest = [
         iconInactive: PlusIcon,
         iconActive: PlusIcon,
         action: () => {
-          console.log("crear comunidad");
+          console.log("abrir modal para crear comunidad");
         },
       },
       {
