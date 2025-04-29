@@ -49,7 +49,7 @@ export const CustomAvatar: React.FC<Props> = ({
     >
       {isLoading && (
         <div
-          className="absolute inset-0 flex items-center justify-center bg-gray-200 rounded-full"
+          className="absolute inset-0 flex items-center justify-center bg-gray-200 rounded-md"
           style={{ width: size, height: size }}
         >
           <span className="loader" />
@@ -58,7 +58,7 @@ export const CustomAvatar: React.FC<Props> = ({
 
       {hasError ? (
         <div
-          className={`flex items-center justify-center rounded-full text-white font-medium ${avatarColor}`}
+          className={`flex items-center justify-center rounded-md text-white font-medium ${avatarColor}`}
           style={{ width: size, height: size }}
         >
           {initials}
@@ -69,7 +69,7 @@ export const CustomAvatar: React.FC<Props> = ({
           alt={altText}
           onLoad={handleImageLoad}
           onError={handleImageError}
-          className={`rounded-full object-cover transition-opacity ${
+          className={`rounded-md object-cover transition-opacity ${
             isLoading ? "opacity-0" : "opacity-100"
           }`}
           style={{ width: size, height: size }}

@@ -78,6 +78,7 @@ export default function ViewCasesPage() {
   const navigate = useNavigate();
   const navigateToExplorerCases = () => navigate(APP_PATHS.EXPLORER_CASES);
   const navigateToMyCases = () => navigate(APP_PATHS.PERSONAL_CASES);
+  const navigateToClients = () => navigate(APP_PATHS.CLIENTS);
   const navigateToCreateCase = () => navigate(APP_PATHS.CREATE_CASE);
 
   const chartRef = useRef<HTMLDivElement>(null);
@@ -122,7 +123,7 @@ export default function ViewCasesPage() {
             </div>
           </button>
           <button
-            onClick={navigateToMyCases}
+            onClick={navigateToClients}
             className="w-full max-w-80 shadow-sm hover:shadow-md transition-all rounded-md p-4 bg-white"
           >
             <div>

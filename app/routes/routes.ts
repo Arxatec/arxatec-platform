@@ -37,6 +37,9 @@ export enum APP_PATHS {
   ARTICLES = "/articles",
   CREATE_ARTICLE = "/articles/create",
 
+  // CLIENTS
+  CLIENTS = "/cases/clients",
+
   // LAWYERS
   LAWYERS = "/lawyers",
 }
@@ -77,6 +80,9 @@ export enum ROUTE_NAMES {
   EXPLORER_CASES = "explorer",
   CASE = ":id",
   CREATE_CASE = "create",
+
+  // CLIENTS
+  CLIENTS = "clients",
 
   // SETTINGS
   SETTINGS = "settings",

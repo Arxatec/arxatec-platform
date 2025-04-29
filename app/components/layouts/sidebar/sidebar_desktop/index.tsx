@@ -30,8 +30,8 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
   const navigate = useNavigate();
   return (
     <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col ">
-      <div className="flex grow flex-col  overflow-y-auto  bg-white   ">
-        <div className="flex h-16 items-center border-b border-gray-200 px-6">
+      <div className="flex flex-col overflow-y-auto bg-white">
+        <div className="flex h-16 items-center border-b border-gray-200 px-6 py-5">
           <img alt="Arxatec" src={logo} className="h-10 w-auto" />
         </div>
         <nav className="flex flex-1 flex-col px-6 border-r border-gray-200 pt-5">

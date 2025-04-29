@@ -4,8 +4,13 @@ import {
   UserIcon,
   FolderIcon,
   CalendarIcon,
+  MagnifyingGlassIcon,
+  ArrowLeftIcon,
 } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router";
+import { CustomInput, CustomSelector } from "~/components/atoms";
 import { CustomTable } from "~/components/molecules/custom_table";
+import { APP_PATHS } from "~/routes/routes";
 
 const columns = [
   {
@@ -342,13 +347,59 @@ const data = [
 ];
 
 export default function ExploreCasesPage() {
+  const navigate = useNavigate();
+  const onBack = () => navigate(APP_PATHS.CASES);
   return (
     <div className="mx-auto max-w-6xl px-6 min-h-screen">
+      <div className="flex items-center justify-between mb-2 gap-2">
+        <button
+          onClick={onBack}
+          className="flex items-center bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-all hover:bg-gray-50"
+        >
+          <ArrowLeftIcon className="size-4 text-gray-500" strokeWidth={2} />
+        </button>
+        <div className="bg-white p-4 w-full  rounded-lg flex items-center justify-start shadow-sm hover:shadow-md transition-all">
+          <h2 className="text-base font-bold">Explorar casos</h2>
+        </div>
+      </div>
+      <div className="flex gap-2 bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-all">
+        <div className="w-full">
+          <CustomInput
+            placeholder="Buscar..."
+            className="w-full"
+            startAdornment={
+              <MagnifyingGlassIcon className="size-5 text-gray-500" />
+            }
+          />
+        </div>
+        <div className="w-56">
+          <CustomSelector
+            options={[
+              { id: "all", name: "Todos" },
+              { id: "civil", name: "Civil" },
+              { id: "laboral", name: "Laboral" },
+              { id: "familiar", name: "Familiar" },
+              { id: "penal", name: "Penal" },
+            ]}
+            selected={{ id: "all", name: "Todos" }}
+            onChange={() => {}}
+          />
+        </div>
+        <div className="w-56">
+          <CustomSelector
+            options={[
+              { id: "Más antiguo", name: "Más antiguo" },
+              { id: "Más reciente", name: "Más reciente" },
+            ]}
+            selected={{ id: "Más reciente", name: "Más reciente" }}
+            onChange={() => {}}
+          />
+        </div>
+      </div>
       <CustomTable
         columns={columns}
         data={data}
         onRowClick={(row) => console.log(row)}
-        className="mi-clase-personalizada"
       />
     </div>
   );

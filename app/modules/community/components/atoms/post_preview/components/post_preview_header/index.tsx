@@ -1,3 +1,4 @@
+import { CustomAvatar } from "~/components/atoms";
 import { PostMenu } from "~/modules/community/components/atoms";
 
 interface Props {
@@ -10,10 +11,11 @@ export const PostPreviewHeader: React.FC<Props> = ({ avatar, username }) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center justify-start gap-2">
-        <img
-          alt="avatar"
-          src={avatar}
-          className="inline-block size-7 rounded-full object-cover"
+        <CustomAvatar
+          avatar={avatar}
+          altText={username}
+          size="1.5rem"
+          username={username}
         />
         <p className="text-sm font-medium text-gray-700">{username}</p>
         <span className="size-1 bg-slate-500 rounded-full" />

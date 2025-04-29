@@ -73,6 +73,10 @@ export default [
           ROUTE_NAMES.CREATE_CASE,
           "modules/cases/features/create_case/components/pages/create_case_page.tsx"
         ),
+        route(
+          ROUTE_NAMES.CLIENTS,
+          "modules/cases/features/clients/components/pages/clients_page.tsx"
+        ),
       ]),
       ...prefix(ROUTE_NAMES.ARTICLES, [
         index(
