@@ -186,17 +186,17 @@ export const SelectUser: React.FC<Props> = ({ open, setOpen }) => {
                         <div className="flex flex-auto flex-col justify-between p-6">
                           <dl className="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-700">
                             <dt className="col-end-1 font-semibold text-gray-900">
-                              Phone
+                              Celular
                             </dt>
                             <dd>{activeOption.phone}</dd>
-                            <dt className="col-end-1 font-semibold text-gray-900">
-                              URL
-                            </dt>
-                            <dd className="truncate">{activeOption.url}</dd>
                             <dt className="col-end-1 font-semibold text-gray-900">
                               Email
                             </dt>
                             <dd className="truncate">{activeOption.email}</dd>
+                            <dt className="col-end-1 font-semibold text-gray-900">
+                              Dirección
+                            </dt>
+                            <dd className="truncate">{activeOption.url}</dd>
                           </dl>
                           <PrimaryButton>Seleccionar cliente</PrimaryButton>
                         </div>
