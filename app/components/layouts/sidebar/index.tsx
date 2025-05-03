@@ -70,12 +70,6 @@ const navigationTest = [
     iconActive: UsersIconActive,
   },
   {
-    name: "Articulos",
-    href: APP_PATHS.ARTICLES,
-    iconInactive: DocumentTextIcon,
-    iconActive: DocumentTextIconActive,
-  },
-  {
     name: "Abogados",
     href: APP_PATHS.LAWYERS,
     iconInactive: BuildingLibraryIcon,
@@ -142,7 +136,7 @@ const navigationTest = [
       },
       {
         name: "Nuestro blog",
-        href: "https://www.arxatec.net/es/blog",
+        href: APP_PATHS.ARTICLES,
         iconInactive: PencilSquareIcon,
         iconActive: PencilSquareIconActive,
       },

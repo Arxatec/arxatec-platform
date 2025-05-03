@@ -1,8 +1,12 @@
 import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { CustomInput, CustomSelector, PrimaryButton } from "~/components/atoms";
 import { CardArticle } from "../molecules";
+import { useNavigate } from "react-router";
+import { APP_PATHS } from "~/routes/routes";
 
 export default function ViewArticles() {
+  const navigate = useNavigate();
+  const navigateToCreateArticle = () => navigate(APP_PATHS.CREATE_ARTICLE);
   return (
     <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 w-full min-h-screen">
       <div className="bg-white px-4 py-4 rounded-md mb-2">
@@ -10,7 +14,10 @@ export default function ViewArticles() {
           <h2 className="text-xl font-bold text-gray-900">
             Todos los articulos
           </h2>
-          <PrimaryButton className="text-sm flex items-center gap-2">
+          <PrimaryButton
+            className="text-sm flex items-center gap-2"
+            onClick={navigateToCreateArticle}
+          >
             <PlusIcon className="size-4 text-white" strokeWidth={2} />
             Nuevo articulo
           </PrimaryButton>

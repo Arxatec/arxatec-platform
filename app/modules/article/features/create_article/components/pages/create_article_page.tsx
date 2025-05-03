@@ -1,8 +1,13 @@
 import { DocumentPlusIcon } from "@heroicons/react/24/solid";
-import { PhotoIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowLeftIcon,
+  PhotoIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { CustomInput, CustomTextArea, PrimaryButton } from "~/components/atoms";
 import { useState, useRef } from "react";
 import type { ChangeEvent } from "react";
+import { TextRich } from "~/components/organisms";
 
 export default function CreateArticlePage() {
   const [coverImage, setCoverImage] = useState<{
@@ -69,9 +74,14 @@ export default function CreateArticlePage() {
   };
 
   return (
-    <div className="max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 ">
-      <div className="flex flex-col gap-2 bg-white rounded-lg p-4">
-        <h1 className="text-lg font-bold">Crear artículo</h1>
+    <div className="max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 min-h-screen">
+      <div className="flex items-center justify-between mb-2 gap-2">
+        <button className="flex items-center bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-all hover:bg-gray-50">
+          <ArrowLeftIcon className="size-4 text-gray-500" strokeWidth={2} />
+        </button>
+        <div className="bg-white px-4 py-4 w-full  rounded-lg flex items-center justify-start shadow-sm hover:shadow-md transition-all">
+          <h2 className="text-base font-bold">Crear artículo</h2>
+        </div>
       </div>
       <div className="bg-white rounded-lg p-4 mt-2 space-y-4">
         <div>
@@ -145,10 +155,10 @@ export default function CreateArticlePage() {
           {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
         </div>
         <div>
-          <CustomTextArea
-            label="Contenido del artículo"
-            placeholder="Ej. Contenido del artículo"
-          />
+          <label className="text-sm font-medium text-gray-900">
+            Contenido del artículo
+          </label>
+          <TextRich maxHeight="600px" minHeight="250px" className="mt-2" />
         </div>
       </div>
       <div className="flex justify-end mt-2">

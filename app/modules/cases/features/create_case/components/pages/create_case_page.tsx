@@ -16,6 +16,7 @@ import {
 } from "~/components/atoms";
 import { APP_PATHS } from "~/routes/routes";
 import { SelectUser } from "../molecules";
+import { TextRich } from "~/components/organisms";
 
 type UploadedFile = {
   id: string;
@@ -183,9 +184,17 @@ export default function CreateCasePage() {
             </button>
           </div>
           <div className="mt-4">
-            <CustomTextArea
-              placeholder="Ej. Escribe aquí la descripción del caso"
-              label="Descripción del caso"
+            <label className="text-sm font-medium text-gray-900 ">
+              Descripción del caso
+            </label>
+            <TextRich
+              minHeight="250px"
+              maxHeight="600px"
+              className="mt-2"
+              showImageMenu={false}
+              showTableMenu={false}
+              showYoutubeMenu={false}
+              showFontSelector={false}
             />
           </div>
         </div>

@@ -210,9 +210,5 @@ export const editorStyles = `
     font-style: italic;
   }
 
-  /* Estilos para el resaltado personalizado */
-  [style*="background-color"] {
-    border-radius: 0.2em;
-    padding: 0.1em 0.3em;
-  }
+
 `;

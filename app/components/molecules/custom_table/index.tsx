@@ -102,7 +102,7 @@ export const CustomTable = ({
                     {column.renderCell ? (
                       column.renderCell(row[column.accessor], row)
                     ) : (
-                      <div className="whitespace-normal">
+                      <div className="whitespace-normal text-gray-700">
                         {row[column.accessor]}
                       </div>
                     )}
