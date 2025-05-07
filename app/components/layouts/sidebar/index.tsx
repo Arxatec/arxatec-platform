@@ -91,9 +91,7 @@ const navigationTest = [
         name: "Crear comunidad",
         iconInactive: PlusIcon,
         iconActive: PlusIcon,
-        action: () => {
-          console.log("crear comunidad");
-        },
+        href: APP_PATHS.CREATE_COMMUNITY,
       },
       {
         name: "Desarrollo legal",

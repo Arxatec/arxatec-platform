@@ -19,6 +19,7 @@ export enum APP_PATHS {
   // POSTS
   POSTS = "/community/posts",
   CREATE_POST = "/community/posts/create",
+  CREATE_COMMUNITY = "/community/create-community",
 
   // CALENDAR
   CALENDAR = "/calendar",
@@ -54,6 +55,7 @@ export enum ROUTE_NAMES {
 
   // COMMUNITIES
   COMMUNITIES = "community",
+  CREATE_COMMUNITY = "create-community",
   COMMUNITY = ":id",
 
   // POST

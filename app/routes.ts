@@ -19,6 +19,10 @@ export default [
           ROUTE_NAMES.COMMUNITY,
           "modules/community/features/community/components/pages/community_page.tsx"
         ),
+        route(
+          ROUTE_NAMES.CREATE_COMMUNITY,
+          "modules/community/features/create_community/components/pages/create_community_page.tsx"
+        ),
         ...prefix(ROUTE_NAMES.POSTS, [
           index(
             "modules/community/features/posts/components/pages/posts_page.tsx"
