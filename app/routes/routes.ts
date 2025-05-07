@@ -29,10 +29,17 @@ export enum APP_PATHS {
 
   // CASES
   CASES = "/cases",
+  PERSONAL_CASES = "/cases/personal",
+  EXPLORER_CASES = "/cases/explorer",
+  CASE = "/cases/:id",
+  CREATE_CASE = "/cases/create",
 
   // ARTICLES
   ARTICLES = "/articles",
   CREATE_ARTICLE = "/articles/create",
+
+  // CLIENTS
+  CLIENTS = "/cases/clients",
 
   // LAWYERS
   LAWYERS = "/lawyers",
@@ -71,6 +78,13 @@ export enum ROUTE_NAMES {
 
   // CASES
   CASES = "cases",
+  PERSONAL_CASES = "personal",
+  EXPLORER_CASES = "explorer",
+  CASE = ":id",
+  CREATE_CASE = "create",
+
+  // CLIENTS
+  CLIENTS = "clients",
 
   // SETTINGS
   SETTINGS = "settings",

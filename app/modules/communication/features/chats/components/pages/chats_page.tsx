@@ -543,7 +543,7 @@ export default function ChatsPage() {
   return (
     <div
       style={{ height: "calc(100vh - 144px)" }}
-      className="flex w-full h-screen rounded-md mx-auto max-w-6xl text-gray-700"
+      className="flex w-full h-screen rounded-md mx-auto max-w-7xl px-6 text-gray-700"
     >
       <SidebarChats
         users={users}

@@ -1,1 +1,1 @@
-export { CreatePostForm } from "./create_post_form";
+export { default as CreatePostForm } from "./create_post_form";

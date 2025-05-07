@@ -1,47 +1,69 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
-import { useState } from "react";
+import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
+import {
+  DocumentIcon,
+  FolderIcon,
+  FolderPlusIcon,
+  GlobeAltIcon,
+  UserIcon,
+} from "@heroicons/react/24/solid";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router";
 import { CustomInput } from "~/components/atoms";
+import { Table } from "~/modules/dashboard/features/components/organisms";
+import { APP_PATHS } from "~/routes/routes";
+var options = {
+  series: [
+    {
+      data: [
+        {
+          x: "Casos en pendientes",
+          y: 55,
+        },
+        {
+          x: "Casos en proceso",
+          y: 30,
+        },
+        {
+          x: "Casos en públicos",
+          y: 42,
+        },
+        {
+          x: "Casos en juicio",
+          y: 20,
+        },
+        {
+          x: "Casos ganados",
+          y: 25,
+        },
+        {
+          x: "Casos perdidos",
+          y: 22,
+        },
+      ],
+    },
+  ],
+  chart: {
+    height: 300,
+    type: "treemap",
+    toolbar: {
+      show: false,
+    },
+    fontFamily: "DM Sans, sans-serif",
+  },
+  legend: {
+    show: true,
+  },
 
-const SearchIcon = () => (
-  <svg
-    className="w-5 h-5"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-  >
-    <circle cx="11" cy="11" r="8" />
-    <path d="M21 21l-4.35-4.35" />
-  </svg>
-);
-
-const ListIcon = () => (
-  <svg
-    className="w-5 h-5"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-  >
-    <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
-  </svg>
-);
-
-const GridIcon = () => (
-  <svg
-    className="w-5 h-5"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-  >
-    <rect width="7" height="7" x="3" y="3" rx="1" />
-    <rect width="7" height="7" x="14" y="3" rx="1" />
-    <rect width="7" height="7" x="14" y="14" rx="1" />
-    <rect width="7" height="7" x="3" y="14" rx="1" />
-  </svg>
-);
-
+  plotOptions: {
+    treemap: {
+      distributed: true,
+      enableShades: true,
+      shadeIntensity: 0.6,
+    },
+  },
+  colors: ["#2563eb"],
+};
 interface Case {
   id: string;
   title: string;
@@ -53,181 +75,251 @@ interface Case {
 }
 
 export default function ViewCasesPage() {
-  const [viewMode, setViewMode] = useState<"list" | "grid">("list");
-  const [filter, setFilter] = useState("Open Cases");
+  const navigate = useNavigate();
+  const navigateToExplorerCases = () => navigate(APP_PATHS.EXPLORER_CASES);
+  const navigateToMyCases = () => navigate(APP_PATHS.PERSONAL_CASES);
+  const navigateToClients = () => navigate(APP_PATHS.CLIENTS);
+  const navigateToCreateCase = () => navigate(APP_PATHS.CREATE_CASE);
 
-  const cases: Case[] = [
-    {
-      id: "CASE-001",
-      title: "Me robaron el celular, ¿cómo denuncio?",
-      client: "Juan Pérez",
-      nextCourtDate: "10/03/2025",
-      created: "07 de febrero de 2025",
-      status: "PENDIENTE",
-      isNew: true,
-    },
-    {
-      id: "CASE-002",
-      title: "Quiero divorciarme, ¿cuáles son los pasos?",
-      client: "María López",
-      nextCourtDate: "15/03/2025",
-      created: "05 de febrero de 2025",
-      status: "ACEPTADO",
-      isNew: false,
-    },
-    {
-      id: "CASE-003",
-      title: "Me despidieron injustamente, ¿qué puedo hacer?",
-      client: "Carlos Gómez",
-      nextCourtDate: "20/03/2025",
-      created: "02 de febrero de 2025",
-      status: "CERRADO",
-      isNew: true,
-    },
-    {
-      id: "CASE-004",
-      title: "Mi arrendador quiere desalojarme sin aviso previo",
-      client: "Ana Rodríguez",
-      nextCourtDate: "25/03/2025",
-      created: "30 de enero de 2025",
-      status: "PENDIENTE",
-      isNew: false,
-    },
-    {
-      id: "CASE-005",
-      title: "Quiero registrar mi marca comercial",
-      client: "Empresa Innovatech S.A.",
-      nextCourtDate: "05/04/2025",
-      created: "28 de enero de 2025",
-      status: "ACEPTADO",
-      isNew: false,
-    },
-    {
-      id: "CASE-006",
-      title: "Sufrí un accidente de tránsito y quiero reclamar daños",
-      client: "Luis Fernández",
-      nextCourtDate: "12/04/2025",
-      created: "25 de enero de 2025",
-      status: "CANCELADO",
-      isNew: true,
-    },
-  ];
+  const chartRef = useRef<HTMLDivElement>(null);
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "ACEPTADO":
-        return "bg-indigo-600";
-      case "CANCELADO":
-        return "bg-rose-600";
-      case "PENDIENTE":
-        return "bg-blue-600";
-      case "CERRADO":
-        return "bg-gray-400";
-      default:
-        return "bg-gray-600";
-    }
-  };
+  useEffect(() => {
+    let chartInstance: any;
+
+    import("apexcharts").then((module) => {
+      const ApexCharts = module.default;
+      if (chartRef.current && typeof ApexCharts !== "undefined") {
+        chartInstance = new ApexCharts(chartRef.current, options);
+        chartInstance.render();
+      }
+    });
+
+    return () => {
+      if (chartInstance) {
+        chartInstance.destroy();
+      }
+    };
+  }, []);
 
   return (
-    <div className=" rounded-md max-w-7xl mx-auto">
+    <div className=" rounded-md max-w-7xl mx-auto px-6 min-h-screen">
       <div className=" mx-auto">
-        <div className="bg-white p-6 rounded-lg shadow-sm">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold text-gray-900">Casos</h2>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm font-semibold">
-              Nuevo caso
-            </button>
+        <div className="flex gap-2">
+          <button
+            onClick={navigateToExplorerCases}
+            className="w-full max-w-80 shadow-sm hover:shadow-md transition-all rounded-md p-4 bg-white"
+          >
+            <div>
+              <div className="flex items-start gap-2 justify-between">
+                <div className="flex w-fit items-center gap-2 bg-blue-50 rounded-md p-2">
+                  <GlobeAltIcon className="size-6 text-blue-600" />
+                </div>
+
+                <ArrowUpRightIcon className="size-4 text-gray-500" />
+              </div>
+              <h2 className="text-base font-semibold text-gray-900 mt-2 text-left">
+                Explorar casos
+              </h2>
+            </div>
+          </button>
+          <button
+            onClick={navigateToClients}
+            className="w-full max-w-80 shadow-sm hover:shadow-md transition-all rounded-md p-4 bg-white"
+          >
+            <div>
+              <div className="flex items-start gap-2 justify-between">
+                <div className="flex w-fit items-center gap-2 bg-indigo-50 rounded-md p-2">
+                  <UserIcon className="size-6 text-indigo-600" />
+                </div>
+
+                <ArrowUpRightIcon className="size-4 text-gray-500" />
+              </div>
+              <h2 className="text-base font-semibold text-gray-900 mt-2 text-left">
+                Mis clientes
+              </h2>
+            </div>
+          </button>
+          <button
+            onClick={navigateToMyCases}
+            className="w-full max-w-80 shadow-sm hover:shadow-md transition-all rounded-md p-4 bg-white"
+          >
+            <div>
+              <div className="flex items-start gap-2 justify-between">
+                <div className="flex w-fit items-center gap-2 bg-sky-50 rounded-md p-2">
+                  <FolderIcon className="size-6 text-sky-500" />
+                </div>
+
+                <ArrowUpRightIcon className="size-4 text-gray-500" />
+              </div>
+              <h2 className="text-base font-semibold text-gray-900 mt-2 text-left">
+                Mis casos
+              </h2>
+            </div>
+          </button>
+          <button
+            onClick={navigateToCreateCase}
+            className="w-full max-w-80 shadow-sm hover:shadow-md transition-all rounded-md p-4 bg-white"
+          >
+            <div>
+              <div className="flex items-start gap-2 justify-between">
+                <div className="flex w-fit items-center gap-2 bg-cyan-50 rounded-md p-2">
+                  <FolderPlusIcon className="size-6 text-cyan-500" />
+                </div>
+
+                <ArrowUpRightIcon className="size-4 text-gray-500" />
+              </div>
+              <h2 className="text-base font-semibold text-gray-900 mt-2 text-left">
+                Crear caso
+              </h2>
+            </div>
+          </button>
+        </div>
+
+        <div className="grid grid-cols-[auto_1fr] gap-2 mt-2">
+          <div className="flex flex-col gap-2">
+            <div className="bg-white rounded-lg w-96 shadow-sm hover:shadow-md transition-all p-4 ">
+              <div className="flex items-center justify-between gap-4 flex-wrap">
+                <h2 className="font-medium text-sm text-gray-600">
+                  Cantidad de clientes
+                </h2>
+              </div>
+              <div className="flex items-end justify-between gap-4 flex-wrap">
+                <h1 className="text-4xl font-extrabold mt-2 text-gray-900">
+                  92
+                </h1>
+                <p className="text-xs font-semibold text-green-600 bg-green-50 rounded-md px-2 py-1 flex items-center gap-2">
+                  +55%
+                </p>
+              </div>
+            </div>
+            <div className="bg-white rounded-lg w-96 shadow-sm hover:shadow-md transition-all p-4">
+              <div className="flex items-center justify-between gap-4 flex-wrap">
+                <h2 className="font-medium text-sm text-gray-600">
+                  Total de casos
+                </h2>
+              </div>
+              <div className="flex items-end justify-between gap-4 flex-wrap">
+                <h1 className="text-4xl font-extrabold mt-2 text-gray-900">
+                  118
+                </h1>
+                <p className="text-xs font-semibold text-red-600 bg-red-50 rounded-md px-2 py-1 flex items-center gap-2">
+                  -10%
+                </p>
+              </div>
+            </div>
+            <div className="bg-white rounded-lg w-96 shadow-sm hover:shadow-md transition-all p-4">
+              <div className="flex items-center justify-between gap-4 flex-wrap">
+                <h2 className="font-medium text-sm text-gray-600">
+                  Casos públicos
+                </h2>
+              </div>
+              <div className="flex items-end justify-between gap-4 flex-wrap">
+                <h1 className="text-4xl font-extrabold mt-2 text-gray-900">
+                  1217
+                </h1>
+                <p className="text-xs font-semibold text-green-600 bg-green-50 rounded-md px-2 py-1 flex items-center gap-2">
+                  +10%
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div className="flex justify-between items-center">
-            <div className="relative flex-1 max-w-xl">
-              <CustomInput
-                type="text"
-                placeholder="Buscar..."
-                startAdornment={
-                  <MagnifyingGlassIcon className="size-4 text-gray-500" />
-                }
-              />
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <button
-                  onClick={() => setViewMode("list")}
-                  className={`p-2 rounded ${
-                    viewMode === "list" ? "bg-gray-100" : ""
-                  }`}
-                >
-                  <ListIcon />
-                </button>
-                <button
-                  onClick={() => setViewMode("grid")}
-                  className={`p-2 rounded ${
-                    viewMode === "grid" ? "bg-gray-100" : ""
-                  }`}
-                >
-                  <GridIcon />
-                </button>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-sm text-gray-600">Viewing:</span>
-                <select
-                  value={filter}
-                  onChange={(e) => setFilter(e.target.value)}
-                  className="border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                >
-                  <option>Open Cases</option>
-                  <option>Closed Cases</option>
-                  <option>All Cases</option>
-                </select>
-              </div>
+          <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all pb-4">
+            <div className="w-full h-[300px] overflow-hidden px-4">
+              <div id="bar-chart" ref={chartRef} className="w-full" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm mt-2">
-          <div className="grid gap-4">
-            {cases.map((case_, index) => (
-              <div key={index} className="bg-white p-4 rounded-lg shadow-sm">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-sm text-gray-600">{case_.id}</span>
-                      {case_.isNew && (
-                        <span className="px-2 py-1 text-xs font-semibold text-white bg-green-500 rounded">
-                          New
-                        </span>
-                      )}
-                    </div>
-                    <h3 className="text-lg font-semibold mt-1">
-                      {case_.title}
-                    </h3>
-                    <div className="mt-2 space-y-1">
-                      <div className="flex items-center text-sm text-gray-600">
-                        <span className="w-24">Client:</span>
-                        <span className="font-medium">{case_.client}</span>
-                      </div>
-                      <div className="flex items-center text-sm text-gray-600">
-                        <span className="w-24">Next Court Date:</span>
-                        <span className="font-medium">
-                          {case_.nextCourtDate}
-                        </span>
-                      </div>
-                      <div className="flex items-center text-sm text-gray-600">
-                        <span className="w-24">Created:</span>
-                        <span>{case_.created}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <span
-                    className={`px-3 py-1 text-xs font-bold text-white rounded ${getStatusColor(
-                      case_.status
-                    )}`}
-                  >
-                    {case_.status}
-                  </span>
+        <div className="gap-2 grid grid-cols-1 md:grid-cols-[1fr_auto]">
+          <Table />
+          <div>
+            <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all p-[18px] w-96 mt-2">
+              <h2 className="font-bold text-lg text-gray-900">
+                Tus documentos
+              </h2>
+            </div>
+            <div className="flex flex-col gap-2 mt-2">
+              <button className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all p-4 w-96 flex items-center gap-2">
+                <div className="flex items-center justify-center bg-blue-100 rounded-lg p-2 w-fit">
+                  <DocumentIcon className="size-5 text-blue-600" />
                 </div>
-              </div>
-            ))}
+                <div>
+                  <h2 className="text-sm font-medium text-gray-900 text-left">
+                    Documento 1
+                  </h2>
+                  <p className="text-xs text-gray-500">
+                    Última actualización: 10/03/2025
+                  </p>
+                </div>
+              </button>
+
+              <button className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all p-4 w-96 flex items-center gap-2">
+                <div className="flex items-center justify-center bg-blue-100 rounded-lg p-2 w-fit">
+                  <DocumentIcon className="size-5 text-blue-600" />
+                </div>
+                <div>
+                  <h2 className="text-sm font-medium text-gray-900 text-left">
+                    Documento 1
+                  </h2>
+                  <p className="text-xs text-gray-500">
+                    Última actualización: 10/03/2025
+                  </p>
+                </div>
+              </button>
+              <button className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all p-4 w-96 flex items-center gap-2">
+                <div className="flex items-center justify-center bg-blue-100 rounded-lg p-2 w-fit">
+                  <DocumentIcon className="size-5 text-blue-600" />
+                </div>
+                <div>
+                  <h2 className="text-sm font-medium text-gray-900 text-left">
+                    Documento 1
+                  </h2>
+                  <p className="text-xs text-gray-500">
+                    Última actualización: 10/03/2025
+                  </p>
+                </div>
+              </button>
+              <button className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all p-4 w-96 flex items-center gap-2">
+                <div className="flex items-center justify-center bg-blue-100 rounded-lg p-2 w-fit">
+                  <DocumentIcon className="size-5 text-blue-600" />
+                </div>
+                <div>
+                  <h2 className="text-sm font-medium text-gray-900 text-left">
+                    Documento 1
+                  </h2>
+                  <p className="text-xs text-gray-500">
+                    Última actualización: 10/03/2025
+                  </p>
+                </div>
+              </button>
+              <button className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all p-4 w-96 flex items-center gap-2">
+                <div className="flex items-center justify-center bg-blue-100 rounded-lg p-2 w-fit">
+                  <DocumentIcon className="size-5 text-blue-600" />
+                </div>
+                <div>
+                  <h2 className="text-sm font-medium text-gray-900 text-left">
+                    Documento 1
+                  </h2>
+                  <p className="text-xs text-gray-500">
+                    Última actualización: 10/03/2025
+                  </p>
+                </div>
+              </button>
+              <button className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all p-4 w-96 flex items-center gap-2">
+                <div className="flex items-center justify-center bg-blue-100 rounded-lg p-2 w-fit">
+                  <DocumentIcon className="size-5 text-blue-600" />
+                </div>
+                <div>
+                  <h2 className="text-sm font-medium text-gray-900 text-left">
+                    Documento 1
+                  </h2>
+                  <p className="text-xs text-gray-500">
+                    Última actualización: 10/03/2025
+                  </p>
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       </div>

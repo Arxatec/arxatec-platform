@@ -1,4 +1,4 @@
-import { BarChart,LineChart} from "../molecules";
+import { BarChart, LineChart } from "../molecules";
 import { StatsGroup, Table } from "../organisms";
 import { useTitle } from "~/hooks";
 import { useEffect } from "react";
@@ -10,7 +10,7 @@ export default function DashboardPage() {
     changeTitle("Dashboard - Arxatec");
   }, [changeTitle]);
   return (
-    <div className="px-6 pb-6 max-w-7xl mx-auto">
+    <div className="px-6 max-w-7xl mx-auto min-h-screen">
       {/* Stats Group */}
       <StatsGroup />
 

@@ -46,22 +46,10 @@ const navigationTest = [
     iconActive: HomeIconActive,
   },
   {
-    name: "Comunidad",
-    href: APP_PATHS.POSTS,
-    iconInactive: UsersIcon,
-    iconActive: UsersIconActive,
-  },
-  {
     name: "Mis casos",
     href: APP_PATHS.CASES,
     iconInactive: FolderIcon,
     iconActive: FolderIconActive,
-  },
-  {
-    name: "Calendario",
-    href: APP_PATHS.CALENDAR,
-    iconInactive: CalendarIcon,
-    iconActive: CalendarIconActive,
   },
   {
     name: "Mensajes",
@@ -70,10 +58,16 @@ const navigationTest = [
     iconActive: ChatBubbleBottomCenterIconActive,
   },
   {
-    name: "Articulos",
-    href: APP_PATHS.ARTICLES,
-    iconInactive: DocumentTextIcon,
-    iconActive: DocumentTextIconActive,
+    name: "Calendario",
+    href: APP_PATHS.CALENDAR,
+    iconInactive: CalendarIcon,
+    iconActive: CalendarIconActive,
+  },
+  {
+    name: "Comunidad",
+    href: APP_PATHS.POSTS,
+    iconInactive: UsersIcon,
+    iconActive: UsersIconActive,
   },
   {
     name: "Abogados",
@@ -92,6 +86,7 @@ const navigationTest = [
         iconInactive: PlusIcon,
         iconActive: PlusIcon,
         href: APP_PATHS.CREATE_COMMUNITY,
+
       },
       {
         name: "Desarrollo legal",
@@ -140,7 +135,7 @@ const navigationTest = [
       },
       {
         name: "Nuestro blog",
-        href: "https://www.arxatec.net/es/blog",
+        href: APP_PATHS.ARTICLES,
         iconInactive: PencilSquareIcon,
         iconActive: PencilSquareIconActive,
       },

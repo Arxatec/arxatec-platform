@@ -432,13 +432,15 @@ const communities = [
 
 export default function CommunitiesPage() {
   return (
-    <div className="mx-auto max-w-6xl w-full grid gap-2">
-      <CommunitiesCard
-        title={"Las mejores comunidades de Arxatec"}
-        description="Aquí encontrarás una amplia variedad de temas interesantes y útiles."
-        communities={communities}
-      />
-      <Pagination />
+    <div className="mx-auto max-w-6xl w-full  min-h-screen">
+      <div className="grid grid-cols-1 gap-2">
+        <CommunitiesCard
+          title={"Las mejores comunidades de Arxatec"}
+          description="Aquí encontrarás una amplia variedad de temas interesantes y útiles."
+          communities={communities}
+        />
+        <Pagination />
+      </div>
     </div>
   );
 }

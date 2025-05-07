@@ -7,8 +7,14 @@ import {
 import { FolderIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { CustomInput, CustomSelector, PrimaryButton } from "~/components/atoms";
+import {
+  CustomAvatar,
+  CustomInput,
+  CustomSelector,
+  PrimaryButton,
+} from "~/components/atoms";
 import { classNames } from "~/utilities/string_utilities";
+import { CustomTable } from "~/components/molecules/custom_table";
 
 type Person = { name: string; title: string; email: string; role: string }; // Define la estructura de los elementos en people
 
@@ -166,13 +172,94 @@ const filterBy = [
   },
 ];
 
+const columns = [
+  {
+    width: "w-1/12",
+    header: {
+      icon: <IdentificationIcon className="size-5 text-gray-500" />,
+      label: "Identificador",
+    },
+    accessor: "commit",
+    align: "left" as const,
+  },
+  {
+    width: "w-3/12",
+    header: {
+      icon: <DocumentIcon className="size-5 text-gray-500" />,
+      label: "Caso",
+    },
+    accessor: "case",
+    align: "left" as const,
+  },
+  {
+    width: "w-1/12",
+    header: {
+      icon: <UserIcon className="size-5 text-gray-500" />,
+      label: "Usuario",
+    },
+    accessor: "user",
+    align: "left" as const,
+    renderCell: (value: any) => (
+      <div className="flex items-center gap-x-4">
+        <CustomAvatar
+          altText={value.name}
+          avatar={value.imageUrl}
+          size="2rem"
+          username={value.name}
+        />
+        <div className="truncate text-sm/6 font-medium text-gray-700">
+          {value.name}
+        </div>
+      </div>
+    ),
+  },
+  {
+    width: "w-1/12",
+    header: {
+      icon: <FolderIcon className="size-5 text-gray-500" />,
+      label: "Estado",
+    },
+    accessor: "status",
+    align: "left" as const,
+    renderCell: (value: string) => (
+      <div className="flex items-center justify-end gap-x-2 sm:justify-start">
+        <div
+          className={classNames(
+            statuses[value as keyof typeof statuses],
+            "flex-none rounded-sm p-1"
+          )}
+        >
+          <div className="size-1.5 rounded-sm bg-current" />
+        </div>
+        <div className="text-gray-700">{value}</div>
+      </div>
+    ),
+  },
+  {
+    width: "w-1/12",
+    header: {
+      icon: <ClockIcon className="size-5 text-gray-500" />,
+      label: "Reciente",
+    },
+    accessor: "date",
+    align: "left" as const,
+    renderCell: (value: string, row: any) => (
+      <time dateTime={row.dateTime}>{value}</time>
+    ),
+  },
+];
+
 export const Table = () => {
   const [category, setCategory] = useState(categories[0]);
   const [filter, setFilter] = useState(filterBy[0]);
 
+  const handleRowClick = (row: any) => {
+    console.log("Row clicked:", row);
+  };
+
   return (
-    <div className=" w-full mt-2">
-      <div className=" bg-white px-4 py-4 rounded-lg shadow-sm transition-all hover:shadow-md">
+    <div className="w-full mt-2">
+      <div className="bg-white px-4 py-4 rounded-lg shadow-sm transition-all hover:shadow-md">
         <div className="flex lg:items-center justify-between flex-col lg:flex-row gap-4 flex-wrap">
           <div className="">
             <h1 className="text-lg font-bold text-gray-900 text-left">
@@ -197,104 +284,12 @@ export const Table = () => {
         </div>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="w-full text-left whitespace-nowrap mt-2 bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all">
-          <colgroup>
-            <col className="w-1/12" />
-            <col className="w-4/12" />
-            <col className="w-2/12" />
-            <col className="w-1/12" />
-            <col className="w-1/12" />
-          </colgroup>
-          <thead className="border-b border-gray-100 text-sm/6 text-gray-500">
-            <tr>
-              <th scope="col" className="py-4 px-4 font-semibold">
-                <div className="flex items-center gap-2">
-                  <IdentificationIcon className="size-5 text-gray-500" />
-                  Identificador
-                </div>
-              </th>
-              <th scope="col" className="py-2 px-4 font-semibold">
-                <div className="flex items-center gap-2">
-                  <DocumentIcon className="size-5 text-gray-500" />
-                  Caso
-                </div>
-              </th>
-              <th scope="col" className="py-2 px-4 font-semibold">
-                <div className="flex items-center gap-2">
-                  <UserIcon className="size-5 text-gray-500" />
-                  Usuario
-                </div>
-              </th>
-              <th
-                scope="col"
-                className="py-2 pr-4 pl-0 text-right font-semibold lg:pr-20"
-              >
-                <div className="flex items-center gap-2">
-                  <FolderIcon className="size-5 text-gray-500" />
-                  Estado
-                </div>
-              </th>
-              <th
-                scope="col"
-                className="py-2 pr-4 pl-0 text-right font-semibold lg:pr-8"
-              >
-                <div className="flex items-center gap-2">
-                  <ClockIcon className="size-5 text-gray-500" />
-                  Última actualización
-                </div>
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100">
-            {activityItems.map((item) => (
-              <tr key={item.commit} className="divide-x divide-gray-100">
-                <td className="py-4 pr-4 pl-4">
-                  <div className="flex gap-x-3">
-                    <div className="font-mono text-sm text-gray-700">
-                      {item.commit}
-                    </div>
-                    <div className="rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-white/10 ring-inset">
-                      {item.folder}
-                    </div>
-                  </div>
-                </td>
-                <td className="py-4 pr-8 pl-4 text-sm/6 text-gray-700 whitespace-pre-line">
-                  {item.case}
-                </td>
-                <td className="py-4 pr-8 pl-4">
-                  <div className="flex items-center gap-x-4">
-                    <img
-                      alt="avatar"
-                      src={item.user.imageUrl}
-                      className="size-8 rounded-full bg-gray-700"
-                    />
-                    <div className="truncate text-sm/6 font-medium text-gray-700">
-                      {item.user.name}
-                    </div>
-                  </div>
-                </td>
-                <td className="py-4 pr-4 pl-4 text-sm/6 lg:pr-20">
-                  <div className="flex items-center justify-end gap-x-2 sm:justify-start">
-                    <div
-                      className={classNames(
-                        statuses[item.status as keyof typeof statuses],
-                        "flex-none rounded-full p-1"
-                      )}
-                    >
-                      <div className="size-1.5 rounded-full bg-current" />
-                    </div>
-                    <div className="text-gray-700">{item.status}</div>
-                  </div>
-                </td>
-                <td className="py-4 pr-4 pl-4 text-left text-sm/6 text-gray-700 lg:pr-8">
-                  <time dateTime={item.dateTime}>{item.date}</time>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <CustomTable
+        columns={columns}
+        data={activityItems}
+        onRowClick={handleRowClick}
+        className="mt-2"
+      />
     </div>
   );
 };
