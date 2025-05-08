@@ -26,7 +26,7 @@ export const LoginForm = () => {
 
   const mutation = useMutation({
     mutationFn: (data: LoginFormData) => login(data.email, data.password),
-    onSuccess: () => onSuccess(),
+    onSuccess: (data) => onSuccess(data),
     onError: (error: AxiosError) => onError(error),
   });
 
@@ -35,8 +35,9 @@ export const LoginForm = () => {
     mutation.mutate(data);
   };
 
-  const onSuccess = () => {
+  const onSuccess = (data: any) => {
     setError(null);
+    localStorage.setItem("TOKEN_AUTH", data.token);
     navigate(APP_PATHS.DASHBOARD);
   };
 
