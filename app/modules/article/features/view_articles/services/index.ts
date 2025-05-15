@@ -1,47 +1,5 @@
 import axiosInstance from "~/interceptors";
-
-export interface Article {
-  id: number;
-  user_id: number;
-  title: string;
-  resume: string;
-  reading_time: number;
-  content: string;
-  banner: string;
-  category_id: number;
-  publication_timestamp: string;
-  status: string;
-  userDetails: {
-    user: {
-      first_name: string;
-      last_name: string;
-    };
-  };
-  articleCategory: {
-    name: string;
-  };
-}
-
-interface ArticlesResponse {
-  status: number;
-  message: string;
-  description: string;
-  timestamp: string;
-  path: string;
-  data: {
-    data: Article[];
-    total: number;
-    totalPages: number;
-    currentPage: number;
-    limit: number;
-  };
-}
-
-interface GetArticlesParams {
-  page: number;
-  limit: number;
-  search?: string;
-}
+import type { ArticlesResponse, GetArticlesParams } from "../models";
 
 export const getArticles = async ({
   page = 1,
@@ -49,7 +7,7 @@ export const getArticles = async ({
   search = "",
 }: GetArticlesParams): Promise<ArticlesResponse> => {
   try {
-    const token = localStorage.getItem("TOKEN_AUTH");
+    const token = window.sessionStorage.getItem("TOKEN_AUTH");
     const params = new URLSearchParams({
       page: page.toString(),
       limit: limit.toString(),

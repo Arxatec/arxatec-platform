@@ -37,7 +37,7 @@ export const LoginForm = () => {
 
   const onSuccess = (data: any) => {
     setError(null);
-    localStorage.setItem("TOKEN_AUTH", data.token);
+    window.sessionStorage.setItem("TOKEN_AUTH", data.token);
     navigate(APP_PATHS.DASHBOARD);
   };
 

@@ -63,7 +63,6 @@ export default function ViewArticles() {
     },
   });
 
-  // Efecto para resetear la búsqueda cuando cambia el término de búsqueda o el ordenamiento
   useEffect(() => {
     refetch();
   }, [debouncedSearchTerm, selectedSort.id, refetch]);
@@ -105,32 +104,29 @@ export default function ViewArticles() {
     setSelectedSort(option);
   };
 
-  // Obtener todos los artículos y aplicar filtros/ordenamiento
   const allArticles = data?.pages.flatMap((page) => page.data.data) || [];
 
-  // Filtrar por título
   const filteredArticles = searchTerm
     ? allArticles.filter((article) =>
         article.title.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : allArticles;
 
-  // Ordenar los artículos
   const sortedArticles = [...filteredArticles].sort((a, b) => {
     switch (selectedSort.id) {
-      case 1: // Alfabético
+      case 1:
         return a.title.localeCompare(b.title);
-      case 2: // Más antiguos
+      case 2:
         return (
           new Date(a.publication_timestamp).getTime() -
           new Date(b.publication_timestamp).getTime()
         );
-      case 3: // Más recientes
+      case 3:
         return (
           new Date(b.publication_timestamp).getTime() -
           new Date(a.publication_timestamp).getTime()
         );
-      case 4: // Más leídos
+      case 4:
         return b.reading_time - a.reading_time;
       default:
         return 0;
