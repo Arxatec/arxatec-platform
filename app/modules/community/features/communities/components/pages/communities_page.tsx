@@ -1,5 +1,7 @@
 import { CommunitiesCard } from "../organisms";
 import { Pagination } from "../molecules";
+import { useEffect } from "react";
+import { useTitle } from "~/hooks/useTitle";
 
 const communities = [
   {
@@ -431,6 +433,12 @@ const communities = [
 ];
 
 export default function CommunitiesPage() {
+  const { changeTitle } = useTitle();
+
+  useEffect(() => {
+    changeTitle("Comunidades - Arxatec");
+  }, []);
+
   return (
     <div className="mx-auto max-w-6xl w-full  min-h-screen">
       <div className="grid grid-cols-1 gap-2">

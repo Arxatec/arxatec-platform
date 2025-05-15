@@ -2,10 +2,16 @@ import { useEffect, useState } from "react";
 import type { User, MediaItem } from "../../types";
 import { ChatArea, InfoPanel, SidebarChats } from "../organism";
 import { avatarLexor } from "~/utilities/assets_utilities";
+import { useTitle } from "~/hooks/useTitle";
 
 export default function ChatsPage() {
   const [selectedChat, setSelectedChat] = useState<User | null>(null);
   const [openInfo, setOpenInfo] = useState(false);
+  const { changeTitle } = useTitle();
+
+  useEffect(() => {
+    changeTitle("Mensajería - Arxatec");
+  }, []);
 
   const handleOpenInfo = () => setOpenInfo(!openInfo);
 

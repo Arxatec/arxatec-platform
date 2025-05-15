@@ -11,7 +11,7 @@ import { APP_PATHS } from "~/routes/routes";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getArticles } from "../../services";
 import { useEffect, useRef, useCallback, useState } from "react";
-import { useDebounce } from "~/hooks/";
+import { useDebounce, useTitle } from "~/hooks/";
 
 const ArticleSkeleton = () => (
   <div className="bg-white rounded-lg shadow-sm p-4 animate-pulse">
@@ -28,6 +28,7 @@ const ArticleSkeleton = () => (
 );
 
 export default function ViewArticles() {
+  const { changeTitle } = useTitle();
   const navigate = useNavigate();
   const navigateToCreateArticle = () => navigate(APP_PATHS.CREATE_ARTICLE);
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -62,6 +63,10 @@ export default function ViewArticles() {
       return undefined;
     },
   });
+
+  useEffect(() => {
+    changeTitle("Articulos - Arxatec");
+  }, []);
 
   useEffect(() => {
     refetch();

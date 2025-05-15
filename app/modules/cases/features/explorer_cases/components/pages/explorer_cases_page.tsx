@@ -7,9 +7,11 @@ import {
   MagnifyingGlassIcon,
   ArrowLeftIcon,
 } from "@heroicons/react/24/outline";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { CustomInput, CustomSelector } from "~/components/atoms";
 import { CustomTable } from "~/components/molecules/custom_table";
+import { useTitle } from "~/hooks/useTitle";
 import { APP_PATHS } from "~/routes/routes";
 
 const columns = [
@@ -349,6 +351,11 @@ const data = [
 export default function ExploreCasesPage() {
   const navigate = useNavigate();
   const onBack = () => navigate(APP_PATHS.CASES);
+  const { changeTitle } = useTitle();
+
+  useEffect(() => {
+    changeTitle("Explorar casos - Arxatec");
+  }, []);
   return (
     <div className="mx-auto max-w-6xl px-6 min-h-screen">
       <div className="flex items-center justify-between mb-2 gap-2">

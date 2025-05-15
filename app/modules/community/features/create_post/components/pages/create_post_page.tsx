@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Multimedia, SaveLinks, Tabs } from "../molecules";
 import { CustomInput, CustomSelector, PrimaryButton } from "~/components/atoms";
 import { DocumentIcon, PlusIcon } from "@heroicons/react/16/solid";
@@ -6,6 +6,7 @@ import { DocumentArrowUpIcon } from "@heroicons/react/24/solid";
 import { LegalDisclamer } from "~/modules/community/components/atoms";
 import { CreatePostForm } from "../organisms";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { useTitle } from "~/hooks/useTitle";
 
 const communities = [
   { name: "Legal profesional", id: 1 },
@@ -17,6 +18,12 @@ const communities = [
 export default function CreatePostPage() {
   const [selected, setSelected] = useState(communities[0]);
   const [content, setContent] = useState("");
+  const { changeTitle } = useTitle();
+
+  useEffect(() => {
+    changeTitle("Crear publicación - Arxatec");
+  }, []);
+
   return (
     <div className=" px-4 block min-h-screen">
       <div className="max-w-5xl mx-auto">

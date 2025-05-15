@@ -1,5 +1,5 @@
 import { CustomInput, CustomLink, PrimaryButton } from "~/components/atoms";
-import { RememberSection, SocialAuthOptions } from "../../molecules";
+import { RememberSection } from "../../molecules";
 import { useTranslation } from "react-i18next";
 import { LocaleKeys } from "~/lang";
 import { APP_PATHS } from "~/routes/routes";
@@ -12,6 +12,7 @@ import { validation } from "../../../validation";
 import { messages } from "../../../messages";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { SocialAuthOptions } from "~/modules/auth/components/molecules";
 
 export const LoginForm = () => {
   const { t } = useTranslation();

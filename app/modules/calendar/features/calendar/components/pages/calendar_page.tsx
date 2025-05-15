@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CreateEvent, HeaderCalendar } from "../molecules";
 import {
   CalendarDay,
@@ -7,11 +7,16 @@ import {
   CalendarYear,
 } from "../organism";
 import { calendars } from "../../types";
+import { useTitle } from "~/hooks/useTitle";
 
 export default function CalendarPage() {
   const [calendar, setCalendar] = useState<calendars>(calendars.DAY);
   const changeCalendar = (newCalendar: calendars) => setCalendar(newCalendar);
+  const { changeTitle } = useTitle();
 
+  useEffect(() => {
+    changeTitle("Calendario - Arxatec");
+  }, []);
   return (
     <div className="flex flex-col">
       <div className="mx-auto px-6 max-w-7xl w-full h-full flex flex-col gap-2">

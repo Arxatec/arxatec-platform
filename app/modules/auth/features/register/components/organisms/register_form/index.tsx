@@ -1,7 +1,6 @@
 import { CustomInput, CustomLink, PrimaryButton } from "~/components/atoms";
 import { useTranslation } from "react-i18next";
 import { LocaleKeys } from "~/lang";
-import { SocialAuthOptions } from "../../molecules";
 import { APP_PATHS } from "~/routes/routes";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
@@ -12,6 +11,7 @@ import { validation } from "../../../validation";
 import { messages } from "../../../messages";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { SocialAuthOptions } from "~/modules/auth/components/molecules";
 
 export const RegisterForm = () => {
   const { t } = useTranslation();

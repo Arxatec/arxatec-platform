@@ -5,7 +5,10 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
+  useNavigate,
 } from "react-router";
+import { useEffect } from "react";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import englishContent from "./assets/lang/en.json";
@@ -19,6 +22,7 @@ import "react-circular-progressbar/dist/styles.css";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { APP_PATHS } from "./routes/routes";
 
 export const links: Route.LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -35,7 +39,7 @@ i18n.use(initReactI18next).init({
     escapeValue: false,
   },
 });
-// Create a client
+
 const queryClient = new QueryClient();
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -61,6 +65,26 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleRedirection = () => {
+      const isRootPath = location.pathname === "/";
+      const hasToken = window.sessionStorage.getItem("TOKEN_AUTH") !== null;
+
+      if (isRootPath) {
+        if (hasToken) {
+          navigate(APP_PATHS.DASHBOARD);
+        } else {
+          navigate(APP_PATHS.LOGIN);
+        }
+      }
+    };
+
+    handleRedirection();
+  }, [location.pathname, navigate]);
+
   return (
     <GoogleOAuthProvider clientId="16579426384-hcu4blgpob121572ud505r6bsl8csi0l.apps.googleusercontent.com">
       <Outlet />

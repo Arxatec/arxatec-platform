@@ -6,6 +6,8 @@ import { TitleInput } from "../fields/TitleInput";
 import { CategorySelector } from "../fields/CategorySelector";
 import { BannerUploader } from "../fields/BannerUploader";
 import { ContentEditor } from "../fields/ContentEditor";
+import { useEffect } from "react";
+import { useTitle } from "~/hooks/useTitle";
 
 export default function CreateArticlePage() {
   const {
@@ -18,7 +20,7 @@ export default function CreateArticlePage() {
     isValid,
     reset,
   } = useArticleForm();
-
+  const { changeTitle } = useTitle();
   const mutation = useCreateArticleMutation();
 
   const onSubmit = (formData: typeof form) => {
@@ -38,6 +40,10 @@ export default function CreateArticlePage() {
       },
     });
   };
+
+  useEffect(() => {
+    changeTitle("Crear artículo - Arxatec");
+  }, []);
 
   return (
     <div className="max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 min-h-screen">

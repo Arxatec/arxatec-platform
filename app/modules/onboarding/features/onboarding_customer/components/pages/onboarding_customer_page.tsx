@@ -69,7 +69,6 @@ export const urgenciesData = [
   },
 ];
 
-// Definición de las interfaces para el formulario
 export interface ClientProfileFormData {
   profilePicture: string;
   location: string;
@@ -104,7 +103,6 @@ export default function OnboardingCustomer() {
   const { changeTitle } = useTitle();
   const navigate = useNavigate();
 
-  // Preparar valores iniciales traducidos para selectores
   const initialAgeRange = {
     id: rangeAgesData[0].id,
     name: t(rangeAgesData[0].name),
@@ -120,7 +118,6 @@ export default function OnboardingCustomer() {
     name: t(communicationPreferencesData[0].name),
   };
 
-  // Valores por defecto para el formulario
   const defaultValues: CustomerOnboardingFormData = {
     clientProfile: {
       profilePicture: avatarDefault,
@@ -135,7 +132,6 @@ export default function OnboardingCustomer() {
     },
   };
 
-  // Form setup
   const methods = useForm<CustomerOnboardingFormData>({
     defaultValues,
     mode: "onChange",

@@ -5,17 +5,17 @@ import { useTitle } from "~/hooks";
 import { useEffect } from "react";
 
 export default function ForgetPasswordPage() {
-  const {changeTitle} = useTitle()
+  const { changeTitle } = useTitle();
 
   useEffect(() => {
-    changeTitle("Recuperar contraseña - Arxatec")
-  }, [])
+    changeTitle("Recuperar contraseña - Arxatec");
+  }, []);
   return (
     <div className=" grid grid-cols-1 lg:grid-cols-[35%_65%] h-screen w-full mx-auto">
       <div className="h-full flex items-center justify-center p-4 flex-col">
         <div className="flex items-center justify-between w-full px-4 ">
           <img src={logo} alt="logo" className="w-32 hidden sm:block" />
-          <LanguageSelector />
+          <div />
         </div>
         <ForgotPasswordContent />
       </div>

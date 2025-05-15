@@ -93,14 +93,6 @@ export default [
         ]),
       ]),
       route(
-        ROUTE_NAMES.VERIFY_ACCOUNT,
-        "modules/auth/features/account_verification/components/pages/account_verification.tsx"
-      ),
-      route(
-        ROUTE_NAMES.FORGOT_PASSWORD,
-        "modules/auth/features/forget_password/components/pages/forget_password_page.tsx"
-      ),
-      route(
         ROUTE_NAMES.ONBOARDING,
         "modules/onboarding/features/onboarding_general/components/pages/onboarding_general_page.tsx"
       ),
@@ -113,6 +105,14 @@ export default [
         "modules/onboarding/features/onboarding_customer/components/pages/onboarding_customer_page.tsx"
       ),
     ]),
+    route(
+      ROUTE_NAMES.VERIFY_ACCOUNT,
+      "modules/auth/features/account_verification/components/pages/account_verification.tsx"
+    ),
+    route(
+      ROUTE_NAMES.FORGOT_PASSWORD,
+      "modules/auth/features/forget_password/components/pages/forget_password_page.tsx"
+    ),
     route(
       ROUTE_NAMES.LOGIN,
       "modules/auth/features/login/components/pages/login_page.tsx"

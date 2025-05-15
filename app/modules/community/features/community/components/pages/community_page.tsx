@@ -4,6 +4,8 @@ import { LegalDisclamer } from "~/modules/community/components/atoms";
 import { PostPreviewCollection } from "~/modules/community/components/organisms";
 import { CommunityInfoCard } from "../organisms";
 import { CommunityHeader } from "../molecules";
+import { useTitle } from "~/hooks/useTitle";
+import { useEffect } from "react";
 
 export const legalPosts = [
   {
@@ -248,6 +250,12 @@ const communityMarkers = [
 ];
 
 export default function CommunityPage() {
+  const { changeTitle } = useTitle();
+
+  useEffect(() => {
+    changeTitle("Foro Jurídico - Arxatec");
+  }, []);
+
   return (
     <div className="w-full max-w-5xl h-full mx-auto min-h-screen">
       <CommunityHeader title="Foro Jurídico" />

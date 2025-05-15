@@ -8,10 +8,17 @@ import { CardClient } from "../molecules";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router";
 import { APP_PATHS } from "~/routes/routes";
+import { useEffect } from "react";
+import { useTitle } from "~/hooks/useTitle";
 
 export default function ClientsPage() {
   const navigate = useNavigate();
   const onBack = () => navigate(APP_PATHS.CASES);
+  const { changeTitle } = useTitle();
+
+  useEffect(() => {
+    changeTitle("Mis clientes - Arxatec");
+  }, []);
   return (
     <div className="max-w-6xl mx-auto px-6 min-h-screen">
       <div className="flex items-center justify-between mb-2 gap-2">

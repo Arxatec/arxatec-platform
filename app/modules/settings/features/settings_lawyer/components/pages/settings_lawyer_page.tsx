@@ -1,8 +1,15 @@
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import { CustomInput, CustomTextArea, PrimaryButton } from "~/components/atoms";
+import { useTitle } from "~/hooks/useTitle";
+import { useEffect } from "react";
 
 export default function SettingsLawyerPage() {
+  const { changeTitle } = useTitle();
+
+  useEffect(() => {
+    changeTitle("Configuración - Arxatec");
+  }, []);
   return (
     <form className="w-full max-w-3xl mx-auto">
       <div className="space-y-2">

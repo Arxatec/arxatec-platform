@@ -1,8 +1,16 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { CustomInput, CustomSelector } from "~/components/atoms";
 import { CardLawyer } from "../molecules";
+import { useEffect } from "react";
+import { useTitle } from "~/hooks/useTitle";
 
 export default function ViewLawyersPage() {
+  const { changeTitle } = useTitle();
+
+  useEffect(() => {
+    changeTitle("Abogados - Arxatec");
+  }, []);
+
   return (
     <div className="mx-auto max-w-7xl w-full min-h-screen">
       <div className="mt-2 bg-white rounded-lg p-4 flex gap-2 w-full items-center">

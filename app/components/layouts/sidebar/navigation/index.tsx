@@ -19,12 +19,8 @@ import {
   FolderIcon,
 } from "@heroicons/react/24/solid";
 import { CustomInput } from "~/components/atoms";
-
-const userNavigation = [
-  { name: "Perfil", href: "#", icon: UserIcon },
-  { name: "Configuración", href: "#", icon: Cog6ToothIcon },
-  { name: "Cerrar sesión", href: "#", icon: ArrowLeftEndOnRectangleIcon },
-];
+import { APP_PATHS } from "~/routes/routes";
+import { useNavigate } from "react-router";
 
 interface Props {
   setSidebarOpen: (value: boolean) => void;
@@ -33,6 +29,27 @@ export const Navigation: React.FC<Props> = ({ setSidebarOpen }) => {
   const [open, setOpen] = useState(false);
   const [openNotification, setOpenNotification] = useState(false);
   const toggleOpen = () => setOpen(!open);
+  const navigate = useNavigate();
+  const userNavigation = [
+    {
+      name: "Perfil",
+      icon: UserIcon,
+      action: () => navigate(APP_PATHS.PROFILE),
+    },
+    {
+      name: "Configuración",
+      icon: Cog6ToothIcon,
+      action: () => navigate(APP_PATHS.SETTINGS),
+    },
+    {
+      name: "Cerrar sesión",
+      icon: ArrowLeftEndOnRectangleIcon,
+      action: () => {
+        window.sessionStorage.removeItem("TOKEN_AUTH");
+        navigate(APP_PATHS.LOGIN);
+      },
+    },
+  ];
   return (
     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4  sm:gap-x-6 sm:px-6 lg:px-8">
       <NotificationDrawer
@@ -137,13 +154,13 @@ export const Navigation: React.FC<Props> = ({ setSidebarOpen }) => {
             >
               {userNavigation.map((item) => (
                 <MenuItem key={item.name}>
-                  <a
-                    href={item.href}
+                  <button
+                    onClick={() => item.action()}
                     className="flex gap-2 items-center w-full px-3 py-1 text-left text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
                   >
                     <item.icon className="size-4 text-gray-700" />
                     {item.name}
-                  </a>
+                  </button>
                 </MenuItem>
               ))}
             </MenuItems>

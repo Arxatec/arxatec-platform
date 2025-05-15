@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useTitle } from "~/hooks/useTitle";
 import { CompactPost } from "~/modules/community/components/molecules";
 import { PostPreviewCollection } from "~/modules/community/components/organisms";
 
@@ -214,10 +216,15 @@ const lastLegalPost = [
 ];
 
 export default function CommunityPage() {
+  const { changeTitle } = useTitle();
+
+  useEffect(() => {
+    changeTitle("Publicaciones - Arxatec");
+  }, []);
+
   return (
     <div className="w-full max-w-5xl  h-full  mx-auto ">
       <div className="grid grid-cols-[69.7%_30%] gap-2 justify-between">
-
         <PostPreviewCollection posts={legalPosts} />
 
         <div className="bg-white rounded-lg w-full h-fit shadow-sm sticky top-[72px]">

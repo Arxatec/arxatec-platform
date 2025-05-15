@@ -5,12 +5,14 @@ import { twMerge } from "tailwind-merge";
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   loader?: boolean;
+  colorLoader?: string;
 }
 
 export const PrimaryButton: React.FC<Props> = ({
   children,
   loader,
   className = "",
+  colorLoader = "#FFF",
   ...rest
 }) => {
   return (
@@ -21,7 +23,7 @@ export const PrimaryButton: React.FC<Props> = ({
       )}
       {...rest}
     >
-      {loader ? <SpinnerLoader size={18} /> : children}
+      {loader ? <SpinnerLoader size={18} color={colorLoader} /> : children}
     </button>
   );
 };

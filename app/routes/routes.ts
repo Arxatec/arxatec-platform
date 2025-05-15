@@ -1,98 +1,107 @@
 export enum APP_PATHS {
   // AUTH
-  LOGIN = "/login",
-  REGISTER = "/register",
-  FORGOT_PASSWORD = "/forgot-password",
-  VERIFY_ACCOUNT = "/verify-account",
+  LOGIN = "/iniciar-sesion",
+  REGISTER = "/registro",
+  FORGOT_PASSWORD = "/recuperar-contrasena",
+  VERIFY_ACCOUNT = "/verificar-cuenta",
 
   // ONBOARDING
-  ONBOARDING = "/onboarding",
-  ONBOARDING_LAWYER = "/onboarding-lawyer",
-  ONBOARDING_CUSTOMER = "/onboarding-customer",
+  ONBOARDING = "/incorporacion",
+  ONBOARDING_LAWYER = "/incorporacion-abogado",
+  ONBOARDING_CUSTOMER = "/incorporacion-cliente",
 
   // DASHBOARD
-  DASHBOARD = "/dashboard",
+  DASHBOARD = "/panel",
 
   // COMMUNITIES
-  COMMUNITIES = "/community",
+  COMMUNITIES = "/comunidad",
 
   // POSTS
-  POSTS = "/community/posts",
-  CREATE_POST = "/community/posts/create",
-  CREATE_COMMUNITY = "/community/create-community",
+  POSTS = "/comunidad/publicaciones",
+  CREATE_POST = "/comunidad/publicaciones/crear",
+  CREATE_COMMUNITY = "/comunidad/crear-comunidad",
 
   // CALENDAR
-  CALENDAR = "/calendar",
+  CALENDAR = "/calendario",
 
   // CHATS
   CHATS = "/chats",
 
   // CASES
-  CASES = "/cases",
-  PERSONAL_CASES = "/cases/personal",
-  EXPLORER_CASES = "/cases/explorer",
-  CASE = "/cases/:id",
-  CREATE_CASE = "/cases/create",
+  CASES = "/casos",
+  PERSONAL_CASES = "/casos/personal",
+  EXPLORER_CASES = "/casos/explorador",
+  CASE = "/casos/:id",
+  CREATE_CASE = "/casos/crear",
 
   // ARTICLES
-  ARTICLES = "/articles",
-  CREATE_ARTICLE = "/articles/create",
+  ARTICLES = "/articulos",
+  CREATE_ARTICLE = "/articulos/crear",
 
   // CLIENTS
-  CLIENTS = "/cases/clients",
+  CLIENTS = "/casos/clientes",
 
   // LAWYERS
-  LAWYERS = "/lawyers",
+  LAWYERS = "/abogados",
+
+  // SETTINGS
+  SETTINGS = "/configuracion",
+
+  // PROFILE
+  PROFILE = "/perfil",
 }
 
 export enum ROUTE_NAMES {
   // AUTH
-  LOGIN = "login",
-  REGISTER = "register",
-  FORGOT_PASSWORD = "forgot-password",
-  VERIFY_ACCOUNT = "verify-account",
+  LOGIN = "iniciar-sesion",
+  REGISTER = "registro",
+  FORGOT_PASSWORD = "recuperar-contrasena",
+  VERIFY_ACCOUNT = "verificar-cuenta",
 
   // ONBOARDING
-  ONBOARDING = "onboarding",
-  ONBOARDING_LAWYER = "onboarding-lawyer",
-  ONBOARDING_CUSTOMER = "onboarding-customer",
+  ONBOARDING = "incorporacion",
+  ONBOARDING_LAWYER = "incorporacion-abogado",
+  ONBOARDING_CUSTOMER = "incorporacion-cliente",
 
   // DASHBOARD
-  DASHBOARD = "dashboard",
+  DASHBOARD = "panel",
 
   // COMMUNITIES
-  COMMUNITIES = "community",
-  CREATE_COMMUNITY = "create-community",
+  COMMUNITIES = "comunidad",
+  CREATE_COMMUNITY = "crear-comunidad",
   COMMUNITY = ":id",
 
   // POST
-  CREATE_POST = "create",
-  POSTS = "posts",
+  CREATE_POST = "crear",
+  POSTS = "publicaciones",
   POST = ":id",
 
   // CALENDAR
-  CALENDAR = "calendar",
+  CALENDAR = "calendario",
 
   // CHATS
   CHATS = "chats",
 
   // CASES
-  CASES = "cases",
+  CASES = "casos",
   PERSONAL_CASES = "personal",
-  EXPLORER_CASES = "explorer",
+  EXPLORER_CASES = "explorador",
   CASE = ":id",
-  CREATE_CASE = "create",
+  CREATE_CASE = "crear",
 
   // CLIENTS
-  CLIENTS = "clients",
+  CLIENTS = "clientes",
 
   // SETTINGS
-  SETTINGS = "settings",
+  SETTINGS = "configuracion",
 
   // ARTICLES
-  ARTICLES = "articles",
-  CREATE_ARTICLE = "create",
+  ARTICLES = "articulos",
+  CREATE_ARTICLE = "crear",
 
   // LAWYERS
-  LAWYERS = "lawyers",
+  LAWYERS = "abogados",
+
+  // PROFILE
+  PROFILE = "perfil",
 }

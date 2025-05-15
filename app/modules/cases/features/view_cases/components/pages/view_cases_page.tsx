@@ -10,6 +10,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { CustomInput } from "~/components/atoms";
+import { useTitle } from "~/hooks/useTitle";
 import { Table } from "~/modules/dashboard/features/components/organisms";
 import { APP_PATHS } from "~/routes/routes";
 var options = {
@@ -80,6 +81,11 @@ export default function ViewCasesPage() {
   const navigateToMyCases = () => navigate(APP_PATHS.PERSONAL_CASES);
   const navigateToClients = () => navigate(APP_PATHS.CLIENTS);
   const navigateToCreateCase = () => navigate(APP_PATHS.CREATE_CASE);
+  const { changeTitle } = useTitle();
+
+  useEffect(() => {
+    changeTitle("Casos - Arxatec");
+  }, []);
 
   const chartRef = useRef<HTMLDivElement>(null);
 

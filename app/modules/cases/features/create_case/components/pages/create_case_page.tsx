@@ -6,7 +6,7 @@ import {
   TableCellsIcon,
   CodeBracketIcon,
 } from "@heroicons/react/24/solid";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 import {
   CustomInput,
@@ -17,6 +17,7 @@ import {
 import { APP_PATHS } from "~/routes/routes";
 import { SelectUser } from "../molecules";
 import { TextRich } from "~/components/organisms";
+import { useTitle } from "~/hooks/useTitle";
 
 type UploadedFile = {
   id: string;
@@ -52,7 +53,11 @@ export default function CreateCasePage() {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [error, setError] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { changeTitle } = useTitle();
 
+  useEffect(() => {
+    changeTitle("Crear caso - Arxatec");
+  }, []);
   const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
   const ALLOWED_FILE_TYPES = [
     "application/pdf",

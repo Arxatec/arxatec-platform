@@ -7,10 +7,12 @@ import {
   MagnifyingGlassIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { CustomAvatar, CustomSelector } from "~/components/atoms";
 import { CustomInput } from "~/components/atoms";
 import { CustomTable } from "~/components/molecules";
+import { useTitle } from "~/hooks/useTitle";
 import { APP_PATHS } from "~/routes/routes";
 
 type CaseStatus = "en_progreso" | "completado" | "abierto" | "en_pausa";
@@ -436,6 +438,11 @@ const data = [
 export default function MyCasesPage() {
   const navigate = useNavigate();
   const onBack = () => navigate(APP_PATHS.CASES);
+  const { changeTitle } = useTitle();
+
+  useEffect(() => {
+    changeTitle("Mis casos - Arxatec");
+  }, []);
   return (
     <div className="max-w-6xl mx-auto px-6 min-h-screen">
       <div className="flex items-center justify-between mb-2 gap-2">
