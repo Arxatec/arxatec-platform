@@ -17,7 +17,7 @@ import { TableMenu } from "./menus/table_menu";
 import { YoutubeMenu } from "./controls/youtube_format";
 import HighlightMenu from "./menus/highlight_selector";
 import { extensions } from "./config/extensions";
-import { editorStyles } from "../../../styles/editorRich";
+import { editorStyles } from "../../../styles/editor_rich";
 import ResetFormattingOnEnterExtension from "./controls/reset_format";
 import { HistoryMenu } from "./controls/history";
 
@@ -58,17 +58,17 @@ export const TextRich = ({
   onChange,
   // Default values for new props
   showHeadingSelector = true,
-  showFontSelector = true,
+  showFontSelector = false,
   showBasicFormat = true,
   showAlignmentMenu = true,
   showColorMenu = true,
   showHighlightMenu = true,
   showListMenu = true,
   showCodeBlockMenu = true,
-  showImageMenu = true,
+  showImageMenu = false,
   showLinkMenu = true,
-  showTableMenu = true,
-  showYoutubeMenu = true,
+  showTableMenu = false,
+  showYoutubeMenu = false,
   showHistoryMenu = true,
 }: BlogEditorProps) => {
   // State for blog title

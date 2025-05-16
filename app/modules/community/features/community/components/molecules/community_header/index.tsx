@@ -1,8 +1,8 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router";
-import { PrimaryButton } from "~/components/atoms";
+import { CustomImage, PrimaryButton } from "~/components/atoms";
 import { APP_PATHS } from "~/routes/routes";
-
+import communityError from "~/assets/images/error/avatar_error.png";
 interface Props {
   title: string;
 }
@@ -13,7 +13,7 @@ export const CommunityHeader: React.FC<Props> = ({ title }) => {
 
   return (
     <div>
-      <img
+      <CustomImage
         src="https://images.pexels.com/photos/2908984/pexels-photo-2908984.jpeg"
         alt="Community"
         className="w-full h-48 object-cover rounded-lg shadow-sm hover:shadow-md transition-all"
@@ -21,10 +21,11 @@ export const CommunityHeader: React.FC<Props> = ({ title }) => {
       <div className="grid grid-cols-[160px_1fr] items-center justify-between mt-2 h-full">
         <div className="w-fit h-full flex relative">
           <span className="w-40 h-40 absolute bottom-0 rounded-tr-md rounded-br-md border-t-8 border-r-8 border-slate-100 overflow-hidden bg-slate-100">
-            <img
+            <CustomImage
               src="https://images.pexels.com/photos/4427430/pexels-photo-4427430.jpeg"
               alt="image"
               className="w-full h-full rounded-md overflow-hidden block object-cover"
+              errorImage={communityError}
             />
           </span>
         </div>

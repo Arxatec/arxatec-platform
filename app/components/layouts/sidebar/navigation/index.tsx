@@ -18,9 +18,11 @@ import {
   DocumentIcon,
   FolderIcon,
 } from "@heroicons/react/24/solid";
-import { CustomInput } from "~/components/atoms";
+import { CustomAvatar, CustomImage, CustomInput } from "~/components/atoms";
 import { APP_PATHS } from "~/routes/routes";
 import { useNavigate } from "react-router";
+import { useUserStore } from "~/store";
+import { getFirstTwoWords } from "~/utilities/string_utilities";
 
 interface Props {
   setSidebarOpen: (value: boolean) => void;
@@ -30,6 +32,7 @@ export const Navigation: React.FC<Props> = ({ setSidebarOpen }) => {
   const [openNotification, setOpenNotification] = useState(false);
   const toggleOpen = () => setOpen(!open);
   const navigate = useNavigate();
+  const { user } = useUserStore();
   const userNavigation = [
     {
       name: "Perfil",
@@ -66,7 +69,6 @@ export const Navigation: React.FC<Props> = ({ setSidebarOpen }) => {
         <Bars3Icon aria-hidden="true" className="size-6" />
       </button>
 
-      {/* Separator */}
       <div aria-hidden="true" className="h-6 w-px bg-gray-200 lg:hidden" />
 
       <div className="flex items-center justify-between gap-x-4 w-full lg:gap-x-6">
@@ -134,17 +136,19 @@ export const Navigation: React.FC<Props> = ({ setSidebarOpen }) => {
           <Menu as="div" className="relative">
             <MenuButton className="-m-1.5 flex items-center p-1.5">
               <span className="sr-only">Open user menu</span>
-              <img
-                alt=""
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                className="size-10 rounded-md object-cover bg-gray-50"
+              <CustomAvatar
+                avatar={user?.avatar ?? ""}
+                size="2.5rem"
+                username={user?.name}
               />
               <span className="hidden lg:flex lg:items-center">
                 <div className="ml-4 flex flex-col justify-start items-start">
                   <p className="text-sm font-semibold text-gray-900">
-                    Rafael Aguirre
+                    {getFirstTwoWords(user?.name ?? "")}
                   </p>
-                  <p className="text-sm font-base text-gray-500">Abogado</p>
+                  <p className="text-sm font-base text-gray-500">
+                    {user?.email}
+                  </p>
                 </div>
               </span>
             </MenuButton>

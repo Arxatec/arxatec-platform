@@ -5,12 +5,12 @@ import {
   MapPinIcon,
   StarIcon,
 } from "@heroicons/react/24/solid";
-import { PrimaryButton } from "~/components/atoms";
+import { PrimaryButton, CustomImage } from "~/components/atoms";
 
 export const CardLawyer = () => {
   return (
     <div className="bg-white rounded-lg w-full overflow-hidden shadow-sm hover:shadow-md transition-all cursor-pointer">
-      <img
+      <CustomImage
         src="https://images.pexels.com/photos/9034267/pexels-photo-9034267.jpeg"
         alt="lawyer"
         className="w-full h-60 object-cover"

@@ -13,11 +13,13 @@ import { messages } from "../../../messages";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { SocialAuthOptions } from "~/modules/auth/components/molecules";
+import { useUserStore } from "~/store";
 
 export const LoginForm = () => {
   const { t } = useTranslation();
   const [error, setError] = useState<any>(null);
   const navigate = useNavigate();
+  const { setUser } = useUserStore();
 
   const {
     register,
@@ -37,8 +39,15 @@ export const LoginForm = () => {
   };
 
   const onSuccess = (data: any) => {
+    const user = {
+      name: `${data.data.user.firstName} ${data.data.user.lastName}`,
+      email: data.data.user.email,
+      avatar: data.data.user.profileImage,
+    };
     setError(null);
+    setUser(user);
     window.sessionStorage.setItem("TOKEN_AUTH", data.token);
+
     navigate(APP_PATHS.DASHBOARD);
   };
 

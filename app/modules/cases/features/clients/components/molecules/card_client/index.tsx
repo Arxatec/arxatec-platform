@@ -2,16 +2,16 @@ import {
   ChatBubbleBottomCenterTextIcon,
   EnvelopeIcon,
 } from "@heroicons/react/24/solid";
-import { PrimaryButton } from "~/components/atoms";
+import { PrimaryButton, CustomImage } from "~/components/atoms";
 
 export const CardClient = () => {
   return (
     <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-all w-full  ">
       <div className="flex gap-2">
-        <img
+        <CustomImage
           src="https://images.pexels.com/photos/832998/pexels-photo-832998.jpeg"
           alt="client"
-          className="size-24 rounded-md object-cover"
+          className="size-28 rounded-md object-cover overflow-hidden"
         />
       </div>
       <div className="divide-y divide-gray-100">

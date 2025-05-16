@@ -7,6 +7,7 @@ import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { Link, useLocation, useNavigate } from "react-router";
 import { classNames } from "~/utilities/string_utilities";
 import { Scrollbars } from "react-custom-scrollbars-2";
+import { CustomImage } from "~/components/atoms";
 
 interface Props {
   logo: string;
@@ -118,10 +119,10 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
                                     )}
                                   >
                                     {subItem.image ? (
-                                      <img
+                                      <CustomImage
                                         src={subItem.image}
                                         alt="avatar"
-                                        className="size-8 rounded-full"
+                                        className="size-8 rounded-md overflow-hidden"
                                       />
                                     ) : null}
                                     {subItem.iconInactive ? (

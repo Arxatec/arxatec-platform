@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import placeholderError from "~/assets/images/error/image_error.jpg";
 
 interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {
   errorImage?: string;
@@ -9,7 +10,7 @@ interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {
 export const CustomImage: React.FC<Props> = ({
   src,
   alt = "",
-  errorImage = "/images/placeholder-error.png",
+  errorImage = placeholderError,
   onImageError,
   onImageLoaded,
   className = "",
@@ -46,7 +47,7 @@ export const CustomImage: React.FC<Props> = ({
         alt={alt}
         onError={handleError}
         onLoad={handleLoad}
-        className={`transition-opacity duration-300 ${
+        className={`transition-opacity duration-300 w-full h-full object-cover ${
           isLoading ? "opacity-0" : "opacity-100"
         }`}
         {...props}

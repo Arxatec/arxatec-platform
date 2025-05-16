@@ -1,3 +1,4 @@
+export { CustomImage } from "./custom_image";
 export { Schedule } from "./schedule";
 export { TimeSelect } from "./time_select";
 export { CustomTextArea } from "./custom_text_area";

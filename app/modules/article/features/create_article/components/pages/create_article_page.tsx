@@ -8,6 +8,8 @@ import { BannerUploader } from "../fields/BannerUploader";
 import { ContentEditor } from "../fields/ContentEditor";
 import { useEffect } from "react";
 import { useTitle } from "~/hooks/useTitle";
+import { useNavigate } from "react-router";
+import { APP_PATHS } from "~/routes/routes";
 
 export default function CreateArticlePage() {
   const {
@@ -21,7 +23,10 @@ export default function CreateArticlePage() {
     reset,
   } = useArticleForm();
   const { changeTitle } = useTitle();
+  const navigate = useNavigate();
   const mutation = useCreateArticleMutation();
+
+  const onBack = () => navigate(APP_PATHS.ARTICLES);
 
   const onSubmit = (formData: typeof form) => {
     const fd = new FormData();
@@ -47,13 +52,20 @@ export default function CreateArticlePage() {
 
   return (
     <div className="max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 min-h-screen">
-      <div className="flex items-center justify-between mb-2 gap-2">
-        <button className="flex items-center bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-all hover:bg-gray-50">
+      <div className="items-center mb-2 gap-2 grid grid-cols-[40px_1fr_auto]">
+        <button
+          onClick={onBack}
+          className=" bg-white rounded-lg flex items-center justify-center h-full shadow-sm hover:shadow-md  transition-all hover:bg-gray-50"
+        >
           <ArrowLeftIcon className="size-4 text-gray-500" strokeWidth={2} />
         </button>
-        <div className="bg-white px-4 py-4 w-full rounded-lg flex items-center justify-start shadow-sm hover:shadow-md transition-all">
+        <div className="bg-white px-4 py-2 w-full h-full rounded-lg flex items-center justify-start shadow-sm hover:shadow-md transition-all">
           <h2 className="text-base font-bold">Crear artículo</h2>
         </div>
+        <PrimaryButton className="w-full h-full">
+          <DocumentPlusIcon className="size-4 mr-2 text-white" />
+          Crear artículo
+        </PrimaryButton>
       </div>
       <div className="bg-white rounded-lg p-4 mt-2 space-y-4">
         <TitleInput
@@ -70,6 +82,8 @@ export default function CreateArticlePage() {
           error={errors.category}
           touched={touched.category}
         />
+      </div>
+      <div className="bg-white rounded-lg p-4 mt-2 space-y-4">
         <BannerUploader
           value={form.banner}
           onChange={(f) => handleChange("banner", f)}
@@ -84,16 +98,6 @@ export default function CreateArticlePage() {
           error={errors.content}
           touched={touched.content}
         />
-      </div>
-      <div className="flex justify-end mt-2">
-        <PrimaryButton
-          onClick={() => handleSubmit(onSubmit)}
-          disabled={mutation.isPending || !isValid}
-          loader={mutation.isPending}
-        >
-          <DocumentPlusIcon className="size-4 mr-2 text-white" />
-          Crear artículo
-        </PrimaryButton>
       </div>
     </div>
   );

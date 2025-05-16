@@ -1,8 +1,15 @@
+import { useEffect } from "react";
 import { Link } from "react-router";
 import logo from "~/assets/images/logo.png";
+import { useTitle } from "~/hooks";
 import { APP_PATHS } from "~/routes/routes";
 
 export default function NotFoundPage() {
+  const { changeTitle } = useTitle();
+  useEffect(() => {
+    changeTitle("Página no encontrada - Arxatec");
+  }, []);
+
   return (
     <>
       <div className="grid min-h-screen grid-cols-1 grid-rows-[1fr_auto_1fr] bg-white lg:grid-cols-[max(50%,36rem)_1fr]">
@@ -61,8 +68,8 @@ export default function NotFoundPage() {
         <div className="hidden lg:relative lg:col-start-2 lg:row-start-1 lg:row-end-4 lg:block ">
           <div className="absolute inset-0 size-full p-2">
             <img
-              alt=""
-              src="https://images.unsplash.com/photo-1470847355775-e0e3c35a9a2c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1825&q=80"
+              alt="Página no encontrada"
+              src="https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg"
               className="object-cover w-full h-full rounded-md"
             />
           </div>

@@ -2,7 +2,7 @@ export const editorStyles = `
   .ProseMirror, .prose {
     min-height: 400px;
     background-color: white;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
     color: #374151;
     line-height: 1.6;
   }
@@ -36,7 +36,7 @@ export const editorStyles = `
   }
 
 .ProseMirror h1, .prose h1 {
-  font-size: 2.5rem;  /* 40px */
+  font-size: 2rem;  /* 40px */
   font-weight: 800;
   margin: 2rem 0 1rem;
   color: #111827;
@@ -45,7 +45,7 @@ export const editorStyles = `
 }
 
 .ProseMirror h2, .prose h2 {
-  font-size: 2rem;  /* 32px */
+  font-size: 1.5rem;  /* 32px */
   font-weight: 700;
   margin: 1.5rem 0 1rem;
   color: #111827;
@@ -54,7 +54,7 @@ export const editorStyles = `
 }
 
 .ProseMirror h3, .prose h3 {
-  font-size: 1.5rem;  /* 24px */
+  font-size: 1.25rem;  /* 24px */
   font-weight: 600;
   margin: 1.25rem 0 0.75rem;
   color: #111827;
@@ -62,7 +62,7 @@ export const editorStyles = `
 }
 
 .ProseMirror h4, .prose h4 {
-  font-size: 1.25rem;  /* 20px */
+  font-size: 1.1rem;  /* 20px */
   font-weight: 600;
   margin: 1rem 0 0.75rem;
   color: #111827;
@@ -70,7 +70,7 @@ export const editorStyles = `
 }
 
 .ProseMirror p, .prose p {
-  font-size: 1rem;  /* 16px */
+  font-size: 0.8rem;  /* 16px */
   font-weight: 400;
   margin: 1rem 0;
   line-height: 1.75;

@@ -39,7 +39,7 @@ export const CustomTable = ({
       className={`w-full shadow-sm hover:shadow-md transition-all ${className}`}
     >
       <div className="overflow-x-auto">
-        <table className="w-full text-left whitespace-nowrap mt-2 bg-white rounded-lg overflow-hidden">
+        <table className="w-full text-left whitespace-nowrap bg-white rounded-lg overflow-hidden">
           <colgroup>
             {columns.map((column, index) => (
               <col key={index} className={column.width} />

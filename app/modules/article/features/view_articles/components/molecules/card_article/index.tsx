@@ -4,9 +4,9 @@ import {
   EllipsisHorizontalIcon,
 } from "@heroicons/react/24/solid";
 import { LinkIcon } from "@heroicons/react/24/outline";
-import { CustomAvatar, CustomDropdown } from "~/components/atoms";
+import { CustomAvatar, CustomDropdown, CustomImage } from "~/components/atoms";
 import { type FC } from "react";
-import type { Article } from "../../../services";
+import type { Article } from "../../../models";
 
 interface CardArticleProps {
   article: Article;
@@ -59,7 +59,7 @@ export const CardArticle: FC<CardArticleProps> = ({
       className="bg-white flex items-center gap-4 rounded-md overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-all"
       aria-label={`Artículo: ${article.title}`}
     >
-      <img
+      <CustomImage
         src={article.banner}
         alt={article.title}
         className="w-52 h-52 object-cover"
