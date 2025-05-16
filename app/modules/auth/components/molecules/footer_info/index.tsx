@@ -9,11 +9,21 @@ export const FooterInfo = () => {
         © 2020-2025 ArxaTEC.
       </a>
       <div className="flex items-center gap-2 flex-wrap">
-        <a href="" className="text-sm text-gray-900">
+        <a
+          href="https://arxatec.net/terms"
+          className="text-sm text-gray-900"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {t(LocaleKeys.common_terms)}
         </a>
         <span className="size-1 bg-gray-400 rounded-full" />
-        <a href="" className="text-sm text-gray-900">
+        <a
+          href="https://arxatec.net/privacy"
+          className="text-sm text-gray-900"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {t(LocaleKeys.common_privacy)}
         </a>
       </div>

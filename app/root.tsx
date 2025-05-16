@@ -1,122 +1,52 @@
-import {
-  isRouteErrorResponse,
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useLocation,
-  useNavigate,
-} from "react-router";
-import { useEffect } from "react";
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-import englishContent from "./assets/lang/en.json";
-import spanishContent from "./assets/lang/es.json";
-import quechuaContent from "./assets/lang/qu.json";
-import type { Route } from "./+types/root";
-import stylesheet from "./app.css?url";
+import { Outlet, Scripts, ScrollRestoration } from "react-router";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { useRedirection } from "./hooks";
+import { createQueryClient } from "./utilities/query_utilities";
+import initI18n from "./utilities/i18n_utilities";
+import { Bounce } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "~/styles/index.css";
 import "react-circular-progressbar/dist/styles.css";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { APP_PATHS } from "./routes/routes";
+initI18n();
+const GOOGLE_CLIENT_ID =
+  "16579426384-hcu4blgpob121572ud505r6bsl8csi0l.apps.googleusercontent.com";
 
-export const links: Route.LinksFunction = () => [
-  { rel: "stylesheet", href: stylesheet },
-];
-
-i18n.use(initReactI18next).init({
-  resources: {
-    en: englishContent,
-    es: spanishContent,
-    qu: quechuaContent,
-  },
-  fallbackLng: "es",
-  interpolation: {
-    escapeValue: false,
-  },
-});
-
-const queryClient = new QueryClient();
-
-export function Layout({ children }: { children: React.ReactNode }) {
+export default function App() {
+  useRedirection();
   return (
-    <html lang="en">
+    <html lang="es">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="shortcut icon" href="favicon.svg" type="image/x-icon" />
-        <Meta />
-        <Links />
       </head>
       <body>
-        <QueryClientProvider client={queryClient}>
-          {children}
-          <ScrollRestoration />
-          <Scripts />
-          <ReactQueryDevtools />
-        </QueryClientProvider>
+        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+          <QueryClientProvider client={createQueryClient()}>
+            <Outlet />
+            <ToastContainer
+              position="bottom-right"
+              autoClose={5000}
+              hideProgressBar={true}
+              newestOnTop={false}
+              closeOnClick={false}
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+              transition={Bounce}
+              toastClassName="custom-toast-root"
+            />
+            <ScrollRestoration />
+            <Scripts />
+            {import.meta.env.DEV && <ReactQueryDevtools />}
+          </QueryClientProvider>
+        </GoogleOAuthProvider>
       </body>
     </html>
-  );
-}
-
-export default function App() {
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const handleRedirection = () => {
-      const isRootPath = location.pathname === "/";
-      const hasToken = window.sessionStorage.getItem("TOKEN_AUTH") !== null;
-
-      if (isRootPath) {
-        if (hasToken) {
-          navigate(APP_PATHS.DASHBOARD);
-        } else {
-          navigate(APP_PATHS.LOGIN);
-        }
-      }
-    };
-
-    handleRedirection();
-  }, [location.pathname, navigate]);
-
-  return (
-    <GoogleOAuthProvider clientId="16579426384-hcu4blgpob121572ud505r6bsl8csi0l.apps.googleusercontent.com">
-      <Outlet />
-    </GoogleOAuthProvider>
-  );
-}
-
-export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Oops!";
-  let details = "An unexpected error occurred.";
-  let stack: string | undefined;
-
-  if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
-    details =
-      error.status === 404
-        ? "The requested page could not be found."
-        : error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
-    details = error.message;
-    stack = error.stack;
-  }
-
-  return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
-    </main>
   );
 }
