@@ -1,8 +1,8 @@
 import fs from "fs";
 
 // Schema es.json
-const inputFile = "./app/assets/lang/es.json";
-const outputFile = "./app/lang/index.ts";
+const inputFile = "./src/assets/lang/es.json";
+const outputFile = "./src/lang/index.ts";
 
 function generateKeys(obj, prefix = "") {
   let result = [];
