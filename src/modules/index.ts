@@ -26,7 +26,7 @@ export { default as CreateCasePage } from "./cases/features/create_case/componen
 export { default as ClientsPage } from "./cases/features/clients/components/pages/clients_page";
 
 export { default as ViewArticlesPage } from "./article/features/view_articles/components/pages/view_articles_page";
-export { default as CreateArticlePage } from "./article/features/create_article/components/pages/create_article_page";
+export { default as ArticleEditorPage } from "./article/features/article_editor/components/pages/article_editor_page";
 
 export { default as OnboardingGeneralPage } from "./onboarding/features/onboarding_general/components/pages/onboarding_general_page";
 export { default as OnboardingLawyerPage } from "./onboarding/features/onboarding_lawyer/components/pages/onboarding_lawyer_page";

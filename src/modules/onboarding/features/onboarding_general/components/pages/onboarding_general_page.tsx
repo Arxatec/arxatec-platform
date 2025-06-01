@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
-import { bannerOnboardingGeneral, logo } from "~/utilities/assets_utilities";
+import { bannerOnboardingGeneral } from "~/utilities/assets_utilities";
 import { PrimaryButton } from "~/components/atoms";
 import { LocaleKeys } from "~/lang";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ROLE, type Form } from "../../types";
 import { Header, HeroImage } from "~/modules/onboarding/components/molecules";
 import { useLocation } from "wouter";

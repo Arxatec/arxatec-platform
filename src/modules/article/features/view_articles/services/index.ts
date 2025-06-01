@@ -1,5 +1,6 @@
 import axiosInstance from "~/interceptors";
 import type { ArticlesResponse, GetArticlesParams } from "../models";
+import axios from "axios";
 
 export const getArticles = async ({
   page = 1,
@@ -23,7 +24,25 @@ export const getArticles = async ({
       }
     );
     return data;
-  } catch (error) {
+  } catch (_) {
     throw new Error("Error al cargar los artículos");
+  }
+};
+
+export const deleteArticle = async (id: string): Promise<void> => {
+  try {
+    const token = window.sessionStorage.getItem("TOKEN_AUTH");
+    const { data } = await axios.delete(
+      `http://localhost:3000/api/v1/articles/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error al eliminar el artículo");
   }
 };

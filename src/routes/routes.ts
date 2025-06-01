@@ -98,6 +98,7 @@ export enum ROUTE_NAMES {
   // ARTICLES
   ARTICLES = "articulos",
   CREATE_ARTICLE = "crear",
+  EDIT_ARTICLE = "editar",
 
   // LAWYERS
   LAWYERS = "abogados",

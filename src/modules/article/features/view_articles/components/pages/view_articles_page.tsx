@@ -1,36 +1,22 @@
-import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/outline";
-import {
-  CustomInput,
-  CustomSelector,
-  PrimaryButton,
-  SpinnerLoader,
-} from "~/components/atoms";
-import { CardArticle } from "../molecules";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { CustomInput, CustomSelector, SpinnerLoader } from "~/components/atoms";
 import { useLocation } from "wouter";
-import { APP_PATHS } from "~/routes/routes";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getArticles } from "../../services";
 import { useEffect, useRef, useCallback, useState } from "react";
 import { useDebounce, useTitle } from "~/hooks/";
-
-const ArticleSkeleton = () => (
-  <div className="bg-white rounded-lg shadow-sm p-4 animate-pulse">
-    <div className="flex gap-4">
-      <div className="w-32 h-32 bg-gray-100 rounded-md"></div>
-      <div className="flex-1">
-        <div className="h-6 bg-gray-100 rounded w-3/4 mb-2"></div>
-        <div className="h-4 bg-gray-100 rounded w-1/2 mb-4"></div>
-        <div className="h-4 bg-gray-100 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-100 rounded w-2/3"></div>
-      </div>
-    </div>
-  </div>
-);
+import {
+  ArticleEmpty,
+  ArticleError,
+  ArticleList,
+  ArticleListSkeleton,
+  Header,
+} from "../atoms";
 
 export default function ViewArticles() {
   const { changeTitle } = useTitle();
   const [, setLocation] = useLocation();
-  const navigateToCreateArticle = () => setLocation(APP_PATHS.CREATE_ARTICLE);
+  const navigateToCreateArticle = () => setLocation("/crear");
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -141,18 +127,7 @@ export default function ViewArticles() {
   return (
     <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 w-full min-h-screen">
       <div className="bg-white px-4 py-4 rounded-md mb-2">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-gray-900">
-            Todos los articulos
-          </h2>
-          <PrimaryButton
-            className="text-sm flex items-center gap-2"
-            onClick={navigateToCreateArticle}
-          >
-            <PlusIcon className="size-4 text-white" strokeWidth={2} />
-            Nuevo articulo
-          </PrimaryButton>
-        </div>
+        <Header navigateToCreateArticle={navigateToCreateArticle} />
         <div className="mt-4 flex gap-2 w-full items-center">
           <div className="w-full">
             <CustomInput
@@ -182,36 +157,21 @@ export default function ViewArticles() {
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        {isLoading && (
-          <>
-            <ArticleSkeleton />
-            <ArticleSkeleton />
-            <ArticleSkeleton />
-          </>
-        )}
+        <ArticleListSkeleton isLoading={isLoading} />
 
-        {error && (
-          <div className="bg-red-50 border border-red-200 rounded-md p-4 text-center">
-            <p className="text-red-600 font-medium">
-              Error al cargar los artículos
-            </p>
-            <p className="text-red-500 text-sm mt-1">
-              Por favor, intenta nuevamente más tarde
-            </p>
-          </div>
-        )}
+        <ArticleError error={!!error} />
 
-        {!isLoading &&
-          !error &&
-          sortedArticles.map((article) => (
-            <CardArticle
-              key={article.id}
-              article={article}
-              onView={(id) => console.log("Ver artículo:", id)}
-              onEdit={(id) => console.log("Editar artículo:", id)}
-              onDelete={(id) => console.log("Eliminar artículo:", id)}
-            />
-          ))}
+        <ArticleEmpty
+          isLoading={isLoading}
+          error={!!error}
+          sortedArticles={sortedArticles}
+        />
+
+        <ArticleList
+          isLoading={isLoading}
+          error={!!error}
+          sortedArticles={sortedArticles}
+        />
 
         <div ref={loadMoreRef}>
           {isFetchingNextPage && (

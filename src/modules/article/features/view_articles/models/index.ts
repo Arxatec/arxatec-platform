@@ -1,5 +1,5 @@
 export interface Article {
-  id: number;
+  id: string;
   user_id: number;
   title: string;
   resume: string;

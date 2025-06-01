@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import { Button } from "./ui/button";
@@ -79,12 +79,12 @@ export const TextRich = ({
   const [wordCount, setWordCount] = useState(0);
   // State for character count
   const [charCount, setCharCount] = useState(0);
-  // State for link URL to insert
-  const [linkUrl, setLinkUrl] = useState("");
-  // State for link text to insert
-  const [linkText, setLinkText] = useState("");
-  // State to show/hide link dialog
-  const [showLinkDialog, setShowLinkDialog] = useState(false);
+  // Link functionality disabled for now
+  // const [linkUrl, setLinkUrl] = useState("");
+  // const [linkText, setLinkText] = useState("");
+
+  // Flag para evitar onChange durante inicialización
+  const [hasInitialized, setHasInitialized] = useState(false);
 
   // TipTap editor instance with extensions and configuration
   const editor = useEditor({
@@ -96,35 +96,100 @@ export const TextRich = ({
       setCharCount(text.length);
       const words = text.trim() ? text.trim().split(/\s+/).length : 0;
       setWordCount(words);
-      onChange?.(editor.getHTML());
+
+      const newContent = editor.getHTML();
+      console.log("🎯 TextRich onUpdate ejecutándose:", {
+        newContentLength: newContent.length,
+        newContentStart: newContent.substring(0, 100) + "...",
+        hasInitialized,
+        timestamp: new Date().toISOString(),
+      });
+
+      // SOLO llamar onChange si ya se inicializó completamente
+      if (hasInitialized) {
+        console.log("✅ Llamando onChange porque ya está inicializado");
+        onChange?.(newContent);
+      } else {
+        console.log("🚫 BLOQUEANDO onChange - aún no inicializado");
+      }
     },
     onCreate: ({ editor }) => {
       // Align text to left when creating editor
       editor.commands.setTextAlign("left");
+      console.log("🎯 TextRich onCreate ejecutado:", {
+        initialContent: editor.getHTML().substring(0, 100) + "...",
+        timestamp: new Date().toISOString(),
+      });
     },
   });
 
-  // Handles link insertion from dialog
-  const handleLinkSubmit = useCallback(() => {
-    if (!editor) return;
+  // Actualizar el contenido del editor cuando cambie el value prop
+  useEffect(() => {
+    console.log("🔄 TextRich useEffect ejecutándose", {
+      hasEditor: !!editor,
+      valueLength: value?.length || 0,
+      valueStart: value?.substring(0, 50) + "...",
+      hasInitialized,
+    });
 
-    if (linkUrl) {
-      const url = linkUrl.startsWith("http") ? linkUrl : `https://${linkUrl}`;
-      const text = linkText || url;
-
-      // If there's an active link, remove it before inserting the new one
-      if (editor.isActive("link")) {
-        editor.chain().focus().unsetLink().run();
-      }
-
-      // Insert text and apply link
-      editor.chain().focus().insertContent(text).setLink({ href: url }).run();
+    // Reset del flag cuando cambia el value (nuevo contenido llegando)
+    if (value && value.length > 10) {
+      console.log("🔄 Reseteando flag de inicialización (nuevo contenido)");
+      setHasInitialized(false);
     }
 
-    setShowLinkDialog(false);
-    setLinkUrl("");
-    setLinkText("");
-  }, [editor, linkUrl, linkText]);
+    if (editor && value !== undefined) {
+      const currentContent = editor.getHTML();
+
+      console.log("🔍 TextRich: Comparando contenidos", {
+        valueIsEmpty: value === "",
+        currentIsEmpty: currentContent === "<p></p>",
+        areEqual: value === currentContent,
+        newValueStart: value.substring(0, 100),
+        currentStart: currentContent.substring(0, 100),
+      });
+
+      // Solo actualizar si el contenido es diferente
+      if (value !== currentContent) {
+        // Si el nuevo valor está vacío y el actual es el default de TipTap, no actualizar
+        if (value === "" && currentContent === "<p></p>") {
+          console.log("❌ TextRich: Evitando actualización de contenido vacío");
+          return;
+        }
+
+        console.log("✅ TextRich: Actualizando contenido del editor");
+        editor.commands.setContent(value, false); // false para no triggear el onUpdate
+
+        // Marcar como inicializado DESPUÉS de cargar el contenido
+        setTimeout(() => {
+          console.log("🎯 Marcando editor como inicializado");
+          setHasInitialized(true);
+        }, 100); // Pequeño delay para asegurar que TipTap terminó
+      } else {
+        console.log("⏸️ TextRich: Contenido igual, no actualizando");
+        // Si el contenido es igual y tiene contenido válido, marcar como inicializado
+        if (value.length > 10) {
+          console.log("🎯 Marcando como inicializado (contenido igual)");
+          setHasInitialized(true);
+        }
+      }
+    }
+  }, [value, editor]);
+
+  // Handles link insertion from dialog (not currently used)
+  // const handleLinkSubmit = useCallback(() => {
+  //   if (!editor) return;
+  //   if (linkUrl) {
+  //     const url = linkUrl.startsWith("http") ? linkUrl : `https://${linkUrl}`;
+  //     const text = linkText || url;
+  //     if (editor.isActive("link")) {
+  //       editor.chain().focus().unsetLink().run();
+  //     }
+  //     editor.chain().focus().insertContent(text).setLink({ href: url }).run();
+  //   }
+  //   setLinkUrl("");
+  //   setLinkText("");
+  // }, [editor, linkUrl, linkText]);
 
   return (
     <div className={`${containerClassName}`}>
@@ -212,7 +277,7 @@ export const TextRich = ({
           {/* Bottom bar with word/character count and preview button */}
           <div className="flex justify-between items-center mt-2 text-sm text-muted-foreground">
             <div>
-              {wordCount} words · {charCount} characters
+              {wordCount} palabras · {charCount} caracteres
             </div>
             <Button
               variant="outline"
@@ -220,7 +285,7 @@ export const TextRich = ({
               className="h-8 px-3"
             >
               <EyeIcon className="h-4 w-4 mr-2" />
-              {previewMode ? "Edit" : "Preview"}
+              {previewMode ? "Editar" : "Vista previa"}
             </Button>
           </div>
         </div>

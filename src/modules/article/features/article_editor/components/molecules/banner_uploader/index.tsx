@@ -2,8 +2,8 @@ import { PhotoIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useRef } from "react";
 
 interface Props {
-  value: File | null;
-  onChange: (f: File | null) => void;
+  value: File | string | null;
+  onChange: (f: File | string | null) => void;
   onBlur: () => void;
   error?: string;
   touched?: boolean;
@@ -41,7 +41,9 @@ export const BannerUploader = ({
         {value ? (
           <div className="relative w-full h-full">
             <img
-              src={URL.createObjectURL(value)}
+              src={
+                typeof value === "string" ? value : URL.createObjectURL(value)
+              }
               alt="Vista previa de portada"
               className="w-full h-full object-cover rounded-lg"
             />

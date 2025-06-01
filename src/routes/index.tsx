@@ -15,6 +15,20 @@ export default function Routes() {
       />
       <Route path={`/${ROUTE_NAMES.LOGIN}`} component={pages.LoginPage} />
       <Route path={`/${ROUTE_NAMES.REGISTER}`} component={pages.RegisterPage} />
+      {/* Onboarding section */}
+      <Route path={ROUTE_NAMES.ONBOARDING} nest>
+        <Switch>
+          <Route
+            path={`/${ROUTE_NAMES.ONBOARDING_LAWYER}`}
+            component={pages.OnboardingLawyerPage}
+          />
+          <Route
+            path={`/${ROUTE_NAMES.ONBOARDING_CUSTOMER}`}
+            component={pages.OnboardingCustomerPage}
+          />
+          <Route path="/" component={pages.OnboardingGeneralPage} />
+        </Switch>
+      </Route>
 
       <Route path="/" nest>
         <pages.Protected>
@@ -99,24 +113,15 @@ export default function Routes() {
               <Switch>
                 <Route
                   path={`/${ROUTE_NAMES.CREATE_ARTICLE}`}
-                  component={pages.CreateArticlePage}
+                  component={pages.ArticleEditorPage}
                 />
-                <Route path="/" component={pages.ViewArticlesPage} />
-              </Switch>
-            </Route>
+                <Route path={`/${ROUTE_NAMES.EDIT_ARTICLE}`} nest>
+                  <Switch>
+                    <Route path="/:id" component={pages.ArticleEditorPage} />
+                  </Switch>
+                </Route>
 
-            {/* Onboarding section */}
-            <Route path={ROUTE_NAMES.ONBOARDING} nest>
-              <Switch>
-                <Route
-                  path={`/${ROUTE_NAMES.ONBOARDING_LAWYER}`}
-                  component={pages.OnboardingLawyerPage}
-                />
-                <Route
-                  path={`/${ROUTE_NAMES.ONBOARDING_CUSTOMER}`}
-                  component={pages.OnboardingCustomerPage}
-                />
-                <Route path="/" component={pages.OnboardingGeneralPage} />
+                <Route path="/" component={pages.ViewArticlesPage} />
               </Switch>
             </Route>
           </pages.Sidebar>
