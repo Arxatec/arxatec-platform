@@ -27,7 +27,7 @@
     "noUncheckedSideEffectImports": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "erasableSyntaxOnly": false 
+    //"erasableSyntaxOnly": false 
   },
   "include": ["src"]
 }

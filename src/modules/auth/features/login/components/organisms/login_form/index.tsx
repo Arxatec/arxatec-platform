@@ -5,21 +5,19 @@ import { LocaleKeys } from "~/lang";
 import { APP_PATHS } from "~/routes/routes";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import type { AxiosError, AxiosResponse } from "axios";
+import type { AxiosError } from "axios";
 import { login } from "../../../services";
 import { type LoginFormData } from "../../../models";
 import { validation } from "../../../validation";
 import { messages } from "../../../messages";
 import { useState } from "react";
 import { SocialAuthOptions } from "~/modules/auth/components/molecules";
-import { useUserStore } from "~/store";
 import { useLocation } from "wouter";
 
 export const LoginForm = () => {
   const { t } = useTranslation();
   const [error, setError] = useState<any>(null);
   const [, setLocation] = useLocation();
-  const { setUser } = useUserStore();
 
   const {
     register,
@@ -39,14 +37,8 @@ export const LoginForm = () => {
   };
 
   const onSuccess = (data: any) => {
-    const user = {
-      name: `${data.data.user.firstName} ${data.data.user.lastName}`,
-      email: data.data.user.email,
-      avatar: data.data.user.profileImage,
-    };
     setError(null);
-    setUser(user);
-    window.sessionStorage.setItem("TOKEN_AUTH", data.token);
+    window.sessionStorage.setItem("TOKEN_AUTH", data.data.token);
 
     setLocation(APP_PATHS.DASHBOARD);
   };
@@ -54,8 +46,8 @@ export const LoginForm = () => {
   const onError = (error: AxiosError) => {
     const statusCode = error.response?.status;
     setError({
-      title: messages[statusCode as keyof typeof messages].title,
-      description: messages[statusCode as keyof typeof messages].description,
+      title: messages[statusCode].title,
+      description: messages[statusCode].description,
     });
   };
 

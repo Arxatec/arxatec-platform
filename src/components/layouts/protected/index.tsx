@@ -1,6 +1,53 @@
-import { AuthGuard } from "~/components/guards";
+import { useQuery } from "@tanstack/react-query";
+import { Redirect } from "wouter";
+import { getProfile } from "~/services";
+import { logoIcon } from "~/utilities/assets_utilities";
 
 export default function Protected({ children }: { children: React.ReactNode }) {
-  console.log("Protected");
-  return <AuthGuard>{children}</AuthGuard>;
+  const token = window.sessionStorage.getItem("TOKEN_AUTH");
+  const { isPending, isError, data, error } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getProfile(token),
+  });
+
+  if (!token) {
+    window.sessionStorage.removeItem("TOKEN_AUTH");
+    return <Redirect to="/iniciar-sesion" />;
+  }
+
+  if (!data || isError) {
+    console.log(token);
+    console.log(error);
+    console.log(data);
+    window.sessionStorage.removeItem("TOKEN_AUTH");
+    window.sessionStorage.setItem("ERROR_JOIN", error?.message);
+    return <Redirect to="/iniciar-sesion" />;
+  }
+
+  if (isPending) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen w-full p-4 bg-slate-100 text-center">
+        <div className="flex flex-col items-center justify-center bg-white px-8 py-12 rounded-md mx-auto w-full max-w-md shadow-sm hover:shadow transition-all duration-300">
+          <img
+            src={logoIcon}
+            alt="logo"
+            className="w-auto h-12 object-cover rounded-full animate-pulse"
+          />
+          <h3 className="text-base font-bold text-center mt-4 text-gray-800">
+            Estamos cargando tus datos
+          </h3>
+          <p className="text-sm text-gray-500 text-center mt-2">
+            Si no te cargan tus datos, por favor, intenta nuevamente. Si el
+            problema persiste, por favor, contacta al soporte.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (data.data.userType === null) {
+    return <Redirect to="/incorporacion" />;
+  }
+
+  return <>{children}</>;
 }

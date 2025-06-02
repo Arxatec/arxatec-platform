@@ -9,12 +9,21 @@ import { LocaleKeys } from "~/lang";
 import { bannerLogin } from "~/utilities/assets_utilities";
 import { useTitle } from "~/hooks";
 import { useEffect } from "react";
+import { ToastManager } from "~/components/molecules/toast_manager";
 
 export default function LoginPage() {
   const { t } = useTranslation();
   const { changeTitle } = useTitle();
 
   useEffect(() => {
+    const error = window.sessionStorage.getItem("ERROR_JOIN");
+    if (error) {
+      ToastManager.error(
+        "Error al ingresar",
+        "No encontramos tu cuenta, pero estas registrado en Arxatec, por favor, contacta al soporte."
+      );
+      window.sessionStorage.removeItem("ERROR_JOIN");
+    }
     changeTitle("Ingresar - Arxatec");
   }, []);
   return (

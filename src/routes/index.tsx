@@ -15,7 +15,7 @@ export default function Routes() {
       />
       <Route path={`/${ROUTE_NAMES.LOGIN}`} component={pages.LoginPage} />
       <Route path={`/${ROUTE_NAMES.REGISTER}`} component={pages.RegisterPage} />
-      {/* Onboarding section */}
+
       <Route path={ROUTE_NAMES.ONBOARDING} nest>
         <Switch>
           <Route

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const createArticle = async (formData: FormData): Promise<any> => {
+export const createArticle = async (formData: FormData) => {
   try {
     const token = window.sessionStorage.getItem("TOKEN_AUTH");
     const response = await axios.post(
@@ -18,10 +18,7 @@ export const createArticle = async (formData: FormData): Promise<any> => {
   }
 };
 
-export const updateArticle = async (
-  formData: FormData,
-  id: string
-): Promise<any> => {
+export const updateArticle = async (formData: FormData, id: string) => {
   try {
     const token = window.sessionStorage.getItem("TOKEN_AUTH");
     const response = await axios.put(
@@ -39,7 +36,7 @@ export const updateArticle = async (
   }
 };
 
-export const getAllCategories = async (): Promise<any> => {
+export const getAllCategories = async () => {
   try {
     const response = await axios.get(
       "http://localhost:3000/api/v1/articles/categories"

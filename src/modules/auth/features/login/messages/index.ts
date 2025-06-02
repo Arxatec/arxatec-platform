@@ -1,19 +1,19 @@
 export const messages = {
-  400: {
+  "400": {
     title: "Datos inválidos",
     description:
       "Los datos enviados no son correctos o están incompletos. Revisa e intenta de nuevo.",
   },
-  401: {
+  "401": {
     title: "Acceso denegado",
     description:
       "No tienes autorización para realizar esta acción. Verifica tus credenciales.",
   },
-  404: {
+  "404": {
     title: "No encontrado",
     description: "No se encontró ningún recurso que coincida con tu búsqueda.",
   },
-  500: {
+  "500": {
     title: "Error interno",
     description:
       "El servidor falló al procesar la solicitud. Intenta de nuevo en unos minutos.",

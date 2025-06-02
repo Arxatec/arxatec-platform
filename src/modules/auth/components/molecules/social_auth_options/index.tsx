@@ -23,10 +23,10 @@ export const SocialAuthOptions = () => {
       );
     },
     onSuccess: (data: any) => {
+      window.sessionStorage.setItem("TOKEN_AUTH", data.data.token);
       if (data.data.isNewUser) {
         setLocation(APP_PATHS.ONBOARDING);
       } else {
-        window.sessionStorage.setItem("TOKEN_AUTH", data.data.token);
         setLocation(APP_PATHS.DASHBOARD);
       }
     },
