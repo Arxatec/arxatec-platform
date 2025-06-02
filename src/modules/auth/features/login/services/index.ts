@@ -16,7 +16,7 @@ export const login = async (email: string, password: string) => {
 export const loginWithGoogle = async (accessToken: string) => {
   try {
     const response = await axios.post(
-      "http://localhost:3000/api/v1/auth/login/google",
+      "https://arxatec-service-production.up.railway.app/api/v1/auth/login/google",
       {
         googleToken: accessToken,
       }

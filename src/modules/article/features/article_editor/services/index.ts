@@ -4,7 +4,7 @@ export const createArticle = async (formData: FormData) => {
   try {
     const token = window.sessionStorage.getItem("TOKEN_AUTH");
     const response = await axios.post(
-      "http://localhost:3000/api/v1/articles",
+      "https://arxatec-service-production.up.railway.app/api/v1/articles",
       formData,
       {
         headers: {
@@ -22,7 +22,7 @@ export const updateArticle = async (formData: FormData, id: string) => {
   try {
     const token = window.sessionStorage.getItem("TOKEN_AUTH");
     const response = await axios.put(
-      `http://localhost:3000/api/v1/articles/${id}`,
+      `https://arxatec-service-production.up.railway.app/api/v1/articles/${id}`,
       formData,
       {
         headers: {
@@ -39,7 +39,7 @@ export const updateArticle = async (formData: FormData, id: string) => {
 export const getAllCategories = async () => {
   try {
     const response = await axios.get(
-      "http://localhost:3000/api/v1/articles/categories"
+      "https://arxatec-service-production.up.railway.app/api/v1/articles/categories"
     );
     return response.data;
   } catch (error) {
