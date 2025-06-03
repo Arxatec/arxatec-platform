@@ -4,7 +4,7 @@ export const createArticle = async (formData: FormData) => {
   try {
     const token = window.sessionStorage.getItem("TOKEN_AUTH");
     const response = await axios.post(
-      "https://arxatec-service-production.up.railway.app/api/v1/articles",
+      "http://localhost:3000/api/v1/articles",
       formData,
       {
         headers: {
@@ -21,8 +21,8 @@ export const createArticle = async (formData: FormData) => {
 export const updateArticle = async (formData: FormData, id: string) => {
   try {
     const token = window.sessionStorage.getItem("TOKEN_AUTH");
-    const response = await axios.put(
-      `https://arxatec-service-production.up.railway.app/api/v1/articles/${id}`,
+    const response = await axios.patch(
+      `http://localhost:3000/api/v1/articles/${id}`,
       formData,
       {
         headers: {

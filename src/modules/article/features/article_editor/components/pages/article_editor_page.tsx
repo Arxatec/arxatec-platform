@@ -1,6 +1,6 @@
 import { SpinnerLoader } from "~/components/atoms";
 import { useArticleForm } from "../../hooks/use_article_form";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import {
   BannerUploader,
   CategorySelector,
@@ -18,8 +18,10 @@ import {
   useErrorHandling,
   useArticleFormData,
 } from "../../hooks";
+import { ToastManager } from "~/components/molecules/toast_manager";
 
 export default function ArticleEditorPage() {
+  const isFirstRender = useRef(true);
   // Navegación y parámetros
   const { isCreate, articleId, contentUrl, setLocation, onBack } =
     useArticleNavigation();
@@ -49,10 +51,7 @@ export default function ArticleEditorPage() {
   } = useArticleData(isCreate, contentUrl);
 
   // Mutaciones
-  const { mutationCreate, mutationUpdate } = useArticleMutations(
-    reset,
-    setLocation
-  );
+  const { mutationCreate, mutationUpdate } = useArticleMutations(reset);
 
   // Submit
   const { onSubmit } = useArticleSubmit(
@@ -73,6 +72,22 @@ export default function ArticleEditorPage() {
       fetchArticleContent();
     }
   }, [isCreate, fetchArticleContent]);
+
+  useEffect(() => {
+    if (!isFirstRender.current) return;
+
+    if (categories.length === 0) {
+      ToastManager.error(
+        "No se encontraron categorías",
+        "Sucedio un error al encontrar categorias no encontramos ninguna, vuelve a intentarlo o contacta al soporte."
+      );
+      setTimeout(() => {
+        window.history.back();
+      }, 2000);
+    }
+
+    isFirstRender.current = false;
+  }, [categories]);
 
   // Renderizado condicional para loading
   if (isLoading) {
@@ -104,7 +119,7 @@ export default function ArticleEditorPage() {
           touched={touched.title}
         />
 
-        {!categoriesPending && !categoriesError && (
+        {!categoriesPending && !categoriesError && categories.length > 0 && (
           <CategorySelector
             categories={categories}
             value={form.category}

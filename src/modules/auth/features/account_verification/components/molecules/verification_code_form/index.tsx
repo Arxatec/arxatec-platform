@@ -28,7 +28,7 @@ export const VerificationCodeForm = () => {
   const onSuccess = () => {
     setError(null);
     localStorage.removeItem("EMAIL_REGISTER");
-    setLocation(APP_PATHS.ONBOARDING);
+    setLocation(APP_PATHS.LOGIN);
   };
 
   const onError = (error: AxiosError) => {

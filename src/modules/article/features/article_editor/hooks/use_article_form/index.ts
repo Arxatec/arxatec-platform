@@ -46,30 +46,6 @@ const initialForm: ArticleForm = {
   content: "",
 };
 
-// Logger utility
-// NOTA: Este logger podría moverse a un archivo separado como:
-// src/shared/utils/form-logger.ts
-const formLogger = {
-  logFormUpdate: (prev: ArticleForm, next: ArticleForm) => {
-    // Solo logear cambios significativos para evitar spam en consola
-    const contentChanged = prev.content !== next.content;
-    const titleChanged = prev.title !== next.title;
-    const categoryChanged = prev.category?.id !== next.category?.id;
-    const bannerChanged = prev.banner !== next.banner;
-
-    if (contentChanged || titleChanged || categoryChanged || bannerChanged) {
-      console.log("📝 Form actualizado:", {
-        contentChanged,
-        titleChanged,
-        categoryChanged,
-        bannerChanged,
-        contentLength: next.content?.length || 0,
-        timestamp: new Date().toISOString(),
-      });
-    }
-  },
-};
-
 // Content protection utility
 // NOTA: Esta utilidad podría moverse a un archivo separado como:
 // src/modules/article/features/article_editor/utils/content-protection.ts
@@ -83,17 +59,6 @@ const contentProtection = {
       newContent.length === 0 ||
       newContent === "<p></p>" ||
       newContent === "<p><br></p>";
-
-    console.log("🛡️ PROTECCIÓN ANTI-VACIADO:", {
-      hasExistingContent,
-      existingLength: prevContent?.length || 0,
-      newLength: newContent.length,
-      isEmptyContent,
-      willBlock: hasExistingContent && isEmptyContent,
-      existingStart: prevContent?.substring(0, 50) + "...",
-      newStart: newContent.substring(0, 50) + "...",
-      timestamp: new Date().toISOString(),
-    });
 
     return hasExistingContent && isEmptyContent;
   },
@@ -127,12 +92,10 @@ export const useArticleForm = (init: Partial<ArticleForm> = {}) => {
       if (typeof updater === "function") {
         setForm((prev) => {
           const next = updater(prev);
-          formLogger.logFormUpdate(prev, next);
           return next;
         });
       } else {
-        setForm((prev) => {
-          formLogger.logFormUpdate(prev, updater);
+        setForm((_) => {
           return updater;
         });
       }
@@ -147,7 +110,6 @@ export const useArticleForm = (init: Partial<ArticleForm> = {}) => {
     if (field === "content" && typeof value === "string") {
       setForm((prev) => {
         if (contentProtection.shouldBlockContentUpdate(prev.content, value)) {
-          console.log("🚫 BLOQUEANDO VACIADO DE CONTENIDO!");
           return prev;
         }
         return { ...prev, [field]: value };

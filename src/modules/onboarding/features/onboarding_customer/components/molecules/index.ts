@@ -1,3 +1,6 @@
-// Este archivo exportará los componentes moleculares específicos del onboarding de clientes
-// Por ahora importamos los componentes comunes desde el módulo principal de onboarding
-export { Header, HeroImage } from "~/modules/onboarding/components/molecules";
+export * from "./age_range_selector";
+export * from "./budget_range_selector";
+export * from "./communication_preference_selector";
+export * from "./occupation_input";
+export * from "./profile_picture_upload";
+export * from "./urgency_selector";

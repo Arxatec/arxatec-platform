@@ -16,6 +16,7 @@ type Props = {
   onChange?: (date: Date) => void;
   placeholder?: string;
   format?: string;
+  iconPosition?: "left" | "right";
 };
 
 type View = "day" | "month" | "year";
@@ -25,6 +26,7 @@ export const CustomCalendar: React.FC<Props> = ({
   onChange,
   placeholder = "Seleccionar fecha",
   format = "dd/MM/yyyy",
+  iconPosition = "right",
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date>(value || new Date());
   const [currentDate, setCurrentDate] = useState<Date>(value || new Date());
@@ -146,18 +148,24 @@ export const CustomCalendar: React.FC<Props> = ({
       <input
         ref={inputRef}
         type="text"
-        className="w-full rounded-md border border-gray-300 px-4 py-1.5 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-600 text-sm z-10"
+        className={`w-full rounded-md border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-600 text-sm z-10 ${
+          iconPosition === "left" ? "pl-10 pr-4" : "pl-4 pr-10"
+        } py-1.5`}
         placeholder={placeholder}
         value={selectedDate ? formatDate(selectedDate, format) : ""}
         onClick={openCalendar}
         readOnly
       />
-      <CalendarIcon className="size-5 text-gray-400 absolute right-2 top-1/2 -translate-y-1/2 z-10" />
+      <CalendarIcon
+        className={`size-5 text-gray-400 absolute top-1/2 -translate-y-1/2 z-10 ${
+          iconPosition === "left" ? "left-2" : "right-2"
+        }`}
+      />
       <div className="w-full max-w-xs">
         {isOpen && (
           <div
             ref={calendarRef}
-            className={`absolute mt-1 w-full rounded-md border border-gray-200 bg-white shadow-lg ${
+            className={`absolute mt-1 w-full max-w-xs rounded-md border border-gray-200 bg-white shadow-lg ${
               animation === "in"
                 ? "animate-fadeIn"
                 : animation === "out"

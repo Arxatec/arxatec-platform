@@ -10,6 +10,7 @@ import { APP_PATHS } from "~/routes/routes";
 import { useTitle } from "~/hooks";
 import { Title } from "~/modules/onboarding/components/atoms";
 import { SelectRoleStep } from "../organisms/select_role_step";
+import { useUserStore } from "~/store";
 
 const initForm: Form = {
   role: null,
@@ -19,6 +20,7 @@ export default function OnboardingGeneral() {
   const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState<Form>(initForm);
   const [hasMounted, setHasMounted] = useState(false);
+  const user = useUserStore((state) => state.user);
   const [, setLocation] = useLocation();
   const { changeTitle } = useTitle();
   const { t } = useTranslation();
@@ -53,7 +55,12 @@ export default function OnboardingGeneral() {
 
   useEffect(() => {
     changeTitle("Introducción - Arxatec");
+    // TODO: Change in the future is smell code
+    if (!user) {
+      setLocation("iniciar-sesion");
+    }
   }, []);
+
   return (
     <div className="grid grid-cols-1 h-screen p-2 rounded-md lg:grid-cols-2">
       <div className="h-full items-center flex flex-col justify-between px-4 py-0 sm:px-6 lg:flex-none lg:px-20 xl:px-24 order-2 lg:order-1 w-full max-w-[720px] mx-auto gap-10">

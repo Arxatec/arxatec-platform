@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { FormProvider, useForm } from "react-hook-form";
 import { PrimaryButton } from "~/components/atoms";
-import { LocaleKeys } from "~/lang";
 import { Header, HeroImage } from "~/modules/onboarding/components/molecules";
 import { bannerOnboardingGeneral } from "~/utilities/assets_utilities";
 import {
@@ -15,173 +13,47 @@ import { useTitle } from "~/hooks";
 import { APP_PATHS } from "~/routes/routes";
 import { useLocation } from "wouter";
 import avatarDefault from "~/assets/images/avatar_default.png";
-
-// Datos para los selectores (exportados para reutilizar en los componentes)
-export const specialitiesData = [
-  {
-    id: 1,
-    name: LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_1_answer_1,
-  },
-  {
-    id: 2,
-    name: LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_1_answer_2,
-  },
-  {
-    id: 3,
-    name: LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_1_answer_3,
-  },
-];
-
-export const experiencesData = [
-  {
-    id: 1,
-    name: LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_2_answer_1,
-  },
-  {
-    id: 2,
-    name: LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_2_answer_2,
-  },
-  {
-    id: 3,
-    name: LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_2_answer_3,
-  },
-  {
-    id: 4,
-    name: LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_2_answer_4,
-  },
-  {
-    id: 5,
-    name: LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_2_answer_5,
-  },
-  {
-    id: 6,
-    name: LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_2_answer_6,
-  },
-];
-
-export const paymentMethodsData = [
-  {
-    id: 1,
-    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_1_answer_1,
-  },
-  {
-    id: 2,
-    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_1_answer_2,
-  },
-  {
-    id: 3,
-    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_1_answer_3,
-  },
-];
-
-export const idealClientsData = [
-  {
-    id: 1,
-    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_2_answer_1,
-  },
-  {
-    id: 2,
-    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_2_answer_2,
-  },
-  {
-    id: 3,
-    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_2_answer_3,
-  },
-];
-
-export const communicationPreferencesData = [
-  {
-    id: 1,
-    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_3_answer_1,
-  },
-  {
-    id: 2,
-    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_3_answer_2,
-  },
-  {
-    id: 3,
-    name: LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_3_answer_3,
-  },
-];
-
-// Definición de las interfaces para el formulario
-export interface LawyerProfileFormData {
-  profilePicture: string;
-  bio: string;
-  location: string;
-}
-
-export interface ProfessionalInfoFormData {
-  speciality: {
-    id: number;
-    name: string;
-  };
-  experience: {
-    id: number;
-    name: string;
-  };
-  education: string;
-}
-
-export interface AvailabilityFormData {
-  schedule: Record<string, { enabled: boolean; slots: string[] }>;
-}
-
-export interface PreferencesFormData {
-  paymentMethod: {
-    id: number;
-    name: string;
-  };
-  idealClient: {
-    id: number;
-    name: string;
-  };
-  communicationPreference: {
-    id: number;
-    name: string;
-  };
-  virtualConsultations: boolean;
-  proBonoWork: boolean;
-}
-
-export interface LawyerOnboardingFormData {
-  lawyerProfile: LawyerProfileFormData;
-  professionalInfo: ProfessionalInfoFormData;
-  availability: AvailabilityFormData;
-  preferences: PreferencesFormData;
-}
+import {
+  specialitiesData,
+  experiencesData,
+  paymentMethodsData,
+  idealClientsData,
+  communicationPreferencesData,
+} from "../../constants/form_data";
+import type { LawyerOnboardingFormData } from "../../types";
+import { useUserStore } from "~/store";
 
 export default function OnboardingLawyer() {
-  const { t } = useTranslation();
   const [step, setStep] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const { changeTitle } = useTitle();
   const [, setLocation] = useLocation();
+  const user = useUserStore((state) => state.user);
 
-  // Preparar valores iniciales traducidos para selectores
+  // Preparar valores iniciales
   const initialSpecialty = {
     id: specialitiesData[0].id,
-    name: t(specialitiesData[0].name),
+    name: specialitiesData[0].name,
   };
 
   const initialExperience = {
     id: experiencesData[0].id,
-    name: t(experiencesData[0].name),
+    name: experiencesData[0].name,
   };
 
   const initialPaymentMethod = {
     id: paymentMethodsData[0].id,
-    name: t(paymentMethodsData[0].name),
+    name: paymentMethodsData[0].name,
   };
 
   const initialIdealClient = {
     id: idealClientsData[0].id,
-    name: t(idealClientsData[0].name),
+    name: idealClientsData[0].name,
   };
 
   const initialCommunicationPreference = {
     id: communicationPreferencesData[0].id,
-    name: t(communicationPreferencesData[0].name),
+    name: communicationPreferencesData[0].name,
   };
 
   // Valores por defecto para el formulario
@@ -190,6 +62,8 @@ export default function OnboardingLawyer() {
       profilePicture: avatarDefault,
       bio: "",
       location: "",
+      gender: "male",
+      birthDate: null,
     },
     professionalInfo: {
       speciality: initialSpecialty,
@@ -214,10 +88,7 @@ export default function OnboardingLawyer() {
     mode: "onChange",
   });
 
-  const {
-    handleSubmit,
-    formState: { isValid, isDirty },
-  } = methods;
+  const { handleSubmit } = methods;
 
   const navigateToOnboarding = () => setLocation(APP_PATHS.ONBOARDING);
 
@@ -231,10 +102,10 @@ export default function OnboardingLawyer() {
       // Validar solo el paso actual antes de avanzar
       try {
         await validateCurrentStep();
-        setError(null); // Limpiar el error al avanzar exitosamente
+        setError(null);
         setStep(step + 1);
-      } catch (err) {
-        setError(t("Por favor, completa todos los campos requeridos."));
+      } catch {
+        setError("Por favor, completa todos los campos requeridos.");
       }
     }
   };
@@ -271,15 +142,18 @@ export default function OnboardingLawyer() {
 
   const handleBackStep = () => {
     if (step === 0) return;
-    setError(null); // Limpiar el error al retroceder
+    setError(null);
     setStep(step - 1);
   };
 
   useEffect(() => {
     changeTitle("Introducción - Arxatec");
+    // TODO: Change in the future is smell code
+    if (!user) {
+      setLocation("iniciar-sesion");
+    }
   }, []);
 
-  // Limpiar el error cada vez que cambia el paso
   useEffect(() => {
     setError(null);
   }, [step]);
@@ -287,28 +161,29 @@ export default function OnboardingLawyer() {
   const steps = [
     {
       id: 1,
-      title: LocaleKeys.pages_onboarding_lawyer_lawyer_profile_title,
+      title: "Presenta tu identidad profesional",
       description:
-        LocaleKeys.pages_onboarding_lawyer_lawyer_profile_description,
+        "Agrega tu biografía, una foto de perfil y tu ubicación para que los clientes puedan conocerte y generar confianza desde el primer contacto.",
       component: <LawyerProfileStep />,
     },
     {
       id: 2,
-      title: LocaleKeys.pages_onboarding_lawyer_professional_info_title,
+      title: "Destaca tu experiencia y especialización",
       description:
-        LocaleKeys.pages_onboarding_lawyer_professional_info_description,
+        "Agrega tu información profesional para que los clientes puedan conocerte y generar confianza desde el primer contacto.",
       component: <ProfessionalInfoStep />,
     },
     {
       id: 3,
-      title: LocaleKeys.pages_onboarding_lawyer_availability_title,
-      description: LocaleKeys.pages_onboarding_lawyer_availability_description,
+      title: "Configura tu disponibilidad",
+      description:
+        "Establece tu horario de trabajo y disponibilidad para consultas.",
       component: <AvailabilityStep />,
     },
     {
       id: 4,
-      title: LocaleKeys.pages_onboarding_lawyer_preferences_title,
-      description: LocaleKeys.pages_onboarding_lawyer_preferences_description,
+      title: "Preferencias y métodos de trabajo",
+      description: "Define tus preferencias de trabajo y métodos de pago.",
       component: <PreferencesStep />,
     },
   ];
@@ -325,10 +200,10 @@ export default function OnboardingLawyer() {
           {/* Content Form */}
           <div className="mx-auto w-full">
             <h1 className="text-2xl font-bold text-gray-900">
-              {t(steps[step].title)}
+              {steps[step].title}
             </h1>
             <p className="text-gray-500 text-base mt-2">
-              {t(steps[step].description)}
+              {steps[step].description}
             </p>
             <div className="w-full mt-8 gap-4 grid">
               {steps[step].component}
@@ -341,16 +216,14 @@ export default function OnboardingLawyer() {
               <p className="text-sm text-red-500 text-left mb-4">{error}</p>
             )}
             <PrimaryButton onClick={handleNextStep} className="w-full py-2">
-              {isLastStep
-                ? t("Finalizar y guardar")
-                : t(LocaleKeys.shared_next)}
+              {isLastStep ? "Finalizar y guardar" : "Siguiente"}
             </PrimaryButton>
             <PrimaryButton
               onClick={step !== 0 ? handleBackStep : navigateToOnboarding}
               className="rounded-md gap-3 bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 text-center flex items-center justify-center w-full mt-2"
             >
               <p className="text-gray-900">
-                {step !== 0 ? t("Anterior") : t("Volver a elegir mi rol")}
+                {step !== 0 ? "Anterior" : "Volver a elegir mi rol"}
               </p>
             </PrimaryButton>
           </div>

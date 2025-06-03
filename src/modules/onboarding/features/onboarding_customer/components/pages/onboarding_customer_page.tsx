@@ -1,129 +1,55 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useLocation } from "wouter";
 import { FormProvider, useForm } from "react-hook-form";
+import { useMutation, type UseMutationResult } from "@tanstack/react-query";
 import { PrimaryButton } from "~/components/atoms";
 import { useTitle } from "~/hooks";
-import { LocaleKeys } from "~/lang";
 import { Header, HeroImage } from "~/modules/onboarding/components/molecules";
-import { APP_PATHS } from "~/routes/routes";
 import { bannerOnboardingGeneral } from "~/utilities/assets_utilities";
 import { ClientProfileStep, LegalPreferencesStep } from "../organisms";
-import avatarDefault from "~/assets/images/avatar_default.png";
-
-// Datos para los selectores (exportados para reutilizar en los componentes)
-export const rangeAgesData = [
-  {
-    id: 0,
-    name: LocaleKeys.pages_onboarding_customer_client_profile_questions_question_4_answer_1,
-  },
-  {
-    id: 1,
-    name: LocaleKeys.pages_onboarding_customer_client_profile_questions_question_4_answer_2,
-  },
-  {
-    id: 2,
-    name: LocaleKeys.pages_onboarding_customer_client_profile_questions_question_4_answer_3,
-  },
-  {
-    id: 3,
-    name: LocaleKeys.pages_onboarding_customer_client_profile_questions_question_4_answer_4,
-  },
-  {
-    id: 4,
-    name: LocaleKeys.pages_onboarding_customer_client_profile_questions_question_4_answer_5,
-  },
-  {
-    id: 5,
-    name: LocaleKeys.pages_onboarding_customer_client_profile_questions_question_4_answer_6,
-  },
-];
-
-export const communicationPreferencesData = [
-  {
-    id: 1,
-    name: LocaleKeys.pages_onboarding_customer_legal_preferences_questions_question_3_answer_1,
-  },
-  {
-    id: 2,
-    name: LocaleKeys.pages_onboarding_customer_legal_preferences_questions_question_3_answer_2,
-  },
-  {
-    id: 3,
-    name: LocaleKeys.pages_onboarding_customer_legal_preferences_questions_question_3_answer_3,
-  },
-];
-
-export const urgenciesData = [
-  {
-    id: 1,
-    name: LocaleKeys.pages_onboarding_customer_legal_preferences_questions_question_2_answer_1,
-  },
-  {
-    id: 2,
-    name: LocaleKeys.pages_onboarding_customer_legal_preferences_questions_question_2_answer_2,
-  },
-  {
-    id: 3,
-    name: LocaleKeys.pages_onboarding_customer_legal_preferences_questions_question_2_answer_3,
-  },
-];
-
-export interface ClientProfileFormData {
-  profilePicture: string;
-  location: string;
-  occupation: string;
-  ageRange: {
-    id: number;
-    name: string;
-  };
-}
-
-export interface LegalPreferencesFormData {
-  budgetRange: number;
-  urgency: {
-    id: number;
-    name: string;
-  };
-  communicationPreference: {
-    id: number;
-    name: string;
-  };
-}
-
-export interface CustomerOnboardingFormData {
-  clientProfile: ClientProfileFormData;
-  legalPreferences: LegalPreferencesFormData;
-}
+import {
+  communicationPreferencesData,
+  rangeAgesData,
+  urgenciesData,
+} from "../../constants/form_data";
+import type { CustomerOnboardingFormData } from "../../types";
+import { createCustomer, type CustomerResponse } from "../../services";
+import { useUserStore } from "~/store";
 
 export default function OnboardingCustomer() {
-  const { t } = useTranslation();
   const [step, setStep] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const user = useUserStore((state) => state.user);
   const { changeTitle } = useTitle();
   const [, setLocation] = useLocation();
 
   const initialAgeRange = {
     id: rangeAgesData[0].id,
-    name: t(rangeAgesData[0].name),
+    name: rangeAgesData[0].name,
   };
 
   const initialUrgency = {
     id: urgenciesData[0].id,
-    name: t(urgenciesData[0].name),
+    name: urgenciesData[0].name,
   };
 
   const initialCommunicationPreference = {
     id: communicationPreferencesData[0].id,
-    name: t(communicationPreferencesData[0].name),
+    name: communicationPreferencesData[0].name,
   };
 
   const defaultValues: CustomerOnboardingFormData = {
     clientProfile: {
-      profilePicture: avatarDefault,
+      profilePicture: null,
       location: "",
+      coordinates: {
+        latitude: 0,
+        longitude: 0,
+      },
       occupation: "",
       ageRange: initialAgeRange,
+      gender: "male",
+      birthDate: null,
     },
     legalPreferences: {
       budgetRange: 100,
@@ -137,8 +63,19 @@ export default function OnboardingCustomer() {
     mode: "onChange",
   });
 
-  const navigateToOnboarding = () => setLocation(APP_PATHS.ONBOARDING);
-  const navigateToDashboard = () => setLocation(APP_PATHS.DASHBOARD);
+  const navigateToOnboarding = () => setLocation("iniciar-sesion");
+  const navigateToDashboard = () => setLocation("panel");
+
+  const mutation: UseMutationResult<CustomerResponse, Error, FormData> =
+    useMutation({
+      mutationFn: createCustomer,
+      onSuccess: () => {
+        navigateToDashboard();
+      },
+      onError: (error) => {
+        setError(error.message || "Error al crear el cliente");
+      },
+    });
 
   const handleNextStep = async () => {
     const isValid = await validateCurrentStep();
@@ -155,22 +92,90 @@ export default function OnboardingCustomer() {
     try {
       setError(null);
       if (step === 0) {
-        await methods.trigger("clientProfile");
-        return methods.getFieldState("clientProfile").invalid === false;
+        const result = await methods.trigger(
+          [
+            "clientProfile.location",
+            "clientProfile.coordinates",
+            "clientProfile.occupation",
+            "clientProfile.ageRange",
+            "clientProfile.gender",
+            "clientProfile.birthDate",
+            "clientProfile.profilePicture",
+          ],
+          { shouldFocus: true }
+        );
+
+        if (!result) {
+          setError("Por favor, completa todos los campos requeridos");
+          return false;
+        }
+        return true;
       } else if (step === 1) {
-        await methods.trigger("legalPreferences");
-        return methods.getFieldState("legalPreferences").invalid === false;
+        const result = await methods.trigger(
+          [
+            "legalPreferences.budgetRange",
+            "legalPreferences.urgency",
+            "legalPreferences.communicationPreference",
+          ],
+          { shouldFocus: true }
+        );
+
+        if (!result) {
+          setError("Por favor, completa todos los campos requeridos");
+          return false;
+        }
+        return true;
       }
       return true;
     } catch (error) {
+      console.error(error);
       setError("Por favor, revisa los campos con errores");
       return false;
     }
   };
 
   const onSubmit = (data: CustomerOnboardingFormData) => {
-    console.log("Formulario enviado:", data);
-    navigateToDashboard();
+    const formData = new FormData();
+
+    // Datos del perfil del cliente
+    formData.append("id", user.id.toString());
+    formData.append("photo", data.clientProfile.profilePicture);
+    formData.append("location", data.clientProfile.location);
+    formData.append(
+      "coordinates",
+      JSON.stringify({
+        latitude: data.clientProfile.coordinates.latitude,
+        longitude: data.clientProfile.coordinates.longitude,
+      })
+    );
+    formData.append("occupation", data.clientProfile.occupation);
+    formData.append("age_range", data.clientProfile.ageRange.name);
+    formData.append("gender", data.clientProfile.gender);
+    formData.append(
+      "birth_date",
+      data.clientProfile.birthDate?.toISOString() || ""
+    );
+
+    // Preferencias legales
+    formData.append("budget", data.legalPreferences.budgetRange.toString());
+    formData.append("urgency_level", data.legalPreferences.urgency.name);
+    formData.append(
+      "communication_preference",
+      data.legalPreferences.communicationPreference.name
+    );
+    console.log(formData.get("id"));
+    console.log(formData.get("photo"));
+    console.log(formData.get("location"));
+    console.log(formData.get("coordinates"));
+    console.log(formData.get("occupation"));
+    console.log(formData.get("age_range"));
+    console.log(formData.get("gender"));
+    console.log(formData.get("birth_date"));
+    console.log(formData.get("budget"));
+    console.log(formData.get("urgency_level"));
+    console.log(formData.get("communication_preference"));
+
+    mutation.mutate(formData);
   };
 
   const handleBackStep = () => {
@@ -180,21 +185,25 @@ export default function OnboardingCustomer() {
 
   useEffect(() => {
     changeTitle("Introducción - Arxatec");
+    // TODO: Change in the future is smell code
+    if (!user) {
+      setLocation("iniciar-sesion");
+    }
   }, []);
 
   const steps = [
     {
       id: 1,
-      title: LocaleKeys.pages_onboarding_customer_client_profile_title,
+      title: "Cuéntanos un poco sobre ti",
       description:
-        LocaleKeys.pages_onboarding_customer_client_profile_description,
+        "Cuéntanos un poco sobre ti para brindarte una mejor experiencia y recomendaciones personalizadas y abogados especializados en tu caso.",
       component: <ClientProfileStep />,
     },
     {
       id: 2,
-      title: LocaleKeys.pages_onboarding_customer_legal_preferences_title,
+      title: "Establece tus preferencias",
       description:
-        LocaleKeys.pages_onboarding_customer_legal_preferences_description,
+        "Establece tus preferencias para que podamos recomendarte abogados especializados en tu caso, y podamos contactarte cuando necesites.",
       component: <LegalPreferencesStep />,
     },
   ];
@@ -203,44 +212,43 @@ export default function OnboardingCustomer() {
     <FormProvider {...methods}>
       <div className="grid grid-cols-1 h-screen p-2 rounded-md lg:grid-cols-2">
         <div className="h-full items-center flex flex-col justify-between px-4 py-0 sm:px-6 lg:flex-none lg:px-20 xl:px-24 order-2 lg:order-1 w-full max-w-[720px] mx-auto gap-10">
-          {/* Header Form */}
           <Header value={step + 1} maxValue={steps.length} />
 
-          {/* Content Form */}
-          <div className="mx-auto w-full ">
+          <div className="mx-auto w-full">
             <h1 className="text-2xl font-bold text-gray-900">
-              {t(steps[step].title)}
+              {steps[step].title}
             </h1>
             <p className="text-gray-500 text-base mt-2">
-              {t(steps[step].description)}
+              {steps[step].description}
             </p>
             <div className="w-full mt-8 gap-4 grid">
               {steps[step].component}
             </div>
           </div>
 
-          {/* Actions Form */}
           <div className="w-full py-10">
             {error && (
               <p className="text-sm text-red-500 text-left mb-4">{error}</p>
             )}
-            <PrimaryButton onClick={handleNextStep} className="w-full py-2">
-              {t(LocaleKeys.shared_next)}
+            <PrimaryButton
+              onClick={handleNextStep}
+              className="w-full py-2"
+              loader={mutation.isPending}
+              disabled={mutation.isPending}
+            >
+              {step === steps.length - 1 ? "Finalizar" : "Siguiente"}
             </PrimaryButton>
             <PrimaryButton
               onClick={step !== 0 ? handleBackStep : navigateToOnboarding}
               className="rounded-md gap-3 bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 text-center flex items-center justify-center w-full mt-2"
             >
               <p className="text-gray-900">
-                {step !== 0
-                  ? t(LocaleKeys.shared_back)
-                  : t(LocaleKeys.pages_onboarding_button_back_choice_role)}
+                {step !== 0 ? "Atrás" : "Volver a selección de rol"}
               </p>
             </PrimaryButton>
           </div>
         </div>
 
-        {/* Image Form */}
         <HeroImage image={bannerOnboardingGeneral} />
       </div>
     </FormProvider>

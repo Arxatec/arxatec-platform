@@ -8,6 +8,7 @@ import { Link, useLocation } from "wouter";
 import { classNames } from "~/utilities/string_utilities";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { CustomImage } from "~/components/atoms";
+import { useEffect, useState } from "react";
 
 interface Props {
   logo: string;
@@ -29,6 +30,36 @@ interface Props {
 
 export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
   const [location, setLocation] = useLocation();
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
+    {}
+  );
+
+  useEffect(() => {
+    const savedState = localStorage.getItem("sidebarExpandedState");
+
+    if (savedState) {
+      setExpandedItems(JSON.parse(savedState));
+    } else {
+      const initialState = navigation.reduce((acc, item) => {
+        if (item.children) {
+          acc[item.name] = true;
+        }
+        return acc;
+      }, {} as Record<string, boolean>);
+      setExpandedItems(initialState);
+      localStorage.setItem(
+        "sidebarExpandedState",
+        JSON.stringify(initialState)
+      );
+    }
+  }, []);
+
+  const handleDisclosureChange = (name: string, isOpen: boolean) => {
+    const newState = { ...expandedItems, [name]: isOpen };
+    setExpandedItems(newState);
+    localStorage.setItem("sidebarExpandedState", JSON.stringify(newState));
+  };
+
   return (
     <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
       <div className="flex flex-col h-screen bg-white">
@@ -79,62 +110,86 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
                           <Disclosure
                             as="div"
                             className="border-t border-gray-100 my-2 pt-2"
+                            defaultOpen={true}
                           >
-                            <DisclosureButton
-                              className={classNames(
-                                location.includes(item.href)
-                                  ? "bg-blue-100 text-blue-600"
-                                  : "text-gray-600 hover:bg-slate-50 hover:text-gray-700",
-                                " flex gap-x-3 rounded-md p-2 text-xs tracking-widest font-semibold w-full group transition-all uppercase"
-                              )}
-                            >
-                              {item.name}
-                              <ChevronRightIcon
-                                aria-hidden="true"
-                                className="ml-auto transition-all size-5 shrink-0 text-gray-400 group-data-[open]:rotate-90 group-data-[open]:text-gray-500"
-                              />
-                            </DisclosureButton>
-                            <DisclosurePanel as="ul" className="mt-1 px-1">
-                              {item.children.map((subItem) => (
-                                <li key={subItem.name}>
+                            {({ open }) => {
+                              if (
+                                expandedItems[item.name] !== undefined &&
+                                open !== expandedItems[item.name]
+                              ) {
+                                handleDisclosureChange(item.name, open);
+                              }
+                              return (
+                                <>
                                   <DisclosureButton
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      if (subItem.action !== undefined) {
-                                        subItem.action();
-                                        return;
-                                      }
-
-                                      if (subItem.href !== undefined) {
-                                        if (subItem.href.includes("http")) {
-                                          window.open(subItem.href, "_blank");
-                                        } else {
-                                          setLocation(subItem.href);
-                                        }
-                                      }
-                                    }}
                                     className={classNames(
-                                      "flex items-center gap-x-2 rounded-md py-2 pl-4 pr-2 text-sm text-gray-700 hover:bg-slate-50 w-full"
+                                      location.includes(item.href)
+                                        ? "bg-blue-100 text-blue-600"
+                                        : "text-gray-600 hover:bg-slate-50 hover:text-gray-700",
+                                      " flex gap-x-3 rounded-md p-2 text-xs tracking-widest font-semibold w-full group transition-all uppercase"
                                     )}
                                   >
-                                    {subItem.image ? (
-                                      <CustomImage
-                                        src={subItem.image}
-                                        alt="avatar"
-                                        className="size-8 rounded-md overflow-hidden"
-                                      />
-                                    ) : null}
-                                    {subItem.iconInactive ? (
-                                      <subItem.iconInactive
-                                        aria-hidden="true"
-                                        className="size-6 shrink-0 text-gray-600"
-                                      />
-                                    ) : null}
-                                    {subItem.name}
+                                    {item.name}
+                                    <ChevronRightIcon
+                                      aria-hidden="true"
+                                      className={classNames(
+                                        "ml-auto transition-all size-5 shrink-0 text-gray-400",
+                                        open ? "rotate-90" : ""
+                                      )}
+                                    />
                                   </DisclosureButton>
-                                </li>
-                              ))}
-                            </DisclosurePanel>
+                                  <DisclosurePanel
+                                    as="ul"
+                                    className="mt-1 px-1"
+                                  >
+                                    {item.children.map((subItem) => (
+                                      <li key={subItem.name}>
+                                        <DisclosureButton
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            if (subItem.action !== undefined) {
+                                              subItem.action();
+                                              return;
+                                            }
+
+                                            if (subItem.href !== undefined) {
+                                              if (
+                                                subItem.href.includes("http")
+                                              ) {
+                                                window.open(
+                                                  subItem.href,
+                                                  "_blank"
+                                                );
+                                              } else {
+                                                setLocation(subItem.href);
+                                              }
+                                            }
+                                          }}
+                                          className={classNames(
+                                            "flex items-center gap-x-2 rounded-md py-2 pl-4 pr-2 text-sm text-gray-700 hover:bg-slate-50 w-full"
+                                          )}
+                                        >
+                                          {subItem.image ? (
+                                            <CustomImage
+                                              src={subItem.image}
+                                              alt="avatar"
+                                              className="size-8 rounded-md overflow-hidden"
+                                            />
+                                          ) : null}
+                                          {subItem.iconInactive ? (
+                                            <subItem.iconInactive
+                                              aria-hidden="true"
+                                              className="size-6 shrink-0 text-gray-600"
+                                            />
+                                          ) : null}
+                                          {subItem.name}
+                                        </DisclosureButton>
+                                      </li>
+                                    ))}
+                                  </DisclosurePanel>
+                                </>
+                              );
+                            }}
                           </Disclosure>
                         )}
                       </li>

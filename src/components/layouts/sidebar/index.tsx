@@ -115,13 +115,13 @@ const navigationTest = [
     children: [
       {
         name: "Acerca de Arxatec",
-        href: "https://www.arxatec.net/es/",
+        href: "https://www.arxatec.net/",
         iconInactive: InformationCircleIcon,
         iconActive: InformationCircleIconActive,
       },
       {
         name: "Ayuda",
-        href: "https://www.arxatec.net/es/support",
+        href: "https://www.arxatec.net/support",
         iconInactive: QuestionMarkCircleIcon,
         iconActive: QuestionMarkCircleIconActive,
       },
@@ -139,19 +139,19 @@ const navigationTest = [
       },
       {
         name: "Planes de Arxatec",
-        href: "https://www.arxatec.net/es/pricing",
+        href: "https://www.arxatec.net/pricing",
         iconInactive: DocumentTextIcon,
         iconActive: DocumentTextIconActive,
       },
       {
         name: "Politica de privacidad",
-        href: "https://www.arxatec.net/es/privacy",
+        href: "https://www.arxatec.net/privacy",
         iconInactive: ShieldCheckIcon,
         iconActive: ShieldCheckIconActive,
       },
       {
         name: "Terminos y condiciones",
-        href: "https://www.arxatec.net/es/terms",
+        href: "https://www.arxatec.net/terms",
         iconInactive: DocumentDuplicateIcon,
         iconActive: DocumentDuplicateIconActive,
       },
@@ -161,7 +161,6 @@ const navigationTest = [
 
 export default function Sidebar({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  console.log("Sidebar");
   return (
     <>
       <div>
@@ -174,8 +173,8 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
         <SidebarDesktop navigation={navigationTest} logo={logo} />
         <div className="lg:pl-72">
           <Navigation setSidebarOpen={setSidebarOpen} />
-          <main className="bg-slate-100 py-10 h-full">
-            <div className="px-4 sm:px-6 lg:px-8 h-full">{children}</div>
+          <main className="bg-slate-100 py-4 lg:py-10 h-full">
+            <div className="h-full">{children}</div>
           </main>
         </div>
       </div>

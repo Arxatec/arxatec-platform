@@ -1,64 +1,36 @@
 import { BuildingLibraryIcon } from "@heroicons/react/16/solid";
 import { Controller, useFormContext } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 import { CustomInput, CustomSelector } from "~/components/atoms";
-import { LocaleKeys } from "~/lang";
 import {
   experiencesData,
   specialitiesData,
-} from "../../pages/onboarding_lawyer_page";
-
-type FormValues = {
-  professionalInfo: {
-    speciality: {
-      id: number;
-      name: string;
-    };
-    experience: {
-      id: number;
-      name: string;
-    };
-    education: string;
-  };
-};
+} from "../../../constants/form_data";
+import type { LawyerOnboardingFormData } from "../../../types";
 
 export const ProfessionalInfoStep = () => {
-  const { t } = useTranslation();
   const {
     register,
     control,
     formState: { errors },
-  } = useFormContext<FormValues>();
-
-  const experiences = experiencesData.map((experience) => ({
-    id: experience.id,
-    name: t(experience.name),
-  }));
-
-  const specialities = specialitiesData.map((speciality) => ({
-    id: speciality.id,
-    name: t(speciality.name),
-  }));
+  } = useFormContext<LawyerOnboardingFormData>();
 
   return (
     <>
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label
-            htmlFor={"speciality"}
+            htmlFor="speciality"
             className="block text-sm font-medium text-gray-900 mb-2"
           >
-            {t(
-              LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_1_label
-            )}
+            Especialidad
           </label>
           <Controller
             control={control}
             name="professionalInfo.speciality"
-            rules={{ required: t("Debes seleccionar una especialidad") }}
+            rules={{ required: "Debes seleccionar una especialidad" }}
             render={({ field }) => (
               <CustomSelector
-                options={specialities}
+                options={specialitiesData}
                 selected={field.value}
                 onChange={field.onChange}
               />
@@ -72,20 +44,18 @@ export const ProfessionalInfoStep = () => {
         </div>
         <div>
           <label
-            htmlFor={"experience"}
+            htmlFor="experience"
             className="block text-sm font-medium text-gray-900 mb-2"
           >
-            {t(
-              LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_2_label
-            )}
+            Experiencia
           </label>
           <Controller
             control={control}
             name="professionalInfo.experience"
-            rules={{ required: t("Debes seleccionar tu nivel de experiencia") }}
+            rules={{ required: "Debes seleccionar tu nivel de experiencia" }}
             render={({ field }) => (
               <CustomSelector
-                options={experiences}
+                options={experiencesData}
                 selected={field.value}
                 onChange={field.onChange}
               />
@@ -101,18 +71,14 @@ export const ProfessionalInfoStep = () => {
       <div>
         <CustomInput
           {...register("professionalInfo.education", {
-            required: t("Este campo es requerido"),
+            required: "La educación es requerida",
           })}
           startAdornment={
             <BuildingLibraryIcon className="size-5 text-gray-400" />
           }
           type="text"
-          label={t(
-            LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_3_label
-          )}
-          placeholder={t(
-            LocaleKeys.pages_onboarding_lawyer_professional_info_questions_question_3_placeholder
-          )}
+          label="Educación"
+          placeholder="Ej. Licenciatura en Derecho, Universidad Nacional Autónoma de México"
           required
         />
         {errors.professionalInfo?.education && (

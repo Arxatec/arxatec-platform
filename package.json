@@ -61,6 +61,7 @@
   "devDependencies": {
     "@eslint/js": "^9.25.0",
     "@tanstack/eslint-plugin-query": "^5.73.3",
+    "@types/google.maps": "^3.58.1",
     "@types/node": "^20",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",

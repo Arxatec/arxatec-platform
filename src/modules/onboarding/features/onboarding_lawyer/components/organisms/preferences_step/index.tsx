@@ -1,70 +1,34 @@
 import { Controller, useFormContext } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 import { CustomSelector, CustomToggle } from "~/components/atoms";
-import { LocaleKeys } from "~/lang";
 import {
   paymentMethodsData,
   idealClientsData,
   communicationPreferencesData,
-} from "../../pages/onboarding_lawyer_page";
-
-type FormValues = {
-  preferences: {
-    paymentMethod: {
-      id: number;
-      name: string;
-    };
-    idealClient: {
-      id: number;
-      name: string;
-    };
-    communicationPreference: {
-      id: number;
-      name: string;
-    };
-    virtualConsultations: boolean;
-    proBonoWork: boolean;
-  };
-};
+} from "../../../constants/form_data";
+import type { LawyerOnboardingFormData } from "../../../types";
 
 export const PreferencesStep = () => {
-  const { t } = useTranslation();
   const {
     control,
     formState: { errors },
-  } = useFormContext<FormValues>();
-
-  const paymentMethods = paymentMethodsData.map((item) => ({
-    id: item.id,
-    name: t(item.name),
-  }));
-  const communicationPreferences = communicationPreferencesData.map((item) => ({
-    id: item.id,
-    name: t(item.name),
-  }));
-  const idealClients = idealClientsData.map((item) => ({
-    id: item.id,
-    name: t(item.name),
-  }));
+  } = useFormContext<LawyerOnboardingFormData>();
 
   return (
     <>
       <div>
         <label
-          htmlFor={"payment-method"}
+          htmlFor="payment-method"
           className="block text-sm font-medium text-gray-900 mb-2"
         >
-          {t(
-            LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_1_label
-          )}
+          Método de pago preferido
         </label>
         <Controller
           control={control}
           name="preferences.paymentMethod"
-          rules={{ required: t("Debes seleccionar un método de pago") }}
+          rules={{ required: "Debes seleccionar un método de pago" }}
           render={({ field }) => (
             <CustomSelector
-              options={paymentMethods}
+              options={paymentMethodsData}
               selected={field.value}
               onChange={field.onChange}
             />
@@ -80,20 +44,18 @@ export const PreferencesStep = () => {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label
-            htmlFor={"ideal-client"}
+            htmlFor="ideal-client"
             className="block text-sm font-medium text-gray-900 mb-2"
           >
-            {t(
-              LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_2_label
-            )}
+            Cliente ideal
           </label>
           <Controller
             control={control}
             name="preferences.idealClient"
-            rules={{ required: t("Debes seleccionar un tipo de cliente") }}
+            rules={{ required: "Debes seleccionar un tipo de cliente" }}
             render={({ field }) => (
               <CustomSelector
-                options={idealClients}
+                options={idealClientsData}
                 selected={field.value}
                 onChange={field.onChange}
               />
@@ -108,22 +70,20 @@ export const PreferencesStep = () => {
 
         <div>
           <label
-            htmlFor={"communication-preference"}
+            htmlFor="communication-preference"
             className="block text-sm font-medium text-gray-900 mb-2"
           >
-            {t(
-              LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_3_label
-            )}
+            Preferencia de comunicación
           </label>
           <Controller
             control={control}
             name="preferences.communicationPreference"
             rules={{
-              required: t("Debes seleccionar una preferencia de comunicación"),
+              required: "Debes seleccionar una preferencia de comunicación",
             }}
             render={({ field }) => (
               <CustomSelector
-                options={communicationPreferences}
+                options={communicationPreferencesData}
                 selected={field.value}
                 onChange={field.onChange}
               />
@@ -142,9 +102,7 @@ export const PreferencesStep = () => {
         name="preferences.virtualConsultations"
         render={({ field: { value, onChange } }) => (
           <CustomToggle
-            label={t(
-              LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_4_label
-            )}
+            label="¿Ofreces consultas virtuales?"
             initialState={value}
             onChange={onChange}
           />
@@ -156,12 +114,8 @@ export const PreferencesStep = () => {
         name="preferences.proBonoWork"
         render={({ field: { value, onChange } }) => (
           <CustomToggle
-            label={t(
-              LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_5_label
-            )}
-            description={t(
-              LocaleKeys.pages_onboarding_lawyer_preferences_questions_question_5_description
-            )}
+            label="¿Ofreces trabajo pro bono?"
+            description="El trabajo pro bono es trabajo legal gratuito para personas o causas que lo necesitan"
             initialState={value}
             onChange={onChange}
           />

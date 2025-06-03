@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { ToastManager } from "~/components/molecules/toast_manager";
 import type { ArticleForm } from "../../models";
+import { useLocation } from "wouter";
 
 export const useArticleSubmit = (
   isCreate: boolean,
@@ -8,6 +9,7 @@ export const useArticleSubmit = (
   mutationCreate: { mutate: (data: FormData) => void },
   mutationUpdate: { mutate: (data: { formData: FormData; id: string }) => void }
 ) => {
+  const [, setLocation] = useLocation();
   const onSubmit = useCallback(
     (formData: ArticleForm) => {
       const fd = new FormData();
@@ -19,13 +21,22 @@ export const useArticleSubmit = (
         transform?: (v: unknown) => string
       ) => {
         if (value != null) {
-          fd.append(key, transform ? transform(value) : String(value));
+          // Si es un archivo, lo agregamos directamente
+          if (key === "banner" && value instanceof File) {
+            fd.append(key, value);
+          } else {
+            fd.append(key, transform ? transform(value) : String(value));
+          }
         }
       };
 
       appendIfExists("title", formData.title);
       appendIfExists("categoryId", formData.category?.id, String);
-      appendIfExists("banner", formData.banner);
+
+      // Manejo específico para el banner
+      if (formData.banner instanceof File) {
+        fd.append("banner", formData.banner);
+      }
 
       if (formData.content) {
         fd.append(
@@ -46,7 +57,7 @@ export const useArticleSubmit = (
           "No se pudo obtener el ID del artículo a editar, vuelve a intentarlo más tarde o contacta a soporte."
         );
         setTimeout(() => {
-          window.history.back();
+          setLocation("/articulos");
         }, 2000);
       }
     },

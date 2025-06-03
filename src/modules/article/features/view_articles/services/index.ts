@@ -33,7 +33,7 @@ export const deleteArticle = async (id: string): Promise<void> => {
   try {
     const token = window.sessionStorage.getItem("TOKEN_AUTH");
     const { data } = await axios.delete(
-      `https://arxatec-service-production.up.railway.app/api/v1/articles/${id}`,
+      `http://localhost:3000/api/v1/articles/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

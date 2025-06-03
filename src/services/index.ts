@@ -4,7 +4,7 @@ import axiosInstance from "~/interceptors";
 export const getProfile = async (token: string) => {
   try {
     // Agregamos un retraso de 5 segundos
-    //await new Promise((resolve) => setTimeout(resolve, 5000));
+    // await new Promise((resolve) => setTimeout(resolve, 5000));
 
     // const response = await axiosInstance.get("/api/v1/auth/profile");
     const response = await axios.get(
