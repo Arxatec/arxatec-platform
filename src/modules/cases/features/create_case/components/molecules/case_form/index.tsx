@@ -3,6 +3,7 @@ import { TextRich } from "~/components/organisms";
 import { useForm, Controller } from "react-hook-form";
 import { CustomAvatar } from "~/components/atoms/custom_avatar";
 import React from "react";
+import type { Category } from "../../../types";
 
 interface User {
   id: number;
@@ -13,44 +14,20 @@ interface User {
 interface CaseFormProps {
   onOpenUserSelector: () => void;
   selectedUser?: User;
+  categories: Category[];
 }
 
 interface FormValues {
   title: string;
-  category: {
-    id: number;
-    name: string;
-  };
+  category: Category;
   client?: User;
   description: string;
 }
 
-const categoriesCases = [
-  {
-    id: 1,
-    name: "Derecho penal",
-  },
-  {
-    id: 2,
-    name: "Derecho civil",
-  },
-  {
-    id: 3,
-    name: "Derecho laboral",
-  },
-  {
-    id: 4,
-    name: "Derecho comercial",
-  },
-  {
-    id: 5,
-    name: "Derecho familiar",
-  },
-];
-
 export const CaseForm = ({
   onOpenUserSelector,
   selectedUser,
+  categories,
 }: CaseFormProps) => {
   const {
     control,
@@ -59,7 +36,11 @@ export const CaseForm = ({
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
-      category: categoriesCases[0],
+      category: categories[0] || {
+        id: 0,
+        name: "Cargando...",
+        description: "",
+      },
     },
   });
 
@@ -69,6 +50,13 @@ export const CaseForm = ({
       setValue("client", selectedUser);
     }
   }, [selectedUser, setValue]);
+
+  // Actualizar la categoría por defecto cuando se cargan las categorías
+  React.useEffect(() => {
+    if (categories.length > 0) {
+      setValue("category", categories[0]);
+    }
+  }, [categories, setValue]);
 
   const onSubmit = (data: FormValues) => {
     console.log("Datos del formulario:", data);
@@ -112,9 +100,10 @@ export const CaseForm = ({
             <div>
               <CustomSelector
                 label="Categoría"
-                options={categoriesCases}
+                options={categories}
                 selected={field.value}
                 onChange={field.onChange}
+                displayKey="name"
               />
               {errors.category && (
                 <span className="text-xs text-red-500 mt-1">

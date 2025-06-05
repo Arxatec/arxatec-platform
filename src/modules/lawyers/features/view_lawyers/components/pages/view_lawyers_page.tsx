@@ -28,8 +28,10 @@ export default function ViewLawyersPage() {
     if (searchTerm) {
       filtered = filtered.filter(
         (lawyer) =>
-          lawyer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          lawyer.description.toLowerCase().includes(searchTerm.toLowerCase())
+          `${lawyer.firstName} ${lawyer.lastName}`
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          lawyer.biography.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
@@ -44,7 +46,7 @@ export default function ViewLawyersPage() {
     // Filtrar por experiencia
     if (experience.id !== 1) {
       filtered = filtered.filter((lawyer) => {
-        const yearsExp = parseInt(lawyer.experience);
+        const yearsExp = lawyer.experience;
         const requiredYears = parseInt(experience.name);
         return yearsExp >= requiredYears;
       });
@@ -53,20 +55,15 @@ export default function ViewLawyersPage() {
     // Ordenar
     switch (sortBy.id) {
       case 1: // Nuevos
-        filtered.sort((a, b) => b.id - a.id);
+        filtered.sort((a, b) => b.userId - a.userId);
         break;
       case 2: // Populares
-        filtered.sort((a, b) => b.rating - a.rating);
+        filtered.sort(
+          (a, b) => b.workSchedules.length - a.workSchedules.length
+        );
         break;
       case 3: // Expertos
-        filtered.sort((a, b) => {
-          const yearsA = parseInt(a.experience);
-          const yearsB = parseInt(b.experience);
-          return yearsB - yearsA;
-        });
-        break;
-      case 4: // Casos ganados
-        filtered.sort((a, b) => b.casesResolved - a.casesResolved);
+        filtered.sort((a, b) => b.experience - a.experience);
         break;
       default:
         break;
@@ -78,6 +75,10 @@ export default function ViewLawyersPage() {
   useEffect(() => {
     changeTitle("Abogados - Arxatec");
   }, [changeTitle]);
+
+  useEffect(() => {
+    console.log(lawyers);
+  }, [lawyers]);
 
   return (
     <div className="mx-auto max-w-7xl w-full min-h-screen">

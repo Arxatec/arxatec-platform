@@ -5,6 +5,7 @@ import {
   FileUploadSection,
   SelectUser,
 } from "../../molecules";
+import type { Category } from "../../../types";
 
 interface User {
   id: number;
@@ -14,9 +15,13 @@ interface User {
 
 interface CreateCaseContentProps {
   onBack: () => void;
+  categories?: Category[];
 }
 
-export const CreateCaseContent = ({ onBack }: CreateCaseContentProps) => {
+export const CreateCaseContent = ({
+  onBack,
+  categories = [],
+}: CreateCaseContentProps) => {
   const [isUserSelectorOpen, setIsUserSelectorOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | undefined>();
 
@@ -37,6 +42,7 @@ export const CreateCaseContent = ({ onBack }: CreateCaseContentProps) => {
         <CaseForm
           onOpenUserSelector={() => setIsUserSelectorOpen(true)}
           selectedUser={selectedUser}
+          categories={categories}
         />
         <FileUploadSection />
       </div>
