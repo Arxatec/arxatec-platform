@@ -15,11 +15,21 @@ export interface ProfessionalInfoFormData {
     id: number;
     name: string;
   };
-  education: string;
+  linkedin: string;
+  identificationNumber: string;
 }
 
 export interface AvailabilityFormData {
-  schedule: Record<string, { enabled: boolean; slots: string[] }>;
+  schedule: Record<
+    string,
+    {
+      enabled: boolean;
+      timeSlots: Array<{
+        start: string;
+        end: string;
+      }>;
+    }
+  >;
 }
 
 export interface PreferencesFormData {
@@ -35,8 +45,10 @@ export interface PreferencesFormData {
     id: number;
     name: string;
   };
-  virtualConsultations: boolean;
-  proBonoWork: boolean;
+  currency: {
+    id: number;
+    name: string;
+  };
 }
 
 export interface LawyerOnboardingFormData {

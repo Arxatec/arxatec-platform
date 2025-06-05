@@ -147,7 +147,11 @@ export const Navigation: React.FC<Props> = ({ setSidebarOpen }) => {
                     {getFirstTwoWords(user?.name ?? "")}
                   </p>
                   <p className="text-sm font-base text-gray-500">
-                    {user?.email}
+                    {user?.userType === "lawyer"
+                      ? "Abogado"
+                      : user?.userType === "client"
+                      ? "Cliente"
+                      : "Administrador"}
                   </p>
                 </div>
               </span>

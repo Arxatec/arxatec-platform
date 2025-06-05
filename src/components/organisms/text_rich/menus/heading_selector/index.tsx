@@ -19,11 +19,11 @@ interface HeadingOption {
 export const HeadingSelector = ({ editor }: HeadingSelectorProps) => {
   const options = useMemo<HeadingOption[]>(
     () => [
-      { id: "p", value: "p", name: "Paragraph" },
-      { id: "h1", value: "h1", name: "Heading 1" },
-      { id: "h2", value: "h2", name: "Heading 2" },
-      { id: "h3", value: "h3", name: "Heading 3" },
-      { id: "h4", value: "h4", name: "Heading 4" },
+      { id: "p", value: "p", name: "Parrafo" },
+      { id: "h1", value: "h1", name: "Título 1" },
+      { id: "h2", value: "h2", name: "Título 2" },
+      { id: "h3", value: "h3", name: "Título 3" },
+      { id: "h4", value: "h4", name: "Título 4" },
     ],
     []
   );

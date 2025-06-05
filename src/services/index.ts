@@ -1,5 +1,4 @@
 import axios from "axios";
-import axiosInstance from "~/interceptors";
 
 export const getProfile = async (token: string) => {
   try {

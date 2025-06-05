@@ -1,6 +1,6 @@
 import { useTitle } from "~/hooks/useTitle";
 import { useEffect } from "react";
-import { CustomImage, PrimaryButton } from "~/components/atoms";
+import { PrimaryButton } from "~/components/atoms";
 import {
   CalendarDaysIcon,
   EnvelopeIcon,
@@ -10,9 +10,7 @@ import {
   PhoneIcon,
   PlusIcon,
   SparklesIcon,
-  StarIcon,
 } from "@heroicons/react/24/solid";
-import communityError from "~/assets/images/error/avatar_error.png";
 import {
   CardTestimonial,
   CardValoration,

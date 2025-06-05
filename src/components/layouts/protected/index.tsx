@@ -49,6 +49,7 @@ export default function Protected({ children }: { children: React.ReactNode }) {
     name: data.data.firstName + " " + data.data.lastName,
     avatar: data.data.avatar,
     email: data.data.email,
+    userType: data.data.userType,
   });
 
   if (data.data.userType === null) {

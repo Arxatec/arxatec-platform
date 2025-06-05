@@ -10,7 +10,6 @@ import {
   PreferencesStep,
 } from "../organisms";
 import { useTitle } from "~/hooks";
-import { APP_PATHS } from "~/routes/routes";
 import { useLocation } from "wouter";
 import avatarDefault from "~/assets/images/avatar_default.png";
 import {
@@ -19,9 +18,15 @@ import {
   paymentMethodsData,
   idealClientsData,
   communicationPreferencesData,
+  currencyData,
 } from "../../constants/form_data";
 import type { LawyerOnboardingFormData } from "../../types";
 import { useUserStore } from "~/store";
+import { useMutation } from "@tanstack/react-query";
+import { createLawyer } from "../../services";
+import { ToastManager } from "~/components/molecules/toast_manager";
+
+const SCHEDULE_STORAGE_KEY = "lawyer_schedule";
 
 export default function OnboardingLawyer() {
   const [step, setStep] = useState(0);
@@ -29,6 +34,20 @@ export default function OnboardingLawyer() {
   const { changeTitle } = useTitle();
   const [, setLocation] = useLocation();
   const user = useUserStore((state) => state.user);
+
+  const mutation = useMutation({
+    mutationFn: createLawyer,
+    onSuccess: () => {
+      navigateToDashboard();
+    },
+    onError: (error) => {
+      ToastManager.error(
+        "Sucedio un error al crear el abogado",
+        "Sucedio un error inesperado porfavor, vuelve a intentarlo dentro de unos minutos."
+      );
+      setError(error.message || "Error al crear el abogado");
+    },
+  });
 
   // Preparar valores iniciales
   const initialSpecialty = {
@@ -56,6 +75,22 @@ export default function OnboardingLawyer() {
     name: communicationPreferencesData[0].name,
   };
 
+  const initialCurrency = {
+    id: currencyData[0].id,
+    name: currencyData[0].name,
+  };
+
+  // Intentar cargar el horario guardado
+  const storedSchedule = (() => {
+    try {
+      const stored = localStorage.getItem(SCHEDULE_STORAGE_KEY);
+      return stored ? JSON.parse(stored) : {};
+    } catch (error) {
+      console.error("Error loading stored schedule:", error);
+      return {};
+    }
+  })();
+
   // Valores por defecto para el formulario
   const defaultValues: LawyerOnboardingFormData = {
     lawyerProfile: {
@@ -68,17 +103,17 @@ export default function OnboardingLawyer() {
     professionalInfo: {
       speciality: initialSpecialty,
       experience: initialExperience,
-      education: "",
+      linkedin: "",
+      identificationNumber: "",
     },
     availability: {
-      schedule: {},
+      schedule: storedSchedule,
     },
     preferences: {
       paymentMethod: initialPaymentMethod,
       idealClient: initialIdealClient,
       communicationPreference: initialCommunicationPreference,
-      virtualConsultations: false,
-      proBonoWork: false,
+      currency: initialCurrency,
     },
   };
 
@@ -90,7 +125,8 @@ export default function OnboardingLawyer() {
 
   const { handleSubmit } = methods;
 
-  const navigateToOnboarding = () => setLocation(APP_PATHS.ONBOARDING);
+  const navigateToOnboarding = () => setLocation("incorporacion");
+  const navigateToDashboard = () => setLocation("panel");
 
   const handleNextStep = async () => {
     const isLastStep = step === steps.length - 1;
@@ -134,10 +170,94 @@ export default function OnboardingLawyer() {
   };
 
   const onSubmit = (data: LawyerOnboardingFormData) => {
-    console.log("Datos del formulario completo:", data);
-    // Aquí puedes enviar los datos al backend
-    alert("Formulario enviado correctamente");
-    setLocation(APP_PATHS.DASHBOARD);
+    const formData = new FormData();
+
+    // Foto de perfil
+    if (
+      data.lawyerProfile.profilePicture &&
+      data.lawyerProfile.profilePicture !== avatarDefault
+    ) {
+      const byteString = atob(data.lawyerProfile.profilePicture.split(",")[1]);
+      const mimeString = data.lawyerProfile.profilePicture
+        .split(",")[0]
+        .split(":")[1]
+        .split(";")[0];
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      const blob = new Blob([ab], { type: mimeString });
+      const file = new File([blob], "profile-picture.jpg", {
+        type: mimeString,
+      });
+      formData.append("photo", file);
+    }
+
+    // Datos básicos
+    if (user?.id) {
+      formData.append("id", user.id.toString());
+    }
+    formData.append(
+      "license_number",
+      data.professionalInfo.identificationNumber
+    );
+    formData.append("gender", data.lawyerProfile.gender);
+    formData.append(
+      "birth_date",
+      data.lawyerProfile.birthDate
+        ? data.lawyerProfile.birthDate.toISOString().split("T")[0]
+        : ""
+    );
+
+    // Coordenadas
+    const coordinates = {
+      latitude: 19.3728,
+      longitude: -99.1728,
+    };
+    formData.append("coordinates", JSON.stringify(coordinates));
+
+    // Información profesional
+    formData.append("specialty", data.professionalInfo.speciality.name);
+    formData.append("experience", data.professionalInfo.experience.name);
+    formData.append("biography", data.lawyerProfile.bio);
+    formData.append("linkedin", data.professionalInfo.linkedin);
+    formData.append("preferred_client", data.preferences.idealClient.name);
+    formData.append("payment_methods", data.preferences.paymentMethod.name);
+    formData.append("currency", data.preferences.currency.name);
+    formData.append(
+      "communication_preference",
+      data.preferences.communicationPreference.name
+    );
+    formData.append("location", data.lawyerProfile.location);
+
+    // Horarios de trabajo
+    const workSchedules = Object.entries(data.availability.schedule)
+      .filter(([, value]) => value.enabled)
+      .flatMap(([day, value]) => {
+        return value.timeSlots.map((slot) => ({
+          day: day.toLowerCase(),
+          open_time: slot.start,
+          close_time: slot.end,
+        }));
+      });
+    formData.append("workSchedules", JSON.stringify(workSchedules));
+
+    // Tarifas
+    const attorneyFees = [
+      {
+        service_category_id: 1,
+        fee: 100,
+      },
+    ];
+    formData.append("attorneyFees", JSON.stringify(attorneyFees));
+
+    console.log("FormData preparado para enviar:");
+    formData.forEach((value, key) => {
+      console.log(key, value);
+    });
+
+    mutation.mutate(formData);
   };
 
   const handleBackStep = () => {

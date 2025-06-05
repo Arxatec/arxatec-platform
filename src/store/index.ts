@@ -5,6 +5,7 @@ interface User {
   name: string;
   avatar: string;
   email: string;
+  userType: string;
 }
 
 interface UserStore {

@@ -71,10 +71,12 @@ const recent: Person[] = [people[0], people[1], people[2]];
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
+  onSelect: (user: { id: number; name: string; avatar: string }) => void;
 }
 
-export const SelectUser: React.FC<Props> = ({ open, setOpen }) => {
+export const SelectUser: React.FC<Props> = ({ open, setOpen, onSelect }) => {
   const [query, setQuery] = useState<string>("");
+  const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
 
   const filteredPeople: Person[] =
     query === ""
@@ -86,6 +88,16 @@ export const SelectUser: React.FC<Props> = ({ open, setOpen }) => {
   const handleClose = () => {
     setOpen(false);
     setQuery("");
+    setSelectedPerson(null);
+  };
+
+  const handleSelect = (person: Person) => {
+    onSelect({
+      id: person.id,
+      name: person.name,
+      avatar: person.imageUrl,
+    });
+    handleClose();
   };
 
   return (
@@ -100,13 +112,7 @@ export const SelectUser: React.FC<Props> = ({ open, setOpen }) => {
           transition
           className="mx-auto max-w-3xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black/5 transition-all data-closed:scale-95 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
         >
-          <Combobox<Person>
-            onChange={(person: Person) => {
-              if (person) {
-                window.location.href = person.url;
-              }
-            }}
-          >
+          <Combobox<Person> value={selectedPerson} onChange={setSelectedPerson}>
             {({ activeOption }) => (
               <>
                 <div className="grid grid-cols-1">
@@ -171,17 +177,15 @@ export const SelectUser: React.FC<Props> = ({ open, setOpen }) => {
                     {activeOption && (
                       <div className="hidden h-96 w-1/2 flex-none flex-col divide-y divide-gray-100 overflow-y-auto sm:flex">
                         <div className="flex-none p-6 text-center">
-                          <img
-                            src={activeOption.imageUrl}
-                            alt=""
-                            className="mx-auto size-16 rounded-lg"
+                          <CustomAvatar
+                            avatar={activeOption.imageUrl}
+                            size="4rem"
+                            altText={activeOption.name}
+                            username={activeOption.name}
                           />
                           <h2 className="mt-2 font-semibold text-gray-900">
                             {activeOption.name}
                           </h2>
-                          <p className="text-sm text-gray-500">
-                            {activeOption.role}
-                          </p>
                         </div>
                         <div className="flex flex-auto flex-col justify-between p-6">
                           <dl className="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-700">
@@ -198,7 +202,11 @@ export const SelectUser: React.FC<Props> = ({ open, setOpen }) => {
                             </dt>
                             <dd className="truncate">{activeOption.url}</dd>
                           </dl>
-                          <PrimaryButton>Seleccionar cliente</PrimaryButton>
+                          <PrimaryButton
+                            onClick={() => handleSelect(activeOption)}
+                          >
+                            Seleccionar cliente
+                          </PrimaryButton>
                         </div>
                       </div>
                     )}

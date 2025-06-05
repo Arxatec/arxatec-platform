@@ -70,6 +70,21 @@ export const idealClientsData = [
   },
 ];
 
+export const currencyData = [
+  {
+    id: 1,
+    name: "USD",
+  },
+  {
+    id: 2,
+    name: "MXN",
+  },
+  {
+    id: 3,
+    name: "EUR",
+  },
+];
+
 export const communicationPreferencesData = [
   {
     id: 1,

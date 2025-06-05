@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   ChevronUpIcon,
   ChevronDownIcon,
@@ -23,7 +23,24 @@ interface DaySchedule {
 
 interface ScheduleProps {
   onChange?: (schedule: Record<string, DaySchedule>) => void;
+  defaultSchedule?: Record<string, DaySchedule>;
 }
+
+const DEFAULT_SCHEDULE: Record<string, DaySchedule> = {
+  Monday: {
+    enabled: false,
+    timeSlots: [],
+  },
+  Tuesday: {
+    enabled: false,
+    timeSlots: [],
+  },
+  Wednesday: { enabled: false, timeSlots: [] },
+  Thursday: { enabled: false, timeSlots: [] },
+  Friday: { enabled: false, timeSlots: [] },
+  Saturday: { enabled: false, timeSlots: [] },
+  Sunday: { enabled: false, timeSlots: [] },
+};
 
 const DAY_OF_WEEK_TRANSLATIONS = [
   LocaleKeys.shared_day_of_week_monday,
@@ -50,26 +67,17 @@ const TIME_OPTIONS = Array.from({ length: 24 }, (_, i) => [
   `${i + 1}:30`,
 ]).flat();
 
-export const Schedule = ({ onChange }: ScheduleProps) => {
+export const Schedule = ({ onChange, defaultSchedule }: ScheduleProps) => {
   const { t } = useTranslation();
-  const [schedule, setSchedule] = useState<Record<string, DaySchedule>>({
-    Monday: {
-      enabled: true,
-      timeSlots: [
-        { start: "9:00", end: "13:30" },
-        { start: "14:30", end: "17:00" },
-      ],
-    },
-    Tuesday: {
-      enabled: true,
-      timeSlots: [{ start: "9:30", end: "11:00" }],
-    },
-    Wednesday: { enabled: true, timeSlots: [{ start: "9:00", end: "17:00" }] },
-    Thursday: { enabled: true, timeSlots: [{ start: "9:00", end: "17:00" }] },
-    Friday: { enabled: true, timeSlots: [{ start: "9:00", end: "17:00" }] },
-    Saturday: { enabled: false, timeSlots: [] },
-    Sunday: { enabled: false, timeSlots: [] },
-  });
+  const [schedule, setSchedule] = useState<Record<string, DaySchedule>>(
+    defaultSchedule || DEFAULT_SCHEDULE
+  );
+
+  useEffect(() => {
+    if (defaultSchedule) {
+      setSchedule(defaultSchedule);
+    }
+  }, [defaultSchedule]);
 
   const [expandedDays, setExpandedDays] = useState<Record<string, boolean>>({
     Monday: true,

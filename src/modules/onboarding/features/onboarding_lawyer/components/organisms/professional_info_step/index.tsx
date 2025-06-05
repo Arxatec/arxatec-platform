@@ -6,6 +6,7 @@ import {
   specialitiesData,
 } from "../../../constants/form_data";
 import type { LawyerOnboardingFormData } from "../../../types";
+import { IdentificationIcon } from "@heroicons/react/24/solid";
 
 export const ProfessionalInfoStep = () => {
   const {
@@ -70,20 +71,49 @@ export const ProfessionalInfoStep = () => {
       </div>
       <div>
         <CustomInput
-          {...register("professionalInfo.education", {
-            required: "La educación es requerida",
+          {...register("professionalInfo.linkedin", {
+            required: "El perfil de LinkedIn es requerido",
+            pattern: {
+              value: /^https:\/\/www\.linkedin\.com\/in\/[\w-]+\/?$/,
+              message:
+                "Ingresa una URL válida de LinkedIn (ej: https://www.linkedin.com/in/usuario)",
+            },
           })}
           startAdornment={
             <BuildingLibraryIcon className="size-5 text-gray-400" />
           }
           type="text"
-          label="Educación"
-          placeholder="Ej. Licenciatura en Derecho, Universidad Nacional Autónoma de México"
+          label="LinkedIn"
+          placeholder="Ej. https://www.linkedin.com/in/juan-perez-1234567890"
           required
         />
-        {errors.professionalInfo?.education && (
+        {errors.professionalInfo?.linkedin && (
           <p className="mt-1 text-sm text-red-600" role="alert">
-            {errors.professionalInfo.education.message}
+            {errors.professionalInfo.linkedin.message}
+          </p>
+        )}
+      </div>
+      <div>
+        <CustomInput
+          {...register("professionalInfo.identificationNumber", {
+            required: "El número de identificación es requerido",
+            pattern: {
+              value: /^\d{5,10}$/,
+              message:
+                "El número de identificación debe tener entre 5 y 10 dígitos",
+            },
+          })}
+          startAdornment={
+            <IdentificationIcon className="size-5 text-gray-400" />
+          }
+          type="text"
+          label="Número de identificación"
+          placeholder="Ej. 77777"
+          required
+        />
+        {errors.professionalInfo?.identificationNumber && (
+          <p className="mt-1 text-sm text-red-600" role="alert">
+            {errors.professionalInfo.identificationNumber.message}
           </p>
         )}
       </div>

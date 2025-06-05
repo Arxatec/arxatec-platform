@@ -1,4 +1,3 @@
-import { SpinnerLoader } from "~/components/atoms";
 import { useArticleForm } from "../../hooks/use_article_form";
 import { useEffect, useRef } from "react";
 import {
@@ -92,8 +91,10 @@ export default function ArticleEditorPage() {
   // Renderizado condicional para loading
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <SpinnerLoader color="gray" size={32} />
+      <div className="max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 min-h-screen">
+        <div className="h-[200px] w-full bg-slate-200 animate-pulse rounded-lg"></div>
+        <div className="h-[400px] w-full bg-slate-200 animate-pulse rounded-lg mt-2"></div>
+        <div className="h-[700px] w-full bg-slate-200 animate-pulse rounded-lg mt-2"></div>
       </div>
     );
   }
