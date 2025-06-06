@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { FileUploadInput, FilePreview } from "../../atoms";
-
-type UploadedFile = {
-  id: string;
-  file: File;
-  preview?: string;
-};
+import { useCaseStore } from "../../../store/case.store";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ALLOWED_FILE_TYPES = [
@@ -23,7 +18,7 @@ const ALLOWED_FILE_TYPES = [
 ];
 
 export const FileUploadSection = () => {
-  const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
+  const { files, addFile, removeFile } = useCaseStore();
   const [error, setError] = useState<string>("");
 
   const handleFileChange = (files: FileList | null) => {
@@ -48,43 +43,29 @@ export const FileUploadSection = () => {
 
       const reader = new FileReader();
       reader.onload = () => {
-        setUploadedFiles((prev) => [
-          ...prev,
-          {
-            id: Math.random().toString(36).substr(2, 9),
-            file,
-            preview: reader.result as string,
-          },
-        ]);
+        addFile({
+          id: Math.random().toString(36).substr(2, 9),
+          file,
+          preview: reader.result as string,
+        });
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleRemoveFile = (id: string) => {
-    setUploadedFiles((prev) => prev.filter((file) => file.id !== id));
-  };
-
   return (
-    <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-all max-w-md w-full">
-      <div className="h-full flex flex-col">
-        <label className="text-sm font-medium text-gray-900">
-          Adjuntar multimedia
-        </label>
-        <FileUploadInput onFileChange={handleFileChange} error={error} />
-        {uploadedFiles.length > 0 && (
-          <div className="mt-4 space-y-2">
-            {uploadedFiles.map((file) => (
-              <FilePreview
-                key={file.id}
-                id={file.id}
-                name={file.file.name}
-                type={file.file.type}
-                onRemove={handleRemoveFile}
-              />
-            ))}
-          </div>
-        )}
+    <div className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-all">
+      <FileUploadInput onFileChange={handleFileChange} error={error} />
+      <div className="mt-4 space-y-4">
+        {files.map((file) => (
+          <FilePreview
+            key={file.id}
+            id={file.id}
+            name={file.file.name}
+            type={file.file.type}
+            onRemove={removeFile}
+          />
+        ))}
       </div>
     </div>
   );

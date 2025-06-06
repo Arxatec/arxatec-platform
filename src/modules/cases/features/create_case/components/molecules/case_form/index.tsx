@@ -2,8 +2,10 @@ import { CustomInput, CustomSelector } from "~/components/atoms";
 import { TextRich } from "~/components/organisms";
 import { useForm, Controller } from "react-hook-form";
 import { CustomAvatar } from "~/components/atoms/custom_avatar";
-import React from "react";
+import React, { useEffect } from "react";
 import type { Category } from "../../../types";
+import { useCaseStore } from "../../../store/case.store";
+import { useCasesStore } from "../../../../../store/cases.store";
 
 interface User {
   id: number;
@@ -30,137 +32,170 @@ export const CaseForm = ({
   categories,
 }: CaseFormProps) => {
   const {
+    title,
+    category,
+    description,
+    files,
+    setTitle,
+    setCategory,
+    setDescription,
+    reset: resetCaseStore,
+  } = useCaseStore();
+
+  const addCase = useCasesStore((state) => state.addCase);
+
+  const {
     control,
     handleSubmit,
     setValue,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
-      category: categories[0] || {
-        id: 0,
-        name: "Cargando...",
-        description: "",
-      },
+      title: title || "",
+      category: category ||
+        categories[0] || {
+          id: 0,
+          name: "Cargando...",
+          description: "",
+        },
+      description: description || "",
     },
   });
 
   // Actualizar el cliente cuando se selecciona
-  React.useEffect(() => {
+  useEffect(() => {
     if (selectedUser) {
       setValue("client", selectedUser);
     }
   }, [selectedUser, setValue]);
 
   // Actualizar la categoría por defecto cuando se cargan las categorías
-  React.useEffect(() => {
-    if (categories.length > 0) {
+  useEffect(() => {
+    if (categories.length > 0 && !category) {
       setValue("category", categories[0]);
+      setCategory(categories[0]);
     }
-  }, [categories, setValue]);
+  }, [categories, setValue, category, setCategory]);
 
   const onSubmit = (data: FormValues) => {
-    console.log("Datos del formulario:", data);
+    if (!data.client) {
+      alert("Por favor selecciona un cliente");
+      return;
+    }
+
+    // Guardar en el store de casos
+    addCase({
+      title: data.title,
+      category: data.category,
+      description: data.description,
+      client: {
+        id: data.client.id,
+        name: data.client.name,
+        phone: "",
+        email: "",
+        role: "client",
+        url: "",
+        imageUrl: data.client.avatar || "",
+      },
+      files: files,
+    });
+
+    // Resetear el store temporal
+    resetCaseStore();
+
+    // Redirigir hacia atrás
+    window.history.back();
   };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-all"
+      className="space-y-6 bg-white p-4 rounded-lg  "
     >
-      <div className="grid grid-cols-1 gap-2">
-        <div className="w-full">
-          <Controller
-            name="title"
-            control={control}
-            rules={{ required: "El título es requerido" }}
-            render={({ field }) => (
-              <div>
-                <CustomInput
-                  {...field}
-                  placeholder="Ej. Reclamación de daños por incumplimiento contractual"
-                  label="Título del caso"
-                  className="w-full"
-                />
-                {errors.title && (
-                  <span className="text-xs text-red-500 mt-1">
-                    {errors.title.message}
-                  </span>
-                )}
-              </div>
-            )}
-          />
-        </div>
-      </div>
-      <div className="mt-4">
+      <div>
         <Controller
-          name="category"
+          name="title"
           control={control}
-          rules={{ required: "La categoría es requerida" }}
+          rules={{ required: "El título es requerido" }}
           render={({ field }) => (
-            <div>
-              <CustomSelector
-                label="Categoría"
-                options={categories}
-                selected={field.value}
-                onChange={field.onChange}
-                displayKey="name"
-              />
-              {errors.category && (
-                <span className="text-xs text-red-500 mt-1">
-                  {errors.category.message}
-                </span>
-              )}
-            </div>
-          )}
-        />
-      </div>
-      <div className="mt-4">
-        <label className="text-sm font-medium text-gray-900">
-          Seleccionar cliente
-        </label>
-        <Controller
-          name="client"
-          control={control}
-          rules={{ required: "El cliente es requerido" }}
-          render={() => (
             <>
-              {selectedUser ? (
-                <div
-                  onClick={onOpenUserSelector}
-                  className="flex items-center gap-2 border border-gray-300 rounded-md px-4 py-2 mt-2 cursor-pointer hover:bg-gray-50"
-                >
-                  <CustomAvatar
-                    avatar={selectedUser.avatar || ""}
-                    size="32px"
-                    altText={selectedUser.name}
-                    username={selectedUser.name}
-                  />
-                  <span className="text-sm text-gray-700">
-                    {selectedUser.name}
-                  </span>
-                </div>
-              ) : (
-                <button
-                  type="button"
-                  onClick={onOpenUserSelector}
-                  className="text-left text-sm text-gray-400 block border border-gray-300 w-full rounded-md px-4 py-1.5 mt-2 hover:bg-gray-50"
-                >
-                  Seleccionar...
-                </button>
-              )}
-              {errors.client && (
-                <span className="text-xs text-red-500 mt-1">
-                  {errors.client.message}
-                </span>
+              <CustomInput
+                {...field}
+                label="Título del caso"
+                placeholder="Ej: Demanda por incumplimiento de contrato"
+                onChange={(e) => {
+                  field.onChange(e);
+                  setTitle(e.target.value);
+                }}
+              />
+              {errors.title && (
+                <p className="mt-1 text-sm text-red-600" role="alert">
+                  {errors.title.message}
+                </p>
               )}
             </>
           )}
         />
       </div>
-      <div className="mt-4">
-        <label className="text-sm font-medium text-gray-900">
-          Descripción del caso
+
+      <div>
+        <Controller
+          name="category"
+          control={control}
+          rules={{ required: "La categoría es requerida" }}
+          render={({ field }) => (
+            <>
+              <CustomSelector
+                {...field}
+                label="Categoría"
+                options={categories}
+                selected={field.value}
+                onChange={(value: Category) => {
+                  field.onChange(value);
+                  setCategory(value);
+                }}
+              />
+              {errors.category && (
+                <p className="mt-1 text-sm text-red-600" role="alert">
+                  {errors.category.message}
+                </p>
+              )}
+            </>
+          )}
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium leading-6 text-gray-900 mb-2">
+          Cliente
         </label>
+        <div className="flex items-center gap-4">
+          {selectedUser ? (
+            <div className="flex items-center gap-2">
+              <CustomAvatar
+                avatar={selectedUser.avatar}
+                size="2rem"
+                altText={selectedUser.name}
+                username={selectedUser.name}
+              />
+              <span className="text-sm text-gray-900">{selectedUser.name}</span>
+            </div>
+          ) : (
+            <span className="text-sm text-gray-500">
+              No se ha seleccionado ningún cliente
+            </span>
+          )}
+          <button
+            type="button"
+            onClick={onOpenUserSelector}
+            className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+          >
+            {selectedUser ? "Cambiar cliente" : "Seleccionar cliente"}
+          </button>
+        </div>
+      </div>
+
+      <div>
         <Controller
           name="description"
           control={control}
@@ -169,7 +204,10 @@ export const CaseForm = ({
             <>
               <TextRich
                 value={field.value}
-                onChange={field.onChange}
+                onChange={(value) => {
+                  field.onChange(value);
+                  setDescription(value);
+                }}
                 minHeight="250px"
                 maxHeight="600px"
                 className="mt-2"
@@ -179,20 +217,28 @@ export const CaseForm = ({
                 showFontSelector={false}
               />
               {errors.description && (
-                <span className="text-xs text-red-500 mt-1">
+                <p className="mt-1 text-sm text-red-600" role="alert">
                   {errors.description.message}
-                </span>
+                </p>
               )}
             </>
           )}
         />
       </div>
-      <div className="mt-4">
+
+      <div className="flex justify-end gap-3">
+        <button
+          type="button"
+          onClick={() => window.history.back()}
+          className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+        >
+          Cancelar
+        </button>
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white rounded-md py-2 hover:bg-blue-700 transition-colors"
+          className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
         >
-          Crear caso
+          Guardar caso
         </button>
       </div>
     </form>

@@ -39,7 +39,7 @@ export const updateArticle = async (formData: FormData, id: string) => {
 export const getAllCategories = async () => {
   try {
     const response = await axios.get(
-      "https://arxatec-service-production.up.railway.app/api/v1/articles/categories"
+      "http://localhost:3000/api/v1/articles/categories"
     );
     return response.data;
   } catch (error) {

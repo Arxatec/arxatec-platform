@@ -18,13 +18,6 @@ export const ActionCardsGroup = () => {
   return (
     <div className="flex gap-2">
       <ActionCard
-        title="Explorar casos"
-        icon={<GlobeAltIcon />}
-        iconBgColor="bg-blue-50"
-        iconColor="text-blue-600"
-        onClick={navigateToExplorerCases}
-      />
-      <ActionCard
         title="Mis clientes"
         icon={<UserIcon />}
         iconBgColor="bg-indigo-50"

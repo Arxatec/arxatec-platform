@@ -17,9 +17,7 @@ export default function ViewCasesPage() {
     <div className="rounded-md max-w-7xl mx-auto px-6 min-h-screen">
       <div className="mx-auto">
         <ActionCardsGroup />
-        <div className="mt-2">
-          <CasesDashboard />
-        </div>
+
         <Table />
       </div>
     </div>

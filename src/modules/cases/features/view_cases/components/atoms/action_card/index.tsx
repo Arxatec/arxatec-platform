@@ -18,7 +18,7 @@ export const ActionCard = ({
   return (
     <button
       onClick={onClick}
-      className="w-full max-w-80 shadow-sm hover:shadow-md transition-all rounded-md p-4 bg-white"
+      className="w-full shadow-sm hover:shadow-md transition-all rounded-md p-4 bg-white"
     >
       <div>
         <div className="flex items-start gap-2 justify-between">
