@@ -35,21 +35,22 @@ import logo from "~/assets/images/logo.png";
 import { SidebarMobile } from "./sidebar_mobile";
 import { SidebarDesktop } from "./sidebar_desktop";
 import { Navigation } from "./navigation";
-import { APP_PATHS } from "~/routes/routes";
+import { ROUTES } from "~/routes/routes";
 
 const navigationTest = [
-  {
+  /*{
     name: "Dashboard",
     href: APP_PATHS.DASHBOARD,
     iconInactive: HomeIcon,
     iconActive: HomeIconActive,
-  },
+  },*/
   {
     name: "Mis casos",
-    href: APP_PATHS.CASES,
+    href: ROUTES.AppRoutes.LawyerCases,
     iconInactive: FolderIcon,
     iconActive: FolderIconActive,
   },
+  /*
   {
     name: "Mensajes",
     href: APP_PATHS.CHATS,
@@ -105,7 +106,7 @@ const navigationTest = [
           "https://images.pexels.com/photos/5648040/pexels-photo-5648040.jpeg",
       },
     ],
-  },
+    }, */
   {
     name: "Recursos",
     href: "#",
@@ -125,15 +126,16 @@ const navigationTest = [
         iconInactive: QuestionMarkCircleIcon,
         iconActive: QuestionMarkCircleIconActive,
       },
+      /*
       {
         name: "Comunidades",
         href: APP_PATHS.COMMUNITIES,
         iconInactive: GlobeAltIcon,
         iconActive: GlobeAltIconActive,
-      },
+        },*/
       {
         name: "Nuestro blog",
-        href: APP_PATHS.ARTICLES,
+        href: ROUTES.AppRoutes.Articles,
         iconInactive: PencilSquareIcon,
         iconActive: PencilSquareIconActive,
       },
@@ -161,6 +163,7 @@ const navigationTest = [
 
 export default function Sidebar({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   return (
     <>
       <div>
@@ -170,9 +173,17 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
           navigation={navigationTest}
           logo={logo}
         />
-        <SidebarDesktop navigation={navigationTest} logo={logo} />
-        <div className="lg:pl-72">
-          <Navigation setSidebarOpen={setSidebarOpen} />
+        <SidebarDesktop
+          navigation={navigationTest}
+          setExpanded={setExpanded}
+          expanded={expanded}
+        />
+        <div className={`${expanded ? "lg:pl-72" : ""} transition-all`}>
+          <Navigation
+            setSidebarOpen={setSidebarOpen}
+            expanded={expanded}
+            setExpanded={setExpanded}
+          />
           <main className="bg-slate-100 py-4 lg:py-10 h-full">
             <div className="h-full">{children}</div>
           </main>

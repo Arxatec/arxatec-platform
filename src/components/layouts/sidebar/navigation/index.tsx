@@ -19,22 +19,29 @@ import {
   FolderIcon,
 } from "@heroicons/react/24/solid";
 import { CustomAvatar, CustomInput } from "~/components/atoms";
-import { APP_PATHS } from "~/routes/routes";
 import { useLocation } from "wouter";
 import { useUserStore } from "~/store";
 import { getFirstTwoWords } from "~/utilities/string_utilities";
+import { logo } from "~/utilities/assets_utilities";
+import { ROUTES } from "~/routes/routes";
 
 interface Props {
+  expanded: boolean;
+  setExpanded: (value: boolean) => void;
   setSidebarOpen: (value: boolean) => void;
 }
-export const Navigation: React.FC<Props> = ({ setSidebarOpen }) => {
+export const Navigation: React.FC<Props> = ({
+  expanded,
+  setSidebarOpen,
+  setExpanded,
+}) => {
   const [open, setOpen] = useState(false);
   const [openNotification, setOpenNotification] = useState(false);
   const toggleOpen = () => setOpen(!open);
   const [, setLocation] = useLocation();
-  const { user } = useUserStore();
+  const { user, setUser } = useUserStore();
   const userNavigation = [
-    {
+    /*     {
       name: "Perfil",
       icon: UserIcon,
       action: () => setLocation(APP_PATHS.PROFILE),
@@ -43,13 +50,14 @@ export const Navigation: React.FC<Props> = ({ setSidebarOpen }) => {
       name: "Configuración",
       icon: Cog6ToothIcon,
       action: () => setLocation(APP_PATHS.SETTINGS),
-    },
+    }, */
     {
       name: "Cerrar sesión",
       icon: ArrowLeftEndOnRectangleIcon,
       action: () => {
+        setUser(null);
         window.sessionStorage.removeItem("TOKEN_AUTH");
-        setLocation(APP_PATHS.LOGIN);
+        setLocation(`${ROUTES.Auth}${ROUTES.AuthRoutes.Login}`);
       },
     },
   ];
@@ -68,6 +76,12 @@ export const Navigation: React.FC<Props> = ({ setSidebarOpen }) => {
         <span className="sr-only">Open sidebar</span>
         <Bars3Icon aria-hidden="true" className="size-6" />
       </button>
+      <button
+        className={`hidden ${!expanded ? "lg:flex" : "hidden"} `}
+        onClick={() => setExpanded(!expanded)}
+      >
+        <img className="w-36" src={logo} alt="logo" />
+      </button>
 
       <div aria-hidden="true" className="h-6 w-px bg-gray-200 lg:hidden" />
 
@@ -85,6 +99,7 @@ export const Navigation: React.FC<Props> = ({ setSidebarOpen }) => {
         </div>
         <div className="flex items-center gap-x-4 lg:gap-x-6">
           <div className="flex items-center justify-start gap-4">
+            {/*
             <Menu as="div" className="relative">
               <MenuButton className=" rounded-full p-2 bg-gray-100 hover:bg-gray-200 transition-all">
                 <PlusIcon className="size-5 text-gray-700" strokeWidth={2.5} />
@@ -119,14 +134,13 @@ export const Navigation: React.FC<Props> = ({ setSidebarOpen }) => {
                 </MenuItem>
               </MenuItems>
             </Menu>
-
+            */}
             <button
               className=" rounded-full p-2 bg-gray-100"
               onClick={() => setOpenNotification(!openNotification)}
             >
               <BellIcon className="size-5 text-gray-700" />
             </button>
-
             <div
               aria-hidden="true"
               className="hidden lg:block lg:h-10 lg:w-px lg:bg-gray-200"
@@ -158,7 +172,7 @@ export const Navigation: React.FC<Props> = ({ setSidebarOpen }) => {
             </MenuButton>
             <MenuItems
               transition
-              className="absolute right-0 z-10 mt-2.5 w-56 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+              className="absolute -left-14 z-10 mt-4 w-56 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
             >
               {userNavigation.map((item) => (
                 <MenuItem key={item.name}>

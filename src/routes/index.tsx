@@ -1,133 +1,101 @@
 import { Switch, Route } from "wouter";
-import { ROUTE_NAMES } from "./routes";
-import * as pages from "~/modules";
+import * as publicPages from "~/modules/shared";
+import * as laywerPages from "~/modules/laywer";
+import * as guard from "~/components/guards";
+import * as layout from "~/components/layouts";
+import { ROUTES } from "./routes";
 
 export default function Routes() {
   return (
     <Switch>
-      <Route
-        path={`/${ROUTE_NAMES.VERIFY_ACCOUNT}`}
-        component={pages.AccountVerificationPage}
-      />
-      <Route
-        path={`/${ROUTE_NAMES.FORGOT_PASSWORD}`}
-        component={pages.ForgotPasswordPage}
-      />
-      <Route path={`/${ROUTE_NAMES.LOGIN}`} component={pages.LoginPage} />
-      <Route path={`/${ROUTE_NAMES.REGISTER}`} component={pages.RegisterPage} />
-
-      <Route path={ROUTE_NAMES.ONBOARDING} nest>
-        <Switch>
+      {/* Start */}
+      <Route path={ROUTES.Auth} nest>
+        <guard.GuestGuard>
+          {/* Authentication */}
           <Route
-            path={`/${ROUTE_NAMES.ONBOARDING_LAWYER}`}
-            component={pages.OnboardingLawyerPage}
+            path={ROUTES.AuthRoutes.VerifyAccount}
+            component={publicPages.AccountVerificationPage}
           />
           <Route
-            path={`/${ROUTE_NAMES.ONBOARDING_CUSTOMER}`}
-            component={pages.OnboardingCustomerPage}
+            path={ROUTES.AuthRoutes.RecoverPassword}
+            component={publicPages.ForgotPasswordPage}
           />
-          <Route path="/" component={pages.OnboardingGeneralPage} />
-        </Switch>
+          <Route
+            path={ROUTES.AuthRoutes.Login}
+            component={publicPages.LoginPage}
+          />
+          <Route
+            path={ROUTES.AuthRoutes.Register}
+            component={publicPages.RegisterPage}
+          />
+
+          {/* Onboarding */}
+          <Route
+            path={ROUTES.AuthRoutes.OnboardingLawyer}
+            component={publicPages.OnboardingLawyerPage}
+          />
+          <Route
+            path={ROUTES.AuthRoutes.OnboardingCustomer}
+            component={publicPages.OnboardingCustomerPage}
+          />
+          <Route
+            path={ROUTES.AuthRoutes.OnboardingGeneral}
+            component={publicPages.OnboardingGeneralPage}
+          />
+        </guard.GuestGuard>
       </Route>
 
-      <Route path="/" nest>
-        <pages.Protected>
-          <pages.Sidebar>
-            {/* Communities section */}
-            <Route path={ROUTE_NAMES.COMMUNITIES} nest>
-              <Switch>
-                <Route
-                  path={`/${ROUTE_NAMES.CREATE_COMMUNITY}`}
-                  component={pages.CreateCommunityPage}
-                />
-                <Route path={ROUTE_NAMES.POSTS} nest>
-                  <Switch>
-                    <Route
-                      path={`/${ROUTE_NAMES.CREATE_POST}`}
-                      component={pages.CreatePostPage}
-                    />
-                    <Route
-                      path={`/${ROUTE_NAMES.POST}`}
-                      component={pages.PostPage}
-                    />
-                    <Route path="/" component={pages.PostsPage} />
-                  </Switch>
-                </Route>
-                <Route
-                  path={`/${ROUTE_NAMES.COMMUNITY}`}
-                  component={pages.CommunityPage}
-                />
-                <Route path="/" component={pages.CommunitiesPage} />
-              </Switch>
-            </Route>
-
-            {/* Main sections */}
+      {/* Platform */}
+      <Route path={ROUTES.App} nest>
+        <guard.AuthGuard>
+          <layout.Sidebar>
+            {/* Abogado */}
             <Route
-              path={ROUTE_NAMES.DASHBOARD}
-              component={pages.DashboardPage}
-            />
-            <Route path={ROUTE_NAMES.CALENDAR} component={pages.CalendarPage} />
-            <Route path={ROUTE_NAMES.CHATS} component={pages.ChatsPage} />
-            <Route
-              path={ROUTE_NAMES.SETTINGS}
-              component={pages.SettingsLawyerPage}
+              path={ROUTES.AppRoutes.LawyerCasesPersonal}
+              component={laywerPages.PersonalCasesPage}
             />
             <Route
-              path={ROUTE_NAMES.PROFILE}
-              component={pages.ViewProfilePage}
+              path={ROUTES.AppRoutes.LawyerCasesExplorer}
+              component={laywerPages.ExplorerCasesPage}
             />
             <Route
-              path={ROUTE_NAMES.LAWYERS}
-              component={pages.ViewLawyersPage}
+              path={ROUTES.AppRoutes.LawyerCasesCreate}
+              component={laywerPages.CreateCasePage}
+            />
+            <Route
+              path={ROUTES.AppRoutes.LawyerCasesClients}
+              component={laywerPages.ClientsPage}
+            />
+            <Route
+              path={ROUTES.AppRoutes.LawyerCasesDetail}
+              component={laywerPages.ViewCasePage}
+            />
+            <Route
+              path={ROUTES.AppRoutes.LawyerCases}
+              component={laywerPages.ViewCasesPage}
             />
 
-            {/* Cases section */}
-            <Route path={ROUTE_NAMES.CASES} nest>
-              <Switch>
-                <Route
-                  path={`/${ROUTE_NAMES.PERSONAL_CASES}`}
-                  component={pages.PersonalCasesPage}
-                />
-                <Route
-                  path={`/${ROUTE_NAMES.EXPLORER_CASES}`}
-                  component={pages.ExplorerCasesPage}
-                />
-                <Route
-                  path={`/${ROUTE_NAMES.CREATE_CASE}`}
-                  component={pages.CreateCasePage}
-                />
-                <Route
-                  path={`/${ROUTE_NAMES.CLIENTS}`}
-                  component={pages.ClientsPage}
-                />
-                <Route
-                  path={`/${ROUTE_NAMES.CASE}`}
-                  component={pages.ViewCasePage}
-                />
-                <Route path="/" component={pages.ViewCasesPage} />
-              </Switch>
-            </Route>
-
-            {/* Articles section */}
-            <Route path={ROUTE_NAMES.ARTICLES} nest>
-              <Switch>
-                <Route
-                  path={`/${ROUTE_NAMES.CREATE_ARTICLE}`}
-                  component={pages.ArticleEditorPage}
-                />
-                <Route path={`/${ROUTE_NAMES.EDIT_ARTICLE}`} nest>
-                  <Switch>
-                    <Route path="/:id" component={pages.ArticleEditorPage} />
-                  </Switch>
-                </Route>
-
-                <Route path="/" component={pages.ViewArticlesPage} />
-              </Switch>
-            </Route>
-          </pages.Sidebar>
-        </pages.Protected>
+            {/* Publico */}
+            <Route
+              path={ROUTES.AppRoutes.ArticlesCreate}
+              component={publicPages.ArticleEditorPage}
+            />
+            <Route
+              path={ROUTES.AppRoutes.ArticlesEdit}
+              component={publicPages.ArticleEditorPage}
+            />
+            <Route
+              path={ROUTES.AppRoutes.Articles}
+              component={publicPages.ViewArticlesPage}
+            />
+          </layout.Sidebar>
+        </guard.AuthGuard>
       </Route>
-      <Route component={pages.NotFoundPage} />
+
+      {/* NotFound */}
+      <Route path={ROUTES.NotFound}>
+        <publicPages.NotFoundPage />
+      </Route>
     </Switch>
   );
 }

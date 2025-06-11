@@ -107,7 +107,7 @@
           },
           "ready": {
             "title": "¡Todo listo!",
-            "description": "Tu contraseña ha sido restablecida. ¿Te gustaría configurar Face ID también?",
+            "description": "Tu contraseña ha sido restablecida, vuelve a iniciar sesión para continuar.",
             "button_face_id": "Configurar Face ID",
             "button_later": "Lo haré más tarde"
           }

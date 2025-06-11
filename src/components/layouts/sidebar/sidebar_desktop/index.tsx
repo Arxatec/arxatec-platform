@@ -9,9 +9,11 @@ import { classNames } from "~/utilities/string_utilities";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { CustomImage } from "~/components/atoms";
 import { useEffect, useState } from "react";
+import { logo } from "~/utilities/assets_utilities";
 
 interface Props {
-  logo: string;
+  setExpanded: (open: boolean) => void;
+  expanded: boolean;
   navigation: {
     name: string;
     href: string;
@@ -28,10 +30,14 @@ interface Props {
   }[];
 }
 
-export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
+export const SidebarDesktop: React.FC<Props> = ({
+  navigation,
+  setExpanded,
+  expanded,
+}) => {
   const [location, setLocation] = useLocation();
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
-    {}
+    {},
   );
 
   useEffect(() => {
@@ -40,16 +46,19 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
     if (savedState) {
       setExpandedItems(JSON.parse(savedState));
     } else {
-      const initialState = navigation.reduce((acc, item) => {
-        if (item.children) {
-          acc[item.name] = true;
-        }
-        return acc;
-      }, {} as Record<string, boolean>);
+      const initialState = navigation.reduce(
+        (acc, item) => {
+          if (item.children) {
+            acc[item.name] = true;
+          }
+          return acc;
+        },
+        {} as Record<string, boolean>,
+      );
       setExpandedItems(initialState);
       localStorage.setItem(
         "sidebarExpandedState",
-        JSON.stringify(initialState)
+        JSON.stringify(initialState),
       );
     }
   }, []);
@@ -61,11 +70,16 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
   };
 
   return (
-    <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
+    <div
+      className={`hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:flex-col ${expanded ? "lg:w-72" : "w-0"} transition-all`}
+    >
       <div className="flex flex-col h-screen bg-white">
-        <div className="flex h-16 shrink-0 items-center border-b border-gray-200 px-6 py-5">
+        <button
+          className="flex h-16 shrink-0 items-center border-b border-gray-200 px-6 py-5"
+          onClick={() => setExpanded(!expanded)}
+        >
           <img alt="Arxatec" src={logo} className="h-10 w-auto" />
-        </div>
+        </button>
         <div className="flex-1 overflow-hidden border-r border-gray-200">
           <Scrollbars
             autoHide
@@ -86,7 +100,7 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
                               location.includes(item.href)
                                 ? "bg-blue-100 text-blue-600"
                                 : "text-gray-600 hover:bg-slate-50 hover:text-gray-700",
-                              "group flex gap-x-3 rounded-md p-2 text-sm font-semibold items-center"
+                              "group flex gap-x-3 rounded-md p-2 text-sm font-semibold items-center",
                             )}
                           >
                             {!location.includes(item.href) ? (
@@ -126,7 +140,7 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
                                       location.includes(item.href)
                                         ? "bg-blue-100 text-blue-600"
                                         : "text-gray-600 hover:bg-slate-50 hover:text-gray-700",
-                                      " flex gap-x-3 rounded-md p-2 text-xs tracking-widest font-semibold w-full group transition-all uppercase"
+                                      " flex gap-x-3 rounded-md p-2 text-xs tracking-widest font-semibold w-full group transition-all uppercase",
                                     )}
                                   >
                                     {item.name}
@@ -134,7 +148,7 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
                                       aria-hidden="true"
                                       className={classNames(
                                         "ml-auto transition-all size-5 shrink-0 text-gray-400",
-                                        open ? "rotate-90" : ""
+                                        open ? "rotate-90" : "",
                                       )}
                                     />
                                   </DisclosureButton>
@@ -158,7 +172,7 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
                                               ) {
                                                 window.open(
                                                   subItem.href,
-                                                  "_blank"
+                                                  "_blank",
                                                 );
                                               } else {
                                                 setLocation(subItem.href);
@@ -166,7 +180,7 @@ export const SidebarDesktop: React.FC<Props> = ({ navigation, logo }) => {
                                             }
                                           }}
                                           className={classNames(
-                                            "flex items-center gap-x-2 rounded-md py-2 pl-4 pr-2 text-sm text-gray-700 hover:bg-slate-50 w-full"
+                                            "flex items-center gap-x-2 rounded-md py-2 pl-4 pr-2 text-sm text-gray-700 hover:bg-slate-50 w-full",
                                           )}
                                         >
                                           {subItem.image ? (
