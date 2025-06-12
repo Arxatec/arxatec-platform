@@ -11,10 +11,7 @@ import { Controller, useForm } from "react-hook-form";
 import { TextRich } from "~/components/organisms";
 import { urgencyLevels } from "../../../constants";
 import { createCase } from "../../../services";
-import {
-  ToastManager,
-  useToastMutation,
-} from "~/components/molecules/toast_manager";
+import { useToastMutation } from "~/components/molecules/toast_manager";
 import type { CreateCaseDTO } from "../../../dtos";
 
 interface Props {
@@ -28,6 +25,7 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
@@ -44,10 +42,17 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
     mutationOptions: {
       mutationFn: (data: CreateCaseDTO) => createCase(data),
       onSuccess: () => {
-        ToastManager.success(
-          "Caso creado correctamente",
-          "Tu caso fue creado correctamente dentro, un abogado podra atender tu caso, espera un momento."
-        );
+        // Resetear el formulario a sus valores por defecto
+        reset({
+          category: categories[0],
+          urgency: urgencyLevels[0],
+          isPrivate: false,
+          title: "",
+          description: "",
+          lawyer: undefined,
+        });
+        // Limpiar el usuario seleccionado
+        setSelectedUser(undefined);
       },
     },
     toastOptions: {
