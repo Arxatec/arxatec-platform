@@ -69,6 +69,7 @@ export default function OnboardingCustomer() {
 
   const navigateToOnboarding = () =>
     setLocation(`~${ROUTES.Auth}${ROUTES.AuthRoutes.OnboardingGeneral}`);
+
   const navigateToDashboard = () =>
     setLocation(`~${ROUTES.App}${ROUTES.AppRoutes.LawyerCases}`);
 
@@ -155,8 +156,6 @@ export default function OnboardingCustomer() {
       })
     );
     formData.append("occupation", data.clientProfile.occupation);
-    // In future remove age_range
-    formData.append("age_range", "18");
     formData.append("gender", data.clientProfile.gender);
     formData.append(
       "birth_date",

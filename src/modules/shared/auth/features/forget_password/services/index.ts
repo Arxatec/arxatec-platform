@@ -1,9 +1,9 @@
-import axiosInstance from "~/interceptors";
+import axios from "axios";
 
 export const requestPasswordReset = async (email: string) => {
   try {
-    const response = await axiosInstance.post(
-      "/api/v1/auth/password-reset/request",
+    const response = await axios.post(
+      "http://localhost:3000/api/v1/auth/password-reset/request",
       {
         email,
       }
@@ -16,8 +16,8 @@ export const requestPasswordReset = async (email: string) => {
 
 export const verifyResetCode = async (code: string, email: string) => {
   try {
-    const response = await axiosInstance.post(
-      "/api/v1/auth/password-reset/verify-code",
+    const response = await axios.post(
+      "http://localhost:3000/api/v1/auth/password-reset/verify-code",
       {
         code,
         email,
@@ -35,8 +35,8 @@ export const resetPassword = async (
   email: string
 ) => {
   try {
-    const response = await axiosInstance.post(
-      "/api/v1/auth/password-reset/confirm",
+    const response = await axios.post(
+      "http://localhost:3000/api/v1/auth/password-reset/confirm",
       {
         password,
         confirm_password,

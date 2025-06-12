@@ -6,7 +6,7 @@ export const getProfile = async (token: string) => {
   }
   try {
     const response = await axios.get(
-      "https://arxatec-service-production.up.railway.app/api/v1/users/profile",
+      "http://localhost:3000/api/v1/users/profile",
       {
         headers: {
           Authorization: `Bearer ${token}`,

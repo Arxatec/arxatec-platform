@@ -1,10 +1,10 @@
-import axiosInstance from "~/interceptors";
+import axios from "axios";
 
 export const verifyCode = async (code: string, email: string) => {
   try {
     console.log(code, email);
-    const response = await axiosInstance.post(
-      "/api/v1/auth/register/verify-code",
+    const response = await axios.post(
+      "http://localhost:3000/api/v1/auth/register/verify-code",
       {
         code,
         email,
@@ -18,9 +18,12 @@ export const verifyCode = async (code: string, email: string) => {
 
 export const resendCode = async (email: string) => {
   try {
-    const response = await axiosInstance.post("/api/v1/auth/register/resend", {
-      email,
-    });
+    const response = await axios.post(
+      "http://localhost:3000/api/v1/auth/register/resend",
+      {
+        email,
+      }
+    );
     return response.data;
   } catch (error) {
     throw error;

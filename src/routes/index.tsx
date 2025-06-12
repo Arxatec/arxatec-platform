@@ -1,6 +1,7 @@
 import { Switch, Route } from "wouter";
 import * as publicPages from "~/modules/shared";
 import * as laywerPages from "~/modules/laywer";
+import * as clientPages from "~/modules/client";
 import * as guard from "~/components/guards";
 import * as layout from "~/components/layouts";
 import { ROUTES } from "./routes";
@@ -52,27 +53,33 @@ export default function Routes() {
             {/* Abogado */}
             <Route
               path={ROUTES.AppRoutes.LawyerCasesPersonal}
-              component={laywerPages.PersonalCasesPage}
+              component={laywerPages.LawyerPersonalCasesPage}
             />
             <Route
               path={ROUTES.AppRoutes.LawyerCasesExplorer}
-              component={laywerPages.ExplorerCasesPage}
+              component={laywerPages.LawyerExplorerCasesPage}
             />
             <Route
               path={ROUTES.AppRoutes.LawyerCasesCreate}
-              component={laywerPages.CreateCasePage}
+              component={laywerPages.LawyerCreateCasePage}
             />
             <Route
               path={ROUTES.AppRoutes.LawyerCasesClients}
-              component={laywerPages.ClientsPage}
+              component={laywerPages.LawyerClientsPage}
             />
             <Route
               path={ROUTES.AppRoutes.LawyerCasesDetail}
-              component={laywerPages.ViewCasePage}
+              component={laywerPages.LawyerViewCasePage}
             />
             <Route
               path={ROUTES.AppRoutes.LawyerCases}
-              component={laywerPages.ViewCasesPage}
+              component={laywerPages.LawyerViewCasesPage}
+            />
+
+            {/* Cliente */}
+            <Route
+              path={ROUTES.AppRoutes.ClientCasesCreate}
+              component={clientPages.ClientCreateCasePage}
             />
 
             {/* Publico */}

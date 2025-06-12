@@ -1,4 +1,3 @@
-import axiosInstance from "~/interceptors";
 import type { ArticlesResponse, GetArticlesParams } from "../models";
 import axios from "axios";
 
@@ -15,8 +14,8 @@ export const getArticles = async ({
       ...(search && { search }),
     });
 
-    const { data } = await axiosInstance.get<ArticlesResponse>(
-      `/api/v1/articles?${params.toString()}`,
+    const { data } = await axios.get<ArticlesResponse>(
+      `http://localhost:3000/api/v1/articles?${params.toString()}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

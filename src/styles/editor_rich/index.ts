@@ -38,7 +38,7 @@ export const editorStyles = `
 .ProseMirror h1, .prose h1 {
   font-size: 2rem;  /* 40px */
   font-weight: 800;
-  margin: 2rem 0 1rem;
+  margin: 0.5rem 0 0.5rem;
   color: #111827;
   line-height: 1.2;
   letter-spacing: -0.025em;
@@ -47,7 +47,7 @@ export const editorStyles = `
 .ProseMirror h2, .prose h2 {
   font-size: 1.5rem;  /* 32px */
   font-weight: 700;
-  margin: 1.5rem 0 1rem;
+  margin: 0.5rem 0 0.5rem;
   color: #111827;
   line-height: 1.3;
   letter-spacing: -0.025em;
@@ -56,7 +56,7 @@ export const editorStyles = `
 .ProseMirror h3, .prose h3 {
   font-size: 1.25rem;  /* 24px */
   font-weight: 600;
-  margin: 1.25rem 0 0.75rem;
+  margin: 0.5rem 0 0.5rem;
   color: #111827;
   line-height: 1.4;
 }
@@ -64,7 +64,7 @@ export const editorStyles = `
 .ProseMirror h4, .prose h4 {
   font-size: 1.1rem;  /* 20px */
   font-weight: 600;
-  margin: 1rem 0 0.75rem;
+  margin: 0.5rem 0 0.5rem;
   color: #111827;
   line-height: 1.5;
 }
@@ -72,14 +72,13 @@ export const editorStyles = `
 .ProseMirror p, .prose p {
   font-size: 0.8rem;  /* 16px */
   font-weight: 400;
-  margin: 1rem 0;
-  line-height: 1.75;
+  line-height: 1.4;
   color: #374151;
 }
 
   .ProseMirror ul, .ProseMirror ol, .prose ul, .prose ol {
     padding-left: 1.5rem;
-    margin: 1rem 0;
+    margin: 0;
   }
 
   .ProseMirror ul, .prose ul {
@@ -88,11 +87,11 @@ export const editorStyles = `
 
   .ProseMirror ol, .prose ol {
     list-style-type: decimal;
+    font-size: 0.8rem;
   }
 
   .ProseMirror li, .prose li {
-    margin: 0.5rem 0;
-    padding-left: 0.5rem;
+    margin: 0 0;
   }
 
   .ProseMirror table, .prose table {
@@ -209,6 +208,4 @@ export const editorStyles = `
     pointer-events: none;
     font-style: italic;
   }
-
-
 `;

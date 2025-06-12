@@ -42,6 +42,7 @@ export const CustomToggle = ({
         className={`relative inline-flex flex-shrink-0 h-6 w-11 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 
         ${enabled ? "bg-blue-600" : "bg-gray-200"}`}
         aria-pressed={enabled}
+        type="button"
       >
         <span
           className={`absolute left-0 inline-block size-5 transform rounded-full bg-white shadow transition duration-200 ease-in-out

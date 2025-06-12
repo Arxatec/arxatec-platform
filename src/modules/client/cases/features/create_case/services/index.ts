@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { LegalCategoryModel } from "../models";
-import { toLegalCategoryModel } from "../adapters";
+import { toLawyerModel, toLegalCategoryModel } from "../adapters";
 
 export const createCase = async (formData: FormData) => {
   try {
@@ -35,5 +35,19 @@ export const getAllCategories = async (): Promise<LegalCategoryModel[]> => {
     throw new Error(
       error?.toString() || "Error inesperado al obtener las categorías"
     );
+  }
+};
+
+export const getLawyers = async () => {
+  const token = window.sessionStorage.getItem("TOKEN_AUTH");
+  try {
+    const response = await axios.get("http://localhost:3000/api/v1/lawyers", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return Promise.all(response.data.data.map(toLawyerModel));
+  } catch (error) {
+    throw new Error(error?.message || "Error al obtener los abogados");
   }
 };

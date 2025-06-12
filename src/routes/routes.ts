@@ -22,6 +22,9 @@ export const ROUTES = {
     LawyerCasesDetail: "/abogado/casos/:id",
     LawyerCases: "/abogado/casos",
 
+    // Client
+    ClientCasesCreate: "/cliente/casos/crear",
+
     // Articles
     ArticlesCreate: "/articulos/crear",
     ArticlesEdit: "/articulos/editar/:id",

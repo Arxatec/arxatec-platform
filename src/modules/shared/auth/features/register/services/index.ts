@@ -1,4 +1,4 @@
-import axiosInstance from "~/interceptors";
+import axios from "axios";
 
 export const register = async (
   name: string,
@@ -14,8 +14,8 @@ export const register = async (
       password: password,
       confirm_password: password,
     };
-    const response = await axiosInstance.post(
-      "/api/v1/auth/register/request",
+    const response = await axios.post(
+      "http://localhost:3000/api/v1/auth/register/request",
       createUser
     );
     return response.data;
