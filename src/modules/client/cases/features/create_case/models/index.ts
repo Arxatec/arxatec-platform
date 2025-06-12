@@ -4,6 +4,7 @@ export interface LegalCategoryModel {
 }
 export interface LawyerModel {
   id: string;
+  lawyerId: number;
   name: string;
   email: string;
   avatar: string;

@@ -1,12 +1,13 @@
 import axios from "axios";
 import type { LegalCategoryModel } from "../models";
 import { toLawyerModel, toLegalCategoryModel } from "../adapters";
+import type { CreateCaseDTO } from "../dtos";
 
-export const createCase = async (formData: FormData) => {
+export const createCase = async (formData: CreateCaseDTO) => {
   try {
     const token = window.sessionStorage.getItem("TOKEN_AUTH");
     const response = await axios.post(
-      "http://localhost:3000/api/v1/articles",
+      "http://localhost:3000/api/v1/cases",
       formData,
       {
         headers: {

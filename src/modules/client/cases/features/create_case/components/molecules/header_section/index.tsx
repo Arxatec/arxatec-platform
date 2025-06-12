@@ -3,7 +3,12 @@ import { DocumentPlusIcon } from "@heroicons/react/24/solid";
 import { useLocation } from "wouter";
 import { PrimaryButton } from "~/components/atoms";
 
-export const HeaderSection = () => {
+interface Props {
+  onCreateCase: () => void;
+  isLoading: boolean;
+}
+
+export const HeaderSection = ({ onCreateCase, isLoading }: Props) => {
   const [, setLocation] = useLocation();
   const onBack = () => setLocation("/");
   return (
@@ -17,7 +22,12 @@ export const HeaderSection = () => {
       <div className="bg-white px-4 py-2 w-full rounded-lg flex items-center justify-start shadow-sm hover:shadow-md transition-all">
         <h2 className="text-base font-bold">Crear caso</h2>
       </div>
-      <PrimaryButton className="w-full h-full">
+      <PrimaryButton
+        className="w-full h-full"
+        onClick={onCreateCase}
+        loader={isLoading}
+        disabled={isLoading}
+      >
         <DocumentPlusIcon className="size-4 mr-2 text-white" />
         Crear caso
       </PrimaryButton>

@@ -5,7 +5,7 @@ export interface LegalCategoryDTO {
 }
 
 export interface LawyerDTO {
-  id: number;
+  userId: number;
   firstName: string;
   lastName: string;
   email: string;
@@ -24,25 +24,24 @@ export interface LawyerDTO {
     fullAddress?: string;
   };
   communicationPreference: string;
-  attorneyFees: AttorneyFee[];
-  workSchedules: WorkSchedule[];
+  attorneyFees: {
+    id?: number;
+    amount?: number;
+    description?: string;
+  }[];
+  workSchedules: {
+    id?: number;
+    day?: string;
+    startTime?: string;
+    endTime?: string;
+  }[];
 }
 
-interface Location {
-  fullAddress: string;
-  latitude: number;
-  longitude: number;
-}
-
-interface AttorneyFee {
-  id?: number;
-  amount?: number;
-  description?: string;
-}
-
-interface WorkSchedule {
-  id?: number;
-  day?: string;
-  startTime?: string;
-  endTime?: string;
+export interface CreateCaseDTO {
+  title: string;
+  category_id: number;
+  description: string;
+  urgency: string;
+  is_public?: boolean;
+  selected_lawyer_id?: number;
 }

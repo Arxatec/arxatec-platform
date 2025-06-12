@@ -93,6 +93,7 @@ export const toLawyerModel = async (dto: LawyerDTO): Promise<LawyerModel> => {
 
   return {
     id: crypto.randomUUID(),
+    lawyerId: dto.userId,
     name: dto.firstName + " " + dto.lastName,
     email: dto.email,
     avatar: dto.profilePicture,

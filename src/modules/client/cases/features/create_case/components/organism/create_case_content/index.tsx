@@ -1,5 +1,5 @@
-import { useState } from "react";
-import type { FormValues, User } from "../../../interface";
+import { useState, useRef } from "react";
+import type { FormValues } from "../../../interface";
 import type { LawyerModel, LegalCategoryModel } from "../../../models";
 import {
   HeaderSection,
@@ -10,6 +10,12 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { TextRich } from "~/components/organisms";
 import { urgencyLevels } from "../../../constants";
+import { createCase } from "../../../services";
+import {
+  ToastManager,
+  useToastMutation,
+} from "~/components/molecules/toast_manager";
+import type { CreateCaseDTO } from "../../../dtos";
 
 interface Props {
   categories: LegalCategoryModel[];
@@ -32,6 +38,36 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
     mode: "onTouched",
   });
 
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const createCaseMutation = useToastMutation({
+    mutationOptions: {
+      mutationFn: (data: CreateCaseDTO) => createCase(data),
+      onSuccess: () => {
+        ToastManager.success(
+          "Caso creado correctamente",
+          "Tu caso fue creado correctamente dentro, un abogado podra atender tu caso, espera un momento."
+        );
+      },
+    },
+    toastOptions: {
+      loading: {
+        title: "Creando caso",
+        content: "Estamos creando tu caso, por favor espera un momento.",
+      },
+      success: {
+        title: "Caso creado correctamente",
+        content:
+          "Tu caso fue creado correctamente dentro, un abogado podra atender tu caso, espera un momento.",
+      },
+      error: {
+        title: "Error al intentar crear el caso",
+        content:
+          "Opps sucedio un error, intenta nuevamente por favor, si el problema persiste, contacta con el administrador.",
+      },
+    },
+  });
+
   const [isUserSelectorOpen, setIsUserSelectorOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<LawyerModel | undefined>();
 
@@ -42,7 +78,43 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
   };
 
   const onSubmit = (data: FormValues) => {
-    console.log("Datos del formulario:", data);
+    if (data.isPrivate) {
+      // Caso privado - incluir información del abogado
+      const privateCase: CreateCaseDTO = {
+        title: data.title,
+        description: data.description,
+        category_id: data.category.id,
+        urgency: mapUrgencyIdToName(data.urgency.id),
+        is_public: false,
+        selected_lawyer_id: data.lawyer ? data.lawyer.lawyerId : null,
+      };
+      createCaseMutation.mutate(privateCase);
+      console.log("Datos del caso privado:", privateCase);
+    } else {
+      // Caso público
+      const publicCase: CreateCaseDTO = {
+        title: data.title,
+        description: data.description,
+        category_id: data.category.id,
+        urgency: mapUrgencyIdToName(data.urgency.id),
+      };
+      createCaseMutation.mutate(publicCase);
+      console.log("Datos del caso público:", publicCase);
+    }
+  };
+
+  // Función para mapear el ID de urgencia al nombre requerido
+  const mapUrgencyIdToName = (urgencyId: number): string => {
+    switch (urgencyId) {
+      case 1:
+        return "alta";
+      case 2:
+        return "media";
+      case 3:
+        return "baja";
+      default:
+        return "media";
+    }
   };
 
   return (
@@ -53,7 +125,10 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
         onSelect={handleUserSelect}
         lawyers={lawyers}
       />
-      <HeaderSection />
+      <HeaderSection
+        onCreateCase={() => formRef.current?.requestSubmit()}
+        isLoading={createCaseMutation.isPending}
+      />
       <div className="grid grid-cols-2 gap-2">
         <CaseForm
           control={control}
@@ -64,6 +139,7 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
           watch={watch}
           handleSubmit={handleSubmit}
           onSubmit={onSubmit}
+          ref={formRef}
         />
         <FileUploadSection />
       </div>
