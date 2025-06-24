@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { ToastManager } from "~/components/molecules/toast_manager";
 import type { ArticleForm } from "../../models";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 
 export const useArticleSubmit = (
   isCreate: boolean,
@@ -9,7 +9,7 @@ export const useArticleSubmit = (
   mutationCreate: { mutate: (data: FormData) => void },
   mutationUpdate: { mutate: (data: { formData: FormData; id: string }) => void }
 ) => {
-  const [, setLocation] = useLocation();
+  const navigate = useNavigate();
   const onSubmit = useCallback(
     (formData: ArticleForm) => {
       const fd = new FormData();
@@ -57,7 +57,7 @@ export const useArticleSubmit = (
           "No se pudo obtener el ID del artículo a editar, vuelve a intentarlo más tarde o contacta a soporte."
         );
         setTimeout(() => {
-          setLocation("/articulos");
+          navigate("/articulos");
         }, 2000);
       }
     },

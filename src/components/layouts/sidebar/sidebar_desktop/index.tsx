@@ -4,7 +4,7 @@ import {
   DisclosurePanel,
 } from "@headlessui/react";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
-import { Link, useLocation } from "wouter";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { classNames } from "~/utilities/string_utilities";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { CustomImage } from "~/components/atoms";
@@ -35,9 +35,10 @@ export const SidebarDesktop: React.FC<Props> = ({
   setExpanded,
   expanded,
 }) => {
-  const [location, setLocation] = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
-    {},
+    {}
   );
 
   useEffect(() => {
@@ -46,19 +47,16 @@ export const SidebarDesktop: React.FC<Props> = ({
     if (savedState) {
       setExpandedItems(JSON.parse(savedState));
     } else {
-      const initialState = navigation.reduce(
-        (acc, item) => {
-          if (item.children) {
-            acc[item.name] = true;
-          }
-          return acc;
-        },
-        {} as Record<string, boolean>,
-      );
+      const initialState = navigation.reduce((acc, item) => {
+        if (item.children) {
+          acc[item.name] = true;
+        }
+        return acc;
+      }, {} as Record<string, boolean>);
       setExpandedItems(initialState);
       localStorage.setItem(
         "sidebarExpandedState",
-        JSON.stringify(initialState),
+        JSON.stringify(initialState)
       );
     }
   }, []);
@@ -71,7 +69,9 @@ export const SidebarDesktop: React.FC<Props> = ({
 
   return (
     <div
-      className={`hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:flex-col ${expanded ? "lg:w-72" : "w-0"} transition-all`}
+      className={`hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:flex-col ${
+        expanded ? "lg:w-72" : "w-0"
+      } transition-all`}
     >
       <div className="flex flex-col h-screen bg-white">
         <button
@@ -97,13 +97,13 @@ export const SidebarDesktop: React.FC<Props> = ({
                           <Link
                             to={item.href}
                             className={classNames(
-                              location.includes(item.href)
+                              location.pathname.includes(item.href)
                                 ? "bg-blue-100 text-blue-600"
                                 : "text-gray-600 hover:bg-slate-50 hover:text-gray-700",
-                              "group flex gap-x-3 rounded-md p-2 text-sm font-semibold items-center",
+                              "group flex gap-x-3 rounded-md p-2 text-sm font-semibold items-center"
                             )}
                           >
-                            {!location.includes(item.href) ? (
+                            {!location.pathname.includes(item.href) ? (
                               <item.iconInactive
                                 aria-hidden="true"
                                 className={
@@ -137,10 +137,10 @@ export const SidebarDesktop: React.FC<Props> = ({
                                 <>
                                   <DisclosureButton
                                     className={classNames(
-                                      location.includes(item.href)
+                                      location.pathname.includes(item.href)
                                         ? "bg-blue-100 text-blue-600"
                                         : "text-gray-600 hover:bg-slate-50 hover:text-gray-700",
-                                      " flex gap-x-3 rounded-md p-2 text-xs tracking-widest font-semibold w-full group transition-all uppercase",
+                                      " flex gap-x-3 rounded-md p-2 text-xs tracking-widest font-semibold w-full group transition-all uppercase"
                                     )}
                                   >
                                     {item.name}
@@ -148,7 +148,7 @@ export const SidebarDesktop: React.FC<Props> = ({
                                       aria-hidden="true"
                                       className={classNames(
                                         "ml-auto transition-all size-5 shrink-0 text-gray-400",
-                                        open ? "rotate-90" : "",
+                                        open ? "rotate-90" : ""
                                       )}
                                     />
                                   </DisclosureButton>
@@ -172,15 +172,15 @@ export const SidebarDesktop: React.FC<Props> = ({
                                               ) {
                                                 window.open(
                                                   subItem.href,
-                                                  "_blank",
+                                                  "_blank"
                                                 );
                                               } else {
-                                                setLocation(subItem.href);
+                                                navigate(subItem.href);
                                               }
                                             }
                                           }}
                                           className={classNames(
-                                            "flex items-center gap-x-2 rounded-md py-2 pl-4 pr-2 text-sm text-gray-700 hover:bg-slate-50 w-full",
+                                            "flex items-center gap-x-2 rounded-md py-2 pl-4 pr-2 text-sm text-gray-700 hover:bg-slate-50 w-full"
                                           )}
                                         >
                                           {subItem.image ? (

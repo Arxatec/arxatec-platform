@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { Redirect } from "wouter";
+import { Navigate, Outlet } from "react-router-dom";
 import { LoaderSplash } from "~/components/molecules/loader_splash";
 import { ROUTES } from "~/routes/routes";
 import { getProfile } from "~/services";
 import { useUserStore } from "~/store";
 
-export default function AuthGuard({ children }: { children: React.ReactNode }) {
+export default function AuthGuard() {
   const token = window.sessionStorage.getItem("TOKEN_AUTH");
   const setUser = useUserStore((state) => state.setUser);
   const { isPending, isError, data, error } = useQuery({
@@ -15,7 +15,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 
   if (!token) {
     window.sessionStorage.removeItem("TOKEN_AUTH");
-    return <Redirect to={`~${ROUTES.Auth}${ROUTES.AuthRoutes.Login}`} />;
+    return <Navigate to={ROUTES.AuthRoutes.Login} />;
   }
 
   if (isPending) {
@@ -25,7 +25,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   if (!data || isError) {
     window.sessionStorage.removeItem("TOKEN_AUTH");
     window.sessionStorage.setItem("ERROR_JOIN", error?.message);
-    return <Redirect to={`~${ROUTES.Auth}${ROUTES.AuthRoutes.Login}`} />;
+    return <Navigate to={ROUTES.AuthRoutes.Login} />;
   }
 
   setUser({
@@ -37,10 +37,10 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   });
 
   if (data.data.userType === null) {
-    return (
-      <Redirect to={`~${ROUTES.Auth}${ROUTES.AuthRoutes.OnboardingGeneral}`} />
-    );
+    return <Navigate to={ROUTES.AuthRoutes.OnboardingGeneral} />;
   }
 
-  return <>{children}</>;
+  console.log("Hello auth guard guest");
+
+  return <Outlet />;
 }

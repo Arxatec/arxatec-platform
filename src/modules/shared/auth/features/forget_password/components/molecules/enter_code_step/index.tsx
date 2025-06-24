@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import React, { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "wouter";
+import { Link } from "react-router-dom";
 import { PrimaryButton, SpinnerLoader } from "~/components/atoms";
 import { LocaleKeys } from "~/lang";
 import { VerifyResetCodeMessages, ResendCodeMessages } from "../../../messages";

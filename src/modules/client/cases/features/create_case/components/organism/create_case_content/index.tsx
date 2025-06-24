@@ -7,12 +7,22 @@ import {
   FileUploadSection,
   SelectUser,
 } from "../../molecules";
+import type { FileUploadSectionRef } from "../../molecules/file_upload_section";
 import { Controller, useForm } from "react-hook-form";
 import { TextRich } from "~/components/organisms";
 import { urgencyLevels } from "../../../constants";
-import { createCase } from "../../../services";
+import { createCaseWithFiles } from "../../../services";
 import { useToastMutation } from "~/components/molecules/toast_manager";
 import type { CreateCaseDTO } from "../../../dtos";
+
+type UploadedFile = {
+  id: string;
+  category_id: number;
+  label: string;
+  description: string;
+  file: File;
+  preview?: string;
+};
 
 interface Props {
   categories: LegalCategoryModel[];
@@ -37,10 +47,12 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
   });
 
   const formRef = useRef<HTMLFormElement>(null);
+  const fileUploadRef = useRef<FileUploadSectionRef>(null);
 
   const createCaseMutation = useToastMutation({
     mutationOptions: {
-      mutationFn: (data: CreateCaseDTO) => createCase(data),
+      mutationFn: (data: { case: CreateCaseDTO; files: FormData[] }) =>
+        createCaseWithFiles(data.files, data.case),
       onSuccess: () => {
         // Resetear el formulario a sus valores por defecto
         reset({
@@ -53,6 +65,8 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
         });
         // Limpiar el usuario seleccionado
         setSelectedUser(undefined);
+        // Limpiar los archivos subidos
+        fileUploadRef.current?.reset();
       },
     },
     toastOptions: {
@@ -75,6 +89,7 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
 
   const [isUserSelectorOpen, setIsUserSelectorOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<LawyerModel | undefined>();
+  const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
 
   const handleUserSelect = (user: LawyerModel) => {
     setSelectedUser(user);
@@ -83,6 +98,17 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
   };
 
   const onSubmit = (data: FormValues) => {
+    console.log("Archivos subidos:", uploadedFiles);
+
+    const formDataList = uploadedFiles.map((file) => {
+      const formData = new FormData();
+      formData.append("category_id", file.category_id.toString());
+      formData.append("label", file.label);
+      formData.append("description", file.description);
+      formData.append("file", file.file);
+      return formData;
+    });
+
     if (data.isPrivate) {
       // Caso privado - incluir información del abogado
       const privateCase: CreateCaseDTO = {
@@ -93,7 +119,7 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
         is_public: false,
         selected_lawyer_id: data.lawyer ? data.lawyer.lawyerId : null,
       };
-      createCaseMutation.mutate(privateCase);
+      createCaseMutation.mutate({ case: privateCase, files: formDataList });
       console.log("Datos del caso privado:", privateCase);
     } else {
       // Caso público
@@ -103,7 +129,7 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
         category_id: data.category.id,
         urgency: mapUrgencyIdToName(data.urgency.id),
       };
-      createCaseMutation.mutate(publicCase);
+      createCaseMutation.mutate({ case: publicCase, files: formDataList });
       console.log("Datos del caso público:", publicCase);
     }
   };
@@ -146,7 +172,10 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
           onSubmit={onSubmit}
           ref={formRef}
         />
-        <FileUploadSection />
+        <FileUploadSection
+          ref={fileUploadRef}
+          onFilesChange={setUploadedFiles}
+        />
       </div>
       <div className="mt-2 bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-all">
         <label className="text-sm font-medium text-gray-900">

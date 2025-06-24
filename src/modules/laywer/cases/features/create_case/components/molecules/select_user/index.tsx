@@ -17,72 +17,31 @@ import { UsersIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { CustomAvatar, PrimaryButton } from "~/components/atoms";
 import { classNames } from "~/utilities/string_utilities";
-
-interface Person {
-  id: number;
-  name: string;
-  phone: string;
-  email: string;
-  role: string;
-  url: string;
-  profileUrl: string;
-  imageUrl: string;
-}
-
-const people: Person[] = [
-  {
-    id: 1,
-    name: "Leslie Alexander",
-    phone: "1-493-747-9031",
-    email: "lesliealexander@example.com",
-    role: "Co-Founder / CEO",
-    url: "https://example.com",
-    profileUrl: "#",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    id: 2,
-    name: "Michael Foster",
-    phone: "1-493-747-9032",
-    email: "michaelfoster@example.com",
-    role: "Co-Founder / CTO",
-    url: "https://example.com",
-    profileUrl: "#",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    id: 3,
-    name: "Dries Vincent",
-    phone: "1-493-747-9033",
-    email: "driesvincent@example.com",
-    role: "Business Relations",
-    url: "https://example.com",
-    profileUrl: "#",
-    imageUrl:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-];
-
-// Solo usamos personas que existen en el array people
-const recent: Person[] = [people[0], people[1], people[2]];
+import type { ClientModel } from "../../../models";
 
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
-  onSelect: (user: { id: number; name: string; avatar: string }) => void;
+  onSelect: (user: ClientModel) => void;
+  lawyers: ClientModel[];
 }
 
-export const SelectUser: React.FC<Props> = ({ open, setOpen, onSelect }) => {
+export const SelectUser: React.FC<Props> = ({
+  open,
+  setOpen,
+  onSelect,
+  lawyers,
+}) => {
   const [query, setQuery] = useState<string>("");
-  const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
+  const [selectedPerson, setSelectedPerson] = useState<ClientModel | null>(
+    null
+  );
 
-  const filteredPeople: Person[] =
+  const filteredPeople: ClientModel[] =
     query === ""
       ? []
-      : people.filter((person) => {
-          return person.name.toLowerCase().includes(query.toLowerCase());
+      : lawyers.filter((lawyer) => {
+          return lawyer.name.toLowerCase().includes(query.toLowerCase());
         });
 
   const handleClose = () => {
@@ -91,12 +50,8 @@ export const SelectUser: React.FC<Props> = ({ open, setOpen, onSelect }) => {
     setSelectedPerson(null);
   };
 
-  const handleSelect = (person: Person) => {
-    onSelect({
-      id: person.id,
-      name: person.name,
-      avatar: person.imageUrl,
-    });
+  const handleSelect = (lawyer: ClientModel) => {
+    onSelect(lawyer);
     handleClose();
   };
 
@@ -112,7 +67,10 @@ export const SelectUser: React.FC<Props> = ({ open, setOpen, onSelect }) => {
           transition
           className="mx-auto max-w-3xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black/5 transition-all data-closed:scale-95 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
         >
-          <Combobox<Person> value={selectedPerson} onChange={setSelectedPerson}>
+          <Combobox<ClientModel>
+            value={selectedPerson}
+            onChange={setSelectedPerson}
+          >
             {({ activeOption }) => (
               <>
                 <div className="grid grid-cols-1">
@@ -148,21 +106,21 @@ export const SelectUser: React.FC<Props> = ({ open, setOpen, onSelect }) => {
                         </h2>
                       )}
                       <div className="-mx-2 text-sm text-gray-700">
-                        {(query === "" ? recent : filteredPeople).map(
-                          (person) => (
+                        {(query === "" ? lawyers : filteredPeople).map(
+                          (lawyer) => (
                             <ComboboxOption
-                              key={person.id}
-                              value={person}
+                              key={lawyer.id}
+                              value={lawyer}
                               className="group flex cursor-pointer hover:bg-gray-100 transition-all items-center rounded-md p-2 select-none data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
                             >
                               <CustomAvatar
-                                avatar={person.imageUrl}
+                                avatar={lawyer.avatar}
                                 size="1.5rem"
-                                altText={person.name}
-                                username={person.name}
+                                altText={lawyer.name}
+                                username={lawyer.name}
                               />
                               <span className="ml-3 flex-auto truncate">
-                                {person.name}
+                                {lawyer.name}
                               </span>
                               <ChevronRightIcon
                                 className="ml-3 hidden size-5 flex-none text-gray-400 group-data-focus:block"
@@ -178,7 +136,7 @@ export const SelectUser: React.FC<Props> = ({ open, setOpen, onSelect }) => {
                       <div className="hidden h-96 w-1/2 flex-none flex-col divide-y divide-gray-100 overflow-y-auto sm:flex">
                         <div className="flex-none p-6 text-center">
                           <CustomAvatar
-                            avatar={activeOption.imageUrl}
+                            avatar={activeOption.avatar}
                             size="4rem"
                             altText={activeOption.name}
                             username={activeOption.name}
@@ -190,17 +148,16 @@ export const SelectUser: React.FC<Props> = ({ open, setOpen, onSelect }) => {
                         <div className="flex flex-auto flex-col justify-between p-6">
                           <dl className="grid grid-cols-1 gap-x-6 gap-y-3 text-sm text-gray-700">
                             <dt className="col-end-1 font-semibold text-gray-900">
-                              Celular
+                              Correo electrónico
                             </dt>
-                            <dd>{activeOption.phone}</dd>
-                            <dt className="col-end-1 font-semibold text-gray-900">
-                              Email
-                            </dt>
-                            <dd className="truncate">{activeOption.email}</dd>
+                            <dd>{activeOption.email}</dd>
+
                             <dt className="col-end-1 font-semibold text-gray-900">
                               Dirección
                             </dt>
-                            <dd className="truncate">{activeOption.url}</dd>
+                            <dd className="truncate">
+                              {activeOption.direction}
+                            </dd>
                           </dl>
                           <PrimaryButton
                             onClick={() => handleSelect(activeOption)}

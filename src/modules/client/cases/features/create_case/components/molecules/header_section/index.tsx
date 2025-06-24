@@ -1,6 +1,6 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { DocumentPlusIcon } from "@heroicons/react/24/solid";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { PrimaryButton } from "~/components/atoms";
 
 interface Props {
@@ -9,8 +9,8 @@ interface Props {
 }
 
 export const HeaderSection = ({ onCreateCase, isLoading }: Props) => {
-  const [, setLocation] = useLocation();
-  const onBack = () => setLocation("/");
+  const navigate = useNavigate();
+  const onBack = () => navigate("/");
   return (
     <div className="grid grid-cols-[40px_1fr_auto] mb-2 gap-2">
       <button

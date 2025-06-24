@@ -4,21 +4,20 @@ import {
   FolderIcon,
   FolderPlusIcon,
 } from "@heroicons/react/24/solid";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { ActionCard } from "../../atoms";
 import { ROUTES } from "~/routes/routes";
 
 export const ActionCardsGroup = () => {
-  const [, setLocation] = useLocation();
+  const navigate = useNavigate();
 
   const navigateToExplorerCases = () =>
-    setLocation(ROUTES.AppRoutes.LawyerCasesExplorer);
+    navigate(ROUTES.AppRoutes.LawyerCasesExplorer);
   const navigateToMyCases = () =>
-    setLocation(ROUTES.AppRoutes.LawyerCasesPersonal);
-  const navigateToClients = () =>
-    setLocation(ROUTES.AppRoutes.LawyerCasesClients);
+    navigate(ROUTES.AppRoutes.LawyerCasesPersonal);
+  const navigateToClients = () => navigate(ROUTES.AppRoutes.LawyerCasesClients);
   const navigateToCreateCase = () =>
-    setLocation(ROUTES.AppRoutes.LawyerCasesCreate);
+    navigate(ROUTES.AppRoutes.LawyerCasesCreate);
 
   return (
     <div className="flex gap-2">

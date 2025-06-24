@@ -1,5 +1,5 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { CustomImage, PrimaryButton } from "~/components/atoms";
 import communityError from "~/assets/images/error/avatar_error.png";
 interface Props {
@@ -7,8 +7,8 @@ interface Props {
 }
 
 export const CommunityHeader: React.FC<Props> = ({ title }) => {
-  const [, setLocation] = useLocation();
-  const navigateToCreatePost = () => setLocation("/");
+  const navigate = useNavigate();
+  const navigateToCreatePost = () => navigate("/");
 
   return (
     <div>

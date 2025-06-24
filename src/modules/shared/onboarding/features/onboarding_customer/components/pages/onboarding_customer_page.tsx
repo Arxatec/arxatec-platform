@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 import { useMutation, type UseMutationResult } from "@tanstack/react-query";
 import { PrimaryButton } from "~/components/atoms";
@@ -25,7 +25,7 @@ export default function OnboardingCustomer() {
   const [error, setError] = useState<string | null>(null);
   const user = useUserStore((state) => state.user);
   const { changeTitle } = useTitle();
-  const [, setLocation] = useLocation();
+  const navigate = useNavigate();
 
   const initialAgeRange = {
     id: rangeAgesData[0].id,
@@ -68,10 +68,10 @@ export default function OnboardingCustomer() {
   });
 
   const navigateToOnboarding = () =>
-    setLocation(`~${ROUTES.Auth}${ROUTES.AuthRoutes.OnboardingGeneral}`);
+    navigate(ROUTES.AuthRoutes.OnboardingGeneral);
 
   const navigateToDashboard = () =>
-    setLocation(`~${ROUTES.App}${ROUTES.AppRoutes.LawyerCases}`);
+    navigate(`~${ROUTES.App}${ROUTES.AppRoutes.LawyerCases}`);
 
   const mutation: UseMutationResult<CustomerResponse, Error, FormData> =
     useMutation({

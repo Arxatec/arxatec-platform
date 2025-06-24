@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { useTitle } from "~/hooks/useTitle";
 import { ExplorerContent } from "../organism";
+import { ROUTES } from "~/routes/routes";
 
 export default function ExploreCasesPage() {
-  const [, setLocation] = useLocation();
-  const onBack = () => setLocation("/");
+  const navigate = useNavigate();
+  const onBack = () => navigate(ROUTES.AppRoutes.LawyerCases);
   const { changeTitle } = useTitle();
 
   useEffect(() => {

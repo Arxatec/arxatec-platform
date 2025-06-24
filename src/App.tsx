@@ -6,7 +6,6 @@ import initI18n from "./utilities/i18n_utilities";
 import { Bounce } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-circular-progressbar/dist/styles.css";
-import Routes from "./routes";
 
 initI18n();
 const GOOGLE_CLIENT_ID =
@@ -17,7 +16,6 @@ function App() {
     <>
       <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
         <QueryClientProvider client={createQueryClient()}>
-          <Routes />
           <ToastContainer
             position="bottom-right"
             autoClose={5000}

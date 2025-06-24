@@ -1,14 +1,14 @@
 import { useEffect } from "react";
-import { useLocation } from "wouter";
+import { useLocation } from "react-router-dom";
 import { ToastManager } from "~/components/molecules/toast_manager";
 
 export const useErrorHandling = (
   isCreate: boolean,
   categoriesError: boolean,
   articleContentError: boolean,
-  setLocation: (location: string) => void
+  navigate: (location: string) => void
 ) => {
-  const [location] = useLocation();
+  const location = useLocation();
   useEffect(() => {
     if (isCreate && categoriesError) {
       ToastManager.error(
@@ -19,7 +19,7 @@ export const useErrorHandling = (
     }
 
     if (
-      location.includes("editar") &&
+      location.pathname.includes("editar") &&
       (categoriesError || articleContentError)
     ) {
       if (articleContentError) {
@@ -28,9 +28,9 @@ export const useErrorHandling = (
           "Sucedió un error inesperado al intentar obtener el artículo, vuelve a intentarlo más tarde o contacta a soporte."
         );
         setTimeout(() => {
-          setLocation("/");
+          navigate("/");
         }, 2000);
       }
     }
-  }, [categoriesError, articleContentError, setLocation, isCreate]);
+  }, [categoriesError, articleContentError, navigate, isCreate, location]);
 };

@@ -14,7 +14,7 @@ interface FileInfoModalProps {
   onSave: (fileInfo: {
     label: string;
     description: string;
-    category_id: string;
+    category_id: number;
   }) => void;
   fileName: string;
 }
@@ -86,7 +86,7 @@ export const FileInfoModal = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-xl bg-white text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-md transform  rounded-lg bg-white text-left align-middle shadow-xl transition-all">
                 <div className="flex items-center justify-between px-4 py-2 border-b border-gray-200">
                   <Dialog.Title
                     as="h3"

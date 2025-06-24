@@ -1,4 +1,4 @@
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { CardArticle } from "../../molecules/card_article";
 import type { Article } from "../../../models";
 import { useQueryClient } from "@tanstack/react-query";
@@ -39,7 +39,7 @@ export const ArticleList = ({
       },
     },
   });
-  const [, setLocation] = useLocation();
+  const navigate = useNavigate();
   return (
     !isLoading &&
     !error &&
@@ -47,9 +47,9 @@ export const ArticleList = ({
       <CardArticle
         key={article.id}
         article={article}
-        onView={(id) => setLocation(`/${id}`)}
+        onView={(id) => navigate(`/${id}`)}
         onEdit={(id) =>
-          setLocation(`/editar/${id}`, {
+          navigate(`/editar/${id}`, {
             state: article,
           })
         }

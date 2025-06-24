@@ -1,4 +1,4 @@
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { CustomAvatar } from "~/components/atoms";
 
 interface Props {
@@ -15,8 +15,8 @@ export const CommunityCard: React.FC<Props> = ({
   description,
   members,
 }) => {
-  const [, setLocation] = useLocation();
-  const navigateToCommunity = () => setLocation(`/`);
+  const navigate = useNavigate();
+  const navigateToCommunity = () => navigate(`/`);
 
   return (
     <button

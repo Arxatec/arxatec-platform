@@ -63,11 +63,12 @@ export const ImageViewer = ({ fileData }: ImageViewerProps) => {
         <p className="text-sm text-gray-500 mt-1">
           Categoría: {getCategoryName(fileData.category_id)}
         </p>
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm text-gray-500">
           Tamaño: {formatFileSize(fileData.file.size)}
         </p>
-
-        <PrimaryButton onClick={downloadFile} className="mt-4">
+      </div>
+      <div className="flex justify-center w-full">
+        <PrimaryButton onClick={downloadFile}>
           <ArrowDownTrayIcon className="w-4 h-4 mr-2" />
           Descargar
         </PrimaryButton>

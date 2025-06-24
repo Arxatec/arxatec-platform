@@ -1,19 +1,22 @@
 import axios from "axios";
+import type { CasesApiResponse } from "../types";
 
-export const getAllCategories = async () => {
+export const getExploreCases = async (): Promise<CasesApiResponse> => {
   try {
-    const response = await axios.get(
+    const response = await axios.get<CasesApiResponse>(
       "http://localhost:3000/api/v1/cases/explore?category=labor&type=consultation"
     );
 
     if (!response.data || !response.data.data) {
-      throw new Error("No se recibieron datos de categorías del servidor");
+      throw new Error("No se recibieron datos de casos del servidor");
     }
 
-    return response.data.data;
+    return response.data;
   } catch (error: unknown) {
     throw new Error(
-      error?.toString() || "Error inesperado al obtener las categorías"
+      error instanceof Error
+        ? error.message
+        : "Error inesperado al obtener los casos"
     );
   }
 };

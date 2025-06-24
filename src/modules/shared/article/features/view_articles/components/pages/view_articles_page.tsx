@@ -1,6 +1,6 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { CustomInput, CustomSelector, SpinnerLoader } from "~/components/atoms";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getArticles } from "../../services";
 import { useEffect, useRef, useCallback, useState } from "react";
@@ -15,8 +15,8 @@ import {
 
 export default function ViewArticles() {
   const { changeTitle } = useTitle();
-  const [, setLocation] = useLocation();
-  const navigateToCreateArticle = () => setLocation("/crear");
+  const navigate = useNavigate();
+  const navigateToCreateArticle = () => navigate("/crear");
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const [searchTerm, setSearchTerm] = useState("");

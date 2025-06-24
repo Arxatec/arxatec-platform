@@ -2,15 +2,15 @@ import { PrimaryButton } from "~/components/atoms/primary_button";
 import communityError from "~/assets/images/error/avatar_error.png";
 import { CustomImage } from "~/components/atoms";
 import { ShareIcon } from "@heroicons/react/24/solid";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   title: string;
 }
 
 export const ProfileHeader: React.FC<Props> = ({ title }) => {
-  const [, setLocation] = useLocation();
-  const navigateToChats = () => setLocation("/");
+  const navigate = useNavigate();
+  const navigateToChats = () => navigate("/");
   return (
     <>
       <CustomImage

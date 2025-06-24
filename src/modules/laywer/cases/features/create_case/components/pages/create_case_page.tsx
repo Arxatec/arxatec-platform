@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useTitle } from "~/hooks/useTitle";
-import { useGetCategoriesCase } from "../../hooks";
+import { useGetCategoriesCase, useGetLawyers } from "../../hooks";
 import { CreateCaseContent } from "../organism";
 import { Loader } from "../molecules";
 import { ToastManager } from "~/components/molecules/toast_manager";
@@ -8,6 +8,11 @@ import { ToastManager } from "~/components/molecules/toast_manager";
 export default function CreateCasePage() {
   const { changeTitle } = useTitle();
   const { data, isPending, isError } = useGetCategoriesCase();
+  const {
+    data: dataLawyers,
+    isPending: isPendingLawyers,
+    isError: isErrorLawyers,
+  } = useGetLawyers();
 
   useEffect(() => {
     changeTitle("Crear caso - Arxatec");
@@ -29,6 +34,21 @@ export default function CreateCasePage() {
     }
   }, [data, isError]);
 
-  if (isPending) return <Loader />;
-  return !isError && <CreateCaseContent categories={data} />;
+  useEffect(() => {
+    if (isErrorLawyers) {
+      ToastManager.error(
+        "Sucedió un error",
+        "Al obtener las categorías de los casos sucedió un error. Por favor, inténtelo de nuevo. Si el problema persiste, contacte al administrador."
+      );
+      window.history.back();
+    }
+  }, [isErrorLawyers]);
+
+  if (isPending || isPendingLawyers) return <Loader />;
+  return (
+    !isError &&
+    !isErrorLawyers && (
+      <CreateCaseContent categories={data} lawyers={dataLawyers} />
+    )
+  );
 }

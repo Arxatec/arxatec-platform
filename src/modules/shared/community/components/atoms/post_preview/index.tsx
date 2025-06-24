@@ -1,6 +1,6 @@
 import { PostFooter } from "~/modules/shared/community/components/atoms";
 import { PostPreviewContent, PostPreviewHeader } from "./components";
-import { Link } from "wouter";
+import { Link } from "react-router-dom";
 
 interface Props {
   avatar: string;

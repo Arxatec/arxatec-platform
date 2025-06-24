@@ -5,18 +5,17 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import { register as registerUser } from "../../../services";
-import { type RegisterFormData } from "../../../models";
+import { type RegisterFormData } from "../../../types";
 import { validation } from "../../../validation";
-import { messages } from "../../../messages";
 import { useState } from "react";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { SocialAuthOptions } from "~/modules/shared/auth/components/molecules";
 import { ROUTES } from "~/routes/routes";
 
 export const RegisterForm = () => {
   const { t } = useTranslation();
-  const [error, setError] = useState<any>(null);
-  const [, setLocation] = useLocation();
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -39,17 +38,10 @@ export const RegisterForm = () => {
 
   const onSuccess = () => {
     setError(null);
-    setLocation(ROUTES.AuthRoutes.VerifyAccount);
+    navigate(ROUTES.AuthRoutes.VerifyAccount);
   };
 
-  const onError = (error: AxiosError) => {
-    localStorage.removeItem("EMAIL_REGISTER");
-    const statusCode = error.response?.status;
-    setError({
-      title: messages[statusCode as keyof typeof messages].title,
-      description: messages[statusCode as keyof typeof messages].description,
-    });
-  };
+  const onError = (error: AxiosError) => setError(error.message);
 
   return (
     <div className="mt-10">
@@ -111,7 +103,7 @@ export const RegisterForm = () => {
 
         {error !== null && (
           <div className="flex flex-col bg-red-50 py-2 px-4 rounded-md border border-red-100">
-            <p className="text-red-500 text-sm">{error.description}</p>
+            <p className="text-red-500 text-sm">{error}</p>
           </div>
         )}
 

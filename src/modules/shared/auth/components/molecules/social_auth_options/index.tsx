@@ -5,14 +5,14 @@ import { Separator } from "~/modules/shared/auth/components/atoms";
 import { PrimaryButton } from "~/components/atoms";
 import { useGoogleLogin } from "@react-oauth/google";
 import { ToastManager } from "~/components/molecules/toast_manager";
-import { loginWithGoogle } from "../../../features/login/services";
+import { loginWithGoogle } from "../../../services";
 import { useMutation } from "@tanstack/react-query";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { ROUTES } from "~/routes/routes";
 
 export const SocialAuthOptions = () => {
   const { t } = useTranslation();
-  const [, setLocation] = useLocation();
+  const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: (accessToken: string) => loginWithGoogle(accessToken),
@@ -25,9 +25,9 @@ export const SocialAuthOptions = () => {
     onSuccess: (data: any) => {
       window.sessionStorage.setItem("TOKEN_AUTH", data.data.token);
       if (data.data.isNewUser) {
-        setLocation(ROUTES.AuthRoutes.OnboardingGeneral);
+        navigate(ROUTES.AuthRoutes.OnboardingGeneral);
       } else {
-        setLocation(ROUTES.AppRoutes.LawyerCases);
+        navigate(ROUTES.AppRoutes.LawyerCases);
       }
     },
   });

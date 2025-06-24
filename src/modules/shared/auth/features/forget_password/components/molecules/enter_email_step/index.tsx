@@ -4,7 +4,7 @@ import type { AxiosError } from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Link } from "wouter";
+import { Link } from "react-router-dom";
 import { CustomInput, PrimaryButton } from "~/components/atoms";
 import { LocaleKeys } from "~/lang";
 import { requestPasswordReset } from "../../../services";

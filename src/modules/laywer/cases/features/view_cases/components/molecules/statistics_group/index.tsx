@@ -1,23 +1,19 @@
 import { StatCard } from "../../atoms";
+import type { CasesSummaryData } from "../../../types";
 
-export const StatisticsGroup = () => {
+interface StatisticsGroupProps {
+  data: CasesSummaryData;
+}
+
+export const StatisticsGroup = ({ data }: StatisticsGroupProps) => {
   return (
     <div className="flex flex-col gap-2">
       <StatCard
-        title="Cantidad de clientes"
-        value={92}
-        trend={{ value: "+55%", isPositive: true }}
+        title="Total de clientes"
+        value={data.totalClients + data.totalExternalClients}
       />
-      <StatCard
-        title="Total de casos"
-        value={118}
-        trend={{ value: "-10%", isPositive: false }}
-      />
-      <StatCard
-        title="Casos públicos"
-        value={1217}
-        trend={{ value: "+10%", isPositive: true }}
-      />
+      <StatCard title="Total de casos" value={data.totalCases} />
+      <StatCard title="Casos en proceso" value={data.casesInProcess} />
     </div>
   );
 };

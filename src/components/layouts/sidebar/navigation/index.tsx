@@ -19,7 +19,7 @@ import {
   FolderIcon,
 } from "@heroicons/react/24/solid";
 import { CustomAvatar, CustomInput } from "~/components/atoms";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { useUserStore } from "~/store";
 import { getFirstTwoWords } from "~/utilities/string_utilities";
 import { logo } from "~/utilities/assets_utilities";
@@ -38,18 +38,18 @@ export const Navigation: React.FC<Props> = ({
   const [open, setOpen] = useState(false);
   const [openNotification, setOpenNotification] = useState(false);
   const toggleOpen = () => setOpen(!open);
-  const [, setLocation] = useLocation();
+  const navigate = useNavigate();
   const { user, setUser } = useUserStore();
   const userNavigation = [
     /*     {
       name: "Perfil",
       icon: UserIcon,
-      action: () => setLocation(APP_PATHS.PROFILE),
+      action: () => navigate(APP_PATHS.PROFILE),
     },
     {
       name: "Configuración",
       icon: Cog6ToothIcon,
-      action: () => setLocation(APP_PATHS.SETTINGS),
+      action: () => navigate(APP_PATHS.SETTINGS),
     }, */
     {
       name: "Cerrar sesión",
@@ -57,7 +57,7 @@ export const Navigation: React.FC<Props> = ({
       action: () => {
         setUser(null);
         window.sessionStorage.removeItem("TOKEN_AUTH");
-        setLocation(`${ROUTES.Auth}${ROUTES.AuthRoutes.Login}`);
+        navigate(ROUTES.AuthRoutes.Login);
       },
     },
   ];

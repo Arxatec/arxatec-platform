@@ -5,20 +5,20 @@ import {
   EnterEmailStep,
   EnterResetPasswordStep,
 } from "../../molecules";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { ROUTES } from "~/routes/routes";
 
 const steps = [EnterEmailStep, EnterCodeStep, EnterResetPasswordStep, AllDone];
 
 export const ForgotPasswordContent: React.FC = () => {
   const [step, setStep] = useState(0);
-  const [, setLocation] = useLocation();
+  const navigate = useNavigate();
   const CurrentComponent = steps[step];
 
   const handleNextStep = () => {
     setStep(step + 1);
     if (step === steps.length - 1) {
-      setLocation(ROUTES.AuthRoutes.Login);
+      navigate(ROUTES.AuthRoutes.Login);
     }
   };
 

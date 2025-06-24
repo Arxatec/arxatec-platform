@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { Link } from "wouter";
+import { Link } from "react-router-dom";
 import logo from "~/assets/images/logo.png";
+import { CustomImage } from "~/components/atoms";
 import { useTitle } from "~/hooks";
 import { ROUTES } from "~/routes/routes";
 
@@ -30,7 +31,7 @@ export default function NotFoundPage() {
             </p>
             <div className="mt-10">
               <Link
-                href={`~${ROUTES.App}${ROUTES.AppRoutes.LawyerCases}`}
+                to={`~${ROUTES.App}${ROUTES.AppRoutes.LawyerCases}`}
                 className="text-sm font-semibold text-blue-600 hover:bg-blue-50 transition-all px-4 py-3 rounded-md"
               >
                 <span aria-hidden="true">&larr;</span> Ir al inicio
@@ -67,7 +68,7 @@ export default function NotFoundPage() {
         </footer>
         <div className="hidden lg:relative lg:col-start-2 lg:row-start-1 lg:row-end-4 lg:block ">
           <div className="absolute inset-0 size-full p-2">
-            <img
+            <CustomImage
               alt="Página no encontrada"
               src="https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg"
               className="object-cover w-full h-full rounded-md"

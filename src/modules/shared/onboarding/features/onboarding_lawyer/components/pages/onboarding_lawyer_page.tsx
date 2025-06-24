@@ -13,7 +13,7 @@ import {
   PreferencesStep,
 } from "../organisms";
 import { useTitle } from "~/hooks";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import avatarDefault from "~/assets/images/avatar_default.png";
 import {
   specialitiesData,
@@ -36,7 +36,7 @@ export default function OnboardingLawyer() {
   const [step, setStep] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const { changeTitle } = useTitle();
-  const [, setLocation] = useLocation();
+  const navigate = useNavigate();
   const user = useUserStore((state) => state.user);
 
   const mutation = useMutation({
@@ -130,9 +130,8 @@ export default function OnboardingLawyer() {
   const { handleSubmit } = methods;
 
   const navigateToOnboarding = () =>
-    setLocation(`~${ROUTES.Auth}${ROUTES.AuthRoutes.OnboardingGeneral}`);
-  const navigateToDashboard = () =>
-    setLocation(`~${ROUTES.App}${ROUTES.AppRoutes.LawyerCases}`);
+    navigate(ROUTES.AuthRoutes.OnboardingGeneral);
+  const navigateToDashboard = () => navigate(ROUTES.AppRoutes.LawyerCases);
 
   const handleNextStep = async () => {
     const isLastStep = step === steps.length - 1;

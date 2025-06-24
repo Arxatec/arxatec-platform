@@ -1,12 +1,15 @@
 import { useCallback, useMemo } from "react";
-import { useLocation, useParams } from "wouter";
-import type { RouteParams } from "../../models";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 
 export const useArticleNavigation = () => {
-  const [location, setLocation] = useLocation();
-  const params = useParams<RouteParams>();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = useParams();
 
-  const isCreate = useMemo(() => location.includes("crear"), [location]);
+  const isCreate = useMemo(
+    () => location.pathname.includes("crear"),
+    [location.pathname]
+  );
   const articleId = params.id;
   const contentUrl = useMemo(
     () =>
@@ -22,7 +25,7 @@ export const useArticleNavigation = () => {
     isCreate,
     articleId,
     contentUrl,
-    setLocation,
+    navigate,
     onBack,
   };
 };

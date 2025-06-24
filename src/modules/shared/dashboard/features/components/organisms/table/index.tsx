@@ -7,129 +7,38 @@ import {
 import { FolderIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import {
-  CustomAvatar,
-  CustomInput,
-  CustomSelector,
-  PrimaryButton,
-} from "~/components/atoms";
+import { CustomAvatar, CustomInput, CustomSelector } from "~/components/atoms";
 import { classNames } from "~/utilities/string_utilities";
 import { CustomTable } from "~/components/molecules/custom_table";
+import type { CaseData } from "~/modules/laywer/cases/features/personal_cases/types";
+import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 
-type Person = { name: string; title: string; email: string; role: string }; // Define la estructura de los elementos en people
+interface User {
+  name: string;
+  imageUrl: string;
+}
+
+interface TableCaseData extends CaseData {
+  user: User;
+  folder: string;
+  status: string;
+  case: string;
+  date: string;
+  dateTime: string;
+  commit: string;
+}
+
+interface TableProps {
+  data?: TableCaseData[];
+  isLoading?: boolean;
+  error?: Error | null;
+}
 
 const statuses = {
   Completed: "text-green-400 bg-green-400/10",
   Error: "text-rose-400 bg-rose-400/10",
   Progress: "text-yellow-400 bg-yellow-400/10",
 };
-
-const activityItems = [
-  {
-    user: {
-      name: "Michael Foster",
-      imageUrl:
-        "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    commit: "2d89f0c8",
-    folder: "penal",
-    status: "Completed",
-    case: "Defensa de un empresario acusado de evasión fiscal tras una auditoría sorpresa.",
-    date: "45 minutes ago",
-    dateTime: "2023-01-23T11:00",
-  },
-  {
-    user: {
-      name: "Lindsay Walton",
-      imageUrl:
-        "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    commit: "249df660",
-    folder: "laboral",
-    status: "Completed",
-    case: "Demanda contra una empresa por despido injustificado de una empleada con 15 años de antigüedad.",
-    date: "3 hours ago",
-    dateTime: "2023-01-23T09:00",
-  },
-  {
-    user: {
-      name: "Courtney Henry",
-      imageUrl:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    commit: "11464223",
-    folder: "civil",
-    status: "Error",
-    case: "Conflicto vecinal por ruidos molestos y construcción ilegal de una ampliación.",
-    date: "12 hours ago",
-    dateTime: "2023-01-23T00:00",
-  },
-  {
-    user: {
-      name: "Courtney Henry",
-      imageUrl:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    commit: "dad28e95",
-    folder: "familiar",
-    status: "Completed",
-    case: "Proceso de divorcio con disputa por la custodia de dos hijos menores.",
-    date: "2 days ago",
-    dateTime: "2023-01-21T13:00",
-  },
-  {
-    user: {
-      name: "Michael Foster",
-      imageUrl:
-        "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    commit: "624bc94c",
-    folder: "mercantil",
-    status: "Progress",
-    case: "Demanda por incumplimiento de contrato entre dos empresas tecnológicas.",
-    date: "5 days ago",
-    dateTime: "2023-01-18T12:34",
-  },
-  {
-    user: {
-      name: "Courtney Henry",
-      imageUrl:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    commit: "e111f80e",
-    folder: "penal",
-    status: "Completed",
-    case: "Defensa de una empresa acusada de contaminación ambiental en una reserva natural.",
-    date: "1 week ago",
-    dateTime: "2023-01-16T15:54",
-  },
-  {
-    user: {
-      name: "Michael Foster",
-      imageUrl:
-        "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    commit: "5e136005",
-    folder: "civil",
-    status: "Progress",
-    case: "Reclamación de daños tras un accidente de tráfico con un conductor sin seguro.",
-    date: "1 week ago",
-    dateTime: "2023-01-16T11:31",
-  },
-  {
-    user: {
-      name: "Whitney Francis",
-      imageUrl:
-        "https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    commit: "5c1fd07f",
-    folder: "laboral",
-    status: "Completed",
-    case: "Negociación de indemnización para un grupo de empleados despedidos sin justificación.",
-    date: "2 weeks ago",
-    dateTime: "2023-01-09T08:45",
-  },
-];
 
 const categories = [
   {
@@ -147,28 +56,6 @@ const categories = [
   {
     id: 4,
     name: "Laboral",
-  },
-];
-const filterBy = [
-  {
-    id: 5,
-    name: "Última semana",
-  },
-  {
-    id: 1,
-    name: "Último mes",
-  },
-  {
-    id: 2,
-    name: "Últimos 3 meses",
-  },
-  {
-    id: 3,
-    name: "Últimos 6 meses",
-  },
-  {
-    id: 4,
-    name: "Último año",
   },
 ];
 
@@ -199,7 +86,7 @@ const columns = [
     },
     accessor: "user",
     align: "left" as const,
-    renderCell: (value: any) => (
+    renderCell: (value: User) => (
       <div className="flex items-center gap-x-4">
         <CustomAvatar
           altText={value.name}
@@ -243,19 +130,50 @@ const columns = [
     },
     accessor: "date",
     align: "left" as const,
-    renderCell: (value: string, row: any) => (
+    renderCell: (value: string, row: TableCaseData) => (
       <time dateTime={row.dateTime}>{value}</time>
     ),
   },
 ];
 
-export const Table = () => {
+export const Table = ({ data = [], isLoading = false, error }: TableProps) => {
   const [category, setCategory] = useState(categories[0]);
-  const [filter, setFilter] = useState(filterBy[0]);
 
-  const handleRowClick = (row: any) => {
+  const handleRowClick = (row: TableCaseData) => {
     console.log("Row clicked:", row);
   };
+
+  if (isLoading) {
+    return (
+      <div className="w-full mt-2">
+        <div className="bg-white px-4 py-4 rounded-lg shadow-sm">
+          <div className="animate-pulse">
+            <div className="h-4 bg-gray-200 rounded w-1/4 mb-4"></div>
+            <div className="space-y-3">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="h-10 bg-gray-200 rounded"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full mt-2">
+        <div className="bg-white px-4 py-8 rounded-lg shadow-sm">
+          <div className="text-center">
+            <div className="text-red-500 text-sm mb-2">
+              Error al cargar los casos
+            </div>
+            <p className="text-gray-600 text-sm">{error.message}</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full mt-2">
@@ -284,12 +202,27 @@ export const Table = () => {
         </div>
       </div>
 
-      <CustomTable
-        columns={columns}
-        data={activityItems}
-        onRowClick={handleRowClick}
-        className="mt-2"
-      />
+      {data.length === 0 ? (
+        <div className="bg-white px-4 py-16 rounded-lg shadow-sm mt-2">
+          <div className="text-center">
+            <ExclamationCircleIcon className="size-14 text-gray-300 mx-auto mb-2" />
+            <h3 className="text-base font-medium text-gray-900 mb-2">
+              No hay casos registrados
+            </h3>
+            <p className="text-gray-600 text-sm text-center max-w-sm mx-auto">
+              Aún no tienes casos registrados. Los casos aparecerán aquí cuando
+              se creen.
+            </p>
+          </div>
+        </div>
+      ) : (
+        <CustomTable
+          columns={columns}
+          data={data}
+          onRowClick={handleRowClick}
+          className="mt-2"
+        />
+      )}
     </div>
   );
 };

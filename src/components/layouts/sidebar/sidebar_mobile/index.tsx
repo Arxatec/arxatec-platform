@@ -9,7 +9,7 @@ import {
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
-import { Link, useLocation } from "wouter";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { classNames } from "~/utilities/string_utilities";
 import { CustomImage } from "~/components/atoms";
 import { useEffect, useState } from "react";
@@ -40,7 +40,8 @@ export const SidebarMobile: React.FC<Props> = ({
   navigation,
   logo,
 }) => {
-  const [location, setLocation] = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
     {}
   );
@@ -113,13 +114,13 @@ export const SidebarMobile: React.FC<Props> = ({
                           <Link
                             to={item.href}
                             className={classNames(
-                              location.includes(item.href)
+                              location.pathname.includes(item.href)
                                 ? "bg-blue-100 text-blue-600"
                                 : "text-gray-600 hover:bg-slate-50 hover:text-gray-700",
                               "group flex gap-x-3 rounded-md p-2 text-sm font-semibold items-center"
                             )}
                           >
-                            {!location.includes(item.href) ? (
+                            {!location.pathname.includes(item.href) ? (
                               <item.iconInactive
                                 aria-hidden="true"
                                 className="text-gray-600 group-hover:text-gray-700 size-6 shrink-0"
@@ -149,7 +150,7 @@ export const SidebarMobile: React.FC<Props> = ({
                                 <>
                                   <DisclosureButton
                                     className={classNames(
-                                      location.includes(item.href)
+                                      location.pathname.includes(item.href)
                                         ? "bg-blue-100 text-blue-600"
                                         : "text-gray-600 hover:bg-slate-50 hover:text-gray-700",
                                       "flex gap-x-3 rounded-md p-2 text-xs tracking-widest font-semibold w-full group transition-all uppercase"
@@ -187,7 +188,7 @@ export const SidebarMobile: React.FC<Props> = ({
                                                   "_blank"
                                                 );
                                               } else {
-                                                setLocation(subItem.href);
+                                                navigate(subItem.href);
                                               }
                                             }
                                             setSidebarOpen(false);

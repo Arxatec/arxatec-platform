@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { PostContent } from "./components";
 import { CustomAvatar } from "~/components/atoms";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import {
   PostFooter,
   PostMenu,
@@ -11,9 +11,9 @@ import {
 export const Post = () => {
   const [upvotes, setUpvotes] = useState(1.7);
   const [commentCount, setCommentCount] = useState(514);
-  const [, setLocation] = useLocation();
+  const navigate = useNavigate();
 
-  const navigateToCommunity = () => setLocation("/");
+  const navigateToCommunity = () => navigate("/");
 
   const post = {
     subreddit: "r/Advice",

@@ -105,7 +105,7 @@ export const TextViewer = ({ fileData }: TextViewerProps) => {
         </Scrollbars>
       </div>
 
-      <div className="text-center">
+      <div className="flex justify-center w-full">
         <PrimaryButton onClick={downloadFile}>
           <ArrowDownTrayIcon className="w-4 h-4 mr-2" />
           Descargar

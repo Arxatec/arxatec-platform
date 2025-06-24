@@ -15,6 +15,7 @@ export const createCase = async (formData: CreateCaseDTO) => {
         },
       }
     );
+    console.log(response.data);
     return response.data;
   } catch (error) {
     throw new Error(error?.message || "Error al crear el artículo");
@@ -25,7 +26,7 @@ export const attachFile = async (id: string, formData: FormData) => {
   try {
     const token = window.sessionStorage.getItem("TOKEN_AUTH");
     const response = await axios.post(
-      `http://localhost:3000/api/v1/cases/${id}/attachments`,
+      `http://localhost:3000/api/v1/cases/${id}/attachment`,
       formData,
       {
         headers: {
@@ -36,6 +37,26 @@ export const attachFile = async (id: string, formData: FormData) => {
     return response.data;
   } catch (error) {
     throw new Error(error?.message || "Error al adjuntar el archivo");
+  }
+};
+
+export const createCaseWithFiles = async (
+  files: FormData[],
+  caseData: CreateCaseDTO
+) => {
+  try {
+    const caseResponse = await createCase(caseData);
+    const caseId = await caseResponse.data.id;
+    let filesResponse = [];
+
+    if (files.length > 0) {
+      filesResponse = await Promise.all(
+        files.map(async (file) => await attachFile(caseId, file))
+      );
+    }
+    return { case: caseResponse, files: filesResponse };
+  } catch (error) {
+    throw new Error(error?.message || "Error al crear el caso con archivos");
   }
 };
 

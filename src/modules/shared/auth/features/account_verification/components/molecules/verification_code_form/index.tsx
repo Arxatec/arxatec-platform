@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import React, { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { PrimaryButton } from "~/components/atoms";
 import { LocaleKeys } from "~/lang";
 import { verifyCodeMessages } from "../../../messages";
@@ -15,7 +15,7 @@ export const VerificationCodeForm = () => {
   const [error, setError] = useState<any>(null);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const { t } = useTranslation();
-  const [, setLocation] = useLocation();
+  const navigate = useNavigate();
   const isCodeComplete = code.every((digit) => digit !== "");
 
   const mutation = useMutation({
@@ -28,7 +28,7 @@ export const VerificationCodeForm = () => {
   const onSuccess = () => {
     setError(null);
     localStorage.removeItem("EMAIL_REGISTER");
-    setLocation(ROUTES.AuthRoutes.Login);
+    navigate(ROUTES.AuthRoutes.Login);
   };
 
   const onError = (error: AxiosError) => {

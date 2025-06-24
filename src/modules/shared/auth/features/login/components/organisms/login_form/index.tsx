@@ -6,24 +6,32 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import { login } from "../../../services";
-import { type LoginFormData } from "../../../models";
+import { type LoginFormData } from "../../../types";
 import { validation } from "../../../validation";
-import { messages } from "../../../messages";
 import { useState } from "react";
 import { SocialAuthOptions } from "~/modules/shared/auth/components/molecules";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { ROUTES } from "~/routes/routes";
+import type { LoginModel } from "../../../models";
 
 export const LoginForm = () => {
   const { t } = useTranslation();
-  const [error, setError] = useState<any>(null);
-  const [, setLocation] = useLocation();
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormData>();
+
+  const onError = (error: AxiosError) => setError(error.message);
+
+  const onSuccess = (data: LoginModel) => {
+    setError(null);
+    window.sessionStorage.setItem("TOKEN_AUTH", data.token);
+    navigate(`~${ROUTES.App}${ROUTES.AppRoutes.LawyerCases}`);
+  };
 
   const mutation = useMutation({
     mutationFn: (data: LoginFormData) => login(data.email, data.password),
@@ -34,21 +42,6 @@ export const LoginForm = () => {
   const onSubmit = (data: LoginFormData) => {
     setError(null);
     mutation.mutate(data);
-  };
-
-  const onSuccess = (data: any) => {
-    setError(null);
-    window.sessionStorage.setItem("TOKEN_AUTH", data.data.token);
-
-    setLocation(`~${ROUTES.App}${ROUTES.AppRoutes.LawyerCases}`);
-  };
-
-  const onError = (error: AxiosError) => {
-    const statusCode = error.response?.status;
-    setError({
-      title: messages[statusCode].title,
-      description: messages[statusCode].description,
-    });
   };
 
   return (
@@ -85,7 +78,7 @@ export const LoginForm = () => {
         <RememberSection />
         {error !== null && (
           <div className="flex flex-col  bg-red-50 py-2 px-4 rounded-md border border-red-100">
-            <p className="text-red-500 text-sm ">{error.description}</p>
+            <p className="text-red-500 text-sm ">{error}</p>
           </div>
         )}
 
@@ -93,9 +86,10 @@ export const LoginForm = () => {
           disabled={mutation.isPending}
           loader={mutation.isPending}
           type="submit"
-          children={t(LocaleKeys.pages_auth_login_form_submit)}
           className="w-full"
-        />
+        >
+          {t(LocaleKeys.pages_auth_login_form_submit)}
+        </PrimaryButton>
       </form>
 
       <SocialAuthOptions />

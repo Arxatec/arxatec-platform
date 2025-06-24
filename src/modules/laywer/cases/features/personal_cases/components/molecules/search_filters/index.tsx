@@ -1,13 +1,42 @@
+import React from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { CustomInput, CustomSelector } from "~/components/atoms";
+import { useCasesFilters } from "../../../hooks";
 
-export const SearchFilters = () => {
+interface SearchFiltersProps {
+  onFiltersChange: (filters: {
+    search: string;
+    category: string;
+    sortBy: string;
+  }) => void;
+}
+
+export const SearchFilters = ({ onFiltersChange }: SearchFiltersProps) => {
+  const {
+    searchTerm,
+    selectedCategory,
+    selectedSort,
+    categoryOptions,
+    sortOptions,
+    setSearchTerm,
+    setSelectedCategory,
+    setSelectedSort,
+    filters,
+  } = useCasesFilters();
+
+  // Notify parent of filter changes
+  React.useEffect(() => {
+    onFiltersChange(filters);
+  }, [filters, onFiltersChange]);
+
   return (
     <div className="flex mb-2 gap-2 bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-all">
       <div className="w-full">
         <CustomInput
           placeholder="Buscar..."
           className="w-full"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           startAdornment={
             <MagnifyingGlassIcon className="size-5 text-gray-500" />
           }
@@ -15,25 +44,16 @@ export const SearchFilters = () => {
       </div>
       <div className="w-56">
         <CustomSelector
-          options={[
-            { id: "all", name: "Todos" },
-            { id: "civil", name: "Civil" },
-            { id: "laboral", name: "Laboral" },
-            { id: "familiar", name: "Familiar" },
-            { id: "penal", name: "Penal" },
-          ]}
-          selected={{ id: "all", name: "Todos" }}
-          onChange={() => {}}
+          options={categoryOptions}
+          selected={selectedCategory}
+          onChange={setSelectedCategory}
         />
       </div>
       <div className="w-56">
         <CustomSelector
-          options={[
-            { id: "Más antiguo", name: "Más antiguo" },
-            { id: "Más reciente", name: "Más reciente" },
-          ]}
-          selected={{ id: "Más reciente", name: "Más reciente" }}
-          onChange={() => {}}
+          options={sortOptions}
+          selected={selectedSort}
+          onChange={setSelectedSort}
         />
       </div>
     </div>

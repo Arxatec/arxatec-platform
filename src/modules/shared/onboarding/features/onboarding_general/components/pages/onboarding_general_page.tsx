@@ -8,7 +8,7 @@ import {
   Header,
   HeroImage,
 } from "~/modules/shared/onboarding/components/molecules";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { useTitle } from "~/hooks";
 import { Title } from "~/modules/shared/onboarding/components/atoms";
 import { SelectRoleStep } from "../organisms/select_role_step";
@@ -22,7 +22,7 @@ export default function OnboardingGeneral() {
   const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState<Form>(initForm);
   const [hasMounted, setHasMounted] = useState(false);
-  const [, setLocation] = useLocation();
+  const navigate = useNavigate();
   const { changeTitle } = useTitle();
   const { t } = useTranslation();
 
@@ -37,7 +37,7 @@ export default function OnboardingGeneral() {
       form.role === ROLE.LAWYER
         ? ROUTES.AuthRoutes.OnboardingLawyer
         : ROUTES.AuthRoutes.OnboardingCustomer;
-    setLocation(nextRoute);
+    navigate(nextRoute);
   };
 
   useEffect(() => {

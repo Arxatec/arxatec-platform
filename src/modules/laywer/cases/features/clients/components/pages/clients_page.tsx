@@ -1,12 +1,13 @@
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useTitle } from "~/hooks/useTitle";
 import { HeaderSection } from "../molecules";
 import { ClientsGrid } from "../organism";
+import { ROUTES } from "~/routes/routes";
 
 export default function ClientsPage() {
-  const [, setLocation] = useLocation();
-  const onBack = () => setLocation("/");
+  const navigate = useNavigate();
+  const onBack = () => navigate(ROUTES.AppRoutes.LawyerCases);
   const { changeTitle } = useTitle();
 
   useEffect(() => {

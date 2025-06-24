@@ -36,6 +36,7 @@ import { SidebarMobile } from "./sidebar_mobile";
 import { SidebarDesktop } from "./sidebar_desktop";
 import { Navigation } from "./navigation";
 import { ROUTES } from "~/routes/routes";
+import { Outlet } from "react-router-dom";
 
 const navigationTest = [
   /*{
@@ -161,7 +162,7 @@ const navigationTest = [
   },
 ];
 
-export default function Sidebar({ children }: { children: React.ReactNode }) {
+export default function Sidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
   return (
@@ -185,7 +186,9 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
             setExpanded={setExpanded}
           />
           <main className="bg-slate-100 py-4 lg:py-10 h-full">
-            <div className="h-full">{children}</div>
+            <div className="h-full">
+              <Outlet />
+            </div>
           </main>
         </div>
       </div>
