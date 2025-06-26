@@ -108,7 +108,7 @@ export const EnterEmailStep = ({ handleNextStep }: Props) => {
         </form>
         <div className="text-center">
           <Link
-            to={ROUTES.AuthRoutes.Login}
+            to={ROUTES.Auth.Login}
             className="flex gap-2 justify-center items-center text-sm text-gray-500 hover:text-gray-900"
           >
             <ArrowLeftIcon className="size-4 " />

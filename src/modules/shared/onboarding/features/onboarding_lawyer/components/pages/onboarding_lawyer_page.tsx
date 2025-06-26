@@ -129,9 +129,8 @@ export default function OnboardingLawyer() {
 
   const { handleSubmit } = methods;
 
-  const navigateToOnboarding = () =>
-    navigate(ROUTES.AuthRoutes.OnboardingGeneral);
-  const navigateToDashboard = () => navigate(ROUTES.AppRoutes.LawyerCases);
+  const navigateToOnboarding = () => navigate(ROUTES.Auth.OnboardingGeneral);
+  const navigateToDashboard = () => navigate(ROUTES.Lawyer.Cases);
 
   const handleNextStep = async () => {
     const isLastStep = step === steps.length - 1;

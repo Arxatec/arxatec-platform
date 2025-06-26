@@ -4,10 +4,9 @@ declare global {
   }
 }
 
+import { GOOGLE_MAPS_API_KEY } from "~/config";
 import type { LawyerDTO, LegalCategoryDTO } from "../dtos";
 import type { LawyerModel, LegalCategoryModel } from "../models";
-
-const GOOGLE_MAPS_API_KEY = "AIzaSyAAYe4kdm0lZzHHsEcQym3DmBlIJOnNE7I";
 
 class GoogleMapsLoader {
   private static instance: GoogleMapsLoader;
@@ -43,7 +42,7 @@ class GoogleMapsLoader {
 }
 
 export const toLegalCategoryModel = (
-  dto: LegalCategoryDTO
+  dto: LegalCategoryDTO,
 ): LegalCategoryModel => ({
   id: dto.id,
   name: dto.name,
@@ -51,7 +50,7 @@ export const toLegalCategoryModel = (
 
 async function getAddressFromCoordinates(
   latitude: number,
-  longitude: number
+  longitude: number,
 ): Promise<string> {
   try {
     await GoogleMapsLoader.getInstance().load();
@@ -71,9 +70,9 @@ async function getAddressFromCoordinates(
             } else {
               reject(new Error(`Geocoding failed: ${status}`));
             }
-          }
+          },
         );
-      }
+      },
     );
 
     return response[0].formatted_address;

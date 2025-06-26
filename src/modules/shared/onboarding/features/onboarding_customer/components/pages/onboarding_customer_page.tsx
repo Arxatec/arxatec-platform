@@ -67,11 +67,9 @@ export default function OnboardingCustomer() {
     mode: "onChange",
   });
 
-  const navigateToOnboarding = () =>
-    navigate(ROUTES.AuthRoutes.OnboardingGeneral);
+  const navigateToOnboarding = () => navigate(ROUTES.Auth.OnboardingGeneral);
 
-  const navigateToDashboard = () =>
-    navigate(`~${ROUTES.App}${ROUTES.AppRoutes.LawyerCases}`);
+  const navigateToDashboard = () => navigate(ROUTES.Lawyer.Cases);
 
   const mutation: UseMutationResult<CustomerResponse, Error, FormData> =
     useMutation({

@@ -4,12 +4,12 @@ import {
   HeroImage,
 } from "~/modules/shared/auth/components/molecules";
 import { LoginForm } from "../organisms/login_form";
-import { useTranslation } from "react-i18next";
 import { LocaleKeys } from "~/lang";
+import { ToastManager } from "~/components/molecules/toast_manager";
+import { useTranslation } from "react-i18next";
 import { bannerLogin } from "~/utilities/assets_utilities";
 import { useTitle } from "~/hooks";
 import { useEffect } from "react";
-import { ToastManager } from "~/components/molecules/toast_manager";
 
 export default function LoginPage() {
   const { t } = useTranslation();
@@ -20,7 +20,7 @@ export default function LoginPage() {
     if (error) {
       ToastManager.error(
         "Error al ingresar",
-        "No encontramos tu cuenta, pero estas registrado en Arxatec, por favor, contacta al soporte."
+        "No encontramos tu cuenta, pero estas registrado en Arxatec, por favor, contacta al soporte.",
       );
       window.sessionStorage.removeItem("ERROR_JOIN");
     }

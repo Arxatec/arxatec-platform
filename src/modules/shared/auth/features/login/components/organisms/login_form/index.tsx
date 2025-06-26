@@ -30,7 +30,7 @@ export const LoginForm = () => {
   const onSuccess = (data: LoginModel) => {
     setError(null);
     window.sessionStorage.setItem("TOKEN_AUTH", data.token);
-    navigate(`~${ROUTES.App}${ROUTES.AppRoutes.LawyerCases}`);
+    navigate(ROUTES.AppRoutes.LawyerCases);
   };
 
   const mutation = useMutation({

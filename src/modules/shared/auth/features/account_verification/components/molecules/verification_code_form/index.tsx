@@ -28,7 +28,7 @@ export const VerificationCodeForm = () => {
   const onSuccess = () => {
     setError(null);
     localStorage.removeItem("EMAIL_REGISTER");
-    navigate(ROUTES.AuthRoutes.Login);
+    navigate(ROUTES.Auth.Login);
   };
 
   const onError = (error: AxiosError) => {

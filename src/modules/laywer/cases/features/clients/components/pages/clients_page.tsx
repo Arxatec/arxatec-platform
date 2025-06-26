@@ -7,7 +7,7 @@ import { ROUTES } from "~/routes/routes";
 
 export default function ClientsPage() {
   const navigate = useNavigate();
-  const onBack = () => navigate(ROUTES.AppRoutes.LawyerCases);
+  const onBack = () => navigate(ROUTES.Lawyer.Cases);
   const { changeTitle } = useTitle();
 
   useEffect(() => {

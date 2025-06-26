@@ -11,13 +11,10 @@ import { ROUTES } from "~/routes/routes";
 export const ActionCardsGroup = () => {
   const navigate = useNavigate();
 
-  const navigateToExplorerCases = () =>
-    navigate(ROUTES.AppRoutes.LawyerCasesExplorer);
-  const navigateToMyCases = () =>
-    navigate(ROUTES.AppRoutes.LawyerCasesPersonal);
-  const navigateToClients = () => navigate(ROUTES.AppRoutes.LawyerCasesClients);
-  const navigateToCreateCase = () =>
-    navigate(ROUTES.AppRoutes.LawyerCasesCreate);
+  const navigateToExplorerCases = () => navigate(ROUTES.Lawyer.CasesExplorer);
+  const navigateToMyCases = () => navigate(ROUTES.Lawyer.CasesPersonal);
+  const navigateToClients = () => navigate(ROUTES.Lawyer.CasesClients);
+  const navigateToCreateCase = () => navigate(ROUTES.Lawyer.CasesCreate);
 
   return (
     <div className="flex gap-2">

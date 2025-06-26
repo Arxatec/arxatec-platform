@@ -35,8 +35,8 @@ export default function OnboardingGeneral() {
     }
     const nextRoute =
       form.role === ROLE.LAWYER
-        ? ROUTES.AuthRoutes.OnboardingLawyer
-        : ROUTES.AuthRoutes.OnboardingCustomer;
+        ? ROUTES.Auth.OnboardingLawyer
+        : ROUTES.Auth.OnboardingCustomer;
     navigate(nextRoute);
   };
 

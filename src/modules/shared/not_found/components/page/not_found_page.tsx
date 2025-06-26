@@ -31,7 +31,7 @@ export default function NotFoundPage() {
             </p>
             <div className="mt-10">
               <Link
-                to={`~${ROUTES.App}${ROUTES.AppRoutes.LawyerCases}`}
+                to={ROUTES.Lawyer.Cases}
                 className="text-sm font-semibold text-blue-600 hover:bg-blue-50 transition-all px-4 py-3 rounded-md"
               >
                 <span aria-hidden="true">&larr;</span> Ir al inicio

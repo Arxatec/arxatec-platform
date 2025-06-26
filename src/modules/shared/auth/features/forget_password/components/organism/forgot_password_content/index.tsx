@@ -18,7 +18,7 @@ export const ForgotPasswordContent: React.FC = () => {
   const handleNextStep = () => {
     setStep(step + 1);
     if (step === steps.length - 1) {
-      navigate(ROUTES.AuthRoutes.Login);
+      navigate(ROUTES.Auth.Login);
     }
   };
 

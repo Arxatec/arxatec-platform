@@ -12,7 +12,7 @@ export const RememberSection = () => {
       <div className="text-sm/6">
         <CustomLink
           text={t(LocaleKeys.pages_auth_login_form_forget_password)}
-          to={ROUTES.AuthRoutes.RecoverPassword}
+          to={ROUTES.Auth.RecoverPassword}
         />
       </div>
     </div>

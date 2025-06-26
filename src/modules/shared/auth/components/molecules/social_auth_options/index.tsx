@@ -25,9 +25,9 @@ export const SocialAuthOptions = () => {
     onSuccess: (data: any) => {
       window.sessionStorage.setItem("TOKEN_AUTH", data.data.token);
       if (data.data.isNewUser) {
-        navigate(ROUTES.AuthRoutes.OnboardingGeneral);
+        navigate(ROUTES.Auth.OnboardingGeneral);
       } else {
-        navigate(ROUTES.AppRoutes.LawyerCases);
+        navigate(ROUTES.Lawyer.Cases);
       }
     },
   });

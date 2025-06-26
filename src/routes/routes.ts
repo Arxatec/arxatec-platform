@@ -1,7 +1,5 @@
 export const ROUTES = {
-  // Auth base
-  Auth: "/auth",
-  AuthRoutes: {
+  Auth: {
     VerifyAccount: "/verificar-cuenta",
     RecoverPassword: "/recuperar-contrasena",
     Login: "/iniciar-sesion",
@@ -11,26 +9,28 @@ export const ROUTES = {
     OnboardingGeneral: "/incorporacion",
   },
 
-  // App base
-  App: "/app",
-  AppRoutes: {
-    // Lawyer
-    LawyerCasesPersonal: "/abogado/casos/personal",
-    LawyerCasesExplorer: "/abogado/casos/explorador",
-    LawyerCasesCreate: "/abogado/casos/crear",
-    LawyerCasesClients: "/abogado/casos/clientes",
-    LawyerCasesDetail: "/abogado/casos/:id",
-    LawyerCases: "/abogado/casos",
+  Lawyer: {
+    Base: "/abogado",
+    CasesPersonal: "/abogado/casos/personal",
+    CasesExplorer: "/abogado/casos/explorador",
+    CasesCreate: "/abogado/casos/crear",
+    CasesClients: "/abogado/casos/clientes",
+    CaseDetail: "/abogado/casos/:id",
+    Cases: "/abogado/casos",
+  },
 
-    // Client
-    ClientCasesCreate: "/cliente/casos/crear",
+  Client: {
+    Base: "/cliente",
+    CasesCreate: "/cliente/casos/crear",
+    CasesPersonal: "/cliente/casos/personal",
+    CaseDetail: "/cliente/casos/:id",
+  },
 
-    // Articles
+  Public: {
     ArticlesCreate: "/articulos/crear",
     ArticlesEdit: "/articulos/editar/:id",
     Articles: "/articulos",
   },
 
-  // NotFound
   NotFound: "*",
 };

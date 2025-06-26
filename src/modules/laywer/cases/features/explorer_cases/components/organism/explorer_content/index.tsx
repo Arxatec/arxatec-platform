@@ -1,16 +1,17 @@
 import { useState, useCallback } from "react";
-import { HeaderSection, SearchFilters, CasesTable } from "../../molecules";
+import { SearchFilters, CasesTable } from "../../molecules";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "~/routes/routes";
+import { CustomHeader } from "~/components/molecules";
 
-interface ExplorerContentProps {
-  onBack: () => void;
-}
-
-export const ExplorerContent = ({ onBack }: ExplorerContentProps) => {
+export const ExplorerContent = () => {
   const [filters, setFilters] = useState({
     search: "",
     category: "all",
     sortBy: "Más reciente",
   });
+  const navigate = useNavigate();
+  const onBack = () => navigate(ROUTES.Lawyer.Cases);
 
   const handleFiltersChange = useCallback(
     (newFilters: { search: string; category: string; sortBy: string }) => {
@@ -21,7 +22,7 @@ export const ExplorerContent = ({ onBack }: ExplorerContentProps) => {
 
   return (
     <div className="mx-auto max-w-6xl px-6 min-h-screen">
-      <HeaderSection title="Explorar casos" onBack={onBack} />
+      <CustomHeader title="Explorar casos" onBack={onBack} />
       <SearchFilters onFiltersChange={handleFiltersChange} />
       <CasesTable filters={filters} />
     </div>

@@ -38,7 +38,7 @@ export const RegisterForm = () => {
 
   const onSuccess = () => {
     setError(null);
-    navigate(ROUTES.AuthRoutes.VerifyAccount);
+    navigate(ROUTES.Auth.VerifyAccount);
   };
 
   const onError = (error: AxiosError) => setError(error.message);

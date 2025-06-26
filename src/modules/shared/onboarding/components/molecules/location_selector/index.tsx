@@ -6,6 +6,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { CustomInputMap } from "../custom_input_map";
+import { GOOGLE_MAPS_API_KEY } from "~/config";
 
 interface Coordinates {
   latitude: number;
@@ -45,7 +46,7 @@ export const LocationSelector = <T extends FieldValues>({
                 }
               }}
               label="Ubicación"
-              googleMapsApiKey={"AIzaSyAAYe4kdm0lZzHHsEcQym3DmBlIJOnNE7I"}
+              googleMapsApiKey={GOOGLE_MAPS_API_KEY}
               required
             />
             {error && (

@@ -1,10 +1,9 @@
 import { useState, useCallback } from "react";
-import { HeaderSection, SearchFilters, CasesTable } from "../../molecules";
+import { SearchFilters, CasesTable } from "../../molecules";
 import { useFilteredCases } from "../../../hooks";
-
-interface CasesContentProps {
-  onBack: () => void;
-}
+import { CustomHeader } from "~/components/molecules";
+import { ROUTES } from "~/routes/routes";
+import { useNavigate } from "react-router-dom";
 
 interface Filters {
   search: string;
@@ -12,14 +11,15 @@ interface Filters {
   sortBy: string;
 }
 
-export const CasesContent = ({ onBack }: CasesContentProps) => {
+export const CasesContent = () => {
   const [filters, setFilters] = useState<Filters>({
     search: "",
     category: "all",
     sortBy: "Más reciente",
   });
-
   const { data: cases, isLoading, error } = useFilteredCases(filters);
+  const navigate = useNavigate();
+  const onBack = () => navigate(ROUTES.Lawyer.Cases);
 
   const handleFiltersChange = useCallback((newFilters: Filters) => {
     setFilters(newFilters);
@@ -27,7 +27,7 @@ export const CasesContent = ({ onBack }: CasesContentProps) => {
 
   return (
     <div className="max-w-6xl mx-auto px-6 min-h-screen">
-      <HeaderSection title="Mis casos" onBack={onBack} />
+      <CustomHeader title="Mis casos" onBack={onBack} />
       <SearchFilters onFiltersChange={handleFiltersChange} />
       <CasesTable cases={cases} isLoading={isLoading} error={error} />
     </div>

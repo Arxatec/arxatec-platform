@@ -2,22 +2,14 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import {
   Bars3Icon,
   BellIcon,
-  UserIcon,
-  Cog6ToothIcon,
   ArrowLeftEndOnRectangleIcon,
 } from "@heroicons/react/24/solid";
 
-import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import type React from "react";
 import { CommandPalettes } from "../command_palettes";
 import { useState } from "react";
 import { NotificationDrawer } from "~/components/molecules";
-import {
-  BookOpenIcon,
-  CalendarDaysIcon,
-  DocumentIcon,
-  FolderIcon,
-} from "@heroicons/react/24/solid";
 import { CustomAvatar, CustomInput } from "~/components/atoms";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "~/store";
@@ -41,23 +33,13 @@ export const Navigation: React.FC<Props> = ({
   const navigate = useNavigate();
   const { user, setUser } = useUserStore();
   const userNavigation = [
-    /*     {
-      name: "Perfil",
-      icon: UserIcon,
-      action: () => navigate(APP_PATHS.PROFILE),
-    },
-    {
-      name: "Configuración",
-      icon: Cog6ToothIcon,
-      action: () => navigate(APP_PATHS.SETTINGS),
-    }, */
     {
       name: "Cerrar sesión",
       icon: ArrowLeftEndOnRectangleIcon,
       action: () => {
         setUser(null);
         window.sessionStorage.removeItem("TOKEN_AUTH");
-        navigate(ROUTES.AuthRoutes.Login);
+        navigate(ROUTES.Auth.Login);
       },
     },
   ];
@@ -99,42 +81,6 @@ export const Navigation: React.FC<Props> = ({
         </div>
         <div className="flex items-center gap-x-4 lg:gap-x-6">
           <div className="flex items-center justify-start gap-4">
-            {/*
-            <Menu as="div" className="relative">
-              <MenuButton className=" rounded-full p-2 bg-gray-100 hover:bg-gray-200 transition-all">
-                <PlusIcon className="size-5 text-gray-700" strokeWidth={2.5} />
-              </MenuButton>
-              <MenuItems
-                transition
-                className="absolute right-0 z-10 mt-2.5 w-44 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-              >
-                <MenuItem>
-                  <button className="flex gap-2 items-center w-full px-3 py-1 text-left text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none">
-                    <DocumentIcon className="size-4 text-gray-700" />
-                    Crear publicación
-                  </button>
-                </MenuItem>
-                <MenuItem>
-                  <button className="flex gap-2 items-center w-full px-3 py-1 text-left text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none">
-                    <CalendarDaysIcon className="size-4 text-gray-700" />
-                    Crear evento
-                  </button>
-                </MenuItem>
-                <MenuItem>
-                  <button className="flex gap-2 items-center w-full px-3 py-1 text-left text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none">
-                    <FolderIcon className="size-4 text-gray-700" />
-                    Crear caso
-                  </button>
-                </MenuItem>
-                <MenuItem>
-                  <button className="flex gap-2 items-center w-full px-3 py-1 text-left text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none">
-                    <BookOpenIcon className="size-4 text-gray-700" />
-                    Crear articulo
-                  </button>
-                </MenuItem>
-              </MenuItems>
-            </Menu>
-            */}
             <button
               className=" rounded-full p-2 bg-gray-100"
               onClick={() => setOpenNotification(!openNotification)}
