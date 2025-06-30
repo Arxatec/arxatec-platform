@@ -1,3 +1,5 @@
+export { FileIcon } from "./file_icon";
+export { CustomStatusState } from "./custom_status_state";
 export { CustomImage } from "./custom_image";
 export { Schedule } from "./schedule";
 export { TimeSelect } from "./time_select";

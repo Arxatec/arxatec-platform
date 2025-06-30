@@ -121,7 +121,7 @@ export const RegisterForm = () => {
         {t(LocaleKeys.pages_auth_register_not_registered)}{" "}
         <CustomLink
           text={t(LocaleKeys.pages_auth_register_start)}
-          to={ROUTES.AuthRoutes.Login}
+          to={ROUTES.Auth.Login}
         />
       </p>
     </div>

@@ -1,8 +1,7 @@
 import { useState, useEffect, useImperativeHandle, forwardRef } from "react";
-import { FileUploadInput, FilePreview } from "../../atoms";
-import { FileInfoModal } from "../../atoms/file_info_modal";
-import { FileViewer } from "../file_viewer";
-import Scrollbars from "react-custom-scrollbars-2";
+import { DropzoneUploader } from "../../atoms";
+import { FileMetadataModal, FileViewer } from "~/components/molecules";
+import { FilePreviewList } from "../file_preview_list";
 
 type UploadedFile = {
   id: string;
@@ -18,21 +17,6 @@ type PendingFile = {
   preview?: string;
 };
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-const ALLOWED_FILE_TYPES = [
-  "application/pdf",
-  "application/msword",
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  "application/json",
-  "text/plain",
-  "text/markdown",
-  "application/vnd.ms-excel",
-  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  "image/png",
-  "image/jpeg",
-  "image/webp",
-];
-
 interface Props {
   onFilesChange?: (files: UploadedFile[]) => void;
 }
@@ -44,7 +28,6 @@ export interface FileUploadSectionRef {
 export const FileUploadSection = forwardRef<FileUploadSectionRef, Props>(
   ({ onFilesChange }, ref) => {
     const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
-    const [error, setError] = useState<string>("");
     const [selectedFile, setSelectedFile] = useState<UploadedFile | null>(null);
     const [isViewerOpen, setIsViewerOpen] = useState(false);
     const [pendingFile, setPendingFile] = useState<PendingFile | null>(null);
@@ -61,44 +44,12 @@ export const FileUploadSection = forwardRef<FileUploadSectionRef, Props>(
     useImperativeHandle(ref, () => ({
       reset: () => {
         setUploadedFiles([]);
-        setError("");
         setSelectedFile(null);
         setIsViewerOpen(false);
         setPendingFile(null);
         setIsInfoModalOpen(false);
       },
     }));
-
-    const handleFileChange = (files: FileList | null) => {
-      if (!files) return;
-
-      setError("");
-
-      // Procesar solo el primer archivo
-      const file = files[0];
-
-      if (!ALLOWED_FILE_TYPES.includes(file.type)) {
-        setError(
-          "Solo se permiten archivos PDF, DOC, Excel, JSON, TXT, Markdown, PNG, JPEG o WebP"
-        );
-        return;
-      }
-
-      if (file.size > MAX_FILE_SIZE) {
-        setError("Los archivos no pueden superar los 5MB");
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        setPendingFile({
-          file,
-          preview: reader.result as string,
-        });
-        setIsInfoModalOpen(true);
-      };
-      reader.readAsDataURL(file);
-    };
 
     const handleSaveFileInfo = (fileInfo: {
       label: string;
@@ -139,69 +90,50 @@ export const FileUploadSection = forwardRef<FileUploadSectionRef, Props>(
       setSelectedFile(null);
     };
 
+    const getSelectedUser = () => {
+      return selectedFile
+        ? {
+            ...selectedFile,
+            category_id: selectedFile.category_id.toString(),
+          }
+        : null;
+    };
+
+    const handleFilesChange = (files: UploadedFile[]) => {
+      if (files.length === 0) return;
+      const file = files[0];
+
+      setPendingFile({
+        file: file.file,
+        preview: file.preview,
+      });
+
+      setIsInfoModalOpen(true);
+    };
+
     return (
       <div className="bg-white rounded-lg py-4 shadow-sm hover:shadow-md transition-all w-full h-full">
-        <div className="h-full flex flex-col">
-          <label className="text-sm font-medium text-gray-900 mb-2 px-4">
-            Adjuntar multimedia
-          </label>
-          <div className="px-4 h-full">
-            <FileUploadInput onFileChange={handleFileChange} error={error} />
+        <div className="h-full flex flex-col ">
+          <div className="flex items-center gap-1 mb-1 px-4">
+            <label className="text-sm font-medium text-gray-900 ">
+              Adjuntar multimedia
+            </label>
+            <span className="text-xs text-gray-500">(opcional)</span>
           </div>
-          <div
-            className={`mt-2  ${
-              uploadedFiles.length > 0 ? "h-[100px]" : "h-0"
-            }`}
-          >
-            {uploadedFiles.length > 0 && (
-              <Scrollbars
-                autoHide
-                universal={true}
-                style={{ width: "100%", height: "100%" }}
-                renderView={({ style, ...props }) => (
-                  <div
-                    {...props}
-                    style={{
-                      ...style,
-                      overflowY: "hidden",
-                      marginBottom: "-17px", // Compensar el espacio del scrollbar horizontal
-                      whiteSpace: "nowrap",
-                    }}
-                  />
-                )}
-              >
-                <div className="flex  gap-2 h-full items-center px-4">
-                  {uploadedFiles.map((file) => (
-                    <FilePreview
-                      key={file.id}
-                      id={file.id}
-                      name={file.label}
-                      type={file.file.type}
-                      onRemove={handleRemoveFile}
-                      onView={() => handleViewFile(file)}
-                    />
-                  ))}
-                </div>
-              </Scrollbars>
-            )}
-          </div>
-
-          <FileInfoModal
+          <DropzoneUploader onFilesChange={handleFilesChange} />
+          <FilePreviewList
+            files={uploadedFiles}
+            onRemove={handleRemoveFile}
+            onView={handleViewFile}
+          />
+          <FileMetadataModal
             isOpen={isInfoModalOpen}
             onClose={handleCloseInfoModal}
             onSave={handleSaveFileInfo}
             fileName={pendingFile?.file.name || ""}
           />
-
           <FileViewer
-            file={
-              selectedFile
-                ? {
-                    ...selectedFile,
-                    category_id: selectedFile.category_id.toString(),
-                  }
-                : null
-            }
+            file={getSelectedUser()}
             isOpen={isViewerOpen}
             onClose={handleCloseViewer}
           />
@@ -210,5 +142,3 @@ export const FileUploadSection = forwardRef<FileUploadSectionRef, Props>(
     );
   }
 );
-
-FileUploadSection.displayName = "FileUploadSection";

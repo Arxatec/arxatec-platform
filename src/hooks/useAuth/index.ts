@@ -1,36 +1,43 @@
+import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getProfile } from "~/services";
 import { useUserStore } from "~/store";
 
 export const useAuth = () => {
-  const token = window.sessionStorage.getItem("TOKEN_AUTH");
-  const user = useUserStore((state) => state.user);
-  const setUser = useUserStore((state) => state.setUser);
+  const token =
+    typeof window !== "undefined"
+      ? window.sessionStorage.getItem("TOKEN_AUTH")
+      : null;
+
+  const user = useUserStore((s) => s.user);
+  const setUser = useUserStore((s) => s.setUser);
 
   const queryEnabled = !!token && !user;
 
-  const { data, isPending, isError, error } = useQuery({
+  const { data, isLoading, isError, error } = useQuery({
     queryKey: ["profile"],
     queryFn: () => getProfile(token),
     enabled: queryEnabled,
     retry: false,
   });
 
-  if (data?.data && !user) {
-    const userData = {
-      id: data.data.id,
-      name: data.data.firstName + " " + data.data.lastName,
-      avatar: data.data.avatar,
-      email: data.data.email,
-      userType: data.data.userType,
-    };
-    setUser(userData);
-  }
+  useEffect(() => {
+    if (data?.data && !user) {
+      const { id, firstName, lastName, avatar, email, userType } = data.data;
+      setUser({
+        id,
+        name: `${firstName} ${lastName}`,
+        avatar,
+        email,
+        userType,
+      });
+    }
+  }, [data, user, setUser]);
 
   return {
     token,
     user: user || data?.data || null,
-    isPending,
+    isPending: isLoading,
     isError,
     error,
   };

@@ -1,12 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTitle } from "~/hooks/useTitle";
-import { HeaderSection } from "../molecules";
+import { CreateClientModal } from "../molecules";
 import { ClientsGrid } from "../organism";
 import { ROUTES } from "~/routes/routes";
+import { CustomHeader } from "~/components/molecules";
+import { UserPlusIcon } from "@heroicons/react/24/solid";
+import { PrimaryButton } from "~/components/atoms";
 
 export default function ClientsPage() {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const onBack = () => navigate(ROUTES.Lawyer.Cases);
   const { changeTitle } = useTitle();
 
@@ -16,8 +20,21 @@ export default function ClientsPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 min-h-screen">
-      <HeaderSection title="Mis clientes" onBack={onBack} />
+      <CustomHeader
+        onBack={onBack}
+        title="Mis clientes"
+        action={
+          <PrimaryButton
+            className="flex items-center gap-2"
+            onClick={() => setIsModalOpen(true)}
+          >
+            <UserPlusIcon className="size-5 text-white" />
+            Agregar cliente
+          </PrimaryButton>
+        }
+      />
       <ClientsGrid />
+      <CreateClientModal open={isModalOpen} setOpen={setIsModalOpen} />
     </div>
   );
 }

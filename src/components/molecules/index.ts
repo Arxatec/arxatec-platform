@@ -1,3 +1,8 @@
+export { SelectEntity } from "./select_entity";
+export { FileViewer } from "./file_viewer";
+export { CustomModal } from "./custom_modal";
+export { FileMetadataModal } from "./file_metadata_modal";
+export { FileDropzone } from "./file_dropzone";
 export { CustomHeader } from "./custom_header";
 export { LoaderSplash } from "./loader_splash";
 export { CustomTable } from "./custom_table";

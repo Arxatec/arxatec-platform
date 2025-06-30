@@ -1,43 +1,21 @@
-import axios from "axios";
 import type { LegalCategoryModel } from "../models";
 import { toLawyerModel, toLegalCategoryModel } from "../adapters";
 import type { CreateCaseDTO } from "../dtos";
+import { axiosInstance } from "~/interceptors";
 
 export const createCase = async (formData: CreateCaseDTO) => {
-  try {
-    const token = window.sessionStorage.getItem("TOKEN_AUTH");
-    const response = await axios.post(
-      "http://localhost:3000/api/v1/cases",
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    throw new Error(error?.message || "Error al crear el artículo");
-  }
+  const response = await axiosInstance.post("/cases", formData);
+  console.log(response.data);
+  return response.data;
 };
 
 export const attachFile = async (id: string, formData: FormData) => {
-  try {
-    const token = window.sessionStorage.getItem("TOKEN_AUTH");
-    const response = await axios.post(
-      `http://localhost:3000/api/v1/cases/${id}/attachment`,
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    throw new Error(error?.message || "Error al adjuntar el archivo");
-  }
+  const response = await axiosInstance.post(
+    `/cases/${id}/attachments`,
+    formData
+  );
+  console.log(response.data);
+  return response.data;
 };
 
 export const createCaseWithFiles = async (
@@ -46,7 +24,7 @@ export const createCaseWithFiles = async (
 ) => {
   try {
     const caseResponse = await createCase(caseData);
-    const caseId = await caseResponse.data.id;
+    const caseId = await caseResponse.data.case.id;
     let filesResponse = [];
 
     if (files.length > 0) {
@@ -61,33 +39,12 @@ export const createCaseWithFiles = async (
 };
 
 export const getAllCategories = async (): Promise<LegalCategoryModel[]> => {
-  try {
-    const response = await axios.get(
-      "http://localhost:3000/api/v1/cases/categories"
-    );
+  const response = await axiosInstance.get("/cases/categories");
 
-    if (!response.data || !response.data.data) {
-      throw new Error("No se recibieron datos de categorías del servidor");
-    }
-
-    return response.data.data.map(toLegalCategoryModel);
-  } catch (error: unknown) {
-    throw new Error(
-      error?.toString() || "Error inesperado al obtener las categorías"
-    );
-  }
+  return response.data.data.categories.map(toLegalCategoryModel);
 };
 
 export const getLawyers = async () => {
-  const token = window.sessionStorage.getItem("TOKEN_AUTH");
-  try {
-    const response = await axios.get("http://localhost:3000/api/v1/lawyers", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return Promise.all(response.data.data.map(toLawyerModel));
-  } catch (error) {
-    throw new Error(error?.message || "Error al obtener los abogados");
-  }
+  const response = await axiosInstance.get("/lawyers");
+  return Promise.all(response.data.data.map(toLawyerModel));
 };

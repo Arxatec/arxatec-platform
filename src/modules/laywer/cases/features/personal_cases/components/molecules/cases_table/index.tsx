@@ -95,7 +95,7 @@ const columns = [
 ];
 
 const EmptyState = () => (
-  <div className="flex flex-col items-center justify-center py-12 text-center bg-white rounded-lg shadow-sm hover:shadow-md transition-all transition-all">
+  <div className="flex flex-col items-center justify-center py-12 text-center bg-white rounded-lg shadow-sm hover:shadow-md transition-all">
     <ExclamationCircleIcon className="size-14 text-gray-300 mb-2" />
     <h3 className="text-base font-medium text-gray-900 ">
       No tienes casos aún

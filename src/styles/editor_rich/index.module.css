@@ -1,0 +1,145 @@
+.richTextContent {
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  color: #111827;
+  line-height: 1.6;
+  font-size: 0.8rem;
+}
+
+.richTextContent h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0.5rem 0 0.5rem;
+  color: #111827;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.richTextContent h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0.5rem 0 0.5rem;
+  color: #111827;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+}
+
+.richTextContent h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0.5rem 0 0.5rem;
+  color: #111827;
+  line-height: 1.4;
+}
+
+.richTextContent h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0.5rem 0 0.5rem;
+  color: #111827;
+  line-height: 1.5;
+}
+
+.richTextContent p {
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #374151;
+}
+
+.richTextContent ul, .richTextContent ol {
+  padding-left: 1.5rem;
+  margin: 0;
+}
+
+.richTextContent ul {
+  list-style-type: disc;
+}
+
+.richTextContent ol {
+  list-style-type: decimal;
+  font-size: 0.8rem;
+}
+
+.richTextContent li {
+  margin: 0;
+}
+
+.richTextContent table {
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  width: 100%;
+  overflow-x: auto;
+  display: block;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+.richTextContent th, .richTextContent td {
+  border: 1px solid #e5e7eb;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  min-width: 120px;
+}
+
+.richTextContent th {
+  background-color: #f9fafb;
+  font-weight: 600;
+  color: #111827;
+}
+
+.richTextContent blockquote {
+  border-left: 4px solid #3b82f6;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  background-color: #f8fafc;
+  border-radius: 0 0.5rem 0.5rem 0;
+  color: #4b5563;
+  font-style: italic;
+}
+
+.richTextContent code {
+  background-color: #f3f4f6;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.875em;
+  color: #ef4444;
+}
+
+.richTextContent pre {
+  background-color: #1f2937;
+  color: #f3f4f6;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+.richTextContent pre code {
+  background-color: transparent;
+  padding: 0;
+  font-size: 0.875em;
+  color: inherit;
+  border: none;
+}
+
+.richTextContent img {
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem 0;
+  border-radius: 0.75rem;
+  display: block;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.richTextContent [style*="text-align:center"] {
+  text-align: center;
+}
+
+.richTextContent [style*="text-align:right"] {
+  text-align: right;
+}
+
+.richTextContent [style*="text-align:justify"] {
+  text-align: justify;
+}

@@ -2,6 +2,7 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { DocumentPlusIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
 import { PrimaryButton } from "~/components/atoms";
+import { ROUTES } from "~/routes/routes";
 
 interface Props {
   onCreateCase: () => void;
@@ -10,11 +11,11 @@ interface Props {
 
 export const HeaderSection = ({ onCreateCase, isLoading }: Props) => {
   const navigate = useNavigate();
-  const onBack = () => navigate("/");
+  const onBack = () => navigate(ROUTES.Client.CasesPersonal);
   return (
     <div className="grid grid-cols-[40px_1fr_auto] mb-2 gap-2">
       <button
-        onClick={onBack}
+        onClick={isLoading ? null : onBack}
         className="flex items-center justify-center bg-white rounded-lg shadow-sm hover:shadow-md transition-all hover:bg-gray-50"
       >
         <ArrowLeftIcon className="size-4 text-gray-500" strokeWidth={2} />

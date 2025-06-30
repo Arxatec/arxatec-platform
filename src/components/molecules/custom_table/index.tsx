@@ -16,12 +16,6 @@ interface TableProps {
   className?: string;
 }
 
-const statuses = {
-  Completed: "text-green-400 bg-green-400/10",
-  Error: "text-rose-400 bg-rose-400/10",
-  Progress: "text-yellow-400 bg-yellow-400/10",
-};
-
 export const CustomTable = ({
   columns,
   data,
@@ -91,7 +85,7 @@ export const CustomTable = ({
                 {columns.map((column, colIndex) => (
                   <td
                     key={colIndex}
-                    className={`py-4 px-4 text-sm/6 break-words ${
+                    className={`py-4 px-4 text-sm/6 break-words text-gray-700 ${
                       column.align === "right"
                         ? "text-right"
                         : column.align === "center"

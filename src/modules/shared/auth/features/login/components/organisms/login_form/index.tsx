@@ -30,7 +30,7 @@ export const LoginForm = () => {
   const onSuccess = (data: LoginModel) => {
     setError(null);
     window.sessionStorage.setItem("TOKEN_AUTH", data.token);
-    navigate(ROUTES.AppRoutes.LawyerCases);
+    navigate(ROUTES.Lawyer.Cases);
   };
 
   const mutation = useMutation({
@@ -97,7 +97,7 @@ export const LoginForm = () => {
         {t(LocaleKeys.pages_auth_login_not_registered)}{" "}
         <CustomLink
           text={t(LocaleKeys.pages_auth_login_start)}
-          to={ROUTES.AuthRoutes.Register}
+          to={ROUTES.Auth.Register}
         />
       </p>
     </div>

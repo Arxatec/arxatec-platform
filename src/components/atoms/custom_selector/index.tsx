@@ -30,6 +30,7 @@ const baseButtonClasses = {
     "focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600",
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const CustomSelector = <T extends Record<string, any>>({
   label,
   options,

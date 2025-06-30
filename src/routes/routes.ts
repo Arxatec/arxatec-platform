@@ -23,7 +23,7 @@ export const ROUTES = {
     Base: "/cliente",
     CasesCreate: "/cliente/casos/crear",
     CasesPersonal: "/cliente/casos/personal",
-    CaseDetail: "/cliente/casos/:id",
+    CaseDetail: "/cliente/casos/personal/:id",
   },
 
   Public: {

@@ -8,6 +8,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   startAdornment?: ReactNode;
   endAdornment?: ReactNode;
   className?: string;
+  isRequired?: boolean;
 }
 
 export const CustomInput: React.FC<Props> = ({
@@ -16,6 +17,7 @@ export const CustomInput: React.FC<Props> = ({
   endAdornment,
   className,
   type = "text",
+  isRequired = true,
   ...rest
 }) => {
   const id = toSnakeCase(label ?? "");
@@ -59,12 +61,17 @@ export const CustomInput: React.FC<Props> = ({
   return (
     <div>
       {label && (
-        <label
-          htmlFor={id}
-          className="block text-sm font-medium text-gray-900 mb-2"
-        >
-          {label}
-        </label>
+        <div className="w-full flex items-center gap-1 mb-2">
+          <label
+            htmlFor={id}
+            className="block text-sm font-medium text-gray-900"
+          >
+            {label}
+          </label>
+          {!isRequired && (
+            <span className="text-xs text-gray-500">(opcional)</span>
+          )}
+        </div>
       )}
       <div className="relative flex items-center">
         {startAdornment && (
@@ -84,6 +91,7 @@ export const CustomInput: React.FC<Props> = ({
             (endAdornment || isPassword) && "pr-10",
             className
           )}
+          required={isRequired}
           {...rest}
         />
 

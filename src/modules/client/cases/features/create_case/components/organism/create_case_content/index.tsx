@@ -1,12 +1,7 @@
 import { useState, useRef } from "react";
 import type { FormValues } from "../../../interface";
 import type { LawyerModel, LegalCategoryModel } from "../../../models";
-import {
-  HeaderSection,
-  CaseForm,
-  FileUploadSection,
-  SelectUser,
-} from "../../molecules";
+import { HeaderSection, CaseForm, FileUploadSection } from "../../molecules";
 import type { FileUploadSectionRef } from "../../molecules/file_upload_section";
 import { Controller, useForm } from "react-hook-form";
 import { TextRich } from "~/components/organisms";
@@ -14,6 +9,8 @@ import { urgencyLevels } from "../../../constants";
 import { createCaseWithFiles } from "../../../services";
 import { useToastMutation } from "~/components/molecules/toast_manager";
 import type { CreateCaseDTO } from "../../../dtos";
+import { SelectEntity } from "~/components/molecules";
+import { useQueryClient } from "@tanstack/react-query";
 
 type UploadedFile = {
   id: string;
@@ -45,6 +42,8 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
     },
     mode: "onTouched",
   });
+
+  const queryClient = useQueryClient();
 
   const formRef = useRef<HTMLFormElement>(null);
   const fileUploadRef = useRef<FileUploadSectionRef>(null);
@@ -97,7 +96,7 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
     setIsUserSelectorOpen(false);
   };
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     console.log("Archivos subidos:", uploadedFiles);
 
     const formDataList = uploadedFiles.map((file) => {
@@ -119,7 +118,11 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
         is_public: false,
         selected_lawyer_id: data.lawyer ? data.lawyer.lawyerId : null,
       };
-      createCaseMutation.mutate({ case: privateCase, files: formDataList });
+      await createCaseMutation.mutateAsync({
+        case: privateCase,
+        files: formDataList,
+      });
+      queryClient.invalidateQueries({ queryKey: ["personal-cases"] });
       console.log("Datos del caso privado:", privateCase);
     } else {
       // Caso público
@@ -129,7 +132,11 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
         category_id: data.category.id,
         urgency: mapUrgencyIdToName(data.urgency.id),
       };
-      createCaseMutation.mutate({ case: publicCase, files: formDataList });
+      await createCaseMutation.mutateAsync({
+        case: publicCase,
+        files: formDataList,
+      });
+      queryClient.invalidateQueries({ queryKey: ["personal-cases"] });
       console.log("Datos del caso público:", publicCase);
     }
   };
@@ -150,16 +157,34 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
 
   return (
     <div className="max-w-6xl mx-auto px-6 min-h-screen">
-      <SelectUser
+      <SelectEntity<LawyerModel>
         open={isUserSelectorOpen}
         setOpen={setIsUserSelectorOpen}
+        items={lawyers}
         onSelect={handleUserSelect}
-        lawyers={lawyers}
+        getId={(l) => l.id}
+        getLabel={(l) => l.name}
+        getAvatar={(l) => l.avatar}
+        filterFn={(l, q) => l.name.toLowerCase().includes(q.toLowerCase())}
+        renderDetails={(l) => (
+          <dl className="grid grid-cols-1 text-sm text-gray-700">
+            <dt className="font-semibold">Email</dt>
+            <dd>{l.email}</dd>
+            <dt className="font-semibold mt-1">Licencia</dt>
+            <dd>{l.licenseNumber}</dd>
+            <dt className="font-semibold mt-1">Dirección</dt>
+            <dd>{l.direction}</dd>
+          </dl>
+        )}
+        placeholder="Buscar abogado..."
+        buttonLabel="Seleccionar abogado"
       />
+
       <HeaderSection
         onCreateCase={() => formRef.current?.requestSubmit()}
         isLoading={createCaseMutation.isPending}
       />
+
       <div className="grid grid-cols-2 gap-2">
         <CaseForm
           control={control}
@@ -184,7 +209,13 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
         <Controller
           name="description"
           control={control}
-          rules={{ required: "La descripción es requerida" }}
+          rules={{
+            required: "La descripción es requerida",
+            maxLength: {
+              value: 2000,
+              message: "La descripción no puede tener más de 2000 caracteres",
+            },
+          }}
           render={({ field }) => (
             <>
               <TextRich

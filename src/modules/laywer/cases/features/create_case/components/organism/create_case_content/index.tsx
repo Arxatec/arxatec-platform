@@ -1,12 +1,7 @@
 import { useState, useRef } from "react";
 import type { FormValues } from "../../../interface";
 import type { ClientModel, LegalCategoryModel } from "../../../models";
-import {
-  HeaderSection,
-  CaseForm,
-  FileUploadSection,
-  SelectUser,
-} from "../../molecules";
+import { CaseForm, FileUploadSection, SelectUser } from "../../molecules";
 import type { FileUploadSectionRef } from "../../molecules/file_upload_section";
 import { Controller, useForm } from "react-hook-form";
 import { TextRich } from "~/components/organisms";
@@ -14,6 +9,11 @@ import { urgencyLevels } from "../../../constants";
 import { createCaseWithFiles } from "../../../services";
 import { useToastMutation } from "~/components/molecules/toast_manager";
 import type { CreateCaseDTO } from "../../../dtos";
+import { CustomHeader } from "~/components/molecules";
+import { ROUTES } from "~/routes/routes";
+import { useNavigate } from "react-router-dom";
+import { PrimaryButton } from "~/components/atoms";
+import { DocumentPlusIcon } from "@heroicons/react/24/solid";
 
 type UploadedFile = {
   id: string;
@@ -45,6 +45,8 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
     },
     mode: "onTouched",
   });
+  const navigate = useNavigate();
+  const onBack = () => navigate(ROUTES.Lawyer.Cases);
 
   const formRef = useRef<HTMLFormElement>(null);
   const fileUploadRef = useRef<FileUploadSectionRef>(null);
@@ -156,9 +158,20 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
         onSelect={handleUserSelect}
         lawyers={lawyers}
       />
-      <HeaderSection
-        onCreateCase={() => formRef.current?.requestSubmit()}
-        isLoading={createCaseMutation.isPending}
+      <CustomHeader
+        title="Crear caso"
+        onBack={onBack}
+        action={
+          <PrimaryButton
+            className="w-full h-full"
+            onClick={() => formRef.current?.requestSubmit()}
+            loader={createCaseMutation.isPending}
+            disabled={createCaseMutation.isPending}
+          >
+            <DocumentPlusIcon className="size-4 mr-2 text-white" />
+            Crear caso
+          </PrimaryButton>
+        }
       />
       <div className="grid grid-cols-[auto_400px] gap-2">
         <div>
