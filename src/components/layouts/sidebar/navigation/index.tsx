@@ -66,30 +66,8 @@ export const Navigation: React.FC<Props> = ({
 
       <div className="flex items-center justify-between gap-x-4 w-full lg:gap-x-6">
         <div></div>
-        <div className="relative w-full max-w-lg ">
-          <CustomInput
-            placeholder="Buscar..."
-            className="w-full"
-            onClick={toggleOpen}
-            startAdornment={
-              <MagnifyingGlassIcon className="size-4 text-gray-400" />
-            }
-          />
-        </div>
+        <div className="relative w-full max-w-lg "></div>
         <div className="flex items-center gap-x-4 lg:gap-x-6">
-          <div className="flex items-center justify-start gap-4">
-            <button
-              className=" rounded-full p-2 bg-gray-100"
-              onClick={() => setOpenNotification(!openNotification)}
-            >
-              <BellIcon className="size-5 text-gray-700" />
-            </button>
-            <div
-              aria-hidden="true"
-              className="hidden lg:block lg:h-10 lg:w-px lg:bg-gray-200"
-            />
-          </div>
-
           <Menu as="div" className="relative">
             <MenuButton className="-m-1.5 flex items-center p-1.5">
               <span className="sr-only">Open user menu</span>

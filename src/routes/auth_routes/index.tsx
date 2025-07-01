@@ -12,11 +12,11 @@ export const authRoutes = {
       element: <Navigate to={ROUTES.Auth.Login} replace />,
     },
     {
-      path: ROUTES.Auth.Login,
+      path: ROUTES.Auth.Login, //iniciar-sesion
       element: <publicPages.LoginPage />,
     },
     {
-      path: ROUTES.Auth.Register,
+      path: ROUTES.Auth.Register, //registrarse
       element: <publicPages.RegisterPage />,
     },
     {

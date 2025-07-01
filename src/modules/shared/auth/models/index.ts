@@ -1,8 +1,8 @@
 export interface LoginWithEmailAndPasswordModel {
-  email: String;
-  password: String;
+  email: string;
+  password: string;
 }
 
 export interface LoginWithGoogle {
-  accessToken: String;
+  accessToken: string;
 }

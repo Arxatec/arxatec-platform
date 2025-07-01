@@ -52,12 +52,6 @@ export const CardClient = ({ client }: { client: Client | undefined }) => {
             {
               items: [
                 {
-                  id: "edit",
-                  label: "Editar",
-                  onClick: () => {},
-                  icon: <PencilIcon className="size-4 text-gray-500" />,
-                },
-                {
                   id: "delete",
                   label: "Archivar",
                   onClick: () => {

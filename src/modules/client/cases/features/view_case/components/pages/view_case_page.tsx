@@ -41,6 +41,8 @@ import { useLawyer } from "../../hooks/use_lawyer";
 import { useSendMessage } from "../../hooks/use_send_message";
 import { ToastManager } from "~/components/molecules/toast_manager";
 import { twMerge } from "tailwind-merge";
+import Chatbot from "../molecules/chatbot";
+import type { ChatbotProps } from "../molecules/chatbot/types";
 
 // Types for API response data
 interface Attachment {
@@ -337,6 +339,23 @@ export default function ViewCase() {
     );
   }
 
+  const chatProps: ChatbotProps = {
+    name: "Asistente Legal",
+    title: "¿Cómo puedo ayudarte?",
+    you: "Tú",
+    context:
+      JSON.stringify(caseData) +
+      JSON.stringify(lawyer) +
+      JSON.stringify(attachments) +
+      JSON.stringify(messages), // ¡Nuevo!
+
+    questions: {
+      question1: "¿Qué documentos necesito?",
+      question2: "¿Cuáles son mis derechos?",
+      question3: "¿Cómo procedo legalmente?",
+    },
+  };
+
   const urgencyDisplay = getUrgencyDisplay(caseData.urgency);
 
   return (
@@ -627,6 +646,8 @@ export default function ViewCase() {
         onClose={handleCloseViewer}
         canDownload={false}
       />
+
+      <Chatbot props={chatProps} />
     </div>
   );
 }

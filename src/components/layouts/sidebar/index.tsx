@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CalendarIcon,
   FolderIcon,
@@ -26,6 +26,8 @@ import { SidebarDesktop } from "./sidebar_desktop";
 import { Navigation } from "./navigation";
 import { ROUTES } from "~/routes/routes";
 import { Outlet } from "react-router-dom";
+import { socket } from "~/utilities/socket_utilities";
+import { useUserStore } from "~/store";
 
 const navigationTest = [
   {
@@ -84,6 +86,29 @@ const navigationTest = [
 export default function Sidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const user = useUserStore((state) => state.user);
+
+  useEffect(() => {
+    if (!user) return;
+    if (!socket.connected) socket.connect();
+
+    // Unirse a la sala privada del usuario
+    socket.emit("join_user_channel", user.id);
+
+    // Escuchar las notificaciones entrantes
+    const handler = (data: any) => {
+      console.log("Notificación recibida:", data);
+      // Aquí puedes lanzar un toast, guardar en estado global, etc.
+    };
+
+    socket.on("notificacion_recibida", handler);
+
+    return () => {
+      socket.off("notificacion_recibida", handler);
+    };
+  }, [user]);
+  // mensajes
+  //
   return (
     <>
       <div>
