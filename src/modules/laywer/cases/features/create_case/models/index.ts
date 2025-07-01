@@ -8,6 +8,6 @@ export interface ClientModel {
   name: string;
   email: string;
   avatar: string;
-  occupation: string;
-  direction: string;
+  dni: string;
+  phone: string;
 }

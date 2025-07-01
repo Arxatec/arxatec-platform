@@ -28,7 +28,6 @@ export const CasesContent = () => {
   return (
     <div className="max-w-6xl mx-auto px-6 min-h-screen">
       <CustomHeader title="Mis casos" onBack={onBack} />
-      <SearchFilters onFiltersChange={handleFiltersChange} />
       <CasesTable cases={cases} isLoading={isLoading} error={error} />
     </div>
   );

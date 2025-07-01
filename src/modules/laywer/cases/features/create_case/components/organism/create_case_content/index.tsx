@@ -1,19 +1,15 @@
 import { useState, useRef } from "react";
 import type { FormValues } from "../../../interface";
 import type { ClientModel, LegalCategoryModel } from "../../../models";
-import { CaseForm, FileUploadSection, SelectUser } from "../../molecules";
+import { HeaderSection, CaseForm, FileUploadSection } from "../../molecules";
 import type { FileUploadSectionRef } from "../../molecules/file_upload_section";
 import { Controller, useForm } from "react-hook-form";
 import { TextRich } from "~/components/organisms";
-import { urgencyLevels } from "../../../constants";
 import { createCaseWithFiles } from "../../../services";
 import { useToastMutation } from "~/components/molecules/toast_manager";
 import type { CreateCaseDTO } from "../../../dtos";
-import { CustomHeader } from "~/components/molecules";
-import { ROUTES } from "~/routes/routes";
-import { useNavigate } from "react-router-dom";
-import { PrimaryButton } from "~/components/atoms";
-import { DocumentPlusIcon } from "@heroicons/react/24/solid";
+import { SelectEntity } from "~/components/molecules";
+import { useQueryClient } from "@tanstack/react-query";
 
 type UploadedFile = {
   id: string;
@@ -26,10 +22,10 @@ type UploadedFile = {
 
 interface Props {
   categories: LegalCategoryModel[];
-  lawyers: ClientModel[];
+  clients: ClientModel[];
 }
 
-export const CreateCaseContent = ({ categories, lawyers }: Props) => {
+export const CreateCaseContent = ({ categories, clients }: Props) => {
   const {
     control,
     handleSubmit,
@@ -40,13 +36,11 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
   } = useForm<FormValues>({
     defaultValues: {
       category: categories[0],
-      urgency: urgencyLevels[0],
-      isPrivate: false,
     },
     mode: "onTouched",
   });
-  const navigate = useNavigate();
-  const onBack = () => navigate(ROUTES.Lawyer.Cases);
+
+  const queryClient = useQueryClient();
 
   const formRef = useRef<HTMLFormElement>(null);
   const fileUploadRef = useRef<FileUploadSectionRef>(null);
@@ -59,11 +53,9 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
         // Resetear el formulario a sus valores por defecto
         reset({
           category: categories[0],
-          urgency: urgencyLevels[0],
-          isPrivate: false,
           title: "",
           description: "",
-          lawyer: undefined,
+          clientId: undefined,
         });
         // Limpiar el usuario seleccionado
         setSelectedUser(undefined);
@@ -95,11 +87,11 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
 
   const handleUserSelect = (user: ClientModel) => {
     setSelectedUser(user);
-    setValue("lawyer", user);
+    setValue("clientId", user.clientId);
     setIsUserSelectorOpen(false);
   };
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     console.log("Archivos subidos:", uploadedFiles);
 
     const formDataList = uploadedFiles.map((file) => {
@@ -111,115 +103,105 @@ export const CreateCaseContent = ({ categories, lawyers }: Props) => {
       return formData;
     });
 
-    if (data.isPrivate) {
+    if (data.clientId) {
       // Caso privado - incluir información del abogado
       const privateCase: CreateCaseDTO = {
         title: data.title,
         description: data.description,
         category_id: data.category.id,
-        urgency: mapUrgencyIdToName(data.urgency.id),
         is_public: false,
-        selected_lawyer_id: data.lawyer ? data.lawyer.lawyerId : null,
+        client_id: data.clientId,
       };
-      createCaseMutation.mutate({ case: privateCase, files: formDataList });
+      await createCaseMutation.mutateAsync({
+        case: privateCase,
+        files: formDataList,
+      });
+      queryClient.invalidateQueries({ queryKey: ["personal-cases"] });
       console.log("Datos del caso privado:", privateCase);
-    } else {
-      // Caso público
-      const publicCase: CreateCaseDTO = {
-        title: data.title,
-        description: data.description,
-        category_id: data.category.id,
-        urgency: mapUrgencyIdToName(data.urgency.id),
-      };
-      createCaseMutation.mutate({ case: publicCase, files: formDataList });
-      console.log("Datos del caso público:", publicCase);
-    }
-  };
-
-  // Función para mapear el ID de urgencia al nombre requerido
-  const mapUrgencyIdToName = (urgencyId: number): string => {
-    switch (urgencyId) {
-      case 1:
-        return "alta";
-      case 2:
-        return "media";
-      case 3:
-        return "baja";
-      default:
-        return "media";
     }
   };
 
   return (
     <div className="max-w-6xl mx-auto px-6 min-h-screen">
-      <SelectUser
+      <SelectEntity<ClientModel>
         open={isUserSelectorOpen}
         setOpen={setIsUserSelectorOpen}
+        items={clients}
         onSelect={handleUserSelect}
-        lawyers={lawyers}
+        getId={(l) => l.id}
+        getLabel={(l) => l.name}
+        getAvatar={(l) => l.avatar}
+        filterFn={(l, q) => l.name.toLowerCase().includes(q.toLowerCase())}
+        renderDetails={(l) => (
+          <dl className="grid grid-cols-1 text-sm text-gray-700">
+            <dt className="font-semibold">Email</dt>
+            <dd>{l.email}</dd>
+            <dt className="font-semibold mt-1">Teléfono</dt>
+            <dd>{l.phone}</dd>
+            <dt className="font-semibold mt-1">DNI</dt>
+            <dd>{l.dni}</dd>
+          </dl>
+        )}
+        placeholder="Buscar cliente..."
+        buttonLabel="Seleccionar cliente"
       />
-      <CustomHeader
-        title="Crear caso"
-        onBack={onBack}
-        action={
-          <PrimaryButton
-            className="w-full h-full"
-            onClick={() => formRef.current?.requestSubmit()}
-            loader={createCaseMutation.isPending}
-            disabled={createCaseMutation.isPending}
-          >
-            <DocumentPlusIcon className="size-4 mr-2 text-white" />
-            Crear caso
-          </PrimaryButton>
-        }
+
+      <HeaderSection
+        onCreateCase={() => formRef.current?.requestSubmit()}
+        isLoading={createCaseMutation.isPending}
       />
-      <div className="grid grid-cols-[auto_400px] gap-2">
-        <div>
-          <CaseForm
-            control={control}
-            errors={errors}
-            onOpenUserSelector={() => setIsUserSelectorOpen(true)}
-            selectedUser={selectedUser}
-            categories={categories}
-            watch={watch}
-            handleSubmit={handleSubmit}
-            onSubmit={onSubmit}
-            ref={formRef}
-          />
-          <div className="mt-2 bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-all">
-            <label className="text-sm font-medium text-gray-900">
-              Descripción del caso
-            </label>
-            <Controller
-              name="description"
-              control={control}
-              rules={{ required: "La descripción es requerida" }}
-              render={({ field }) => (
-                <>
-                  <TextRich
-                    value={field.value}
-                    onChange={field.onChange}
-                    minHeight="250px"
-                    maxHeight="600px"
-                    className="mt-2"
-                    showImageMenu={false}
-                    showTableMenu={false}
-                    showYoutubeMenu={false}
-                    showFontSelector={false}
-                  />
-                  {errors.description && (
-                    <span className="text-xs text-red-500 mt-1">
-                      {errors.description.message}
-                    </span>
-                  )}
-                </>
-              )}
-            />
-          </div>
-        </div>
+
+      <div className="grid grid-cols-2 gap-2">
+        <CaseForm
+          control={control}
+          errors={errors}
+          onOpenUserSelector={() => setIsUserSelectorOpen(true)}
+          selectedUser={selectedUser}
+          categories={categories}
+          watch={watch}
+          handleSubmit={handleSubmit}
+          onSubmit={onSubmit}
+          ref={formRef}
+        />
         <FileUploadSection
           ref={fileUploadRef}
           onFilesChange={setUploadedFiles}
+        />
+      </div>
+      <div className="mt-2 bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-all">
+        <label className="text-sm font-medium text-gray-900">
+          Descripción del caso
+        </label>
+        <Controller
+          name="description"
+          control={control}
+          rules={{
+            required: "La descripción es requerida",
+            maxLength: {
+              value: 2000,
+              message: "La descripción no puede tener más de 2000 caracteres",
+            },
+          }}
+          render={({ field }) => (
+            <>
+              <TextRich
+                value={field.value}
+                onChange={field.onChange}
+                minHeight="250px"
+                maxHeight="600px"
+                className="mt-2"
+                showImageMenu={false}
+                showTableMenu={false}
+                showYoutubeMenu={false}
+                showFontSelector={false}
+              />
+              {errors.description && (
+                <span className="text-xs text-red-500 mt-1">
+                  {errors.description.message}
+                </span>
+              )}
+            </>
+          )}
         />
       </div>
     </div>

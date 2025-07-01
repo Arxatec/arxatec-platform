@@ -135,14 +135,12 @@ export const SelectEntity = <T,>({
                               value={item}
                               className="group flex cursor-pointer hover:bg-gray-100 transition-all items-center rounded-md p-2 select-none data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
                             >
-                              {avatar && (
-                                <CustomAvatar
-                                  avatar={avatar}
-                                  size="1.5rem"
-                                  altText={label}
-                                  username={label}
-                                />
-                              )}
+                              <CustomAvatar
+                                avatar={avatar ?? ""}
+                                size="1.5rem"
+                                altText={label}
+                                username={label}
+                              />
                               <span className="ml-3 flex-auto truncate">
                                 {label}
                               </span>

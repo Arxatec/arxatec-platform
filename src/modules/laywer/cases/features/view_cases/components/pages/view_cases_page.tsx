@@ -71,7 +71,6 @@ export default function ViewCasesPage() {
         <div className="mt-2">
           <CasesDashboard />
         </div>
-        <Table data={tableData} isLoading={isLoading} error={error} />
       </div>
     </div>
   );

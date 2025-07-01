@@ -23,7 +23,9 @@ export const getPersonalCasesOld = async (): Promise<CasesApiResponse> => {
     );
   }
 };
+
 export const getPersonalCases = async (): Promise<CasesApiResponse> => {
   const response = await axiosInstance.get<CasesApiResponse>("/cases/me");
+  console.log(response.data);
   return response.data;
 };

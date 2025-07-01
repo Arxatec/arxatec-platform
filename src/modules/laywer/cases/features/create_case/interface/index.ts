@@ -1,5 +1,3 @@
-import type { LawyerModel } from "../models";
-
 export interface User {
   id: number;
   name: string;
@@ -12,11 +10,6 @@ export interface FormValues {
     id: number;
     name: string;
   };
-  lawyer?: LawyerModel;
+  clientId?: number;
   description: string;
-  isPrivate: boolean;
-  urgency: {
-    id: number;
-    name: string;
-  };
 }

@@ -1,5 +1,5 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { FileIcon } from "../file_icon";
+import { FileIcon } from "~/components/atoms";
 
 interface FilePreviewProps {
   id: string;

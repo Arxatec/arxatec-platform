@@ -1,5 +1,5 @@
 import type React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   avatar: string;
@@ -41,6 +41,11 @@ export const CustomAvatar: React.FC<Props> = ({
 
   const avatarColor = getColorFromUsername(username);
   const initials = username.charAt(0).toUpperCase();
+
+  useEffect(() => {
+    setIsLoading(true);
+    setHasError(false);
+  }, [avatar, username]);
 
   return (
     <div

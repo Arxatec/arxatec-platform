@@ -29,14 +29,18 @@ import {
 import { CustomHeader, FileViewer } from "~/components/molecules";
 import { useTitle } from "~/hooks";
 import { ROUTES } from "~/routes/routes";
-import { usePersonalCase, usePersonalCaseAttachments } from "../../hooks";
+import {
+  usePersonalCase,
+  usePersonalCaseAttachments,
+  useSocketMessages,
+} from "../../hooks";
 import s from "~/styles/editor_rich/index.module.css";
-import { socket } from "~/utilities";
 import { useUserStore } from "~/store";
 import { useArchiveCase } from "../../hooks/use_archive_case";
 import { useLawyer } from "../../hooks/use_lawyer";
 import { useSendMessage } from "../../hooks/use_send_message";
 import { ToastManager } from "~/components/molecules/toast_manager";
+import { twMerge } from "tailwind-merge";
 
 // Types for API response data
 interface Attachment {
@@ -263,16 +267,20 @@ export default function ViewCase() {
     changeTitle("Ver caso - Arxatec");
   }, []);
 
-  useEffect(() => {
-    if (user) {
-      console.log("userId", user.id);
-      socket.emit("join_user_channel", user.id);
-
-      return () => {
-        socket.disconnect();
-      };
-    }
-  }, [user]);
+  useSocketMessages(user?.id, (data) => {
+    console.log("📩 Nuevo mensaje recibido:", data);
+    const newMessage: Message[] = [
+      ...messages,
+      {
+        id: Math.floor(Math.random() * 1000000),
+        content: data.content,
+        created_at: new Date().toISOString(),
+        sender_name: data.sender_name,
+      },
+    ];
+    setMessages(newMessage);
+    // Aquí puedes hacer: actualizar mensajes, notificaciones, etc.
+  });
 
   useEffect(() => {
     if (isErrorSendMessage) {
@@ -333,7 +341,12 @@ export default function ViewCase() {
 
   return (
     <div className="min-h-screen">
-      <div className="flex flex-col h-[800px] max-w-6xl mx-auto w-full px-4">
+      <div
+        className={twMerge(
+          "flex flex-col h-[800px] mx-auto w-full px-4",
+          lawyer && lawyerId ? "max-w-6xl" : "max-w-4xl"
+        )}
+      >
         <CustomHeader
           onBack={onBack}
           title={caseData.title}
@@ -349,7 +362,12 @@ export default function ViewCase() {
           }
         />
 
-        <div className="grid flex-1 grid-cols-1 lg:grid-cols-[auto_400px] gap-2">
+        <div
+          className={twMerge(
+            "grid flex-1 grid-cols-1  gap-2",
+            lawyer && lawyerId ? "lg:grid-cols-[auto_400px]" : ""
+          )}
+        >
           <div className="flex flex-col h-full">
             <div className="shadow hover:shadow-md bg-white w-full p-4 rounded-md grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex items-center justify-start gap-2">
@@ -518,40 +536,49 @@ export default function ViewCase() {
               </div>
             </div>
           </div>
-          <div className="h-full grid grid-rows-[auto_1fr_auto]">
-            <div className="shadow hover:shadow-md bg-white w-full px-4 py-2 rounded-md">
-              <h2 className="text-slate-900 font-semibold text-base">
-                Mensajes
-              </h2>
-            </div>
-            <div className="shadow hover:shadow-md bg-white w-full p-4 rounded-md mt-2">
-              {caseData.service?.messages?.length === 0 &&
-              messages.length === 0 ? (
-                <>
-                  <div className="flex items-center justify-center gap-2 w-full">
-                    <span className="flex-1 h-[1px] bg-slate-200"></span>
-                    <p className="text-xs text-slate-500 italic text-center whitespace-nowrap px-1">
-                      No hay mensajes aún
-                    </p>
-                    <span className="flex-1 h-[1px] bg-slate-200"></span>
-                  </div>
-                  <div
-                    key={"new-message"}
-                    className=" border-slate-100  last:border-b-0 bg-slate-50 p-4 rounded-md mt-2 border"
-                  >
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-sm font-medium text-slate-900">
-                        {user?.name || "Usuario"}
-                      </span>
-                      <span className="text-xs text-slate-500">10-05-2025</span>
+          {lawyer && lawyerId && (
+            <div className="h-full grid grid-rows-[auto_1fr_auto]">
+              <div className="shadow hover:shadow-md bg-white w-full px-4 py-2 rounded-md">
+                <h2 className="text-slate-900 font-semibold text-base">
+                  Mensajes
+                </h2>
+              </div>
+              <div className="shadow hover:shadow-md bg-white w-full p-4 rounded-md mt-2">
+                {(!caseData.service?.messages ||
+                  caseData.service.messages.length === 0) &&
+                messages.length === 0 ? (
+                  <>
+                    <div className="flex items-center justify-center gap-2 w-full">
+                      <span className="flex-1 h-[1px] bg-slate-200"></span>
+                      <p className="text-xs text-slate-500 italic text-center whitespace-nowrap px-1">
+                        No hay mensajes aún
+                      </p>
+                      <span className="flex-1 h-[1px] bg-slate-200"></span>
                     </div>
-                    <p className="text-sm text-slate-700">Hola mundo</p>
-                  </div>
-                </>
-              ) : (
-                <div className="space-y-3">
-                  {caseData.service.messages.map(
-                    (message: Message, index: number) => (
+                  </>
+                ) : (
+                  <div className="space-y-3">
+                    {(caseData.service?.messages || []).map(
+                      (message: Message, index: number) => (
+                        <div
+                          key={index}
+                          className=" border-slate-100  last:border-b-0 bg-slate-50 p-4 rounded-md mt-2 border"
+                        >
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-sm font-medium text-slate-900">
+                              {message.sender_name || "Usuario"}
+                            </span>
+                            <span className="text-xs text-slate-500">
+                              {formatDate(message.created_at)}
+                            </span>
+                          </div>
+                          <p className="text-sm text-slate-700">
+                            {message.content}
+                          </p>
+                        </div>
+                      )
+                    )}
+                    {messages.map((message: Message, index: number) => (
                       <div
                         key={index}
                         className=" border-slate-100  last:border-b-0 bg-slate-50 p-4 rounded-md mt-2 border"
@@ -568,47 +595,29 @@ export default function ViewCase() {
                           {message.content}
                         </p>
                       </div>
-                    )
-                  )}
-                  {messages.map((message: Message, index: number) => (
-                    <div
-                      key={index}
-                      className=" border-slate-100  last:border-b-0 bg-slate-50 p-4 rounded-md mt-2 border"
-                    >
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-sm font-medium text-slate-900">
-                          {message.sender_name || "Usuario"}
-                        </span>
-                        <span className="text-xs text-slate-500">
-                          {formatDate(message.created_at)}
-                        </span>
-                      </div>
-                      <p className="text-sm text-slate-700">
-                        {message.content}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="grid grid-cols-[auto_100px] mt-2 items-center gap-2 w-full">
+                <CustomInput
+                  placeholder="Agrega un comentario"
+                  className="ring-0 py-2.5 flex shadow hover:shadow-md"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                />
+                <PrimaryButton
+                  className="gap-2 py-2.5"
+                  onClick={handleSendMessage}
+                  loader={isPendingSendMessage}
+                  disabled={isPendingSendMessage || !message}
+                >
+                  <PaperAirplaneIcon className="size-4 text-white" />
+                  Enviar
+                </PrimaryButton>
+              </div>
             </div>
-            <div className="grid grid-cols-[auto_100px] mt-2 items-center gap-2 w-full">
-              <CustomInput
-                placeholder="Agrega un comentario"
-                className="ring-0 py-2.5 flex shadow hover:shadow-md"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-              />
-              <PrimaryButton
-                className="gap-2 py-2.5"
-                onClick={handleSendMessage}
-                loader={isPendingSendMessage}
-                disabled={isPendingSendMessage || !message}
-              >
-                <PaperAirplaneIcon className="size-4 text-white" />
-                Enviar
-              </PrimaryButton>
-            </div>
-          </div>
+          )}
         </div>
       </div>
 

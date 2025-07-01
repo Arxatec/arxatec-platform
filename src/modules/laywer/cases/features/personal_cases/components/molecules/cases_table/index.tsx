@@ -1,16 +1,31 @@
 import {
   CalendarIcon,
   DocumentIcon,
-  FolderIcon,
-  IdentificationIcon,
+  SignalIcon,
+  TagIcon,
 } from "@heroicons/react/24/outline";
-import {
-  ExclamationCircleIcon,
-  ExclamationTriangleIcon,
-} from "@heroicons/react/24/solid";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { CustomTable } from "~/components/molecules";
 import type { CaseData } from "../../../types";
 import { CustomStatusState } from "~/components/atoms";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "~/routes/routes";
+
+const categories = {
+  1: "Derecho penal",
+  2: "Derecho civil",
+  3: "Derecho laboral",
+  4: "Derecho comercial",
+  5: "Derecho de familia",
+};
+
+const statuses = {
+  1: "Registrado",
+  2: "En revisión",
+  3: "En proceso",
+  4: "Con resolución",
+  5: "Cerrado",
+};
 
 interface CasesTableProps {
   cases: CaseData[];
@@ -20,16 +35,7 @@ interface CasesTableProps {
 
 const columns = [
   {
-    width: "w-2/12",
-    header: {
-      icon: <IdentificationIcon className="size-5 text-gray-500" />,
-      label: "Código",
-    },
-    accessor: "reference_code",
-    align: "left" as const,
-  },
-  {
-    width: "w-4/12",
+    width: "w-8/12",
     header: {
       icon: <DocumentIcon className="size-5 text-gray-500" />,
       label: "Título del Caso",
@@ -43,39 +49,44 @@ const columns = [
     ),
   },
   {
-    width: "w-3/12",
+    width: "w-2/12",
     header: {
-      icon: <DocumentIcon className="size-5 text-gray-500" />,
-      label: "Descripción",
+      icon: <TagIcon className="size-5 text-gray-500" />,
+      label: "Categoría",
     },
-    accessor: "description",
+    accessor: "category_id",
     align: "left" as const,
-    renderCell: (value: string) => (
-      <div className="whitespace-normal line-clamp-2 text-gray-500 text-sm">
-        {value}
-      </div>
-    ),
+    renderCell: (value: number) => {
+      const getCategoryName = (categoryId: number) => {
+        const categories: { [key: number]: string } = {
+          1: "Penal",
+          2: "Civil",
+          3: "Laboral",
+          4: "Comercial",
+          5: "Familia",
+        };
+        return categories[categoryId] || `Categoría ${categoryId}`;
+      };
+      return (
+        <div className="whitespace-normal line-clamp-2 text-gray-700">
+          {getCategoryName(value)}
+        </div>
+      );
+    },
   },
   {
     width: "w-2/12",
     header: {
-      icon: <FolderIcon className="size-5 text-gray-500" />,
-      label: "Urgencia",
+      icon: <SignalIcon className="size-5 text-gray-500" />,
+      label: "Estado",
     },
-    accessor: "urgency",
+    accessor: "status_id",
     align: "left" as const,
-    renderCell: (value: "alta" | "media" | "baja") => {
-      const urgencyColors = {
-        alta: "bg-red-100 text-red-800",
-        media: "bg-yellow-100 text-yellow-800",
-        baja: "bg-green-100 text-green-800",
-      };
+    renderCell: (value: number) => {
       return (
-        <span
-          className={`px-2 py-1 rounded-full text-xs font-medium ${urgencyColors[value]}`}
-        >
-          {value.charAt(0).toUpperCase() + value.slice(1)}
-        </span>
+        <div className="whitespace-normal line-clamp-2 text-gray-700">
+          {statuses[value]}
+        </div>
       );
     },
   },
@@ -133,6 +144,7 @@ const LoadingState = () => (
 );
 
 export const CasesTable = ({ cases, isLoading, error }: CasesTableProps) => {
+  const navigate = useNavigate();
   if (isLoading) {
     return <LoadingState />;
   }
@@ -162,7 +174,9 @@ export const CasesTable = ({ cases, isLoading, error }: CasesTableProps) => {
     <CustomTable
       columns={columns}
       data={cases}
-      onRowClick={(row) => console.log(row)}
+      onRowClick={(row) =>
+        navigate(ROUTES.Lawyer.CaseDetail.replace(":id", row.id.toString()))
+      }
     />
   );
 };

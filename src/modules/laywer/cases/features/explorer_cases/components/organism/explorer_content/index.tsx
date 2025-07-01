@@ -23,7 +23,6 @@ export const ExplorerContent = () => {
   return (
     <div className="mx-auto max-w-6xl px-6 min-h-screen">
       <CustomHeader title="Explorar casos" onBack={onBack} />
-      <SearchFilters onFiltersChange={handleFiltersChange} />
       <CasesTable filters={filters} />
     </div>
   );

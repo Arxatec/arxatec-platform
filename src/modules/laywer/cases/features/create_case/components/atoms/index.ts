@@ -1,10 +1,3 @@
-export { FileIcon } from "./file_icon";
-export { FileUploadInput } from "./file_upload_input";
+export { LoaderState } from "./loader_state";
+export { DropzoneUploader } from "./dropzone_uploader";
 export { FilePreview } from "./file_preview";
-export { FileViewerModal } from "./file_viewer_modal";
-export { FileInfoModal } from "./file_info_modal";
-export { ImageViewer } from "./image_viewer";
-export { TextViewer } from "./text_viewer";
-export { DocumentViewer } from "./document_viewer";
-export { UnsupportedViewer } from "./unsupported_viewer";
-export { PDFViewer } from "./pdf_viewer";

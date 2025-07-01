@@ -18,11 +18,8 @@ export const useFilteredCases = (filters: FilterParams) => {
     // Filter by search
     if (filters.search && filters.search.trim()) {
       const searchTerm = filters.search.toLowerCase().trim();
-      cases = cases.filter(
-        (caseItem) =>
-          caseItem.title.toLowerCase().includes(searchTerm) ||
-          caseItem.description.toLowerCase().includes(searchTerm) ||
-          caseItem.reference_code.toLowerCase().includes(searchTerm)
+      cases = cases.filter((caseItem) =>
+        caseItem.title.toLowerCase().includes(searchTerm)
       );
     }
 

@@ -17,7 +17,7 @@ export const ActionCardsGroup = () => {
   const navigateToCreateCase = () => navigate(ROUTES.Lawyer.CasesCreate);
 
   return (
-    <div className="flex gap-2">
+    <div className="gap-2 grid grid-cols-1 md:grid-cols-2 ">
       <ActionCard
         title="Explorar casos"
         icon={<GlobeAltIcon />}

@@ -5,29 +5,21 @@ export interface LegalCategoryDTO {
 }
 
 export interface ClientDTO {
-  userId: number;
-  firstName: string;
-  lastName: string;
+  id: number;
+  user_detail_id: number;
+  profile_image: string;
+  full_name: string;
   email: string;
-  profilePicture: string;
-  location: {
-    fullAddress: string;
-    latitude: number;
-    longitude: number;
-  };
-  occupation: string;
-  gender: string;
-  birthDate: string;
-  budget: string;
-  urgencyLevel: string;
-  communicationPreference: string;
+  phone: string;
+  dni: string;
+  created_at: string;
+  archived: boolean;
 }
 
 export interface CreateCaseDTO {
   title: string;
   category_id: number;
   description: string;
-  urgency: string;
-  is_public?: boolean;
-  selected_lawyer_id?: number;
+  is_public: boolean;
+  client_id: number;
 }

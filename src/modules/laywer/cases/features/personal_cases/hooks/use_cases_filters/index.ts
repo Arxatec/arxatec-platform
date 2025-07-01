@@ -22,11 +22,11 @@ export const useCasesFilters = () => {
 
   const categoryOptions: FilterOption[] = [
     { id: "all", name: "Todos" },
+    { id: "penal", name: "Penal" },
     { id: "civil", name: "Civil" },
     { id: "laboral", name: "Laboral" },
-    { id: "familiar", name: "Familiar" },
-    { id: "penal", name: "Penal" },
     { id: "comercial", name: "Comercial" },
+    { id: "familiar", name: "Familiar" },
   ];
 
   const sortOptions: FilterOption[] = [
