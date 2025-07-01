@@ -49,16 +49,20 @@ const formatDate = (dateString: string): string => {
 
 export default function ViewCasesPage() {
   const { changeTitle } = useTitle();
-  const { data: casesResponse, isLoading, error } = usePersonalCases();
+  const { data, isLoading, error } = usePersonalCases();
 
   useEffect(() => {
     changeTitle("Casos - Arxatec");
   }, []);
 
   // Transformar datos para la tabla
-  const tableData = casesResponse?.data
-    ? transformCasesToTableData(casesResponse.data)
+  const tableData = data?.data
+    ? transformCasesToTableData(data.data.cases)
     : [];
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <div className="rounded-md max-w-7xl mx-auto px-6 min-h-screen">

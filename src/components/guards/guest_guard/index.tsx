@@ -20,7 +20,7 @@ export default function GuestGuard() {
     currentPath.includes(ROUTES.Auth.Register);
 
   if (isError) {
-    window.sessionStorage.removeItem("TOKEN_AUTH");
+    window.localStorage.removeItem("TOKEN_AUTH");
 
     if (currentPath.includes(ROUTES.Auth.Login)) {
       window.location.reload();
@@ -39,10 +39,10 @@ export default function GuestGuard() {
   if (user?.userType) {
     if (isAuthRoute) {
       if (user.userType === "lawyer") {
-        return <Navigate to="/abogado/casos" replace />;
+        return <Navigate to={ROUTES.Lawyer.Cases} replace />;
       }
       if (user.userType === "client") {
-        return <Navigate to="/cliente/casos" replace />;
+        return <Navigate to={ROUTES.Client.CasesPersonal} replace />;
       }
     }
   }

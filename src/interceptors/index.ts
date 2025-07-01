@@ -8,7 +8,7 @@ export const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const token = window.sessionStorage.getItem("TOKEN_AUTH");
+  const token = window.localStorage.getItem("TOKEN_AUTH");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -22,5 +22,5 @@ axiosInstance.interceptors.response.use(
     const message = getErrorMessageByStatus(status, error);
 
     return Promise.reject(new Error(message));
-  },
+  }
 );

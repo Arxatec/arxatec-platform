@@ -69,13 +69,11 @@ export default function OnboardingCustomer() {
 
   const navigateToOnboarding = () => navigate(ROUTES.Auth.OnboardingGeneral);
 
-  const navigateToDashboard = () => navigate(ROUTES.Lawyer.Cases);
-
   const mutation: UseMutationResult<CustomerResponse, Error, FormData> =
     useMutation({
       mutationFn: createCustomer,
       onSuccess: () => {
-        navigateToDashboard();
+        window.location.reload();
       },
       onError: (error) => {
         setError(error.message || "Error al crear el cliente");
@@ -167,6 +165,10 @@ export default function OnboardingCustomer() {
       "communication_preference",
       data.legalPreferences.communicationPreference.name
     );
+
+    formData.forEach((value, key) => {
+      console.log(key, value);
+    });
 
     mutation.mutate(formData);
   };

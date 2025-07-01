@@ -7,7 +7,7 @@ export const getArticles = async ({
   search = "",
 }: GetArticlesParams): Promise<ArticlesResponse> => {
   try {
-    const token = window.sessionStorage.getItem("TOKEN_AUTH");
+    const token = window.localStorage.getItem("TOKEN_AUTH");
     const params = new URLSearchParams({
       page: page.toString(),
       limit: limit.toString(),
@@ -30,7 +30,7 @@ export const getArticles = async ({
 
 export const deleteArticle = async (id: string): Promise<void> => {
   try {
-    const token = window.sessionStorage.getItem("TOKEN_AUTH");
+    const token = window.localStorage.getItem("TOKEN_AUTH");
     const { data } = await axios.delete(
       `http://localhost:3000/api/v1/articles/${id}`,
       {

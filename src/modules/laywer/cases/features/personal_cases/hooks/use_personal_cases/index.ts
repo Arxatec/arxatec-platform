@@ -4,7 +4,7 @@ import type { CasesApiResponse } from "../../types";
 
 export const usePersonalCases = () => {
   return useQuery<CasesApiResponse, Error>({
-    queryKey: ["personal-cases"],
+    queryKey: ["personal-cases-lawyer"],
     queryFn: getPersonalCases,
     retry: 2,
     refetchOnWindowFocus: false,

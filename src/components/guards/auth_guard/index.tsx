@@ -7,9 +7,9 @@ export default function AuthGuard() {
   const { token, user, isPending, isError, error } = useAuth();
 
   if (!token || isError) {
-    window.sessionStorage.removeItem("TOKEN_AUTH");
+    window.localStorage.removeItem("TOKEN_AUTH");
     if (error?.message) {
-      window.sessionStorage.setItem("ERROR_JOIN", error.message);
+      window.localStorage.setItem("ERROR_JOIN", error.message);
     }
     return <Navigate to={ROUTES.Auth.Login} />;
   }

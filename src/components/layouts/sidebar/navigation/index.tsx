@@ -11,11 +11,9 @@ import { CommandPalettes } from "../command_palettes";
 import { useState } from "react";
 import { NotificationDrawer } from "~/components/molecules";
 import { CustomAvatar, CustomInput } from "~/components/atoms";
-import { useNavigate } from "react-router-dom";
 import { useUserStore } from "~/store";
 import { getFirstTwoWords } from "~/utilities/string_utilities";
 import { logo } from "~/utilities/assets_utilities";
-import { ROUTES } from "~/routes/routes";
 
 interface Props {
   expanded: boolean;
@@ -30,7 +28,6 @@ export const Navigation: React.FC<Props> = ({
   const [open, setOpen] = useState(false);
   const [openNotification, setOpenNotification] = useState(false);
   const toggleOpen = () => setOpen(!open);
-  const navigate = useNavigate();
   const { user, setUser } = useUserStore();
   const userNavigation = [
     {
@@ -38,8 +35,8 @@ export const Navigation: React.FC<Props> = ({
       icon: ArrowLeftEndOnRectangleIcon,
       action: () => {
         setUser(null);
-        window.sessionStorage.removeItem("TOKEN_AUTH");
-        navigate(ROUTES.Auth.Login);
+        window.localStorage.removeItem("TOKEN_AUTH");
+        window.location.reload();
       },
     },
   ];

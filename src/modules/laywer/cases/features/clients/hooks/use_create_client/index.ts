@@ -41,7 +41,7 @@ export const useCreateClient = (): UseCreateClientReturn => {
     },
     onSuccess: () => {
       // Invalidar las queries de clientes para refrescar la lista
-      queryClient.invalidateQueries({ queryKey: ["external_clients"] });
+      queryClient.invalidateQueries({ queryKey: ["external-clients"] });
     },
     onError: (error: Error) => {
       console.error("Error al crear cliente:", error.message);

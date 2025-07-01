@@ -1,21 +1,18 @@
 import axios from "axios";
 import type { CasesApiResponse } from "../types";
+import { axiosInstance } from "~/interceptors";
 
-export const getPersonalCases = async (): Promise<CasesApiResponse> => {
+export const getPersonalCasesOld = async (): Promise<CasesApiResponse> => {
   try {
-    const token = window.sessionStorage.getItem("TOKEN_AUTH");
+    const token = window.localStorage.getItem("TOKEN_AUTH");
     const response = await axios.get<CasesApiResponse>(
-      "http://localhost:3000/api/v1/cases/my",
+      "http://localhost:3000/api/v1/cases/me",
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       }
     );
-
-    if (!response.data || !response.data.data) {
-      throw new Error("No se recibieron datos de casos del servidor");
-    }
 
     return response.data;
   } catch (error: unknown) {
@@ -25,4 +22,8 @@ export const getPersonalCases = async (): Promise<CasesApiResponse> => {
         : "Error inesperado al obtener los casos"
     );
   }
+};
+export const getPersonalCases = async (): Promise<CasesApiResponse> => {
+  const response = await axiosInstance.get<CasesApiResponse>("/cases/me");
+  return response.data;
 };

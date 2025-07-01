@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import type { CasesSummaryData } from "../../../types";
 import ApexCharts from "apexcharts";
 import { ChartBarIcon } from "@heroicons/react/24/solid";
+import { CustomStatusState } from "~/components/atoms";
 
 interface CasesChartProps {
   data: CasesSummaryData;
@@ -65,24 +66,19 @@ export const CasesChart = ({ data }: CasesChartProps) => {
       }
     };
   }, [data, hasData]);
+  if (!hasData)
+    return (
+      <CustomStatusState
+        icon={<ChartBarIcon className="size-10 text-gray-300 mb-2" />}
+        title="No hay información por el momento"
+        message="Cuando tengas casos registrados, aparecerán aquí en el gráfico para que puedas visualizar su distribución."
+      />
+    );
 
   return (
     <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all pb-4">
       <div className="w-full h-[300px] overflow-hidden px-4">
-        {hasData ? (
-          <div id="bar-chart" ref={chartRef} className="w-full" />
-        ) : (
-          <div className="flex flex-col items-center justify-center h-full text-center">
-            <ChartBarIcon className="size-14 text-gray-300 mb-2" />
-            <h3 className="text-base font-medium text-gray-900 mb-2">
-              No tienes información por el momento
-            </h3>
-            <p className="text-gray-500 text-sm max-w-sm">
-              Cuando tengas casos registrados, aparecerán aquí en el gráfico
-              para que puedas visualizar su distribución.
-            </p>
-          </div>
-        )}
+        <div id="bar-chart" ref={chartRef} className="w-full" />
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import { useUserStore } from "~/store";
 export const useAuth = () => {
   const token =
     typeof window !== "undefined"
-      ? window.sessionStorage.getItem("TOKEN_AUTH")
+      ? window.localStorage.getItem("TOKEN_AUTH")
       : null;
 
   const user = useUserStore((s) => s.user);

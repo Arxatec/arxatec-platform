@@ -11,9 +11,9 @@ export const useFilteredCases = (filters: FilterParams) => {
   const { data, isLoading, error, refetch } = usePersonalCases();
 
   const filteredCases = useMemo(() => {
-    if (!data?.data) return [];
+    if (!data?.data.cases) return [];
 
-    let cases = [...data.data];
+    let cases = [...data.data.cases];
 
     // Filter by search
     if (filters.search && filters.search.trim()) {
@@ -55,14 +55,14 @@ export const useFilteredCases = (filters: FilterParams) => {
     });
 
     return cases;
-  }, [data?.data, filters.search, filters.category, filters.sortBy]);
+  }, [data?.data.cases, filters.search, filters.category, filters.sortBy]);
 
   return {
     data: filteredCases,
     isLoading,
     error,
     refetch,
-    totalCases: data?.data?.length || 0,
+    totalCases: data?.data.cases.length || 0,
     filteredCount: filteredCases.length,
   };
 };

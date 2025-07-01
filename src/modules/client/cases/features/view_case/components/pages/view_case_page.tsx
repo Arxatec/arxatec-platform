@@ -35,6 +35,8 @@ import { socket } from "~/utilities";
 import { useUserStore } from "~/store";
 import { useArchiveCase } from "../../hooks/use_archive_case";
 import { useLawyer } from "../../hooks/use_lawyer";
+import { useSendMessage } from "../../hooks/use_send_message";
+import { ToastManager } from "~/components/molecules/toast_manager";
 
 // Types for API response data
 interface Attachment {
@@ -140,7 +142,7 @@ const getUrgencyDisplay = (urgency: string) => {
   return (
     urgencyMap[urgency.toLowerCase()] || {
       label: urgency,
-      className: "text-gray-600 bg-gray-100",
+      className: "text-slate-600 bg-slate-100",
     }
   );
 };
@@ -174,6 +176,8 @@ const attachmentToFileData = (attachment: Attachment) => ({
 export default function ViewCase() {
   const user = useUserStore((state) => state.user);
   const [lawyerId, setLawyerId] = useState<string | null>(null);
+  const [message, setMessage] = useState<string>("");
+  const [messages, setMessages] = useState<Message[]>([]);
   const { changeTitle } = useTitle();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -191,10 +195,31 @@ export default function ViewCase() {
     isError: isErrorLawyer,
   } = useLawyer(lawyerId);
 
+  const {
+    mutate: sendMessage,
+    isPending: isPendingSendMessage,
+    isError: isErrorSendMessage,
+  } = useSendMessage();
+
   const { mutate: archiveCase } = useArchiveCase();
 
   const handleArchiveCase = () => {
     archiveCase(id as string);
+  };
+
+  const handleSendMessage = () => {
+    const newMessage: Message[] = [
+      ...messages,
+      {
+        id: Math.floor(Math.random() * 1000000),
+        content: message,
+        created_at: new Date().toISOString(),
+        sender_name: user?.name,
+      },
+    ];
+    setMessages(newMessage);
+    setMessage("");
+    sendMessage({ idCase: id as string, message });
   };
 
   const sections = [
@@ -203,7 +228,7 @@ export default function ViewCase() {
         {
           id: "close",
           label: "Archivar caso",
-          icon: <ArchiveBoxIcon className="size-4 text-gray-500" />,
+          icon: <ArchiveBoxIcon className="size-4 text-slate-500" />,
           onClick: handleArchiveCase,
         },
       ],
@@ -250,6 +275,15 @@ export default function ViewCase() {
   }, [user]);
 
   useEffect(() => {
+    if (isErrorSendMessage) {
+      ToastManager.error(
+        "Error al enviar el mensaje",
+        "Sucedio un error inesperado, por favor intenta nuevamente. Si el error persiste, contacta al administrador o soporte."
+      );
+    }
+  }, [isErrorSendMessage]);
+
+  useEffect(() => {
     if (!isPending && data?.data?.case) {
       const lawyerId = data.data.case.service.lawyer_id?.toString();
       if (lawyerId) {
@@ -270,7 +304,7 @@ export default function ViewCase() {
       <CustomStatusState
         title="Error al cargar el caso"
         message="Sucedió un error inesperado, por favor intenta nuevamente. Si el error persiste, contacta al administrador o soporte."
-        icon={<ExclamationCircleIcon className="size-10 text-gray-300 mb-2" />}
+        icon={<ExclamationCircleIcon className="size-10 text-slate-300 mb-2" />}
       />
     );
   }
@@ -290,7 +324,7 @@ export default function ViewCase() {
       <CustomStatusState
         title="Caso no encontrado"
         message="No se pudo encontrar la información del caso solicitado."
-        icon={<ExclamationCircleIcon className="size-10 text-gray-300 mb-2" />}
+        icon={<ExclamationCircleIcon className="size-10 text-slate-300 mb-2" />}
       />
     );
   }
@@ -306,7 +340,7 @@ export default function ViewCase() {
           action={
             <CustomDropdown
               buttonIcon={
-                <EllipsisVerticalIcon className="size-5 text-gray-500" />
+                <EllipsisVerticalIcon className="size-5 text-slate-500" />
               }
               buttonClassName="w-full bg-white w-full shadow hover:shadow-md p-2.5 rounded-md"
               sections={sections}
@@ -320,20 +354,20 @@ export default function ViewCase() {
             <div className="shadow hover:shadow-md bg-white w-full p-4 rounded-md grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex items-center justify-start gap-2">
                 <div className="flex items-center gap-2 w-[130px]">
-                  <HashtagIcon className="size-4 text-gray-500" />
-                  <h3 className="text-gray-900 font-medium text-sm">
+                  <HashtagIcon className="size-4 text-slate-500" />
+                  <h3 className="text-slate-900 font-medium text-sm">
                     Identificador
                   </h3>
                 </div>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-slate-500">
                   {caseData.reference_code}
                 </p>
               </div>
 
               <div className="flex items-center justify-start gap-2">
                 <div className="flex items-center gap-2 w-[130px]">
-                  <ClockIcon className="size-4 text-gray-500" />
-                  <h3 className="text-gray-900 font-medium text-sm">
+                  <ClockIcon className="size-4 text-slate-500" />
+                  <h3 className="text-slate-900 font-medium text-sm">
                     Urgencia
                   </h3>
                 </div>
@@ -346,30 +380,30 @@ export default function ViewCase() {
 
               <div className="flex items-center justify-start gap-2">
                 <div className="flex items-center gap-2 w-[130px]">
-                  <CalendarDaysIcon className="size-4 text-gray-500" />
-                  <h3 className="text-gray-900 font-medium text-sm">
+                  <CalendarDaysIcon className="size-4 text-slate-500" />
+                  <h3 className="text-slate-900 font-medium text-sm">
                     Fecha de inicio
                   </h3>
                 </div>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-slate-500">
                   {formatDate(caseData.created_at)}
                 </p>
               </div>
               <div className="flex items-center justify-start gap-2">
                 <div className="flex items-center gap-2 w-[130px]">
-                  <TagIcon className="size-4 text-gray-500" />
-                  <h3 className="text-gray-900 font-medium text-sm">
+                  <TagIcon className="size-4 text-slate-500" />
+                  <h3 className="text-slate-900 font-medium text-sm">
                     Categoria
                   </h3>
                 </div>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-slate-500">
                   {caseData.category?.name}
                 </p>
               </div>
               <div className="flex items-center justify-start gap-2">
                 <div className="flex items-center gap-2 w-[130px]">
-                  <SignalIcon className="size-4 text-gray-500" />
-                  <h3 className="text-gray-900 font-medium text-sm">Estado</h3>
+                  <SignalIcon className="size-4 text-slate-500" />
+                  <h3 className="text-slate-900 font-medium text-sm">Estado</h3>
                 </div>
                 <p className="text-xs text-green-700 px-2 py-1 rounded-md bg-green-100 uppercase font-medium">
                   {caseData.status?.name}
@@ -378,8 +412,8 @@ export default function ViewCase() {
               {lawyer && lawyerId && (
                 <div className="flex items-center justify-start gap-2">
                   <div className="flex items-center gap-2 w-[130px]">
-                    <UserIcon className="size-4 text-gray-500" />
-                    <h3 className="text-gray-900 font-medium text-sm">
+                    <UserIcon className="size-4 text-slate-500" />
+                    <h3 className="text-slate-900 font-medium text-sm">
                       Abogado
                     </h3>
                   </div>
@@ -389,7 +423,7 @@ export default function ViewCase() {
                       avatar={lawyer?.data?.profilePicture}
                       size={"1.5rem"}
                     ></CustomAvatar>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-slate-500">
                       {lawyer?.data?.firstName} {lawyer?.data?.lastName}
                     </p>
                   </div>
@@ -399,11 +433,11 @@ export default function ViewCase() {
             <div className="mt-2 shadow hover:shadow-md bg-white w-full py-4 rounded-md">
               <div className="flex items-center justify-between gap-2 px-4">
                 <div className="flex items-center gap-2">
-                  <PaperClipIcon className="size-4 text-gray-900" />
-                  <h3 className="text-gray-900 font-medium text-sm">
+                  <PaperClipIcon className="size-4 text-slate-900" />
+                  <h3 className="text-slate-900 font-medium text-sm">
                     Archivos adjuntos
                   </h3>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-slate-500">
                     ({attachments?.data?.attachments?.length || 0})
                   </span>
                 </div>
@@ -411,9 +445,9 @@ export default function ViewCase() {
               <div className="mt-4 ">
                 {!attachments?.data?.attachments?.length ? (
                   <div className="px-4">
-                    <div className="flex items-center justify-center flex-col w-full h-full bg-gray-50 border-gray-200 border rounded-md p-4">
-                      <DocumentMinusIcon className="size-6 text-gray-500" />
-                      <p className="text-sm text-gray-500 text-center mt-2 font-medium">
+                    <div className="flex items-center justify-center flex-col w-full h-full bg-slate-50 border-slate-200 border rounded-md p-4">
+                      <DocumentMinusIcon className="size-6 text-slate-500" />
+                      <p className="text-sm text-slate-500 text-center mt-2 font-medium">
                         No hay archivos adjuntos
                       </p>
                     </div>
@@ -436,24 +470,24 @@ export default function ViewCase() {
                               <button
                                 onClick={() => handleViewAttachment(attachment)}
                                 key={attachment.id}
-                                className="flex p-3 bg-gray-50 rounded-md hover:bg-gray-100 transition-colors border border-gray-100 w-[300px] flex-shrink-0"
+                                className="flex p-3 bg-slate-50 rounded-md hover:bg-slate-100 transition-colors border border-slate-100 w-[300px] flex-shrink-0"
                               >
                                 <div className="flex items-center justify-start gap-3">
                                   <div className="flex-shrink-0">
-                                    <div className="size-10 bg-gray-100 rounded-md flex items-center justify-center">
+                                    <div className="size-10 bg-slate-100 rounded-md flex items-center justify-center">
                                       <FileIcon fileType={extension} />
                                     </div>
                                   </div>
                                   <div className="flex flex-col w-full min-w-0 justify-start">
-                                    <p className="text-sm font-medium text-gray-900 truncate w-full text-left">
+                                    <p className="text-sm font-medium text-slate-900 truncate w-full text-left">
                                       {attachment.label}
                                     </p>
                                     {attachment.description && (
-                                      <p className="text-xs text-gray-500 truncate w-full text-left">
+                                      <p className="text-xs text-slate-500 truncate w-full text-left">
                                         {attachment.description}
                                       </p>
                                     )}
-                                    <p className="text-xs text-gray-400 w-full text-left">
+                                    <p className="text-xs text-slate-400 w-full text-left">
                                       {extension.toUpperCase()} •{" "}
                                       {formatDate(attachment.created_at)}
                                     </p>
@@ -471,12 +505,12 @@ export default function ViewCase() {
             </div>
             <div className="mt-2 shadow hover:shadow-md bg-white w-full p-4 rounded-md h-full flex flex-col">
               <div className="flex items-center gap-2">
-                <DocumentTextIcon className="size-4 text-gray-900" />
-                <h3 className="text-gray-900 font-medium text-sm">
+                <DocumentTextIcon className="size-4 text-slate-900" />
+                <h3 className="text-slate-900 font-medium text-sm">
                   Descripción
                 </h3>
               </div>
-              <div className="bg-gray-50 mt-2 border border-gray-100 rounded-md w-full text-sm text-gray-700 p-4 h-full">
+              <div className="bg-slate-50 mt-2 border border-slate-100 rounded-md w-full text-sm text-slate-700 p-4 h-full">
                 <div
                   className={`${s.richTextContent} prose`}
                   dangerouslySetInnerHTML={{ __html: caseData.description }}
@@ -486,41 +520,74 @@ export default function ViewCase() {
           </div>
           <div className="h-full grid grid-rows-[auto_1fr_auto]">
             <div className="shadow hover:shadow-md bg-white w-full px-4 py-2 rounded-md">
-              <h2 className="text-gray-900 font-semibold text-base">
+              <h2 className="text-slate-900 font-semibold text-base">
                 Mensajes
               </h2>
             </div>
             <div className="shadow hover:shadow-md bg-white w-full p-4 rounded-md mt-2">
-              {caseData.service?.messages?.length === 0 ? (
-                <div className="flex items-center justify-center gap-2 w-full">
-                  <span className="flex-1 h-[1px] bg-gray-200"></span>
-                  <p className="text-xs text-gray-500 italic text-center whitespace-nowrap px-1">
-                    No hay mensajes aún
-                  </p>
-                  <span className="flex-1 h-[1px] bg-gray-200"></span>
-                </div>
+              {caseData.service?.messages?.length === 0 &&
+              messages.length === 0 ? (
+                <>
+                  <div className="flex items-center justify-center gap-2 w-full">
+                    <span className="flex-1 h-[1px] bg-slate-200"></span>
+                    <p className="text-xs text-slate-500 italic text-center whitespace-nowrap px-1">
+                      No hay mensajes aún
+                    </p>
+                    <span className="flex-1 h-[1px] bg-slate-200"></span>
+                  </div>
+                  <div
+                    key={"new-message"}
+                    className=" border-slate-100  last:border-b-0 bg-slate-50 p-4 rounded-md mt-2 border"
+                  >
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-sm font-medium text-slate-900">
+                        {user?.name || "Usuario"}
+                      </span>
+                      <span className="text-xs text-slate-500">10-05-2025</span>
+                    </div>
+                    <p className="text-sm text-slate-700">Hola mundo</p>
+                  </div>
+                </>
               ) : (
                 <div className="space-y-3">
                   {caseData.service.messages.map(
                     (message: Message, index: number) => (
                       <div
                         key={index}
-                        className="border-b border-gray-100 pb-2 last:border-b-0"
+                        className=" border-slate-100  last:border-b-0 bg-slate-50 p-4 rounded-md mt-2 border"
                       >
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-sm font-medium text-gray-900">
+                          <span className="text-sm font-medium text-slate-900">
                             {message.sender_name || "Usuario"}
                           </span>
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs text-slate-500">
                             {formatDate(message.created_at)}
                           </span>
                         </div>
-                        <p className="text-sm text-gray-700">
+                        <p className="text-sm text-slate-700">
                           {message.content}
                         </p>
                       </div>
                     )
                   )}
+                  {messages.map((message: Message, index: number) => (
+                    <div
+                      key={index}
+                      className=" border-slate-100  last:border-b-0 bg-slate-50 p-4 rounded-md mt-2 border"
+                    >
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-sm font-medium text-slate-900">
+                          {message.sender_name || "Usuario"}
+                        </span>
+                        <span className="text-xs text-slate-500">
+                          {formatDate(message.created_at)}
+                        </span>
+                      </div>
+                      <p className="text-sm text-slate-700">
+                        {message.content}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
@@ -528,8 +595,15 @@ export default function ViewCase() {
               <CustomInput
                 placeholder="Agrega un comentario"
                 className="ring-0 py-2.5 flex shadow hover:shadow-md"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
               />
-              <PrimaryButton className="gap-2 py-2.5">
+              <PrimaryButton
+                className="gap-2 py-2.5"
+                onClick={handleSendMessage}
+                loader={isPendingSendMessage}
+                disabled={isPendingSendMessage || !message}
+              >
                 <PaperAirplaneIcon className="size-4 text-white" />
                 Enviar
               </PrimaryButton>

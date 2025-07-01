@@ -4,9 +4,13 @@ import {
   FolderIcon,
   IdentificationIcon,
 } from "@heroicons/react/24/outline";
-import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
+import {
+  ExclamationCircleIcon,
+  ExclamationTriangleIcon,
+} from "@heroicons/react/24/solid";
 import { CustomTable } from "~/components/molecules";
 import type { CaseData } from "../../../types";
+import { CustomStatusState } from "~/components/atoms";
 
 interface CasesTableProps {
   cases: CaseData[];
@@ -94,19 +98,6 @@ const columns = [
   },
 ];
 
-const EmptyState = () => (
-  <div className="flex flex-col items-center justify-center py-12 text-center bg-white rounded-lg shadow-sm hover:shadow-md transition-all">
-    <ExclamationCircleIcon className="size-14 text-gray-300 mb-2" />
-    <h3 className="text-base font-medium text-gray-900 ">
-      No tienes casos aún
-    </h3>
-    <p className="text-gray-500 max-w-sm text-sm mt-2">
-      Cuando tengas casos asignados, aparecerán aquí para que puedas
-      gestionarlos fácilmente.
-    </p>
-  </div>
-);
-
 const LoadingState = () => (
   <div className="bg-white rounded-lg shadow-sm">
     {/* Header skeleton */}
@@ -141,27 +132,30 @@ const LoadingState = () => (
   </div>
 );
 
-const ErrorState = ({ error }: { error: Error }) => (
-  <div className="flex flex-col items-center justify-center py-12 text-center">
-    <ExclamationCircleIcon className="size-16 text-red-300 mb-4" />
-    <h3 className="text-lg font-medium text-red-900 mb-2">
-      Error al cargar los casos
-    </h3>
-    <p className="text-red-600 max-w-md">{error.message}</p>
-  </div>
-);
-
 export const CasesTable = ({ cases, isLoading, error }: CasesTableProps) => {
   if (isLoading) {
     return <LoadingState />;
   }
 
   if (error) {
-    return <ErrorState error={error} />;
+    return (
+      <CustomStatusState
+        icon={
+          <ExclamationTriangleIcon className="size-10 text-gray-300 mb-2" />
+        }
+        title="Error al cargar los casos"
+        message="Sucedió un error al cargar los casos, por favor intente nuevamente, si el problema persiste, por favor contacte al soporte."
+      />
+    );
   }
 
   if (!cases || cases.length === 0) {
-    return <EmptyState />;
+    return (
+      <CustomStatusState
+        title="No tienes casos aún"
+        message="Cuando tengas casos asignados, aparecerán aquí para que puedas gestionarlos fácilmente."
+      />
+    );
   }
 
   return (

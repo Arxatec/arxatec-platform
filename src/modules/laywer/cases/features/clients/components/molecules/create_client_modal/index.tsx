@@ -115,20 +115,17 @@ export const CreateClientModal: React.FC<CreateClientModalProps> = ({
             className="relative transform overflow-hidden rounded-xl bg-white text-left shadow-2xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
           >
             {/* Header con gradiente */}
-            <div className="bg-blue-600 px-6 py-4">
+            <div className="border-b border-gray-200 px-6 py-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="flex size-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
-                    <UserPlusIcon className="size-5 text-white" />
-                  </div>
                   <div>
                     <DialogTitle
                       as="h3"
-                      className="text-base font-semibold text-white"
+                      className="text-base font-semibold text-gray-900"
                     >
                       Nuevo cliente
                     </DialogTitle>
-                    <p className="text-sm text-blue-100">
+                    <p className="text-sm text-gray-500">
                       Agregue la información del cliente
                     </p>
                   </div>
@@ -137,173 +134,174 @@ export const CreateClientModal: React.FC<CreateClientModalProps> = ({
                   type="button"
                   onClick={handleClose}
                   disabled={isLoading}
-                  className="p-2 rounded-full hover:bg-white/20 transition-colors disabled:opacity-50"
+                  className="p-2 rounded-md  hover:bg-gray-100 transition-colors disabled:opacity-50"
                 >
-                  <XMarkIcon className="size-5 text-white" />
+                  <XMarkIcon className="size-5 text-gray-500" />
                 </button>
               </div>
             </div>
 
             {/* Contenido del formulario */}
-            <div className=" py-6">
+            <div className="py-6 ">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                {/* Avatar Section */}
-                <div className="flex flex-col items-center space-y-4">
-                  <div className="relative">
-                    <div className="size-20 rounded-full overflow-hidden bg-gray-100  border-gray-200 shadow-inner">
-                      {avatarPreview ? (
-                        <CustomImage
-                          src={avatarPreview}
-                          alt="Vista previa del avatar"
-                          className="size-full rounded-full object-cover"
-                        />
-                      ) : (
-                        <div className="size-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-                          <UserIcon className="size-8 text-gray-400" />
-                        </div>
-                      )}
+                <div className="py-4">
+                  <div className="flex flex-col items-center space-y-4">
+                    <div className="relative">
+                      <div className="size-20 rounded-md overflow-hidden bg-gray-100  border-gray-200 shadow-inner">
+                        {avatarPreview ? (
+                          <CustomImage
+                            src={avatarPreview}
+                            alt="Vista previa del avatar"
+                            className="size-full rounded-md object-cover"
+                          />
+                        ) : (
+                          <div className="size-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                            <UserIcon className="size-8 text-gray-400" />
+                          </div>
+                        )}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={isLoading}
+                        className="absolute -bottom-1 -right-1 p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md shadow-lg transition-colors disabled:opacity-50"
+                      >
+                        <PhotoIcon className="size-3" />
+                      </button>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => fileInputRef.current?.click()}
+
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileSelect}
+                      className="hidden"
                       disabled={isLoading}
-                      className="absolute -bottom-1 -right-1 p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg transition-colors disabled:opacity-50"
-                    >
-                      <PhotoIcon className="size-3" />
-                    </button>
-                  </div>
+                    />
 
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileSelect}
-                    className="hidden"
-                    disabled={isLoading}
-                  />
-
-                  {errors.avatar && (
-                    <p className="text-sm text-red-600 text-center">
-                      {errors.avatar.message}
-                    </p>
-                  )}
-
-                  <p className="text-xs text-gray-500 text-center">
-                    Seleccione una imagen para el avatar
-                  </p>
-                </div>
-                <div className="px-4">
-                  {/* Campos del formulario en grid */}
-                  <div className="grid grid-cols-1 gap-6">
-                    {/* Nombre completo */}
-                    <div>
-                      <CustomInput
-                        label="Nombre completo"
-                        type="text"
-                        placeholder="Ingrese el nombre completo"
-                        disabled={isLoading}
-                        startAdornment={
-                          <UserIcon className="size-4 text-gray-400" />
-                        }
-                        className={
-                          errors.full_name
-                            ? "ring-red-300 focus:outline-red-600"
-                            : ""
-                        }
-                        {...register("full_name", clientValidation.full_name)}
-                      />
-                      {errors.full_name && (
-                        <p className="mt-1 text-sm text-red-600">
-                          {errors.full_name.message}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Email */}
-                    <div>
-                      <CustomInput
-                        label="Correo electrónico"
-                        type="email"
-                        placeholder="correo@ejemplo.com"
-                        disabled={isLoading}
-                        startAdornment={
-                          <EnvelopeIcon className="size-4 text-gray-400" />
-                        }
-                        className={
-                          errors.email
-                            ? "ring-red-300 focus:outline-red-600"
-                            : ""
-                        }
-                        {...register("email", clientValidation.email)}
-                      />
-                      {errors.email && (
-                        <p className="mt-1 text-sm text-red-600">
-                          {errors.email.message}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Grid para teléfono y DNI */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {/* Teléfono */}
-                      <div>
-                        <CustomInput
-                          label="Teléfono"
-                          type="tel"
-                          placeholder="987654321"
-                          disabled={isLoading}
-                          startAdornment={
-                            <PhoneIcon className="size-4 text-gray-400" />
-                          }
-                          className={
-                            errors.phone
-                              ? "ring-red-300 focus:outline-red-600"
-                              : ""
-                          }
-                          {...register("phone", clientValidation.phone)}
-                        />
-                        {errors.phone && (
-                          <p className="mt-1 text-sm text-red-600">
-                            {errors.phone.message}
-                          </p>
-                        )}
-                      </div>
-
-                      {/* DNI */}
-                      <div>
-                        <CustomInput
-                          label="DNI"
-                          type="text"
-                          placeholder="12345678"
-                          disabled={isLoading}
-                          startAdornment={
-                            <IdentificationIcon className="size-4 text-gray-400" />
-                          }
-                          className={
-                            errors.dni
-                              ? "ring-red-300 focus:outline-red-600"
-                              : ""
-                          }
-                          {...register("dni", clientValidation.dni)}
-                        />
-                        {errors.dni && (
-                          <p className="mt-1 text-sm text-red-600">
-                            {errors.dni.message}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Error general */}
-                  {error && (
-                    <div className="py-2.5 px-4 bg-red-50 border border-red-200 rounded-lg mt-4">
-                      <p className="text-sm text-red-700 font-medium">
-                        Error al crear cliente
+                    {errors.avatar && (
+                      <p className="text-sm text-red-600 text-center">
+                        {errors.avatar.message}
                       </p>
-                      <p className="text-sm text-red-600">{error.message}</p>
+                    )}
+
+                    <p className="text-xs text-gray-500 text-center">
+                      Seleccione una imagen para el avatar
+                    </p>
+                  </div>
+                  <div className="px-4 mt-4">
+                    {/* Campos del formulario en grid */}
+                    <div className="grid grid-cols-1 gap-6">
+                      {/* Nombre completo */}
+                      <div>
+                        <CustomInput
+                          label="Nombre completo"
+                          type="text"
+                          placeholder="Ingrese el nombre completo"
+                          disabled={isLoading}
+                          startAdornment={
+                            <UserIcon className="size-4 text-gray-400" />
+                          }
+                          className={
+                            errors.full_name
+                              ? "ring-red-300 focus:outline-red-600"
+                              : ""
+                          }
+                          {...register("full_name", clientValidation.full_name)}
+                        />
+                        {errors.full_name && (
+                          <p className="mt-1 text-sm text-red-600">
+                            {errors.full_name.message}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Email */}
+                      <div>
+                        <CustomInput
+                          label="Correo electrónico"
+                          type="email"
+                          placeholder="correo@ejemplo.com"
+                          disabled={isLoading}
+                          startAdornment={
+                            <EnvelopeIcon className="size-4 text-gray-400" />
+                          }
+                          className={
+                            errors.email
+                              ? "ring-red-300 focus:outline-red-600"
+                              : ""
+                          }
+                          {...register("email", clientValidation.email)}
+                        />
+                        {errors.email && (
+                          <p className="mt-1 text-sm text-red-600">
+                            {errors.email.message}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Grid para teléfono y DNI */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {/* Teléfono */}
+                        <div>
+                          <CustomInput
+                            label="Teléfono"
+                            type="tel"
+                            placeholder="987654321"
+                            disabled={isLoading}
+                            startAdornment={
+                              <PhoneIcon className="size-4 text-gray-400" />
+                            }
+                            className={
+                              errors.phone
+                                ? "ring-red-300 focus:outline-red-600"
+                                : ""
+                            }
+                            {...register("phone", clientValidation.phone)}
+                          />
+                          {errors.phone && (
+                            <p className="mt-1 text-sm text-red-600">
+                              {errors.phone.message}
+                            </p>
+                          )}
+                        </div>
+
+                        {/* DNI */}
+                        <div>
+                          <CustomInput
+                            label="DNI"
+                            type="text"
+                            placeholder="12345678"
+                            disabled={isLoading}
+                            startAdornment={
+                              <IdentificationIcon className="size-4 text-gray-400" />
+                            }
+                            className={
+                              errors.dni
+                                ? "ring-red-300 focus:outline-red-600"
+                                : ""
+                            }
+                            {...register("dni", clientValidation.dni)}
+                          />
+                          {errors.dni && (
+                            <p className="mt-1 text-sm text-red-600">
+                              {errors.dni.message}
+                            </p>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  )}
+
+                    {/* Error general */}
+                    {error && (
+                      <div className="py-2.5 px-4 bg-red-50 border border-red-200 rounded-lg mt-4">
+                        <p className="text-sm text-red-700 font-medium">
+                          Error al crear cliente
+                        </p>
+                        <p className="text-sm text-red-600">{error.message}</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {/* Botones */}

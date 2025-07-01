@@ -23,7 +23,7 @@ export const SocialAuthOptions = () => {
       );
     },
     onSuccess: (data: any) => {
-      window.sessionStorage.setItem("TOKEN_AUTH", data.data.token);
+      window.localStorage.setItem("TOKEN_AUTH", data.data.token);
       if (data.data.isNewUser) {
         navigate(ROUTES.Auth.OnboardingGeneral);
       } else {

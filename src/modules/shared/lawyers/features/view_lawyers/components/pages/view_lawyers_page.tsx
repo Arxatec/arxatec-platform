@@ -8,7 +8,7 @@ import type { Lawyer } from "../../types";
 
 export default function ViewLawyersPage() {
   const { changeTitle } = useTitle();
-  const token = window.sessionStorage.getItem("TOKEN_AUTH");
+  const token = window.localStorage.getItem("TOKEN_AUTH");
   const { data: lawyers, isPending } = useQuery<Lawyer[]>({
     queryKey: ["lawyers"],
     queryFn: () => getLawyers(token),

@@ -28,7 +28,7 @@ const columns = [
     accessor: "reference_code",
     align: "left" as const,
     renderCell: (value: string) => {
-      const lastFourDigits = value.slice(-4);
+      const lastFourDigits = value.slice(-11);
       return (
         <span className="font-mono text-sm font-semibold text-blue-600">
           ...{lastFourDigits}

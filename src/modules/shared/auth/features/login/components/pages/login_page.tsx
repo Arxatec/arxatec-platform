@@ -16,13 +16,13 @@ export default function LoginPage() {
   const { changeTitle } = useTitle();
 
   useEffect(() => {
-    const error = window.sessionStorage.getItem("ERROR_JOIN");
+    const error = window.localStorage.getItem("ERROR_JOIN");
     if (error) {
       ToastManager.error(
         "Error al ingresar",
-        "No encontramos tu cuenta, pero estas registrado en Arxatec, por favor, contacta al soporte.",
+        "No encontramos tu cuenta, pero estas registrado en Arxatec, por favor, contacta al soporte."
       );
-      window.sessionStorage.removeItem("ERROR_JOIN");
+      window.localStorage.removeItem("ERROR_JOIN");
     }
     changeTitle("Ingresar - Arxatec");
   }, []);

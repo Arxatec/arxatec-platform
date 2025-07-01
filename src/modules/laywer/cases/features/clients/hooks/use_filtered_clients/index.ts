@@ -11,9 +11,9 @@ export const useFilteredClients = (filters: FilterParams) => {
   const { data, isLoading, error, refetch } = useExternalClients();
 
   const filteredClients = useMemo(() => {
-    if (!data?.data) return [];
+    if (!data?.data.clients) return [];
 
-    let clients = [...data.data];
+    let clients = [...data.data.clients];
 
     // Filtrar por búsqueda
     if (filters.search && filters.search.trim()) {
@@ -55,14 +55,14 @@ export const useFilteredClients = (filters: FilterParams) => {
     });
 
     return clients;
-  }, [data?.data, filters.search, filters.category, filters.sortBy]);
+  }, [data?.data.clients, filters.search, filters.category, filters.sortBy]);
 
   return {
     data: filteredClients,
     isLoading,
     error,
     refetch,
-    totalClients: data?.data?.length || 0,
+    totalClients: data?.data.clients.length || 0,
     filteredCount: filteredClients.length,
   };
 };

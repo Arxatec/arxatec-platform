@@ -29,7 +29,7 @@ export const LoginForm = () => {
 
   const onSuccess = (data: LoginModel) => {
     setError(null);
-    window.sessionStorage.setItem("TOKEN_AUTH", data.token);
+    window.localStorage.setItem("TOKEN_AUTH", data.token);
     navigate(ROUTES.Lawyer.Cases);
   };
 

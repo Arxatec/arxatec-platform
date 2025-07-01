@@ -8,6 +8,6 @@ export const useExternalClients = () => {
     queryFn: getExternalClients,
     retry: 2,
     refetchOnWindowFocus: false,
-    staleTime: 5 * 60 * 1000, // 5 minutos
+    staleTime: 5 * 60 * 1000,
   });
 };

@@ -5,7 +5,7 @@ import type { CreateCaseDTO } from "../dtos";
 
 export const createCase = async (formData: CreateCaseDTO) => {
   try {
-    const token = window.sessionStorage.getItem("TOKEN_AUTH");
+    const token = window.localStorage.getItem("TOKEN_AUTH");
     const response = await axios.post(
       "http://localhost:3000/api/v1/cases",
       formData,
@@ -24,7 +24,7 @@ export const createCase = async (formData: CreateCaseDTO) => {
 
 export const attachFile = async (id: string, formData: FormData) => {
   try {
-    const token = window.sessionStorage.getItem("TOKEN_AUTH");
+    const token = window.localStorage.getItem("TOKEN_AUTH");
     const response = await axios.post(
       `http://localhost:3000/api/v1/cases/${id}/attachment`,
       formData,

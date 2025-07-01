@@ -42,7 +42,7 @@ export default function OnboardingLawyer() {
   const mutation = useMutation({
     mutationFn: createLawyer,
     onSuccess: () => {
-      navigateToDashboard();
+      window.location.reload();
     },
     onError: (error) => {
       ToastManager.error(
@@ -130,7 +130,6 @@ export default function OnboardingLawyer() {
   const { handleSubmit } = methods;
 
   const navigateToOnboarding = () => navigate(ROUTES.Auth.OnboardingGeneral);
-  const navigateToDashboard = () => navigate(ROUTES.Lawyer.Cases);
 
   const handleNextStep = async () => {
     const isLastStep = step === steps.length - 1;
@@ -223,7 +222,10 @@ export default function OnboardingLawyer() {
 
     // Información profesional
     formData.append("specialty", data.professionalInfo.speciality.name);
-    formData.append("experience", data.professionalInfo.experience.name);
+    formData.append(
+      "experience",
+      data.professionalInfo.experience.id.toString()
+    );
     formData.append("biography", data.lawyerProfile.bio);
     formData.append("linkedin", data.professionalInfo.linkedin);
     formData.append("preferred_client", data.preferences.idealClient.name);
@@ -335,7 +337,12 @@ export default function OnboardingLawyer() {
             {error && (
               <p className="text-sm text-red-500 text-left mb-4">{error}</p>
             )}
-            <PrimaryButton onClick={handleNextStep} className="w-full py-2">
+            <PrimaryButton
+              onClick={handleNextStep}
+              className="w-full py-2"
+              loader={mutation.isPending}
+              disabled={mutation.isPending}
+            >
               {isLastStep ? "Finalizar y guardar" : "Siguiente"}
             </PrimaryButton>
             <PrimaryButton

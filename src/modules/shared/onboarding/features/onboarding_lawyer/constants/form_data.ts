@@ -24,19 +24,19 @@ export const experiencesData = [
   },
   {
     id: 3,
-    name: "Más de 3 años",
+    name: "3 años",
   },
   {
     id: 4,
-    name: "Más de 5 años",
+    name: "4 años",
   },
   {
     id: 5,
-    name: "Más de 7 años",
+    name: "5 años",
   },
   {
-    id: 6,
-    name: "Más de 10 años de experiencia",
+    id: 10,
+    name: "10 años",
   },
 ];
 

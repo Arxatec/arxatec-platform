@@ -7,11 +7,15 @@ import {
 import { FolderIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { CustomAvatar, CustomInput, CustomSelector } from "~/components/atoms";
+import {
+  CustomAvatar,
+  CustomInput,
+  CustomSelector,
+  CustomStatusState,
+} from "~/components/atoms";
 import { classNames } from "~/utilities/string_utilities";
 import { CustomTable } from "~/components/molecules/custom_table";
 import type { CaseData } from "~/modules/laywer/cases/features/personal_cases/types";
-import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 
 interface User {
   name: string;
@@ -146,12 +150,15 @@ export const Table = ({ data = [], isLoading = false, error }: TableProps) => {
   if (isLoading) {
     return (
       <div className="w-full mt-2">
-        <div className="bg-white px-4 py-4 rounded-lg shadow-sm">
+        <div className="bg-gray-200 px-4 py-4 rounded-lg shadow-sm animate-pulse">
           <div className="animate-pulse">
-            <div className="h-4 bg-gray-200 rounded w-1/4 mb-4"></div>
-            <div className="space-y-3">
+            <div className="h-4 bg-gray-300 rounded w-1/4 mb-4 animate-pulse"></div>
+            <div className="space-y-2">
               {[...Array(5)].map((_, i) => (
-                <div key={i} className="h-10 bg-gray-200 rounded"></div>
+                <div
+                  key={i}
+                  className="h-10 bg-gray-300 animate-pulse rounded"
+                ></div>
               ))}
             </div>
           </div>
@@ -162,16 +169,10 @@ export const Table = ({ data = [], isLoading = false, error }: TableProps) => {
 
   if (error) {
     return (
-      <div className="w-full mt-2">
-        <div className="bg-white px-4 py-8 rounded-lg shadow-sm">
-          <div className="text-center">
-            <div className="text-red-500 text-sm mb-2">
-              Error al cargar los casos
-            </div>
-            <p className="text-gray-600 text-sm">{error.message}</p>
-          </div>
-        </div>
-      </div>
+      <CustomStatusState
+        title="Error al cargar los casos"
+        message="Sucedió un error al cargar los casos, por favor intente nuevamente, si el problema persiste, por favor contacte al soporte."
+      />
     );
   }
 
@@ -203,17 +204,11 @@ export const Table = ({ data = [], isLoading = false, error }: TableProps) => {
       </div>
 
       {data.length === 0 ? (
-        <div className="bg-white px-4 py-16 rounded-lg shadow-sm mt-2">
-          <div className="text-center">
-            <ExclamationCircleIcon className="size-14 text-gray-300 mx-auto mb-2" />
-            <h3 className="text-base font-medium text-gray-900 mb-2">
-              No hay casos registrados
-            </h3>
-            <p className="text-gray-600 text-sm text-center max-w-sm mx-auto">
-              Aún no tienes casos registrados. Los casos aparecerán aquí cuando
-              se creen.
-            </p>
-          </div>
+        <div className="mt-2">
+          <CustomStatusState
+            title="No hay casos registrados"
+            message="Aún no tienes casos registrados. Los casos aparecerán aquí cuando se creen, por el momento puedes crear un caso desde el botón de crear caso."
+          />
         </div>
       ) : (
         <CustomTable
