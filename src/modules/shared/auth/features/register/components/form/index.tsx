@@ -6,6 +6,21 @@ export const Form = () => {
   return (
     <form>
       <div className="flex flex-col gap-6">
+        <div className="grid grid-cols-2 gap-3">
+          <div className="grid gap-3">
+            <Label htmlFor="email">Nombre</Label>
+            <Input id="name" type="text" placeholder="Ej. Juan" required />
+          </div>
+          <div className="grid gap-3">
+            <Label htmlFor="email">Apellido</Label>
+            <Input
+              id="last_name"
+              type="text"
+              placeholder="Ej. Perez"
+              required
+            />
+          </div>
+        </div>
         <div className="grid gap-3">
           <Label htmlFor="email">Correo electrónico</Label>
           <Input
@@ -16,15 +31,7 @@ export const Form = () => {
           />
         </div>
         <div className="grid gap-3">
-          <div className="flex items-center">
-            <Label htmlFor="password">Contraseña</Label>
-            <a
-              href="#"
-              className="ml-auto inline-block text-sm underline-offset-4 hover:underline text-secondary-foreground"
-            >
-              ¿Olvidaste tu contraseña?
-            </a>
-          </div>
+          <Label htmlFor="password">Contraseña</Label>
           <Input
             id="password"
             placeholder="Ej. cfaWR52$!Mja"
@@ -34,17 +41,17 @@ export const Form = () => {
         </div>
         <div className="flex flex-col gap-3">
           <Button type="submit" className="w-full">
-            Ingresar
+            Registrarse
           </Button>
         </div>
       </div>
       <div className="mt-4 text-center text-sm text-secondary-foreground">
-        ¿No tienes una cuenta?{" "}
+        ¿Ya tienes una cuenta?{" "}
         <Link
-          to={ROUTES.Auth.Register}
+          to={ROUTES.Auth.Login}
           className="underline underline-offset-4 text-foreground"
         >
-          Registrarse
+          Ingresar
         </Link>
       </div>
     </form>

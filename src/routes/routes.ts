@@ -13,7 +13,8 @@ export const ROUTES = {
   },
 
   Lawyer: {
-    ViewCases: "/cases",
+    ViewCases: "/lawyer/cases",
+    CreateCase: "/lawyer/cases/create",
   },
 
   Error: {

@@ -46,9 +46,9 @@ export const LoaderSplash = () => {
     <div className="w-screen h-screen bg-neutral-950 flex items-center justify-center">
       <div className="flex flex-col items-center gap-4">
         <img src="/logo.png" alt="logo" className="w-48" />
-        <p className="text-neutral-200 text-base font-serif font-medium h-6">
+        <p className="text-foreground text-base font-serif font-medium h-6">
           Estamos {displayedText}
-          <span className="animate-pulse text-neutral-400">|</span>
+          <span className="animate-pulse text-secondary-foreground">|</span>
         </p>
       </div>
     </div>

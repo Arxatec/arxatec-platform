@@ -1,5 +1,6 @@
 import { Input, Label, Button } from "@/components/ui";
 import { ROUTES } from "@/routes/routes";
+import { ArrowLeftIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export const Form = () => {
@@ -7,44 +8,36 @@ export const Form = () => {
     <form>
       <div className="flex flex-col gap-6">
         <div className="grid gap-3">
-          <Label htmlFor="email">Correo electrónico</Label>
+          <Label htmlFor="password">Nueva contraseña</Label>
           <Input
-            id="email"
-            type="email"
-            placeholder="Ej. correo@ejemplo.com"
+            id="password"
+            type="password"
+            placeholder="Ej. cfaWR52$!Mja"
             required
           />
         </div>
         <div className="grid gap-3">
-          <div className="flex items-center">
-            <Label htmlFor="password">Contraseña</Label>
-            <a
-              href="#"
-              className="ml-auto inline-block text-sm underline-offset-4 hover:underline text-secondary-foreground"
-            >
-              ¿Olvidaste tu contraseña?
-            </a>
-          </div>
+          <Label htmlFor="password_confirmation">Confirmar contraseña</Label>
           <Input
-            id="password"
-            placeholder="Ej. cfaWR52$!Mja"
+            id="password_confirmation"
             type="password"
+            placeholder="Ej. cfaWR52$!Mja"
             required
           />
         </div>
         <div className="flex flex-col gap-3">
           <Button type="submit" className="w-full">
-            Ingresar
+            Cambiar contraseña
           </Button>
         </div>
       </div>
       <div className="mt-4 text-center text-sm text-secondary-foreground">
-        ¿No tienes una cuenta?{" "}
         <Link
-          to={ROUTES.Auth.Register}
-          className="underline underline-offset-4 text-foreground"
+          to={ROUTES.Auth.Login}
+          className="flex items-center justify-center gap-2 text-foreground"
         >
-          Registrarse
+          <ArrowLeftIcon className="w-4 h-4" />
+          Volver atrás
         </Link>
       </div>
     </form>

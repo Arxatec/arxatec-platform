@@ -1,5 +1,6 @@
 import { Input, Label, Button } from "@/components/ui";
 import { ROUTES } from "@/routes/routes";
+import { ArrowLeftIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export const Form = () => {
@@ -15,36 +16,19 @@ export const Form = () => {
             required
           />
         </div>
-        <div className="grid gap-3">
-          <div className="flex items-center">
-            <Label htmlFor="password">Contraseña</Label>
-            <a
-              href="#"
-              className="ml-auto inline-block text-sm underline-offset-4 hover:underline text-secondary-foreground"
-            >
-              ¿Olvidaste tu contraseña?
-            </a>
-          </div>
-          <Input
-            id="password"
-            placeholder="Ej. cfaWR52$!Mja"
-            type="password"
-            required
-          />
-        </div>
         <div className="flex flex-col gap-3">
           <Button type="submit" className="w-full">
-            Ingresar
+            Recuperar contraseña
           </Button>
         </div>
       </div>
       <div className="mt-4 text-center text-sm text-secondary-foreground">
-        ¿No tienes una cuenta?{" "}
         <Link
-          to={ROUTES.Auth.Register}
-          className="underline underline-offset-4 text-foreground"
+          to={ROUTES.Auth.Login}
+          className="flex items-center justify-center gap-2 text-foreground"
         >
-          Registrarse
+          <ArrowLeftIcon className="w-4 h-4" />
+          Volver atrás
         </Link>
       </div>
     </form>

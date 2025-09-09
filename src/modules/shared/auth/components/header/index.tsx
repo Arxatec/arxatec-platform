@@ -1,6 +1,4 @@
 import React from "react";
-import { CardTitle, CardDescription } from "@/components/ui";
-
 interface Props {
   title: string;
   description: string;
@@ -8,11 +6,9 @@ interface Props {
 
 export const Header: React.FC<Props> = ({ title, description }) => {
   return (
-    <React.Fragment>
-      <CardTitle>
-        <h1 className="text-xl font-extrabold font-serif">{title}</h1>
-      </CardTitle>
-      <CardDescription>{description}</CardDescription>
-    </React.Fragment>
+    <div>
+      <h1 className="text-xl font-extrabold font-serif">{title}</h1>
+      <p className="text-sm text-secondary-foreground">{description}</p>
+    </div>
   );
 };

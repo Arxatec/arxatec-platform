@@ -23,13 +23,25 @@ export const authRoutes = {
           path: ROUTES.Auth.Register,
           element: <publicPages.RegisterPage />,
         },
+        {
+          path: ROUTES.Auth.VerifyAccount,
+          element: <publicPages.VerifyAccountPage />,
+        },
+        {
+          path: ROUTES.Auth.RecoverPassword,
+          element: <publicPages.RecoverPasswordPage />,
+        },
+        {
+          path: ROUTES.Auth.VerifyPasswordReset,
+          element: <publicPages.VerifyPasswordResetPage />,
+        },
+        {
+          path: ROUTES.Auth.ChangePassword,
+          element: <publicPages.ChangePasswordPage />,
+        },
       ],
     },
     /*  
-    {
-      path: ROUTES.Auth.VerifyAccount,
-      element: <publicPages.VerifyAccountPage />,
-    },
     {
       path: ROUTES.Auth.RecoverPassword,
       element: <publicPages.RecoverPasswordPage />,
