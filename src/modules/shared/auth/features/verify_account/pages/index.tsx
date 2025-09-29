@@ -1,7 +1,14 @@
+import { useEffect } from "react";
 import { Header } from "../../../components";
 import { Form } from "../components";
+import { useTitle } from "@/hooks";
 
 export default function VerifyAccountPage() {
+  const { changeTitle } = useTitle();
+
+  useEffect(() => {
+    changeTitle("Verificar cuenta - Arxatec");
+  }, []);
   return (
     <>
       <Header

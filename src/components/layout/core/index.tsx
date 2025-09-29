@@ -11,15 +11,7 @@ export default function Core({ children }: Props) {
   return (
     <QueryClientProvider client={createQueryClient()}>
       {children}
-      <Toaster
-        richColors
-        closeButton
-        duration={5000}
-        dir="auto"
-        expand
-        invert
-        visibleToasts={1}
-      />
+      <Toaster visibleToasts={2} duration={5000} dir="auto" expand />
     </QueryClientProvider>
   );
 }

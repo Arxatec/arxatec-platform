@@ -39,6 +39,7 @@ export const Form = () => {
   };
 
   const onSubmit = (data: RegisterRequest) => {
+    localStorage.setItem("TEMPORARY_EMAIL", data.email);
     registerUser(data, {
       onSuccess,
       onError,
