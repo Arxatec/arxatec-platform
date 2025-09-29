@@ -15,8 +15,19 @@ axiosInstance.interceptors.request.use((config) => {
 });
 
 axiosInstance.interceptors.response.use(
-  (response) => response,
-  (error: AxiosError<Response>) => {
+  (response) => {
+    const apiResponse = response.data;
+
+    if (!apiResponse?.data) {
+      return Promise.reject(
+        new Error("No se pudo procesar la respuesta del servidor")
+      );
+    }
+
+    return apiResponse.data;
+  },
+
+  (error: AxiosError<Response<unknown>>) => {
     const message = error.response?.data.description;
     return Promise.reject(new Error(message));
   }

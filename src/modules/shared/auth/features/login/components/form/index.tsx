@@ -18,12 +18,12 @@ export const Form = () => {
         <div className="grid gap-3">
           <div className="flex items-center">
             <Label htmlFor="password">Contraseña</Label>
-            <a
-              href="#"
+            <Link
+              to={ROUTES.Auth.RecoverPassword}
               className="ml-auto inline-block text-sm underline-offset-4 hover:underline text-secondary-foreground"
             >
               ¿Olvidaste tu contraseña?
-            </a>
+            </Link>
           </div>
           <Input
             id="password"
