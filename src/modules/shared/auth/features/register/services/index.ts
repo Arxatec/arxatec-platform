@@ -1,14 +1,14 @@
 import { axiosInstance } from "@/interceptors";
-import type { RegisterRequest, RegisterResponse } from "../types";
+import type { RegisterRequest } from "../types";
 import type { Response } from "@/types";
 
 export const register = async (
   registerRequest: RegisterRequest
-): Promise<RegisterResponse> => {
-  const { data } = await axiosInstance.post<Response<RegisterResponse>>(
-    "/users/register",
+): Promise<Response> => {
+  const { data } = await axiosInstance.post<Response>(
+    "/auth/register/request",
     registerRequest
   );
 
-  return data.data as RegisterResponse;
+  return data;
 };

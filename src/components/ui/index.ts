@@ -17,3 +17,4 @@ export * from "./avatar";
 export * from "./file_dropzone";
 export * from "./select";
 export * from "./text_area";
+export * from "./form_input";
