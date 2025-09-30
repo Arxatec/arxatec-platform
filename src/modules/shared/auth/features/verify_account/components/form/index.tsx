@@ -1,11 +1,11 @@
 import { Button, InputOTPGroup, InputOTPSlot, InputOTP } from "@/components/ui";
+import { Resend } from "../";
 import { useMutation } from "@tanstack/react-query";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import { toast } from "sonner";
 import { useState } from "react";
 import { verifyCode } from "../../services";
 import type { VerifyCodeRequest } from "../../types";
-import { Resend } from "../resend";
 import { Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/routes/routes";
@@ -61,6 +61,7 @@ export const Form = () => {
           </InputOTPGroup>
         </InputOTP>
       </div>
+
       {error && (
         <p className="text-sm mt-2 text-red-500 text-center">{error}</p>
       )}

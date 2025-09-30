@@ -1,40 +1,40 @@
-# Guía de Testing - Arxatec Platform
+# Testing Guide – Arxatec Platform
 
-Esta guía explica cómo ejecutar y escribir tests en el proyecto Arxatec Platform siguiendo nuestra arquitectura de features.
+This guide explains how to write and run tests in the Arxatec Platform project following our feature-based architecture.
 
-## 📋 Tabla de Contenidos
+## 📋 Table of Contents
 
-- [Configuración](#configuración)
-- [Arquitectura de Tests](#arquitectura-de-tests)
-- [Tests Unitarios](#tests-unitarios)
-- [Tests E2E](#tests-e2e)
-- [Ejecutar Tests](#ejecutar-tests)
-- [Estructura de Archivos](#estructura-de-archivos)
-- [Mejores Prácticas](#mejores-prácticas)
+- [Setup](#setup)
+- [Test Architecture](#test-architecture)
+- [Unit Tests](#unit-tests)
+- [E2E Tests](#e2e-tests)
+- [Running Tests](#running-tests)
+- [File Structure](#file-structure)
+- [Best Practices](#best-practices)
 - [CI/CD](#cicd)
 
-## 🛠️ Configuración
+## 🛠️ Setup
 
-El proyecto está configurado con dos tipos principales de testing:
+The project is configured with two main types of testing:
 
-### Tests Unitarios y de Componentes
+### Unit and Component Tests
 
-- **Vitest**: Framework de testing rápido y moderno
-- **React Testing Library**: Para testing de componentes React
-- **Jest DOM**: Matchers adicionales para DOM testing
+- **Vitest**: Fast and modern testing framework
+- **React Testing Library**: For testing React components
+- **Jest DOM**: Additional matchers for DOM testing
 
-### Tests End-to-End (E2E)
+### End-to-End (E2E) Tests
 
-- **Playwright**: Framework para testing E2E con soporte para múltiples navegadores
-- **Chromium**: Navegador configurado para los tests
+- **Playwright**: E2E testing framework with multi-browser support
+- **Chromium**: Configured browser for tests
 
-## 🏗️ Arquitectura de Tests
+## 🏗️ Test Architecture
 
-Seguimos una arquitectura **co-ubicada** y **por features** para mantener los tests cerca del código que prueban:
+We follow a **co-located** and **feature-based** architecture to keep tests close to the code they cover:
 
-### 1. Tests por Features
+### 1. Feature-Based Tests
 
-Cada feature tiene su propia carpeta `__tests__/` con tests unitarios y E2E:
+Each feature has its own `__tests__/` folder with unit and E2E tests:
 
 ```
 src/modules/shared/auth/features/
@@ -43,59 +43,59 @@ src/modules/shared/auth/features/
 │   ├── pages/
 │   ├── services/
 │   ├── types/
-│   └── __tests__/              # 👈 Tests de la feature
+│   └── __tests__/
 │       ├── unit/
-│       │   ├── components/     # Tests de componentes
-│       │   ├── services/       # Tests de servicios
-│       │   └── pages/          # Tests de páginas
+│       │   ├── components/
+│       │   ├── services/
+│       │   └── pages/
 │       └── e2e/
-│           └── register.spec.ts # Tests E2E
+│           └── register.spec.ts
 ```
 
-### 2. Tests Co-ubicados para Componentes UI
+### 2. Co-located Tests for UI Components
 
-Los componentes UI tienen tests junto al código:
+UI components have their tests next to the code:
 
 ```
 src/components/ui/
 ├── button/
 │   ├── index.tsx
-│   └── button.test.tsx         # 👈 Test co-ubicado
+│   └── button.test.tsx
 ├── input/
 │   ├── index.tsx
-│   └── input.test.tsx          # 👈 Test co-ubicado
+│   └── input.test.tsx
 ```
 
-### 3. Tests de Stores
+### 3. Store Tests
 
-Los stores de Zustand tienen sus tests co-ubicados:
+Zustand stores have co-located tests:
 
 ```
 src/store/
 └── user/
     ├── index.ts
     └── __tests__/
-        └── user-store.test.ts  # 👈 Test del store
+        └── user-store.test.ts
 ```
 
-## 🧪 Tests Unitarios
+## 🧪 Unit Tests
 
-### Ejecutar Tests Unitarios
+### Running Unit Tests
 
 ```bash
-# Ejecutar todos los tests unitarios una vez
+# Run all unit tests once
 npm run test:unit
 
-# Ejecutar en modo watch (se re-ejecutan al cambiar archivos)
+# Run in watch mode (reruns on file changes)
 npm run test:unit:watch
 
-# Ejecutar con coverage
+# Run with coverage
 npm run test:unit -- --coverage
 ```
 
-### Ejemplos de Tests Unitarios
+### Unit Test Examples
 
-#### Test de Componente UI (Co-ubicado)
+#### UI Component Test (Co-located)
 
 ```typescript
 // src/components/ui/button/button.test.tsx
@@ -104,14 +104,14 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { Button } from "./index";
 
 describe("Button", () => {
-  it("debe renderizar correctamente", () => {
-    render(<Button>Haz clic</Button>);
+  it("should render correctly", () => {
+    render(<Button>Click me</Button>);
     expect(screen.getByRole("button")).toBeInTheDocument();
   });
 
-  it("debe manejar eventos de clic", () => {
+  it("should handle click events", () => {
     const handleClick = vi.fn();
-    render(<Button onClick={handleClick}>Clic</Button>);
+    render(<Button onClick={handleClick}>Click</Button>);
 
     fireEvent.click(screen.getByRole("button"));
     expect(handleClick).toHaveBeenCalledTimes(1);
@@ -119,7 +119,7 @@ describe("Button", () => {
 });
 ```
 
-#### Test de Servicio de Feature
+#### Feature Service Test
 
 ```typescript
 // src/modules/shared/auth/features/register/__tests__/unit/services/register.test.ts
@@ -134,7 +134,7 @@ vi.mock("@/interceptors", () => ({
 }));
 
 describe("Register Service", () => {
-  it("debe llamar al endpoint correcto", async () => {
+  it("should call the correct endpoint", async () => {
     const mockRequest = {
       first_name: "Juan",
       last_name: "Pérez",
@@ -156,7 +156,7 @@ describe("Register Service", () => {
 });
 ```
 
-#### Test de Store de Zustand
+#### Zustand Store Test
 
 ```typescript
 // src/store/user/__tests__/user-store.test.ts
@@ -168,7 +168,7 @@ describe("useUserStore", () => {
     useUserStore.getState().deleteUser();
   });
 
-  it("debe establecer un usuario correctamente", () => {
+  it("should set a user correctly", () => {
     const mockUser = { id: "1", name: "Test User" };
 
     useUserStore.getState().setUser(mockUser);
@@ -178,27 +178,27 @@ describe("useUserStore", () => {
 });
 ```
 
-## 🌐 Tests E2E
+## 🌐 E2E Tests
 
-Los tests E2E están organizados por features y cubren flujos completos de usuario.
+E2E tests are organized by feature and cover complete user flows.
 
-### Ejecutar Tests E2E
+### Running E2E Tests
 
 ```bash
-# Ejecutar todos los tests E2E
+# Run all E2E tests
 npm run test:e2e
 
-# Ejecutar en modo headed (con interfaz gráfica)
+# Run in headed mode (with GUI)
 npx playwright test --headed
 
-# Ejecutar tests de una feature específica
+# Run tests for a specific feature
 npx playwright test src/modules/shared/auth/features/register/__tests__/e2e/
 
-# Ejecutar en modo debug
+# Run in debug mode
 npx playwright test --debug
 ```
 
-### Ejemplo de Test E2E por Feature
+### Example of Feature E2E Test
 
 ```typescript
 // src/modules/shared/auth/features/register/__tests__/e2e/register.spec.ts
@@ -209,93 +209,93 @@ test.describe("Register Feature E2E", () => {
     await page.goto("/register");
   });
 
-  test("debe completar el flujo de registro", async ({ page }) => {
-    // Llenar formulario
+  test("should complete the registration flow", async ({ page }) => {
+    // Fill form
     await page.locator('input[id="name"]').fill("Juan");
     await page.locator('input[id="last_name"]').fill("Pérez");
     await page.locator('input[id="email"]').fill("juan@example.com");
     await page.locator('input[id="password"]').fill("password123");
 
-    // Verificar valores
+    // Verify values
     await expect(page.locator('input[id="name"]')).toHaveValue("Juan");
     await expect(page.locator('input[id="email"]')).toHaveValue(
       "juan@example.com"
     );
 
-    // Enviar formulario
-    await page.getByRole("button", { name: /registrarse/i }).click();
+    // Submit form
+    await page.getByRole("button", { name: /register/i }).click();
   });
 });
 ```
 
-## 📁 Estructura de Archivos
+## 📁 File Structure
 
 ```
 src/
-├── components/ui/                    # Componentes UI
+├── components/ui/
 │   ├── button/
 │   │   ├── index.tsx
-│   │   └── button.test.tsx          # ✅ Test co-ubicado
+│   │   └── button.test.tsx
 │   ├── input/
 │   │   ├── index.tsx
-│   │   └── input.test.tsx           # ✅ Test co-ubicado
+│   │   └── input.test.tsx
 │   └── label/
 │       ├── index.tsx
-│       └── label.test.tsx           # ✅ Test co-ubicado
+│       └── label.test.tsx
 │
-├── modules/shared/auth/features/     # Features de autenticación
+├── modules/shared/auth/features/
 │   ├── register/
 │   │   ├── components/
 │   │   ├── pages/
 │   │   ├── services/
 │   │   ├── types/
-│   │   └── __tests__/               # ✅ Tests de feature
+│   │   └── __tests__/
 │   │       ├── unit/
-│   │       │   ├── components/      # Tests de componentes
-│   │       │   ├── services/        # Tests de servicios
-│   │       │   └── pages/           # Tests de páginas
+│   │       │   ├── components/
+│   │       │   ├── services/
+│   │       │   └── pages/
 │   │       └── e2e/
-│   │           └── register.spec.ts # Tests E2E
+│   │           └── register.spec.ts
 │   └── login/
-│       └── __tests__/               # ✅ Tests de feature
+│       └── __tests__/
 │           └── e2e/
 │               └── login.spec.ts
 │
-├── store/                           # Stores de Zustand
+├── store/
 │   └── user/
 │       ├── index.ts
-│       └── __tests__/               # ✅ Tests de store
+│       └── __tests__/
 │           └── user-store.test.ts
 │
 └── tests/
-    └── setup.ts                     # Configuración global
+    └── setup.ts
 
-# Configuración
-├── playwright.config.ts             # Config Playwright
-└── vite.config.ts                   # Config Vitest
+# Config
+├── playwright.config.ts
+└── vite.config.ts
 ```
 
-## ✅ Mejores Prácticas
+## ✅ Best Practices
 
-### Tests Unitarios
+### Unit Tests
 
-1. **Co-ubicación**: Mantén tests cerca del código que prueban
-2. **Descriptivos**: Nombres claros en español que expliquen qué se prueba
+1. **Co-location**: Keep tests close to the code
+2. **Descriptive**: Clear names explaining what is tested
 3. **AAA Pattern**: Arrange, Act, Assert
-4. **Mocks**: Usar mocks para dependencias externas
-5. **Aislamiento**: Cada test debe ser independiente
+4. **Mocks**: Use mocks for external dependencies
+5. **Isolation**: Each test must be independent
 
 ```typescript
-// ✅ Bueno - Test co-ubicado y descriptivo
+// ✅ Good - Co-located, descriptive test
 describe("RegisterForm", () => {
   beforeEach(() => {
-    // Limpiar estado antes de cada test
+    // Reset state before each test
   });
 
-  it("debe validar email con formato correcto", () => {
+  it("should validate email format correctly", () => {
     // Arrange
     render(<Form />, { wrapper: RouterWrapper });
-    const emailInput = screen.getByLabelText(/correo/i);
+    const emailInput = screen.getByLabelText(/email/i);
 
     // Act
     fireEvent.change(emailInput, { target: { value: "invalid-email" } });
@@ -306,50 +306,50 @@ describe("RegisterForm", () => {
 });
 ```
 
-### Tests E2E
+### E2E Tests
 
-1. **Por Features**: Organizar tests por funcionalidad
-2. **Selectores estables**: Usar `getByRole`, `getByLabelText`, etc.
-3. **Esperas explícitas**: Usar `await expect().toBeVisible()`
-4. **Datos realistas**: Usar datos que simulen uso real
-5. **Flujos completos**: Probar escenarios de usuario completos
+1. **Feature-based**: Organize tests by functionality
+2. **Stable selectors**: Use `getByRole`, `getByLabelText`, etc.
+3. **Explicit waits**: `await expect().toBeVisible()`
+4. **Realistic data**: Use data simulating real usage
+5. **Complete flows**: Test full user scenarios
 
 ```typescript
-// ✅ Bueno - Test E2E por feature
+// ✅ Good - E2E test by feature
 test.describe("Login Feature E2E", () => {
-  test("debe completar el flujo de login exitoso", async ({ page }) => {
+  test("should complete a successful login flow", async ({ page }) => {
     await page.goto("/login");
 
-    // Llenar credenciales
-    await page.locator('input[type="email"]').fill("usuario@ejemplo.com");
+    // Fill credentials
+    await page.locator('input[type="email"]').fill("user@example.com");
     await page.locator('input[type="password"]').fill("password123");
 
-    // Enviar formulario
-    await page.getByRole("button", { name: /ingresar/i }).click();
+    // Submit form
+    await page.getByRole("button", { name: /login/i }).click();
 
-    // Verificar redirección exitosa
+    // Verify successful redirection
     await expect(page).toHaveURL("/dashboard");
   });
 });
 ```
 
-### Organización por Features
+### Feature Organization
 
-1. **Separación clara**: Unit tests y E2E tests en carpetas separadas
-2. **Tests específicos**: Cada feature tiene sus propios tests
-3. **Reutilización**: Compartir utilities de testing cuando sea apropiado
-4. **Mantenimiento**: Tests fáciles de encontrar y mantener
+1. **Clear separation**: Unit tests vs E2E tests in separate folders
+2. **Specific tests**: Each feature has its own tests
+3. **Reusability**: Share testing utilities when appropriate
+4. **Maintainability**: Tests are easy to find and maintain
 
 ## 🔄 CI/CD
 
-Los tests se ejecutan automáticamente en GitHub Actions:
+Tests are automatically executed in GitHub Actions:
 
-- **Push/PR a main/develop**: Ejecuta todos los tests
-- **Tests unitarios**: Se ejecutan en paralelo con lint y build
-- **Tests E2E**: Se ejecutan con Playwright en Ubuntu
-- **Artefactos**: Se guardan reportes de coverage y Playwright
+- **Push/PR to main/develop**: Run all tests
+- **Unit tests**: Run in parallel with lint and build
+- **E2E tests**: Run with Playwright on Ubuntu
+- **Artifacts**: Coverage and Playwright reports are saved
 
-### Workflow de CI
+### CI Workflow
 
 ```yaml
 # .github/workflows/tests.yml
@@ -372,100 +372,100 @@ jobs:
       - run: npm run test:e2e
 ```
 
-## 🚀 Comandos Rápidos
+## 🚀 Quick Commands
 
 ```bash
-# Desarrollo
-npm run test:unit:watch              # Tests unitarios en modo watch
-npx playwright test --ui             # Interfaz web de Playwright
+# Development
+npm run test:unit:watch              # Unit tests in watch mode
+npx playwright test --ui             # Playwright web interface
 
-# Tests específicos por feature
+# Feature-specific tests
 npm run test:unit src/modules/shared/auth/features/register/
 npx playwright test src/modules/shared/auth/features/login/
 
-# CI/Producción
-npm run test:unit                    # Todos los tests unitarios
-npm run test:e2e                     # Todos los tests E2E
+# CI/Production
+npm run test:unit                    # All unit tests
+npm run test:e2e                     # All E2E tests
 
 # Debugging
-npx playwright test --debug          # Debug tests E2E
-npm run test:unit -- --reporter=verbose  # Tests unitarios verbose
+npx playwright test --debug          # Debug E2E tests
+npm run test:unit -- --reporter=verbose  # Verbose unit tests
 ```
 
-## 📊 Coverage y Reportes
+## 📊 Coverage and Reports
 
-- **Unit tests**: Coverage automático con Vitest
-- **E2E tests**: Reportes HTML con Playwright
-- **CI**: Artefactos guardados en GitHub Actions
+- **Unit tests**: Automatic coverage with Vitest
+- **E2E tests**: HTML reports with Playwright
+- **CI**: Artifacts saved in GitHub Actions
 
-Para ver reportes localmente:
+Local reports:
 
 ```bash
-# Coverage unitario
+# Unit test coverage
 npm run test:unit -- --coverage
 
-# Reporte E2E
+# E2E report
 npx playwright show-report
 ```
 
-## 🆘 Solución de Problemas
+## 🆘 Troubleshooting
 
-### Tests unitarios fallan
+### Unit Tests Fail
 
-- Verificar imports y paths con `@/`
-- Revisar setup en `src/tests/setup.ts`
-- Limpiar cache: `npm run test:unit -- --run`
-- Verificar mocks en tests de features
+- Check imports and `@/` paths
+- Verify setup in `src/tests/setup.ts`
+- Clear cache: `npm run test:unit -- --run`
+- Check mocks in feature tests
 
-### Tests E2E fallan
+### E2E Tests Fail
 
-- Verificar que el servidor dev esté corriendo
-- Revisar selectores en los tests
-- Usar modo debug: `npx playwright test --debug`
-- Verificar rutas y navegación
+- Ensure dev server is running
+- Check selectors in tests
+- Use debug mode: `npx playwright test --debug`
+- Verify routes and navigation
 
-### CI falla
+### CI Fails
 
-- Revisar logs en GitHub Actions
-- Verificar que todas las dependencias estén en `package.json`
-- Comprobar que los tests pasan localmente
+- Check GitHub Actions logs
+- Verify all dependencies in `package.json`
+- Ensure tests pass locally
 
-## 📝 Convenciones de Naming
+## 📝 Naming Conventions
 
-### Archivos de Test
+### Test Files
 
-- **Componentes UI**: `ComponentName.test.tsx`
+- **UI Components**: `ComponentName.test.tsx`
 - **Services**: `service-name.test.ts`
 - **Pages**: `page-name.test.tsx`
 - **Stores**: `store-name.test.ts`
 - **E2E**: `feature-name.spec.ts`
 
-### Descripciones de Test
+### Test Descriptions
 
 ```typescript
-// ✅ Bueno - Descripciones claras en español
+// ✅ Good - Clear descriptions in English
 describe("RegisterForm", () => {
-  it("debe mostrar error cuando el email es inválido", () => {});
-  it("debe enviar datos correctamente al hacer submit", () => {});
-  it("debe navegar a login después de registro exitoso", () => {});
+  it("should show error when email is invalid", () => {});
+  it("should submit data correctly", () => {});
+  it("should navigate to login after successful registration", () => {});
 });
 
 test.describe("Register Feature E2E", () => {
-  test("debe completar el flujo de registro correctamente", async () => {});
-  test("debe mostrar errores de validación apropiados", async () => {});
+  test("should complete the registration flow correctly", async () => {});
+  test("should show appropriate validation errors", async () => {});
 });
 ```
 
 ---
 
-## 🎯 Resumen
+## 🎯 Summary
 
-**Ventajas de esta arquitectura:**
+**Benefits of this architecture:**
 
-✅ **Co-ubicación**: Tests cerca del código que prueban  
-✅ **Organización por features**: Fácil mantenimiento y escalabilidad  
-✅ **Separación clara**: Unit tests vs E2E tests bien organizados  
-✅ **Reutilización**: Componentes UI testeados independientemente  
-✅ **Mantenimiento**: Fácil encontrar y actualizar tests
+✅ **Co-location**: Tests close to the code
+✅ **Feature-based organization**: Easy maintenance and scalability
+✅ **Clear separation**: Unit vs E2E tests organized
+✅ **Reusability**: UI components tested independently
+✅ **Maintainability**: Easy to find and update tests
 
-¿Tienes preguntas sobre testing? Consulta la documentación oficial de [Vitest](https://vitest.dev/) y [Playwright](https://playwright.dev/).
+For more information, refer to the official documentation of [Vitest](https://vitest.dev/) and [Playwright](https://playwright.dev/).

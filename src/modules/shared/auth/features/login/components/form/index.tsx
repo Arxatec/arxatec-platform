@@ -1,20 +1,63 @@
-import { Input, Label, Button } from "@/components/ui";
+import { Label, Button, FormInput } from "@/components/ui";
 import { ROUTES } from "@/routes/routes";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { loginSchema } from "../../schemas";
+import { useForm } from "react-hook-form";
+import type { LoginRequest } from "../../types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { login } from "../../services";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 export const Form = () => {
+  const navigate = useNavigate();
+  const { mutate: loginUser, isPending } = useMutation({
+    mutationFn: (data: LoginRequest) => login(data),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginRequest>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSuccess = (token: string) => {
+    localStorage.setItem("TOKEN_AUTH", token);
+    // navigate(ROUTES.Client.ViewCases);
+    toast.success("Ingreso exitoso", {
+      description:
+        "Bienvenido a Arxatec, estamos encantados de tenerte de nuevo.",
+    });
+  };
+
+  const onError = (error: Error) => {
+    toast.error("Error al ingresar", {
+      description: error.message,
+    });
+  };
+
+  const onSubmit = (data: LoginRequest) => {
+    console.log(data);
+    loginUser(data, {
+      onSuccess: (data) => onSuccess(data.token),
+      onError,
+    });
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-6">
-        <div className="grid gap-3">
-          <Label htmlFor="email">Correo electrónico</Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="Ej. correo@ejemplo.com"
-            required
-          />
-        </div>
+        <FormInput
+          label="Correo electrónico"
+          name="email"
+          type="email"
+          placeholder="Ej. correo@ejemplo.com"
+          register={register}
+          errors={errors}
+        />
         <div className="grid gap-3">
           <div className="flex items-center">
             <Label htmlFor="password">Contraseña</Label>
@@ -25,16 +68,18 @@ export const Form = () => {
               ¿Olvidaste tu contraseña?
             </Link>
           </div>
-          <Input
-            id="password"
-            placeholder="Ej. cfaWR52$!Mja"
+          <FormInput
+            name="password"
             type="password"
-            required
+            placeholder="Ej. cfaWR52$!Mja"
+            register={register}
+            errors={errors}
           />
         </div>
         <div className="flex flex-col gap-3">
-          <Button type="submit" className="w-full">
-            Ingresar
+          <Button type="submit" className="w-full" disabled={isPending}>
+            {isPending && <Loader2 className="size-5 animate-spin" />}
+            {isPending ? "Ingresando..." : "Ingresar"}
           </Button>
         </div>
       </div>
