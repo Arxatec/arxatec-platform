@@ -16,14 +16,14 @@ export default function Role() {
   const isClientRoute = path.startsWith("/client");
 
   const canAccess =
-    (user.user_type === USER_TYPE.LAWYER && isLawyerRoute) ||
-    (user.user_type === USER_TYPE.CLIENT && isClientRoute);
+    (user?.user_type === USER_TYPE.LAWYER && isLawyerRoute) ||
+    (user?.user_type === USER_TYPE.CLIENT && isClientRoute);
 
   if (!canAccess) {
     const fallback =
-      user.user_type === USER_TYPE.LAWYER
+      user?.user_type === USER_TYPE.LAWYER
         ? ROUTES.Lawyer.ViewCases
-        : user.user_type === USER_TYPE.CLIENT
+        : user?.user_type === USER_TYPE.CLIENT
         ? ROUTES.Client.ViewCases
         : ROUTES.Client.ViewCases;
 

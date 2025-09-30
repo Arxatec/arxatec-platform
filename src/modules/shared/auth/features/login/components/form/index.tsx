@@ -1,6 +1,6 @@
 import { Label, Button, FormInput } from "@/components/ui";
 import { ROUTES } from "@/routes/routes";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { loginSchema } from "../../schemas";
 import { useForm } from "react-hook-form";
 import type { LoginRequest } from "../../types";
@@ -11,7 +11,6 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
 export const Form = () => {
-  const navigate = useNavigate();
   const { mutate: loginUser, isPending } = useMutation({
     mutationFn: (data: LoginRequest) => login(data),
   });
@@ -40,7 +39,6 @@ export const Form = () => {
   };
 
   const onSubmit = (data: LoginRequest) => {
-    console.log(data);
     loginUser(data, {
       onSuccess: (data) => onSuccess(data.token),
       onError,

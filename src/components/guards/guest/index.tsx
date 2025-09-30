@@ -34,10 +34,10 @@ export default function Guest() {
 
   if (user?.user_type) {
     if (isAuthRoute) {
-      if (user.user_type === USER_TYPE.LAWYER) {
+      if (user?.user_type === USER_TYPE.LAWYER) {
         return <Navigate to={ROUTES.Lawyer.ViewCases} replace />;
       }
-      if (user.user_type === USER_TYPE.CLIENT) {
+      if (user?.user_type === USER_TYPE.CLIENT) {
         return <Navigate to={ROUTES.Client.ViewCases} replace />;
       }
     }

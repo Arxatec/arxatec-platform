@@ -1,12 +1,12 @@
+/* eslint-disable */
+// @ts-nocheck
 import "@testing-library/jest-dom";
 import { vi } from "vitest";
 
-// Asegurarse de que fetch existe
 if (!globalThis.fetch) {
   globalThis.fetch = vi.fn();
 }
 
-// Mock de URL global si alguna librería lo requiere
 if (!globalThis.URL) {
   globalThis.URL = class {
     href: string;
@@ -16,7 +16,6 @@ if (!globalThis.URL) {
   };
 }
 
-// Mock de otras APIs de navegador si es necesario
 if (!globalThis.Headers) {
   globalThis.Headers = class {};
 }
