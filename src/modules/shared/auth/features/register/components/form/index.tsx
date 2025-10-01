@@ -1,16 +1,19 @@
-import { Button, FormInput } from "@/components/ui";
+import { Button, FormInput, Label } from "@/components/ui";
 import { ROUTES } from "@/routes/routes";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { registerSchema } from "../../schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { RegisterRequest } from "../../types";
+import type { RegisterSchemaType } from "../../types";
 import { useMutation } from "@tanstack/react-query";
 import { register as registerService } from "../../services";
-import { Loader2 } from "lucide-react";
+import { BriefcaseIcon, Loader2, UserIcon } from "lucide-react";
 import { toast } from "sonner";
+import { useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 export const Form = () => {
+  const [userType, setUserType] = useState<"lawyer" | "client">("lawyer");
   const navigate = useNavigate();
   const { mutate: registerUser, isPending } = useMutation({
     mutationFn: registerService,
@@ -20,7 +23,7 @@ export const Form = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterRequest>({
+  } = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerSchema),
   });
 
@@ -38,9 +41,13 @@ export const Form = () => {
     });
   };
 
-  const onSubmit = (data: RegisterRequest) => {
+  const onSubmit = (data: RegisterSchemaType) => {
     localStorage.setItem("TEMPORARY_EMAIL", data.email);
-    registerUser(data, {
+    const dataRequest = {
+      ...data,
+      user_type: userType,
+    };
+    registerUser(dataRequest, {
       onSuccess,
       onError,
     });
@@ -77,6 +84,39 @@ export const Form = () => {
             register={register}
             errors={errors}
           />
+          <div>
+            <Label htmlFor="role">¿Qué tipo de usuario eres?</Label>
+            <div className="flex items-center w-full justify-center gap-2 mt-2">
+              <Button
+                className={twMerge(
+                  "flex-1 flex items-center justify-center gap-2 font-normal",
+                  userType === "lawyer" &&
+                    "text-background bg-primary! hover:text-background! opacity-100!"
+                )}
+                type="button"
+                variant="outline"
+                onClick={() => setUserType("lawyer")}
+                disabled={userType === "lawyer"}
+              >
+                <BriefcaseIcon className="w-4 h-4" />
+                Soy abogado
+              </Button>
+              <Button
+                className={twMerge(
+                  "flex-1 flex items-center justify-center gap-2 font-normal",
+                  userType === "client" &&
+                    "text-background bg-primary! hover:text-background! opacity-100!"
+                )}
+                type="button"
+                variant="outline"
+                onClick={() => setUserType("client")}
+                disabled={userType === "client"}
+              >
+                <UserIcon className="w-4 h-4" />
+                Soy cliente
+              </Button>
+            </div>
+          </div>
           <FormInput
             label="Contraseña"
             name="password"

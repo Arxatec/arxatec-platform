@@ -5,8 +5,6 @@ import { useAuth } from "@/hooks";
 import { USER_TYPE } from "@/types";
 
 export default function Guest() {
-  return <Outlet />;
-  // Only for test
   const location = useLocation();
   const { token, user, isPending, isError } = useAuth();
 

@@ -1,16 +1,20 @@
 import { Label, Button, FormInput } from "@/components/ui";
 import { ROUTES } from "@/routes/routes";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginSchema } from "../../schemas";
 import { useForm } from "react-hook-form";
-import type { LoginRequest } from "../../types";
+import type { LoginRequest, LoginResponse } from "../../types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../services";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { useUserStore } from "@/store";
+import { USER_TYPE } from "@/types";
 
 export const Form = () => {
+  const navigate = useNavigate();
+  const setUser = useUserStore((s) => s.setUser);
   const { mutate: loginUser, isPending } = useMutation({
     mutationFn: (data: LoginRequest) => login(data),
   });
@@ -23,13 +27,19 @@ export const Form = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSuccess = (token: string) => {
-    localStorage.setItem("TOKEN_AUTH", token);
-    // navigate(ROUTES.Client.ViewCases);
+  const onSuccess = (data: LoginResponse) => {
+    localStorage.setItem("TOKEN_AUTH", data.token);
+    localStorage.setItem("USER_AUTH", JSON.stringify(data.user));
+    setUser(data.user);
     toast.success("Ingreso exitoso", {
       description:
         "Bienvenido a Arxatec, estamos encantados de tenerte de nuevo.",
     });
+    if (data.user.user_type === USER_TYPE.LAWYER) {
+      navigate(ROUTES.Lawyer.ViewCases);
+    } else {
+      navigate(ROUTES.Client.ViewCases);
+    }
   };
 
   const onError = (error: Error) => {
@@ -40,7 +50,7 @@ export const Form = () => {
 
   const onSubmit = (data: LoginRequest) => {
     loginUser(data, {
-      onSuccess: (data) => onSuccess(data.token),
+      onSuccess: (data) => onSuccess(data),
       onError,
     });
   };

@@ -4,8 +4,6 @@ import { ROUTES } from "@/routes/routes";
 import { useAuth } from "@/hooks";
 
 export default function Auth() {
-  return <Outlet />;
-  // Only for test
   const { token, user, isPending, isError } = useAuth();
 
   if (!token || isError) {

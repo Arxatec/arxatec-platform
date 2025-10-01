@@ -9,7 +9,7 @@ export const ROUTES = {
   },
 
   Client: {
-    ViewCases: "/cases",
+    ViewCases: "/client/cases",
   },
 
   Lawyer: {

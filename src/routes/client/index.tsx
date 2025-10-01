@@ -1,4 +1,12 @@
+import { ROUTES } from "../routes";
+import * as clientPages from "@/modules/client";
+
 export const clientRoutes = {
   path: "/client",
-  children: [],
+  children: [
+    {
+      path: ROUTES.Client.ViewCases,
+      element: <clientPages.ViewCasesPage />,
+    },
+  ],
 };

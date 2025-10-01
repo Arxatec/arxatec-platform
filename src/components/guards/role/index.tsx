@@ -4,8 +4,6 @@ import { ROUTES } from "@/routes/routes";
 import { USER_TYPE } from "@/types";
 
 export default function Role() {
-  return <Outlet />;
-  // Only for test
   const { user } = useAuth();
   const location = useLocation();
   const path = location.pathname;
