@@ -8,5 +8,9 @@ export const clientRoutes = {
       path: ROUTES.Client.ViewCases,
       element: <clientPages.ViewCasesPage />,
     },
+    {
+      path: ROUTES.Client.CreateCase,
+      element: <clientPages.CreateCasePage />,
+    },
   ],
 };

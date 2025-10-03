@@ -40,7 +40,7 @@ export function FormInput<T extends FieldValues>({
         type={type}
         placeholder={placeholder}
         {...register(name)}
-        className={twMerge(error ? "border-rose-500/10 border" : "", className)}
+        className={twMerge(error && "border-rose-500/10 border", className)}
       />
       {error && (
         <p className="text-sm text-rose-500 mt-2" data-testid={`${name}-error`}>

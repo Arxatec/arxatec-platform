@@ -1,5 +1,12 @@
-import { ChevronsUpDown, Home, LogOut } from "lucide-react";
-import { Outlet } from "react-router-dom";
+import {
+  ChevronsUpDown,
+  Folder,
+  Home,
+  LogOut,
+  Telescope,
+  Users,
+} from "lucide-react";
+import { Outlet, useLocation } from "react-router-dom";
 
 import {
   Sidebar as SidebarComponent,
@@ -7,6 +14,7 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarHeader,
   SidebarInset,
   SidebarMenu,
   SidebarMenuButton,
@@ -16,39 +24,83 @@ import {
 import {
   Avatar,
   AvatarFallback,
-  AvatarImage,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui";
+import { useAuth } from "@/hooks";
+import { ROUTES } from "@/routes/routes";
+import { USER_TYPE } from "@/types";
 
-const items = [
+const clientNavigation = [
   {
     title: "Mis casos",
-    url: "#",
+    url: ROUTES.Client.ViewCases,
     icon: Home,
   },
 ];
 
+const lawyerNavigation = [
+  {
+    title: "Mis casos",
+    url: ROUTES.Lawyer.ViewCases,
+    icon: Folder,
+  },
+  {
+    title: "Explorar casos",
+    url: ROUTES.Lawyer.ExplorerCases,
+    icon: Telescope,
+  },
+  {
+    title: "Mis clientes",
+    url: ROUTES.Lawyer.ViewClients,
+    icon: Users,
+  },
+];
 export default function Sidebar() {
+  const { user, logout } = useAuth();
+  const pathname = useLocation().pathname;
   return (
     <SidebarProvider>
       <SidebarComponent>
+        <SidebarHeader>
+          <div className="py-2 px-4 flex items-center justify-center bg-accent rounded">
+            <img src="/logo.png" alt="logo" className="w-20" />
+          </div>
+        </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupContent>
               <SidebarMenu>
-                {items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <a href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                {user?.user_type === USER_TYPE.LAWYER &&
+                  lawyerNavigation.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={pathname === item.url}
+                      >
+                        <a href={item.url}>
+                          <item.icon />
+                          <span>{item.title}</span>
+                        </a>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                {user?.user_type === USER_TYPE.CLIENT &&
+                  clientNavigation.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={pathname === item.url}
+                      >
+                        <a href={item.url}>
+                          <item.icon />
+                          <span>{item.title}</span>
+                        </a>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
@@ -62,13 +114,15 @@ export default function Sidebar() {
                     <div className="flex items-center gap-2 justify-between w-full">
                       <div className="flex items-center justify-start gap-2">
                         <Avatar>
-                          <AvatarImage src="https://github.com/shadcn.png" />
-                          <AvatarFallback>JP</AvatarFallback>
+                          <AvatarFallback>
+                            {user?.name?.split(" ")[0].charAt(0)}
+                            {user?.name?.split(" ")[1].charAt(0)}
+                          </AvatarFallback>
                         </Avatar>
                         <div className="text-xs">
-                          <p>Juan Perez</p>
+                          <p>{user?.name}</p>
                           <p className="text-secondary-foreground">
-                            juan.perez@gmail.com
+                            {user?.email}
                           </p>
                         </div>
                       </div>
@@ -77,7 +131,7 @@ export default function Sidebar() {
                   </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-[245px]" side="top">
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick={logout}>
                     <LogOut />
                     <span>Cerrar sesión</span>
                   </DropdownMenuItem>

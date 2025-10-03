@@ -17,8 +17,11 @@ import { Link } from "react-router-dom";
 export default function CreateCasePage() {
   return (
     <div className="w-full">
-      <Link to={ROUTES.Lawyer.ViewCases} className="flex items-center gap-2">
-        <Button variant="outline" className="border-none">
+      <Link
+        to={ROUTES.Lawyer.ViewCases}
+        className="flex items-center gap-2 w-fit"
+      >
+        <Button variant="outline" className="border-none bg-accent">
           <ArrowLeftIcon />
           Volver
         </Button>
