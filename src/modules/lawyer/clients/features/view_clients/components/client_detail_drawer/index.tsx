@@ -1,24 +1,23 @@
 import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerClose,
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
   Avatar,
   AvatarImage,
   AvatarFallback,
   Button,
   Skeleton,
 } from "@/components/ui";
-import { ArchiveIcon, Loader2, PencilIcon, XIcon } from "lucide-react";
-import { getClient } from "../../services";
+import { ArchiveIcon, Loader2, PencilIcon } from "lucide-react";
+import { getExternalClient } from "../../services";
 import { useQuery } from "@tanstack/react-query";
 import { formatDate } from "date-fns";
 import { es } from "date-fns/locale";
-import { useArchiveClient } from "../../hooks";
+import { useArchiveExternalClient } from "../../hooks";
 import { ROUTES } from "@/routes/routes";
 import { useNavigate } from "react-router-dom";
-import type { Client } from "@/types/client";
+import type { ExternalClient } from "@/types/client";
 
 interface Props {
   id: string;
@@ -39,37 +38,23 @@ export const ClientDetailDrawer = ({
     error,
   } = useQuery({
     queryKey: ["client", id],
-    queryFn: () => getClient(id),
+    queryFn: () => getExternalClient(id),
     enabled: !!id,
   });
 
-  const { handleArchiveClient } = useArchiveClient();
+  const { handleArchiveExternalClient } = useArchiveExternalClient();
 
-  const onHandleArchiveClient = (client: Client) => {
-    handleArchiveClient(client);
+  const onHandleArchiveClient = (client: ExternalClient) => {
+    handleArchiveExternalClient(client);
     setIsDrawerOpen(false);
   };
 
   return (
-    <Drawer
-      direction="right"
-      open={isDrawerOpen}
-      onOpenChange={setIsDrawerOpen}
-    >
-      <DrawerContent>
-        <DrawerHeader className="border-b">
-          <div className="flex items-center justify-between">
-            <DrawerTitle className="text-xl font-semibold font-serif">
-              Detalles del cliente
-            </DrawerTitle>
-            <DrawerClose asChild>
-              <button className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
-                <XIcon className="h-4 w-4" />
-                <span className="sr-only">Cerrar</span>
-              </button>
-            </DrawerClose>
-          </div>
-        </DrawerHeader>
+    <Sheet open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+      <SheetContent side="right">
+        <SheetHeader>
+          <SheetTitle>Detalles del cliente</SheetTitle>
+        </SheetHeader>
 
         {isPending && (
           <div className="px-4 mt-4">
@@ -189,7 +174,7 @@ export const ClientDetailDrawer = ({
             </div>
           </div>
         )}
-      </DrawerContent>
-    </Drawer>
+      </SheetContent>
+    </Sheet>
   );
 };

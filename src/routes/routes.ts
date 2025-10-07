@@ -20,6 +20,8 @@ export const ROUTES = {
     ExplorerCases: "/lawyer/cases/explorer",
     CreateClient: "/lawyer/clients/create",
     UpdateClient: "/lawyer/clients/update/:id",
+    ViewCase: "/lawyer/cases/:id",
+    UpdateCase: "/lawyer/cases/update/:id",
   },
 
   Error: {

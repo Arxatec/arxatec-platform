@@ -1,6 +1,6 @@
 import { axiosInstance } from "@/interceptors";
-import type { Response } from "@/types";
-import type { ExplorerCasesResponse } from "../types";
+import { CaseStatus, type Response } from "@/types";
+import type { ExplorerCasesResponse, TakeCaseRequest } from "../types";
 
 export const explorerCases = async (
   page: number,
@@ -23,4 +23,14 @@ export const explorerCases = async (
     throw new Error("No se pudo obtener los casos");
   }
   return data.data;
+};
+
+export const takeCase = async (
+  id: string,
+  takeCaseRequest: TakeCaseRequest
+) => {
+  await axiosInstance.patch(`/cases/status/${id}`, {
+    ...takeCaseRequest,
+    status: CaseStatus.IN_PENDING,
+  });
 };

@@ -1,4 +1,6 @@
 import type z from "zod";
-import type { updateClientSchema } from "../schemas";
+import type { updateExternalClientSchema } from "../schemas";
 
-export type UpdateClientSchemaType = z.infer<typeof updateClientSchema>;
+export type UpdateExternalClientSchemaType = z.infer<
+  typeof updateExternalClientSchema
+>;

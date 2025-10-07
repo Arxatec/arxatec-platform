@@ -28,3 +28,7 @@ export const getCases = async (
   }
   return data.data;
 };
+
+export const getArchivedCases = async (id: string) => {
+  await axiosInstance.patch(`/cases/archive/${id}`);
+};

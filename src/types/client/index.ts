@@ -1,4 +1,4 @@
-export interface Client {
+export interface ExternalClient {
   id: string;
   profile_image: string | null;
   full_name: string;

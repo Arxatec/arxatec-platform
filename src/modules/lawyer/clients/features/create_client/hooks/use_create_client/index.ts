@@ -1,14 +1,14 @@
-import { createClient } from "../../services";
+import { createExternalClient } from "../../services";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { ROUTES } from "@/routes/routes";
 import { useNavigate } from "react-router-dom";
-import type { CreateClientSchemaType } from "../../types";
+import type { CreateExternalClientSchemaType } from "../../types";
 
-export const useCreateClient = () => {
+export const useCreateExternalClient = () => {
   const navigate = useNavigate();
   const { mutate: createClientMutation, isPending } = useMutation({
-    mutationFn: (data: FormData) => createClient(data),
+    mutationFn: (data: FormData) => createExternalClient(data),
   });
 
   const onSuccess = () => {
@@ -25,7 +25,7 @@ export const useCreateClient = () => {
     });
   };
 
-  const onSubmit = (data: CreateClientSchemaType) => {
+  const onSubmit = (data: CreateExternalClientSchemaType) => {
     const createClientFormData = new FormData();
     if (data.avatar) {
       createClientFormData.append("avatar", data.avatar as File);

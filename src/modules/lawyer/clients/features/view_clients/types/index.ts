@@ -1,7 +1,7 @@
 import type { Pagination } from "@/types";
-import type { Client } from "@/types/client";
+import type { ExternalClient } from "@/types/client";
 
-export interface GetClientsResponse {
-  clients: Client[];
+export interface GetExternalClientsResponse {
+  clients: ExternalClient[];
   pagination: Pagination;
 }

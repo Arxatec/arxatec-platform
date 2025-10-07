@@ -14,7 +14,7 @@ import {
   ContextMenuContent,
   ContextMenuItem,
 } from "@/components/ui";
-import { LoadingState, ErrorState, EmptyState } from "../";
+import { LoadingState, ErrorState, EmptyState, TakeCaseDialog } from "../";
 import { formatDate } from "date-fns";
 import { es } from "date-fns/locale";
 import { type Case } from "@/types";
@@ -27,6 +27,8 @@ export const TableCases = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<string | undefined>(undefined);
+  const [open, setOpen] = useState(false);
+  const [caseSelect, setCaseSelect] = useState<Case>();
   const debouncedSearch = useDebounce(search, 500);
   const { data, isPending, isError, error } = useQuery({
     queryKey: ["cases", page, debouncedSearch, category],
@@ -88,7 +90,12 @@ export const TableCases = () => {
                         <EyeIcon className="w-4 h-4" />
                         <span>Ver detalles del caso</span>
                       </ContextMenuItem>
-                      <ContextMenuItem>
+                      <ContextMenuItem
+                        onClick={() => {
+                          setOpen(true);
+                          setCaseSelect(caso);
+                        }}
+                      >
                         <FileTextIcon className="w-4 h-4" />
                         <span>Tomar caso</span>
                       </ContextMenuItem>
@@ -113,6 +120,13 @@ export const TableCases = () => {
           </>
         )}
       </AsyncBoundary>
+
+      <TakeCaseDialog
+        open={open}
+        setOpen={setOpen}
+        titleCase={caseSelect?.title || ""}
+        id={caseSelect?.id || ""}
+      />
     </div>
   );
 };

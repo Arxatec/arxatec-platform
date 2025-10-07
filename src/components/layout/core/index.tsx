@@ -11,7 +11,7 @@ export default function Core({ children }: Props) {
   return (
     <QueryClientProvider client={createQueryClient()}>
       {children}
-      <Toaster visibleToasts={2} duration={5000} dir="auto" expand />
+      <Toaster visibleToasts={1} expand={false} dir="ltr" />
     </QueryClientProvider>
   );
 }

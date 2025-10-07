@@ -5,7 +5,7 @@ import { ArrowLeftIcon } from "lucide-react";
 import { useTitle } from "@/hooks";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getClient } from "../services";
+import { getExternalClient } from "../services";
 import { ErrorState, Form, LoadingState } from "../components";
 
 export default function UpdateClientPage() {
@@ -13,8 +13,8 @@ export default function UpdateClientPage() {
   const { id } = useParams();
 
   const { data, isPending, isError } = useQuery({
-    queryKey: ["client", id],
-    queryFn: () => getClient(id as string),
+    queryKey: ["external-client", id],
+    queryFn: () => getExternalClient(id as string),
     enabled: !!id,
   });
 

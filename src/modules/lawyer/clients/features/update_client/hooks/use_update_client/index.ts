@@ -1,14 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
-import { updateClient } from "../../services";
+import { updateExternalClient } from "../../services";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/routes/routes";
-import type { UpdateClientSchemaType } from "../../types";
+import type { UpdateExternalClientSchemaType } from "../../types";
 
-export const useUpdateClient = (id: string) => {
+export const useUpdateExternalClient = (id: string) => {
   const navigate = useNavigate();
   const { mutate: updateClientMutation, isPending } = useMutation({
-    mutationFn: (data: FormData) => updateClient(id, data),
+    mutationFn: (data: FormData) => updateExternalClient(id, data),
   });
 
   const onSuccess = () => {
@@ -20,12 +20,12 @@ export const useUpdateClient = (id: string) => {
   };
 
   const onError = (error: Error) => {
-    toast.error("Error al editar cliente", {
+    toast.error("Error al editar cliente externo", {
       description: error.message,
     });
   };
 
-  const onSubmit = (data: UpdateClientSchemaType) => {
+  const onSubmit = (data: UpdateExternalClientSchemaType) => {
     const updateClientFormData = new FormData();
     if (data.avatar) {
       updateClientFormData.append("avatar", data.avatar as File);

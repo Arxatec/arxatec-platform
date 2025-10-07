@@ -1,11 +1,11 @@
-import type { CreateClientSchemaType } from "../../types";
+import type { CreateExternalClientSchemaType } from "../../types";
 import { useForm, useWatch } from "react-hook-form";
-import { createClientSchema } from "../../schemas";
+import { createExternalClientSchema } from "../../schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, FormInput } from "@/components/ui";
 import { Loader2, PlusIcon } from "lucide-react";
 import { AvatarInput } from "../../../../components";
-import { useCreateClient } from "../../hooks";
+import { useCreateExternalClient } from "../../hooks";
 
 export const Form = () => {
   const {
@@ -14,8 +14,8 @@ export const Form = () => {
     control,
     setValue,
     formState: { errors },
-  } = useForm<CreateClientSchemaType>({
-    resolver: zodResolver(createClientSchema),
+  } = useForm<CreateExternalClientSchemaType>({
+    resolver: zodResolver(createExternalClientSchema),
   });
 
   const fullName = useWatch({
@@ -27,7 +27,7 @@ export const Form = () => {
     setValue("avatar", file);
   };
 
-  const { onSubmit, isPending } = useCreateClient();
+  const { onSubmit, isPending } = useCreateExternalClient();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

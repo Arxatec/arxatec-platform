@@ -1,15 +1,15 @@
 import { useForm, useWatch } from "react-hook-form";
-import type { UpdateClientSchemaType } from "../../types";
+import type { UpdateExternalClientSchemaType } from "../../types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { updateClientSchema } from "../../schemas";
+import { updateExternalClientSchema } from "../../schemas";
 import { Button, FormInput } from "@/components/ui";
 import { Loader2, PencilIcon } from "lucide-react";
-import type { Client } from "@/types/client";
-import { useUpdateClient } from "../../hooks";
+import type { ExternalClient } from "@/types/client";
+import { useUpdateExternalClient } from "../../hooks";
 import { AvatarInput } from "../../../../components";
 
 interface Props {
-  defaultValues: Client;
+  defaultValues: ExternalClient;
 }
 
 export const Form: React.FC<Props> = ({ defaultValues }) => {
@@ -19,8 +19,8 @@ export const Form: React.FC<Props> = ({ defaultValues }) => {
     control,
     setValue,
     formState: { errors },
-  } = useForm<UpdateClientSchemaType>({
-    resolver: zodResolver(updateClientSchema),
+  } = useForm<UpdateExternalClientSchemaType>({
+    resolver: zodResolver(updateExternalClientSchema),
     defaultValues: {
       full_name: defaultValues.full_name,
       email: defaultValues.email || "",
@@ -39,7 +39,7 @@ export const Form: React.FC<Props> = ({ defaultValues }) => {
     setValue("avatar", file);
   };
 
-  const { onSubmit, isPending } = useUpdateClient(defaultValues.id);
+  const { onSubmit, isPending } = useUpdateExternalClient(defaultValues.id);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

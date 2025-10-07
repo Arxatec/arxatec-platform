@@ -28,5 +28,13 @@ export const lawyerRoutes = {
       path: ROUTES.Lawyer.UpdateClient,
       element: <lawyerPages.UpdateClientPage />,
     },
+    {
+      path: ROUTES.Lawyer.ViewCase,
+      element: <lawyerPages.ViewCasePage />,
+    },
+    {
+      path: ROUTES.Lawyer.UpdateCase,
+      element: <lawyerPages.UpdateCasePage />,
+    },
   ],
 };

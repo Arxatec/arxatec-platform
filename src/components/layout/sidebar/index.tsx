@@ -1,4 +1,5 @@
 import {
+  CalendarIcon,
   ChevronsUpDown,
   Folder,
   Home,
@@ -6,7 +7,7 @@ import {
   Telescope,
   Users,
 } from "lucide-react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 import {
   Sidebar as SidebarComponent,
@@ -28,10 +29,12 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  Logo,
 } from "@/components/ui";
 import { useAuth } from "@/hooks";
 import { ROUTES } from "@/routes/routes";
 import { USER_TYPE } from "@/types";
+import { toast } from "sonner";
 
 const clientNavigation = [
   {
@@ -61,12 +64,19 @@ const lawyerNavigation = [
 export default function Sidebar() {
   const { user, logout } = useAuth();
   const pathname = useLocation().pathname;
+
+  const showSoonToast = () => {
+    toast.info("Próximamente disponible", {
+      description:
+        "Actualmente estamos trabajando en esta funcionalidad, pronto estará disponible.",
+    });
+  };
   return (
     <SidebarProvider>
       <SidebarComponent>
         <SidebarHeader>
           <div className="py-2 px-4 flex items-center justify-center bg-accent rounded">
-            <img src="/logo.png" alt="logo" className="w-20" />
+            <Logo className="w-24 h-8 text-primary" />
           </div>
         </SidebarHeader>
         <SidebarContent>
@@ -80,10 +90,10 @@ export default function Sidebar() {
                         asChild
                         isActive={pathname === item.url}
                       >
-                        <a href={item.url}>
+                        <Link to={item.url}>
                           <item.icon />
                           <span>{item.title}</span>
-                        </a>
+                        </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
@@ -94,13 +104,20 @@ export default function Sidebar() {
                         asChild
                         isActive={pathname === item.url}
                       >
-                        <a href={item.url}>
+                        <Link to={item.url}>
                           <item.icon />
                           <span>{item.title}</span>
-                        </a>
+                        </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton onClick={showSoonToast}>
+                    <CalendarIcon />
+                    <span>Calendario</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

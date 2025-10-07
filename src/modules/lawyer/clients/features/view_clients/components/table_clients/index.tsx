@@ -18,13 +18,13 @@ import {
   Label,
   Input,
 } from "@/components/ui";
-import { getClients } from "../../services";
+import { getExternalClients } from "../../services";
 import { useQuery } from "@tanstack/react-query";
 import { ErrorState, EmptyState, LoadingState, ClientDetailDrawer } from "../";
 import { useState } from "react";
 import { ArchiveIcon, EyeIcon, PencilIcon } from "lucide-react";
-import type { Client } from "@/types/client";
-import { useArchiveClient } from "../../hooks";
+import type { ExternalClient } from "@/types/client";
+import { useArchiveExternalClient } from "../../hooks";
 import { ROUTES } from "@/routes/routes";
 import { useNavigate } from "react-router-dom";
 import { useDebounce } from "@/hooks";
@@ -34,16 +34,16 @@ export const TableClients = () => {
   const [page, setPage] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
-  const { handleArchiveClient } = useArchiveClient();
+  const { handleArchiveExternalClient } = useArchiveExternalClient();
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
 
   const { data, isPending, isError, error } = useQuery({
-    queryKey: ["clients", page, debouncedSearch],
-    queryFn: () => getClients(page, debouncedSearch),
+    queryKey: ["external-clients", page, debouncedSearch],
+    queryFn: () => getExternalClients(page, debouncedSearch),
   });
 
-  const handleViewDetails = (client: Client) => {
+  const handleViewDetails = (client: ExternalClient) => {
     setSelectedClientId(client.id);
     setIsDrawerOpen(true);
   };
@@ -121,7 +121,7 @@ export const TableClients = () => {
                       </ContextMenuItem>
                       <ContextMenuSeparator />
                       <ContextMenuItem
-                        onClick={() => handleArchiveClient(client)}
+                        onClick={() => handleArchiveExternalClient(client)}
                       >
                         <ArchiveIcon className="w-4 h-4" />
                         <span>Archivar</span>
