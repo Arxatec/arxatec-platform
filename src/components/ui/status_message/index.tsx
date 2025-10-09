@@ -7,14 +7,14 @@ interface Props {
 }
 const colorVariants = {
   rose: {
-    background: "bg-rose-500/10",
-    textPrimary: "text-rose-800",
-    textSecondary: "text-rose-700",
+    background: "bg-destructive/10",
+    textPrimary: "text-destructive",
+    textSecondary: "text-destructive/80",
   },
   white: {
-    background: "bg-neutral-100/5",
-    textPrimary: "text-neutral-100",
-    textSecondary: "text-neutral-100/80",
+    background: "bg-accent",
+    textPrimary: "text-card-foreground",
+    textSecondary: "text-card-foreground/80",
   },
 };
 

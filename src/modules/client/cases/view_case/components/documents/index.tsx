@@ -29,7 +29,7 @@ interface Props {
 }
 
 export const LoadingStateDocuments = () => {
-  return <Skeleton className="w-full bg-card h-[500px]"></Skeleton>;
+  return <Skeleton className="w-full h-42"></Skeleton>;
 };
 
 export const ErrorStateDocuments = () => {

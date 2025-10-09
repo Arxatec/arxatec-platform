@@ -52,7 +52,7 @@ export const ClientSelect: React.FC<Props> = ({ control, errors }) => {
             role="combobox"
             aria-expanded={open}
             className={twMerge(
-              "w-full justify-between",
+              "w-full justify-between bg-card",
               errors.external_client_id && "border-rose-500/10! border!",
               !field.value && "text-muted-foreground"
             )}
