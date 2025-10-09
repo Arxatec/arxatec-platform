@@ -1,4 +1,5 @@
 import {
+  BriefcaseIcon,
   CalendarIcon,
   ChevronsUpDown,
   Folder,
@@ -111,6 +112,14 @@ export default function Sidebar() {
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
+                {user?.user_type === USER_TYPE.CLIENT && (
+                  <SidebarMenuItem>
+                    <SidebarMenuButton onClick={showSoonToast}>
+                      <BriefcaseIcon />
+                      <span>Abogados</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )}
 
                 <SidebarMenuItem>
                   <SidebarMenuButton onClick={showSoonToast}>

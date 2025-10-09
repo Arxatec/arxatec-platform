@@ -27,7 +27,7 @@ function Input({
         />
         <button
           type="button"
-          className="absolute inset-y-0 right-0 flex items-center justify-center w-10 text-stone-500 hover:text-stone-700 focus:outline-none"
+          className="absolute inset-y-0 right-0 flex items-center justify-center w-10 text-muted-foreground focus:outline-none"
           onClick={() => setShowPassword(!showPassword)}
         >
           {showPassword ? (

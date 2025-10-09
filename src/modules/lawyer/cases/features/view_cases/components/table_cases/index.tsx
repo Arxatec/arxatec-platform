@@ -63,8 +63,11 @@ export const TableCases = () => {
     });
   };
 
-  const handleUpdateCase = (id: string) => {
-    navigate(ROUTES.Lawyer.UpdateCase.replace(":id", id));
+  const handleSoon = () => {
+    toast.info("Próximamente disponible", {
+      description:
+        "Actualmente estamos trabajando en esta funcionalidad, pronto estará disponible.",
+    });
   };
 
   return (
@@ -134,9 +137,7 @@ export const TableCases = () => {
                         <EyeIcon className="w-4 h-4" />
                         <span>Ver detalle del caso</span>
                       </ContextMenuItem>
-                      <ContextMenuItem
-                        onClick={() => handleUpdateCase(caso.id)}
-                      >
+                      <ContextMenuItem onClick={() => handleSoon()}>
                         <PencilIcon className="w-4 h-4" />
                         <span>Editar caso</span>
                       </ContextMenuItem>

@@ -3,13 +3,18 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
+  Button,
   Skeleton,
   StatusMessage,
 } from "@/components/ui";
-import { getClient } from "../../services";
 import { useQuery } from "@tanstack/react-query";
+import { getExternalClient } from "../../services";
 import { formatDate } from "date-fns";
-import { es } from "date-fns/locale/es";
+import { es } from "date-fns/locale";
+import { ROUTES } from "@/routes/routes";
+import { useNavigate } from "react-router-dom";
+import { PencilIcon } from "lucide-react";
+
 interface Props {
   id: string;
 }
@@ -28,18 +33,32 @@ const ErrorState = () => {
   );
 };
 
-export const Client: React.FC<Props> = ({ id }) => {
+export const ExternalClient: React.FC<Props> = ({ id }) => {
   const { data, isPending, isError } = useQuery({
-    queryKey: ["client"],
-    queryFn: () => getClient(id),
-    enabled: !!id,
+    queryKey: ["external-client"],
+    queryFn: () => getExternalClient(id),
   });
+
+  const navigate = useNavigate();
+
+  const handleUpdateExternalClient = (id: string) => {
+    navigate(ROUTES.Lawyer.UpdateClient.replace(":id", id));
+  };
 
   return (
     <div className="bg-card rounded-md p-4">
-      <h2 className="text-xl font-bold font-serif mb-4">
-        Información del cliente
-      </h2>
+      <div className="mb-4 flex items-center gap-2 justify-between">
+        <h2 className="text-xl font-bold font-serif">
+          Información del cliente
+        </h2>
+        <Button
+          variant="outline"
+          onClick={() => handleUpdateExternalClient(id)}
+        >
+          <PencilIcon />
+          Editar
+        </Button>
+      </div>
       <AsyncBoundary
         isLoading={isPending}
         isError={isError}
@@ -65,6 +84,12 @@ export const Client: React.FC<Props> = ({ id }) => {
                 </span>
                 <span className="text-sm text-right">{data.full_name}</span>
               </div>
+              <div className="grid grid-cols-2 gap-2 justify-between items-center">
+                <span className="text-sm text-muted-foreground">
+                  Documento de identidad
+                </span>
+                <span className="text-sm text-right">{data.dni}</span>
+              </div>
 
               <div className="grid grid-cols-2 gap-2 justify-between items-center">
                 <span className="text-sm text-muted-foreground">
@@ -77,21 +102,14 @@ export const Client: React.FC<Props> = ({ id }) => {
                 <span className="text-sm text-muted-foreground">
                   Número de contacto
                 </span>
+                <span className="text-sm text-right">{data.phone}</span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 justify-between items-center">
+                <span className="text-sm text-muted-foreground">Archivado</span>
                 <span className="text-sm text-right">
-                  {data.phone || "No especificado"}
+                  {data.archived ? "Si" : "No"}
                 </span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 justify-between items-center">
-                <span className="text-sm text-muted-foreground">Ocupación</span>
-                <span className="text-sm text-right">No especificado</span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 justify-between items-center">
-                <span className="text-sm text-muted-foreground">
-                  Otro contacto
-                </span>
-                <span className="text-sm text-right">No especificado</span>
               </div>
 
               <div className="grid grid-cols-2 gap-2 justify-between items-center">

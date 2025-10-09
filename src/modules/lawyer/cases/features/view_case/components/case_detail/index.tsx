@@ -1,11 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui";
-import {
-  ActivityIcon,
-  FolderIcon,
-  MessageCircleIcon,
-  UserIcon,
-} from "lucide-react";
-import { Activity, Client, Communication, Documents, Information } from "..";
+import { FolderIcon, MessageCircleIcon, UserIcon } from "lucide-react";
+import { Client, Messages, Documents, ExternalClient, Information } from "..";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getCase } from "../../services";
@@ -41,35 +36,43 @@ export const CaseDetail: React.FC<Props> = ({ id }) => {
               Documentos
             </TabsTrigger>
             {data?.client_id && (
-              <TabsTrigger value="communication">
-                <MessageCircleIcon />
-                Comunicación
+              <>
+                <TabsTrigger value="client">
+                  <UserIcon />
+                  Cliente
+                </TabsTrigger>
+                <TabsTrigger value="messages">
+                  <MessageCircleIcon />
+                  Comunicación
+                </TabsTrigger>
+              </>
+            )}
+            {data?.external_client_id && (
+              <TabsTrigger value="external_client">
+                <UserIcon />
+                Cliente externo
               </TabsTrigger>
             )}
-            <TabsTrigger value="client">
-              <UserIcon />
-              Cliente
-            </TabsTrigger>
-            <TabsTrigger value="activity">
-              <ActivityIcon />
-              Actividad
-            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="documents">
             <Documents id={id} />
           </TabsContent>
           {data?.client_id && (
-            <TabsContent value="communication">
-              <Communication />
+            <>
+              <TabsContent value="messages">
+                <Messages id={id} />
+              </TabsContent>
+              <TabsContent value="client">
+                <Client id={data.client_id} />
+              </TabsContent>
+            </>
+          )}
+          {data?.external_client_id && (
+            <TabsContent value="external_client">
+              <ExternalClient id={data.external_client_id} />
             </TabsContent>
           )}
-          <TabsContent value="client">
-            <Client />
-          </TabsContent>
-          <TabsContent value="activity">
-            <Activity />
-          </TabsContent>
         </Tabs>
       </div>
     </>

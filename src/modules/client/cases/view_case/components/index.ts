@@ -4,7 +4,5 @@ export * from "./messages";
 export * from "./activity";
 export * from "./case_detail";
 export * from "./create_document_sheet";
-export * from "./client";
-export * from "./external_client";
 export * from "./send_message";
 export * from "./message";

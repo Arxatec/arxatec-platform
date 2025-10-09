@@ -1,15 +1,8 @@
-import {
-  AsyncBoundary,
-  Button,
-  Skeleton,
-  StatusMessage,
-} from "@/components/ui";
+import { AsyncBoundary, Skeleton, StatusMessage } from "@/components/ui";
 import { CaseStatusLabel, CaseUrgencyLabel } from "@/types";
 import { CaseCategoryLabel, type Case } from "@/types/cases";
 import { formatDate } from "date-fns";
 import { es } from "date-fns/locale";
-import { PencilIcon } from "lucide-react";
-import { toast } from "sonner";
 
 interface Props {
   isPending: boolean;
@@ -44,13 +37,6 @@ export const ErrorStateInformation = () => {
 };
 
 export const Information: React.FC<Props> = ({ isPending, isError, data }) => {
-  const handleSoon = () => {
-    toast.info("Próximamente disponible", {
-      description:
-        "Actualmente estamos trabajando en esta funcionalidad, pronto estará disponible.",
-    });
-  };
-
   return (
     <AsyncBoundary
       isLoading={isPending}
@@ -61,15 +47,9 @@ export const Information: React.FC<Props> = ({ isPending, isError, data }) => {
     >
       {(caseData) => (
         <>
-          <div className="flex items-center gap-2 justify-between mb-8">
-            <h1 className="text-2xl font-bold font-serif mt-4">
-              {caseData.title}
-            </h1>
-            <Button onClick={() => handleSoon()}>
-              <PencilIcon />
-              Editar
-            </Button>
-          </div>
+          <h1 className="text-2xl font-bold font-serif mt-4 mb-8">
+            {caseData.title}
+          </h1>
           <div className="bg-card p-4 rounded-md w-full">
             <h2 className="text-xl font-bold font-serif mb-4">
               Información del caso

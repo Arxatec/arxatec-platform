@@ -8,17 +8,31 @@ import {
   AsyncBoundary,
   Badge,
   PaginationController,
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuItem,
 } from "@/components/ui";
 import { useQuery } from "@tanstack/react-query";
 import { getCases } from "../../services";
-import { type Case } from "@/types";
+import {
+  CaseCategoryLabel,
+  CaseStatus,
+  CaseStatusLabel,
+  type Case,
+} from "@/types";
 import { LoadingState, ErrorState, EmptyState, Filters } from "../";
 import { formatDate } from "date-fns";
 import { es } from "date-fns/locale";
 import { useState } from "react";
 import { useDebounce } from "@/hooks";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@/routes/routes";
+import { ArchiveIcon, EyeIcon } from "lucide-react";
+import { toast } from "sonner";
 
 export const TableCases = () => {
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
   const [page, setPage] = useState(1);
@@ -28,6 +42,24 @@ export const TableCases = () => {
     queryKey: ["cases", page, debouncedSearch, category, status],
     queryFn: () => getCases(page, debouncedSearch, category, status),
   });
+
+  const handleViewCase = (id: string, status: string) => {
+    if (status === CaseStatus.IN_PENDING) {
+      navigate(ROUTES.Client.ViewCase.replace(":id", id));
+      return;
+    }
+    toast.info("Próximamente disponible", {
+      description:
+        "Actualmente estamos trabajando en esta funcionalidad, solo puedes ver el detalle de los casos en progreso.",
+    });
+  };
+
+  const handleSoonToast = () => {
+    toast.info("Próximamente disponible", {
+      description:
+        "Actualmente estamos trabajando en esta funcionalidad, pronto estará disponible.",
+    });
+  };
 
   return (
     <div>
@@ -61,25 +93,47 @@ export const TableCases = () => {
               </TableHeader>
               <TableBody>
                 {cases?.map((caso: Case) => (
-                  <TableRow key={caso.id}>
-                    <TableCell className="w-[150px] uppercase">
-                      #{caso.id.slice(0, 8)}
-                    </TableCell>
-                    <TableCell>{caso.title}</TableCell>
-                    <TableCell className="w-[150px] ">
-                      <Badge className="capitalize" variant="secondary">
-                        {caso.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="w-[150px] capitalize">
-                      {caso.category}
-                    </TableCell>
-                    <TableCell className="w-[180px]">
-                      {formatDate(caso.created_at, "dd 'de' MMMM 'del' yyyy", {
-                        locale: es,
-                      })}
-                    </TableCell>
-                  </TableRow>
+                  <ContextMenu key={caso.id}>
+                    <ContextMenuTrigger asChild>
+                      <TableRow
+                        onClick={() => handleViewCase(caso.id, caso.status)}
+                      >
+                        <TableCell className="w-[150px] uppercase">
+                          #{caso.id.slice(0, 8)}
+                        </TableCell>
+                        <TableCell>{caso.title}</TableCell>
+                        <TableCell className="w-[150px] ">
+                          <Badge variant="secondary">
+                            {CaseStatusLabel[caso.status]}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="w-[150px]">
+                          {CaseCategoryLabel[caso.category]}
+                        </TableCell>
+                        <TableCell className="w-[180px]">
+                          {formatDate(
+                            caso.created_at,
+                            "dd 'de' MMMM 'del' yyyy",
+                            {
+                              locale: es,
+                            }
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    </ContextMenuTrigger>
+                    <ContextMenuContent>
+                      <ContextMenuItem
+                        onClick={() => handleViewCase(caso.id, caso.status)}
+                      >
+                        <EyeIcon className="w-4 h-4" />
+                        <span>Ver detalle del caso</span>
+                      </ContextMenuItem>
+                      <ContextMenuItem onClick={() => handleSoonToast()}>
+                        <ArchiveIcon className="w-4 h-4" />
+                        <span>Archivar caso</span>
+                      </ContextMenuItem>
+                    </ContextMenuContent>
+                  </ContextMenu>
                 ))}
               </TableBody>
             </Table>

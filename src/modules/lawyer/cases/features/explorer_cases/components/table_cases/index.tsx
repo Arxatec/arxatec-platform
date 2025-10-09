@@ -22,6 +22,7 @@ import { useState } from "react";
 import { Filters } from "../filters";
 import { useDebounce } from "@/hooks";
 import { EyeIcon, FileTextIcon } from "lucide-react";
+import { toast } from "sonner";
 
 export const TableCases = () => {
   const [page, setPage] = useState(1);
@@ -34,6 +35,13 @@ export const TableCases = () => {
     queryKey: ["cases", page, debouncedSearch, category],
     queryFn: () => explorerCases(page, debouncedSearch, category),
   });
+
+  const handleSoonToast = () => {
+    toast.info("Próximamente disponible", {
+      description:
+        "Actualmente estamos trabajando en esta funcionalidad, pronto estará disponible.",
+    });
+  };
 
   return (
     <div>
@@ -86,7 +94,7 @@ export const TableCases = () => {
                       </TableRow>
                     </ContextMenuTrigger>
                     <ContextMenuContent className="w-64">
-                      <ContextMenuItem>
+                      <ContextMenuItem onClick={() => handleSoonToast()}>
                         <EyeIcon className="w-4 h-4" />
                         <span>Ver detalles del caso</span>
                       </ContextMenuItem>

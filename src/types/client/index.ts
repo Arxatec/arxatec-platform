@@ -8,3 +8,12 @@ export interface ExternalClient {
   created_at: Date;
   archived: boolean;
 }
+
+export interface Client {
+  id: string;
+  profile_image: string | null;
+  full_name: string;
+  email: string | null;
+  phone: string | null;
+  created_at: Date;
+}

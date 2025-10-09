@@ -10,6 +10,7 @@ export const ROUTES = {
 
   Client: {
     ViewCases: "/client/cases",
+    ViewCase: "/client/cases/:id",
     CreateCase: "/client/cases/create",
   },
 
