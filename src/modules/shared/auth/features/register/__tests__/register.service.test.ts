@@ -22,6 +22,7 @@ describe("Register Service", () => {
     email: "juan@example.com",
     password: "password123",
     confirm_password: "password123",
+    user_type: "client",
   };
 
   const mockSuccessResponse: Response = {
