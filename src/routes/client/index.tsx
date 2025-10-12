@@ -16,5 +16,13 @@ export const clientRoutes = {
       path: ROUTES.Client.CreateCase,
       element: <clientPages.CreateCasePage />,
     },
+    {
+      path: ROUTES.Client.ViewLawyers,
+      element: <clientPages.ViewLawyersPage />,
+    },
+    {
+      path: ROUTES.Client.ViewCalendar,
+      element: <clientPages.ViewCalendarPage />,
+    },
   ],
 };

@@ -12,6 +12,8 @@ export const ROUTES = {
     ViewCases: "/client/cases",
     ViewCase: "/client/cases/:id",
     CreateCase: "/client/cases/create",
+    ViewLawyers: "/client/lawyers",
+    ViewCalendar: "/client/calendar",
   },
 
   Lawyer: {

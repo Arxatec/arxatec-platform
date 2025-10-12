@@ -122,3 +122,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+.EmojiPickerReact {
+  --epr-text-color: var(--muted-foreground) !important;
+  --epr-emoji-size: 24px !important;
+  font-family: 'Source Sans 3', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+.epr-emoji-category-label {
+
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}

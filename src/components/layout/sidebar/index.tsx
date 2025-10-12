@@ -43,6 +43,16 @@ const clientNavigation = [
     url: ROUTES.Client.ViewCases,
     icon: Home,
   },
+  {
+    title: "Abogados",
+    url: ROUTES.Client.ViewLawyers,
+    icon: BriefcaseIcon,
+  },
+  {
+    title: "Calendario",
+    url: ROUTES.Client.ViewCalendar,
+    icon: CalendarIcon,
+  },
 ];
 
 const lawyerNavigation = [
@@ -66,12 +76,12 @@ export default function Sidebar() {
   const { user, logout } = useAuth();
   const pathname = useLocation().pathname;
 
-  const showSoonToast = () => {
+  /* const showSoonToast = () => {
     toast.info("Próximamente disponible", {
       description:
         "Actualmente estamos trabajando en esta funcionalidad, pronto estará disponible.",
     });
-  };
+  }; */
   return (
     <SidebarProvider>
       <SidebarComponent>
@@ -112,21 +122,6 @@ export default function Sidebar() {
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
-                {user?.user_type === USER_TYPE.CLIENT && (
-                  <SidebarMenuItem>
-                    <SidebarMenuButton onClick={showSoonToast}>
-                      <BriefcaseIcon />
-                      <span>Abogados</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                )}
-
-                <SidebarMenuItem>
-                  <SidebarMenuButton onClick={showSoonToast}>
-                    <CalendarIcon />
-                    <span>Calendario</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
@@ -168,7 +163,7 @@ export default function Sidebar() {
         </SidebarFooter>
       </SidebarComponent>
       <SidebarInset>
-        <div className="mx-auto max-w-5xl w-full px-12 py-8">
+        <div className="mx-auto w-full">
           <Outlet />
         </div>
       </SidebarInset>
