@@ -8,7 +8,7 @@ export default function ViewCasePage() {
   const { id } = useParams();
 
   return (
-    <div>
+    <div className="w-full p-8 ">
       <Link to={ROUTES.Lawyer.ViewCases} className="flex items-center gap-2">
         <Button variant="outline" className="border-none bg-accent">
           <ArrowLeftIcon />

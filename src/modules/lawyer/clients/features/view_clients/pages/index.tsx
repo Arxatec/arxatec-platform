@@ -12,7 +12,7 @@ export default function ViewClientsPage() {
     changeTitle("Mis clientes - Arxatec");
   }, []);
   return (
-    <div className="w-full">
+    <div className="w-full p-8">
       <CustomHeader
         title="Mis clientes"
         button={{

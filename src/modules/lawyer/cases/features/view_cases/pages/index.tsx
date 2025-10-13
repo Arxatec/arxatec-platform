@@ -13,7 +13,7 @@ export default function ViewCasesPage() {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full p-8">
       <CustomHeader
         title="Mis casos"
         button={{

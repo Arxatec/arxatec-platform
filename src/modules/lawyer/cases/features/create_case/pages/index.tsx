@@ -13,7 +13,7 @@ export default function CreateCasePage() {
     changeTitle("Crear caso - Arxatec");
   }, []);
   return (
-    <div className="w-full">
+    <div className="w-full p-8 mx-auto max-w-5xl">
       <Link
         to={ROUTES.Lawyer.ViewCases}
         className="flex items-center gap-2 w-fit"

@@ -13,7 +13,7 @@ export default function CreateClientPage() {
     changeTitle("Crear cliente - Arxatec");
   }, []);
   return (
-    <>
+    <div className="w-full p-8 mx-auto max-w-5xl">
       <Link
         to={ROUTES.Lawyer.ViewClients}
         className="flex items-center gap-2 w-fit"
@@ -25,6 +25,6 @@ export default function CreateClientPage() {
       </Link>
 
       <Form />
-    </>
+    </div>
   );
 }

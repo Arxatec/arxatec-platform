@@ -11,7 +11,7 @@ export default function ExplorerCasesPage() {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full p-8">
       <CustomHeader
         title="Explorar casos"
         description="Estos son los casos que están disponibles y que fueron creador por clientes, puedes tomarlos para realizar un estudio y ofrecer tu servicio."
