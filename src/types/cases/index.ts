@@ -63,6 +63,7 @@ export interface Case {
   created_at: Date;
   client_id?: string | null;
   external_client_id?: string | null;
+  lawyer_id?: string | null;
 }
 
 export interface CaseAttachment {

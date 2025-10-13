@@ -7,7 +7,7 @@ interface Props {
 
 export const SelectorDayCalendar = ({ date, setDate }: Props) => {
   return (
-    <div className="hidden w-1/2 max-w-xs flex-none border-l border-muted bg-card p-6 md:block">
+    <div className="hidden w-1/2 max-w-xs flex-none border-l border-muted bg-card p-6 md:block fixed top-0 right-0 h-screen overflow-y-auto z-10 pt-28">
       <Calendar
         mode="single"
         selected={date}

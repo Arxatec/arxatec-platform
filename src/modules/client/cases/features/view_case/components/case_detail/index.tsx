@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getCase } from "../../services";
 import { useTitle } from "@/hooks/use_title";
+import { Lawyer } from "../lawyer";
 
 interface Props {
   id: string;
@@ -35,24 +36,24 @@ export const CaseDetail: React.FC<Props> = ({ id }) => {
               <FolderIcon />
               Documentos
             </TabsTrigger>
-            <TabsTrigger value="messages">
-              <MessageCircleIcon />
-              Comunicación
-            </TabsTrigger>
             <TabsTrigger value="laywer">
               <BriefcaseIcon />
               Mi abogado
+            </TabsTrigger>
+            <TabsTrigger value="messages">
+              <MessageCircleIcon />
+              Comunicación
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="documents">
             <Documents id={id} />
           </TabsContent>
+          <TabsContent value="laywer">
+            <Lawyer id={data?.lawyer_id as string} />
+          </TabsContent>
           <TabsContent value="messages">
             <Messages id={id} />
-          </TabsContent>
-          <TabsContent value="laywer">
-            <p>Mi abogado</p>
           </TabsContent>
         </Tabs>
       </div>

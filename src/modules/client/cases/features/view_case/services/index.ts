@@ -1,8 +1,7 @@
 import { axiosInstance } from "@/interceptors";
 import type { Response } from "@/types";
-import type { Case } from "@/types";
+import type { Case, Lawyer } from "@/types";
 import type { GetCaseAttachmentsResponse } from "../types";
-import type { Client, ExternalClient } from "@/types/client";
 import { groupMessagesByDate } from "../utils";
 
 export const getCase = async (id: string): Promise<Case> => {
@@ -57,24 +56,12 @@ export const getHistoryMessages = async (id: string) => {
   return groupMessagesByDate(data.data.messages);
 };
 
-export const getExternalClient = async (
-  id: string
-): Promise<ExternalClient> => {
-  const { data } = await axiosInstance.get<Response<ExternalClient>>(
-    `/cases/external-clients/detail/${id}`
+export const getLawyer = async (id: string) => {
+  const { data } = await axiosInstance.get<Response<Lawyer>>(
+    `/lawyers/detail/${id}`
   );
   if (!data.data) {
-    throw new Error("No se pudo obtener el cliente externo");
-  }
-  return data.data;
-};
-
-export const getClient = async (id: string): Promise<Client> => {
-  const { data } = await axiosInstance.get<Response<Client>>(
-    `/clients/detail/${id}`
-  );
-  if (!data.data) {
-    throw new Error("No se pudo obtener el cliente");
+    throw new Error("No se pudo obtener el abogado del caso");
   }
   return data.data;
 };

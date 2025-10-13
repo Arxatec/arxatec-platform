@@ -77,7 +77,7 @@ export const ViewDayView = () => {
 
   return (
     <div className="isolate flex flex-auto overflow-hidden bg-background">
-      <div className="flex flex-auto flex-col overflow-auto">
+      <div className="flex flex-auto flex-col overflow-auto pr-80">
         <div className="flex w-full flex-auto">
           <div className="w-14 flex-none bg-background ring-1 ring-muted" />
           <div className="grid flex-auto grid-cols-1 grid-rows-1">
@@ -132,7 +132,6 @@ export const ViewDayView = () => {
           </div>
         </div>
       </div>
-
       <SelectorDayCalendar date={date} setDate={setDate} />
     </div>
   );

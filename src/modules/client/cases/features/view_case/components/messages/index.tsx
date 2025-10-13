@@ -7,7 +7,7 @@ import { es } from "date-fns/locale";
 import { socket } from "@/services/socket";
 import { useUserStore } from "@/store";
 import type { Message as MessageType } from "@/types";
-import { Skeleton, StatusMessage } from "@/components/ui";
+import { Card, CardContent, Skeleton, StatusMessage } from "@/components/ui";
 
 interface Props {
   id: string;
@@ -104,51 +104,53 @@ export const Messages: React.FC<Props> = ({ id }) => {
   }
 
   return (
-    <div className="bg-card p-4 rounded-md w-full h-full">
-      <div className="my-4 space-y-4">
-        {Object.entries(data || {}).map(([date, dateMessages]) => (
-          <div key={date}>
-            <div className="flex items-center gap-4 py-8">
-              <span className="w-full h-[1px] bg-muted-foreground/10 flex-1"></span>
-              <p className="text-sm text-muted-foreground text-center">
-                {formatDate(date, "dd 'de' MMMM 'del' yyyy", { locale: es })}
-              </p>
-              <span className="w-full h-[1px] bg-muted-foreground/10 flex-1"></span>
-            </div>
+    <Card>
+      <CardContent>
+        <div className="my-4 space-y-4">
+          {Object.entries(data || {}).map(([date, dateMessages]) => (
+            <div key={date}>
+              <div className="flex items-center gap-4 py-8">
+                <span className="w-full h-[1px] bg-muted-foreground/10 flex-1"></span>
+                <p className="text-sm text-muted-foreground text-center">
+                  {formatDate(date, "dd 'de' MMMM 'del' yyyy", { locale: es })}
+                </p>
+                <span className="w-full h-[1px] bg-muted-foreground/10 flex-1"></span>
+              </div>
 
-            <div className="mb-4">
-              {dateMessages.map((message, index) => {
-                const previousMessage =
-                  index > 0 ? dateMessages[index - 1] : null;
-                const isConsecutiveMessage =
-                  previousMessage &&
-                  previousMessage.sent_by === message.sent_by;
+              <div className="mb-4">
+                {dateMessages.map((message, index) => {
+                  const previousMessage =
+                    index > 0 ? dateMessages[index - 1] : null;
+                  const isConsecutiveMessage =
+                    previousMessage &&
+                    previousMessage.sent_by === message.sent_by;
 
-                return (
-                  <Message
-                    key={message.id}
-                    isConsecutiveMessage={isConsecutiveMessage || false}
-                    sent_name={message.sent_name}
-                    created_at={message.created_at}
-                    content={message.content}
-                  />
-                );
-              })}
+                  return (
+                    <Message
+                      key={message.id}
+                      isConsecutiveMessage={isConsecutiveMessage || false}
+                      sent_name={message.sent_name}
+                      created_at={message.created_at}
+                      content={message.content}
+                    />
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        ))}
-        <div ref={messagesEndRef} />
-      </div>
-      {Object.keys(data || {}).length === 0 && (
-        <div className="w-full">
-          <StatusMessage
-            title="No hay mensajes"
-            description="No hay mensajes, podrías agregar uno en el botón que se encuentra en la parte superior derecha."
-            color="white"
-          />
+          ))}
+          <div ref={messagesEndRef} />
         </div>
-      )}
-      <SendMessage id={id} />
-    </div>
+        {Object.keys(data || {}).length === 0 && (
+          <div className="w-full">
+            <StatusMessage
+              title="No hay mensajes"
+              description="No hay mensajes, podrías agregar uno en el botón que se encuentra en la parte superior derecha."
+              color="white"
+            />
+          </div>
+        )}
+        <SendMessage id={id} />
+      </CardContent>
+    </Card>
   );
 };
