@@ -1,5 +1,5 @@
 import { CustomHeader } from "@/components/ui";
-import { TableLawyers } from "../components";
+import { DirectoryLawyers } from "../components";
 import { useTitle } from "@/hooks";
 import { useEffect } from "react";
 
@@ -15,7 +15,7 @@ export default function ViewLawyersPage() {
         title="Abogados"
         description="Estos son los abogados que están disponibles en la plataforma, puedes contactarlos para que te ayude en tu caso o estudio."
       />
-      <TableLawyers />
+      <DirectoryLawyers />
     </div>
   );
 }
