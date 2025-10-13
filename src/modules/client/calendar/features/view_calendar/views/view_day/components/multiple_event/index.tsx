@@ -1,6 +1,6 @@
 import type { CalendarEvent } from "../../types";
 import { calculateAbsolutePosition } from "../../utils";
-import { DraggableEvent } from "../draggable_event";
+import { DraggableEvent } from "../";
 
 interface Props {
   eventGroup: CalendarEvent[];
@@ -56,19 +56,14 @@ export const MultipleEvent: React.FC<Props> = ({
                   height: `${eventHeight}px`,
                   width: "100%",
                 }}
-                className={`rounded-lg ${event.bgColor} p-1 text-xs border border-opacity-20 ${event.hoverColor} pointer-events-auto cursor-grab active:cursor-grabbing transition-all duration-200`}
+                className={`rounded border border-background ${event.bgColor} p-2 text-xs ${event.hoverColor} pointer-events-auto cursor-grab active:cursor-grabbing transition-all duration-200`}
               >
                 <p
-                  className={`font-semibold ${event.textColor} text-xs truncate`}
+                  className={`font-bold font-serif text-base ${event.textColor} truncate`}
                 >
                   {event.title}
                 </p>
-                {event.description && (
-                  <p className={`${event.descriptionColor} text-xs truncate`}>
-                    {event.description}
-                  </p>
-                )}
-                <p className={`${event.descriptionColor} text-xs`}>
+                <p className={`${event.descriptionColor} text-sm`}>
                   {event.startTime}-{event.endTime}
                 </p>
               </div>

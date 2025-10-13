@@ -32,13 +32,12 @@ export const Event: React.FC<Props> = ({ event, position }) => {
             height: position.height,
             width: "100%",
           }}
-          className={`rounded-lg ${event.bgColor} p-2 text-xs border border-opacity-20 ${event.hoverColor} pointer-events-auto cursor-grab active:cursor-grabbing transition-all duration-200`}
+          className={`rounded border border-background ${event.bgColor} p-2 text-xs ${event.hoverColor} pointer-events-auto cursor-grab active:cursor-grabbing transition-all duration-200`}
         >
-          <p className={`font-semibold ${event.textColor}`}>{event.title}</p>
-          {event.description && (
-            <p className={`${event.descriptionColor}`}>{event.description}</p>
-          )}
-          <p className={event.descriptionColor}>
+          <p className={`font-bold font-serif text-base ${event.textColor}`}>
+            {event.title}
+          </p>
+          <p className={`${event.descriptionColor} text-sm`}>
             {event.startTime} - {event.endTime}
           </p>
         </div>
