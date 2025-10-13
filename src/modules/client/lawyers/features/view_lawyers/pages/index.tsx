@@ -10,7 +10,7 @@ export default function ViewLawyersPage() {
     changeTitle("Abogados - Arxatec");
   }, []);
   return (
-    <div className="w-full max-w-5xl px-12 py-8 mx-auto">
+    <div className="w-full px-8 py-8 mx-auto">
       <CustomHeader
         title="Abogados"
         description="Estos son los abogados que están disponibles en la plataforma, puedes contactarlos para que te ayude en tu caso o estudio."
