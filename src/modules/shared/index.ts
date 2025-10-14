@@ -5,3 +5,6 @@ export { default as VerifyAccountPage } from "./auth/features/verify_account/pag
 export { default as RecoverPasswordPage } from "./auth/features/recover_password/pages";
 export { default as VerifyPasswordResetPage } from "./auth/features/verify_password_reset/pages";
 export { default as ChangePasswordPage } from "./auth/features/change_password/pages";
+
+// Onboarding
+export { default as LawyerOnboardingPage } from "./onboarding/features/lawyer/pages";

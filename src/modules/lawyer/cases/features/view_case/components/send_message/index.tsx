@@ -1,6 +1,6 @@
 import { Button, Input } from "@/components/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2Icon, SendIcon } from "lucide-react";
+import { Loader2Icon, SendIcon, SmilePlus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { sendMessageSchema } from "../../schemas";
 import type { SendMessageRequest } from "../../types";
@@ -8,7 +8,10 @@ import { toast } from "sonner";
 import { sendMessage } from "../../services";
 import { useMutation } from "@tanstack/react-query";
 import { twMerge } from "tailwind-merge";
+import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
+import type { EmojiClickData } from "emoji-picker-react";
 import { useState } from "react";
+import { EMOJI_CATEGORIES } from "@/constants";
 
 interface Props {
   id: string;
@@ -16,11 +19,14 @@ interface Props {
 
 export const SendMessage: React.FC<Props> = ({ id }) => {
   const [onFocus, setOnFocus] = useState(false);
+  const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
+    setValue,
+    watch,
   } = useForm<SendMessageRequest>({
     resolver: zodResolver(sendMessageSchema),
   });
@@ -46,8 +52,13 @@ export const SendMessage: React.FC<Props> = ({ id }) => {
     });
   };
 
+  const onEmojiClick = (emoji: EmojiClickData) => {
+    const prevContent = watch("content");
+    setValue("content", prevContent + emoji.emoji);
+  };
+
   return (
-    <div>
+    <div className="relative">
       <form
         className={twMerge(
           "flex items-center gap-2 bg-accent transition-all border rounded-md py-1 px-1",
@@ -63,6 +74,27 @@ export const SendMessage: React.FC<Props> = ({ id }) => {
           onFocus={() => setOnFocus(true)}
           onBlur={() => setOnFocus(false)}
         />
+        <Button
+          variant="ghost"
+          size="icon"
+          className="relative"
+          type="button"
+          onClick={() => setIsEmojiPickerOpen(!isEmojiPickerOpen)}
+        >
+          <SmilePlus className="w-4 h-4" />
+        </Button>
+        {isEmojiPickerOpen && (
+          <div className="absolute top-12 right-0">
+            <EmojiPicker
+              searchPlaceholder="Buscar emoji..."
+              onEmojiClick={onEmojiClick}
+              skinTonesDisabled
+              lazyLoadEmojis
+              categories={EMOJI_CATEGORIES}
+              emojiStyle={EmojiStyle.NATIVE}
+            />
+          </div>
+        )}
         <Button type="submit" disabled={isPending}>
           {isPending ? (
             <Loader2Icon className="w-4 h-4 animate-spin" />

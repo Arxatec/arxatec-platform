@@ -1,6 +1,8 @@
 import {
   AsyncBoundary,
   Button,
+  Card,
+  CardContent,
   Skeleton,
   StatusMessage,
 } from "@/components/ui";
@@ -70,71 +72,73 @@ export const Information: React.FC<Props> = ({ isPending, isError, data }) => {
               Editar
             </Button>
           </div>
-          <div className="bg-card p-4 rounded-md w-full">
-            <h2 className="text-xl font-bold font-serif mb-4">
-              Información del caso
-            </h2>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-semibold w-[150px]">
-                  Título del caso:
-                </span>
-                <span className="text-sm text-muted-foreground">
-                  {caseData.title}
-                </span>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          <Card>
+            <CardContent>
+              <h2 className="text-xl font-bold font-serif mb-4">
+                Información del caso
+              </h2>
+              <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-semibold w-[150px]">
-                    Tipo de caso:
+                    Título del caso:
                   </span>
                   <span className="text-sm text-muted-foreground">
-                    {CaseCategoryLabel[caseData.category]}
+                    {caseData.title}
                   </span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold w-[150px]">
+                      Tipo de caso:
+                    </span>
+                    <span className="text-sm text-muted-foreground">
+                      {CaseCategoryLabel[caseData.category]}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold w-[150px]">
+                      Urgencia:
+                    </span>
+                    <span className="text-sm text-muted-foreground">
+                      {CaseUrgencyLabel[caseData.urgency]}
+                    </span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold w-[150px]">
+                      Estado:
+                    </span>
+                    <span className="text-sm text-muted-foreground">
+                      {CaseStatusLabel[caseData.status]}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold w-[150px]">
+                      Fecha de creación:
+                    </span>
+                    <span className="text-sm text-muted-foreground">
+                      {formatDate(
+                        caseData.created_at,
+                        "dd 'de' MMMM 'del' yyyy",
+                        {
+                          locale: es,
+                        }
+                      )}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2">
                   <span className="text-sm font-semibold w-[150px]">
-                    Urgencia:
+                    Descripción de caso:
                   </span>
                   <span className="text-sm text-muted-foreground">
-                    {CaseUrgencyLabel[caseData.urgency]}
+                    {caseData.description}
                   </span>
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold w-[150px]">
-                    Estado:
-                  </span>
-                  <span className="text-sm text-muted-foreground">
-                    {CaseStatusLabel[caseData.status]}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold w-[150px]">
-                    Fecha de creación:
-                  </span>
-                  <span className="text-sm text-muted-foreground">
-                    {formatDate(
-                      caseData.created_at,
-                      "dd 'de' MMMM 'del' yyyy",
-                      {
-                        locale: es,
-                      }
-                    )}
-                  </span>
-                </div>
-              </div>
-              <div className="flex flex-col gap-2">
-                <span className="text-sm font-semibold w-[150px]">
-                  Descripción de caso:
-                </span>
-                <span className="text-sm text-muted-foreground">
-                  {caseData.description}
-                </span>
-              </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </>
       )}
     </AsyncBoundary>

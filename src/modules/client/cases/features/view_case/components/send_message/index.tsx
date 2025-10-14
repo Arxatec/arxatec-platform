@@ -8,9 +8,10 @@ import { toast } from "sonner";
 import { sendMessage } from "../../services";
 import { useMutation } from "@tanstack/react-query";
 import { twMerge } from "tailwind-merge";
-import EmojiPicker, { Categories, EmojiStyle } from "emoji-picker-react";
+import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
 import type { EmojiClickData } from "emoji-picker-react";
 import { useState } from "react";
+import { EMOJI_CATEGORIES } from "@/constants";
 
 interface Props {
   id: string;
@@ -89,29 +90,7 @@ export const SendMessage: React.FC<Props> = ({ id }) => {
               onEmojiClick={onEmojiClick}
               skinTonesDisabled
               lazyLoadEmojis
-              categories={[
-                {
-                  category: Categories.SUGGESTED,
-                  name: "Usados recientemente",
-                },
-                {
-                  category: Categories.SMILEYS_PEOPLE,
-                  name: "Caras & personas",
-                },
-                {
-                  category: Categories.ANIMALS_NATURE,
-                  name: "Animales & naturaleza",
-                },
-                { category: Categories.FOOD_DRINK, name: "Comida & bebida" },
-                {
-                  category: Categories.TRAVEL_PLACES,
-                  name: "Viajes & lugares",
-                },
-                { category: Categories.ACTIVITIES, name: "Actividades" },
-                { category: Categories.OBJECTS, name: "Objetos" },
-                { category: Categories.SYMBOLS, name: "Símbolos" },
-                { category: Categories.FLAGS, name: "Banderas" },
-              ]}
+              categories={EMOJI_CATEGORIES}
               emojiStyle={EmojiStyle.NATIVE}
             />
           </div>

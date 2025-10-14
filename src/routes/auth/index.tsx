@@ -41,6 +41,11 @@ export const authRoutes = {
         },
       ],
     },
+    {
+      path: ROUTES.Lawyer.LawyerOnboarding,
+      element: <publicPages.LawyerOnboardingPage />,
+    },
+
     /*  
     {
       path: ROUTES.Auth.RecoverPassword,

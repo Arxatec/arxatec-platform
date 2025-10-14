@@ -17,6 +17,7 @@ export const ROUTES = {
   },
 
   Lawyer: {
+    LawyerOnboarding: "/onboarding/lawyer",
     ViewCases: "/lawyer/cases",
     CreateCase: "/lawyer/cases/create",
     ViewClients: "/lawyer/clients",

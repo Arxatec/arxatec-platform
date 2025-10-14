@@ -14,7 +14,8 @@ export default function Guest() {
     currentPath.includes(ROUTES.Auth.Login) ||
     currentPath.includes(ROUTES.Auth.Register) ||
     currentPath.includes(ROUTES.Auth.RecoverPassword) ||
-    currentPath.includes(ROUTES.Auth.ChangePassword);
+    currentPath.includes(ROUTES.Auth.ChangePassword) ||
+    currentPath.includes(ROUTES.Lawyer.LawyerOnboarding);
 
   if (isError) {
     window.localStorage.removeItem("TOKEN_AUTH");

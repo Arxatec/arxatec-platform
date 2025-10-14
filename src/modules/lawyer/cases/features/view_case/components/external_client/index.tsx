@@ -4,6 +4,8 @@ import {
   AvatarFallback,
   AvatarImage,
   Button,
+  Card,
+  CardContent,
   Skeleton,
   StatusMessage,
 } from "@/components/ui";
@@ -46,86 +48,92 @@ export const ExternalClient: React.FC<Props> = ({ id }) => {
   };
 
   return (
-    <div className="bg-card rounded-md p-4">
-      <div className="mb-4 flex items-center gap-2 justify-between">
-        <h2 className="text-xl font-bold font-serif">
-          Información del cliente
-        </h2>
-        <Button
-          variant="outline"
-          onClick={() => handleUpdateExternalClient(id)}
+    <Card>
+      <CardContent>
+        <div className="mb-4 flex items-center gap-2 justify-between">
+          <h2 className="text-xl font-bold font-serif">
+            Información del cliente
+          </h2>
+          <Button
+            variant="outline"
+            onClick={() => handleUpdateExternalClient(id)}
+          >
+            <PencilIcon />
+            Editar
+          </Button>
+        </div>
+        <AsyncBoundary
+          isLoading={isPending}
+          isError={isError}
+          data={data}
+          LoadingComponent={<LoadingState />}
+          ErrorComponent={<ErrorState />}
         >
-          <PencilIcon />
-          Editar
-        </Button>
-      </div>
-      <AsyncBoundary
-        isLoading={isPending}
-        isError={isError}
-        data={data}
-        LoadingComponent={<LoadingState />}
-        ErrorComponent={<ErrorState />}
-      >
-        {(data) => (
-          <div className="grid grid-cols-[auto_1fr] gap-6">
-            <div className="flex flex-col gap-4">
-              <Avatar className="border size-42">
-                {data.profile_image && <AvatarImage src={data.profile_image} />}
-                <AvatarFallback className="uppercase text-primary">
-                  {data.full_name.split(" ")[0][0]}
-                  {data.full_name.split(" ")[1][0]}
-                </AvatarFallback>
-              </Avatar>
-            </div>
-            <div className="flex flex-col gap-2">
-              <div className="grid grid-cols-2 gap-2 justify-between items-center">
-                <span className="text-sm text-muted-foreground">
-                  Nombre y apellido
-                </span>
-                <span className="text-sm text-right">{data.full_name}</span>
+          {(data) => (
+            <div className="grid grid-cols-[auto_1fr] gap-6">
+              <div className="flex flex-col gap-4">
+                <Avatar className="border size-42">
+                  {data.profile_image && (
+                    <AvatarImage src={data.profile_image} />
+                  )}
+                  <AvatarFallback className="uppercase text-primary">
+                    {data.full_name.split(" ")[0][0]}
+                    {data.full_name.split(" ")[1][0]}
+                  </AvatarFallback>
+                </Avatar>
               </div>
-              <div className="grid grid-cols-2 gap-2 justify-between items-center">
-                <span className="text-sm text-muted-foreground">
-                  Documento de identidad
-                </span>
-                <span className="text-sm text-right">{data.dni}</span>
-              </div>
+              <div className="flex flex-col gap-2">
+                <div className="grid grid-cols-2 gap-2 justify-between items-center">
+                  <span className="text-sm text-muted-foreground">
+                    Nombre y apellido
+                  </span>
+                  <span className="text-sm text-right">{data.full_name}</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 justify-between items-center">
+                  <span className="text-sm text-muted-foreground">
+                    Documento de identidad
+                  </span>
+                  <span className="text-sm text-right">{data.dni}</span>
+                </div>
 
-              <div className="grid grid-cols-2 gap-2 justify-between items-center">
-                <span className="text-sm text-muted-foreground">
-                  Correo electrónico
-                </span>
-                <span className="text-sm text-right">{data.email}</span>
-              </div>
+                <div className="grid grid-cols-2 gap-2 justify-between items-center">
+                  <span className="text-sm text-muted-foreground">
+                    Correo electrónico
+                  </span>
+                  <span className="text-sm text-right">{data.email}</span>
+                </div>
 
-              <div className="grid grid-cols-2 gap-2 justify-between items-center">
-                <span className="text-sm text-muted-foreground">
-                  Número de contacto
-                </span>
-                <span className="text-sm text-right">{data.phone}</span>
-              </div>
+                <div className="grid grid-cols-2 gap-2 justify-between items-center">
+                  <span className="text-sm text-muted-foreground">
+                    Número de contacto
+                  </span>
+                  <span className="text-sm text-right">{data.phone}</span>
+                </div>
 
-              <div className="grid grid-cols-2 gap-2 justify-between items-center">
-                <span className="text-sm text-muted-foreground">Archivado</span>
-                <span className="text-sm text-right">
-                  {data.archived ? "Si" : "No"}
-                </span>
-              </div>
+                <div className="grid grid-cols-2 gap-2 justify-between items-center">
+                  <span className="text-sm text-muted-foreground">
+                    Archivado
+                  </span>
+                  <span className="text-sm text-right">
+                    {data.archived ? "Si" : "No"}
+                  </span>
+                </div>
 
-              <div className="grid grid-cols-2 gap-2 justify-between items-center">
-                <span className="text-sm text-muted-foreground">
-                  Fecha de creación
-                </span>
-                <span className="text-sm text-right">
-                  {formatDate(data.created_at, "dd 'de' MMMM 'del' yyyy", {
-                    locale: es,
-                  })}
-                </span>
+                <div className="grid grid-cols-2 gap-2 justify-between items-center">
+                  <span className="text-sm text-muted-foreground">
+                    Fecha de creación
+                  </span>
+                  <span className="text-sm text-right">
+                    {formatDate(data.created_at, "dd 'de' MMMM 'del' yyyy", {
+                      locale: es,
+                    })}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        )}
-      </AsyncBoundary>
-    </div>
+          )}
+        </AsyncBoundary>
+      </CardContent>
+    </Card>
   );
 };
