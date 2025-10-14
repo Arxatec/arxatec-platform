@@ -15,6 +15,7 @@ interface Props<T extends FieldValues> {
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
   className?: string;
+  optional?: boolean;
 }
 
 export function FormInput<T extends FieldValues>({
@@ -25,6 +26,7 @@ export function FormInput<T extends FieldValues>({
   register,
   errors,
   className,
+  optional = false,
 }: Props<T>) {
   const error = errors[name];
 
@@ -33,6 +35,9 @@ export function FormInput<T extends FieldValues>({
       {label && (
         <Label className="mb-2 block" htmlFor={name}>
           {label}
+          {optional && (
+            <span className="text-xs text-muted-foreground"> (Opcional)</span>
+          )}
         </Label>
       )}
       <Input

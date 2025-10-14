@@ -42,7 +42,10 @@ export const LocationInput = ({
 
   return (
     <div>
-      <Label className="mb-2 block">Ubicación</Label>
+      <Label className="mb-2 block">
+        Ubicación{" "}
+        <span className="text-xs text-muted-foreground">(Opcional)</span>
+      </Label>
 
       {value && (
         <div className="mb-3 p-3 bg-card rounded border">

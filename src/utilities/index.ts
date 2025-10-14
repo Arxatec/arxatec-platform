@@ -4,3 +4,4 @@ export * from "./assets";
 export * from "./string";
 export * from "./objects";
 export * from "./date";
+export * from "./image";
