@@ -36,5 +36,13 @@ export const lawyerRoutes = {
       path: ROUTES.Lawyer.UpdateCase,
       element: <lawyerPages.UpdateCasePage />,
     },
+    {
+      path: ROUTES.Lawyer.ViewCalendar,
+      element: <lawyerPages.ViewCalendarPage />,
+    },
+    {
+      path: ROUTES.Lawyer.ViewTasks,
+      element: <lawyerPages.ViewTasksPage />,
+    },
   ],
 };

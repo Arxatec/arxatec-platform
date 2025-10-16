@@ -16,13 +16,23 @@ import {
 } from "@/components/ui";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getArchivedCases, getCases } from "../../services";
-import { CaseStatusLabel, type Case } from "@/types";
+import { CaseStatusLabel, CaseUrgencyLabel, type Case } from "@/types";
 import { LoadingState, ErrorState, EmptyState, Filters } from "../";
 import { formatDate } from "date-fns";
 import { es } from "date-fns/locale";
 import { useState } from "react";
 import { useDebounce } from "@/hooks";
-import { ArchiveIcon, EyeIcon, PencilIcon } from "lucide-react";
+import {
+  ArchiveIcon,
+  CalendarDaysIcon,
+  CircleCheckIcon,
+  EyeIcon,
+  FileTextIcon,
+  Hash,
+  PencilIcon,
+  TagIcon,
+  TriangleAlertIcon,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/routes/routes";
 import { toast } from "sonner";
@@ -93,11 +103,42 @@ export const TableCases = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[150px]">Número de caso</TableHead>
-                  <TableHead>Título del caso</TableHead>
-                  <TableHead className="w-[150px]">Estado</TableHead>
-                  <TableHead className="w-[150px]">Categoría</TableHead>
-                  <TableHead className="w-[180px]">Fecha de creación</TableHead>
+                  <TableHead className="w-[150px]">
+                    <span className="flex items-center gap-2">
+                      <Hash className="size-4 text-muted-foreground" />
+                      Número de caso
+                    </span>
+                  </TableHead>
+                  <TableHead>
+                    <span className="flex items-center gap-2">
+                      <FileTextIcon className="size-4 text-muted-foreground" />
+                      Título del caso
+                    </span>
+                  </TableHead>
+                  <TableHead className="w-[150px]">
+                    <span className="flex items-center gap-2">
+                      <CircleCheckIcon className="size-4 text-muted-foreground" />
+                      Estado
+                    </span>
+                  </TableHead>
+                  <TableHead className="w-[150px]">
+                    <span className="flex items-center gap-2">
+                      <TriangleAlertIcon className="size-4 text-muted-foreground" />
+                      Urgencia
+                    </span>
+                  </TableHead>
+                  <TableHead className="w-[150px]">
+                    <span className="flex items-center gap-2">
+                      <TagIcon className="size-4 text-muted-foreground" />
+                      Categoría
+                    </span>
+                  </TableHead>
+                  <TableHead className="w-[180px]">
+                    <span className="flex items-center gap-2">
+                      <CalendarDaysIcon className="size-4 text-muted-foreground" />
+                      Fecha de creación
+                    </span>
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -116,6 +157,11 @@ export const TableCases = () => {
                         <TableCell className="w-[150px] ">
                           <Badge variant="secondary">
                             {CaseStatusLabel[caso.status]}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="w-[150px] ">
+                          <Badge variant="secondary">
+                            {CaseUrgencyLabel[caso.urgency]}
                           </Badge>
                         </TableCell>
                         <TableCell className="w-[150px] capitalize">

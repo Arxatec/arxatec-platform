@@ -17,12 +17,24 @@ import {
   ContextMenuSeparator,
   Label,
   Input,
+  ButtonGroup,
+  Button,
 } from "@/components/ui";
 import { getExternalClients } from "../../services";
 import { useQuery } from "@tanstack/react-query";
 import { ErrorState, EmptyState, LoadingState, ClientDetailDrawer } from "../";
 import { useState } from "react";
-import { ArchiveIcon, EyeIcon, PencilIcon } from "lucide-react";
+import {
+  ArchiveIcon,
+  EyeIcon,
+  PencilIcon,
+  UserIcon,
+  MailIcon,
+  PhoneIcon,
+  IdCard,
+  Grid,
+  List,
+} from "lucide-react";
 import type { ExternalClient } from "@/types/client";
 import { useArchiveExternalClient } from "../../hooks";
 import { ROUTES } from "@/routes/routes";
@@ -50,7 +62,7 @@ export const TableClients = () => {
 
   return (
     <div>
-      <div className="flex items-center gap-2 mb-4">
+      <div className="flex items-end gap-2 mb-4">
         <div className="w-full">
           <Label className="mb-2 block">Buscar cliente</Label>
           <Input
@@ -59,6 +71,14 @@ export const TableClients = () => {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
+        <ButtonGroup>
+          <Button variant="default">
+            <List className="size-4" />
+          </Button>
+          <Button variant="outline">
+            <Grid className="size-4" />
+          </Button>
+        </ButtonGroup>
       </div>
       <AsyncBoundary
         isLoading={isPending}
@@ -73,10 +93,30 @@ export const TableClients = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Nombre completo</TableHead>
-                  <TableHead>Correo electrónico</TableHead>
-                  <TableHead>Número de contacto</TableHead>
-                  <TableHead>Documento de identidad</TableHead>
+                  <TableHead>
+                    <span className="flex items-center gap-2">
+                      <UserIcon className="size-4 text-muted-foreground" />
+                      Nombre completo
+                    </span>
+                  </TableHead>
+                  <TableHead>
+                    <span className="flex items-center gap-2">
+                      <MailIcon className="size-4 text-muted-foreground" />
+                      Correo electrónico
+                    </span>
+                  </TableHead>
+                  <TableHead>
+                    <span className="flex items-center gap-2">
+                      <PhoneIcon className="size-4 text-muted-foreground" />
+                      Número de contacto
+                    </span>
+                  </TableHead>
+                  <TableHead>
+                    <span className="flex items-center gap-2">
+                      <IdCard className="size-4 text-muted-foreground" />
+                      Documento de identidad
+                    </span>
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

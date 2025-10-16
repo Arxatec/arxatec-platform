@@ -10,3 +10,8 @@ export { default as ViewClientsPage } from "./clients/features/view_clients/page
 export { default as CreateClientPage } from "./clients/features/create_client/pages";
 export { default as UpdateClientPage } from "./clients/features/update_client/pages";
 
+// Calendar
+export { default as ViewCalendarPage } from "./calendar/features/view_calendar/pages";
+
+// Tasks
+export { default as ViewTasksPage } from "./tasks/features/view_tasks/pages";

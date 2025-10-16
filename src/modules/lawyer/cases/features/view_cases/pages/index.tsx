@@ -16,6 +16,7 @@ export default function ViewCasesPage() {
     <div className="w-full p-8">
       <CustomHeader
         title="Mis casos"
+        description="Estos son los casos que creaste en la plataforma, o que tomaste en la parte de explorar casos, recuerda que puedes filtrarlos por estado, categoría, urgencia y más."
         button={{
           label: "Nuevo caso",
           url: ROUTES.Lawyer.CreateCase,

@@ -1,10 +1,13 @@
 import {
+  Bell,
   BriefcaseIcon,
   CalendarIcon,
+  CheckSquare,
   ChevronsUpDown,
   Folder,
   Home,
   LogOut,
+  Settings,
   Telescope,
   Users,
 } from "lucide-react";
@@ -71,17 +74,27 @@ const lawyerNavigation = [
     url: ROUTES.Lawyer.ViewClients,
     icon: Users,
   },
+  {
+    title: "Calendario",
+    url: ROUTES.Lawyer.ViewCalendar,
+    icon: CalendarIcon,
+  },
+  {
+    title: "Tareas",
+    url: ROUTES.Lawyer.ViewTasks,
+    icon: CheckSquare,
+  },
 ];
 export default function Sidebar() {
   const { user, logout } = useAuth();
   const pathname = useLocation().pathname;
 
-  /* const showSoonToast = () => {
+  const showSoonToast = () => {
     toast.info("Próximamente disponible", {
       description:
         "Actualmente estamos trabajando en esta funcionalidad, pronto estará disponible.",
     });
-  }; */
+  };
   return (
     <SidebarProvider>
       <SidebarComponent>
@@ -152,6 +165,14 @@ export default function Sidebar() {
                   </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-[245px]" side="top">
+                  <DropdownMenuItem onClick={showSoonToast}>
+                    <Bell />
+                    <span>Notificaciones</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={showSoonToast}>
+                    <Settings />
+                    <span>Configuración</span>
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={logout}>
                     <LogOut />
                     <span>Cerrar sesión</span>
@@ -162,7 +183,7 @@ export default function Sidebar() {
           </SidebarMenu>
         </SidebarFooter>
       </SidebarComponent>
-      <SidebarInset>
+      <SidebarInset className="overflow-x-hidden">
         <div className="mx-auto w-full">
           <Outlet />
         </div>

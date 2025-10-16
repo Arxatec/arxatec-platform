@@ -1,6 +1,13 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui";
-import { FolderIcon, MessageCircleIcon, UserIcon } from "lucide-react";
-import { Client, Messages, Documents, ExternalClient, Information } from "..";
+import { BotIcon, FolderIcon, MessageCircleIcon, UserIcon } from "lucide-react";
+import {
+  Client,
+  Messages,
+  Documents,
+  ExternalClient,
+  Information,
+  Assistant,
+} from "..";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getCase } from "../../services";
@@ -53,6 +60,10 @@ export const CaseDetail: React.FC<Props> = ({ id }) => {
                 Cliente externo
               </TabsTrigger>
             )}
+            <TabsTrigger value="assistant">
+              <BotIcon />
+              Asistente
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="documents">
@@ -73,6 +84,9 @@ export const CaseDetail: React.FC<Props> = ({ id }) => {
               <ExternalClient id={data.external_client_id} />
             </TabsContent>
           )}
+          <TabsContent value="assistant">
+            <Assistant />
+          </TabsContent>
         </Tabs>
       </div>
     </>

@@ -21,7 +21,13 @@ import { type Case } from "@/types";
 import { useState } from "react";
 import { Filters } from "../filters";
 import { useDebounce } from "@/hooks";
-import { EyeIcon, FileTextIcon } from "lucide-react";
+import {
+  CalendarDaysIcon,
+  EyeIcon,
+  FileTextIcon,
+  Hash,
+  TagIcon,
+} from "lucide-react";
 import { toast } from "sonner";
 
 export const TableCases = () => {
@@ -64,10 +70,30 @@ export const TableCases = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[150px]">Número de caso</TableHead>
-                  <TableHead>Título del caso</TableHead>
-                  <TableHead className="w-[150px]">Categoría</TableHead>
-                  <TableHead className="w-[180px]">Fecha de creación</TableHead>
+                  <TableHead className="w-[150px]">
+                    <span className="flex items-center gap-2">
+                      <Hash className="size-4 text-muted-foreground" />
+                      Número de caso
+                    </span>
+                  </TableHead>
+                  <TableHead>
+                    <span className="flex items-center gap-2">
+                      <FileTextIcon className="size-4 text-muted-foreground" />
+                      Título del caso
+                    </span>
+                  </TableHead>
+                  <TableHead className="w-[150px]">
+                    <span className="flex items-center gap-2">
+                      <TagIcon className="size-4 text-muted-foreground" />
+                      Categoría
+                    </span>
+                  </TableHead>
+                  <TableHead className="w-[180px]">
+                    <span className="flex items-center gap-2">
+                      <CalendarDaysIcon className="size-4 text-muted-foreground" />
+                      Fecha de creación
+                    </span>
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

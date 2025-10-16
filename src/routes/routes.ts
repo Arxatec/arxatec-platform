@@ -26,6 +26,8 @@ export const ROUTES = {
     UpdateClient: "/lawyer/clients/update/:id",
     ViewCase: "/lawyer/cases/:id",
     UpdateCase: "/lawyer/cases/update/:id",
+    ViewCalendar: "/lawyer/calendar",
+    ViewTasks: "/lawyer/tasks",
   },
 
   Error: {

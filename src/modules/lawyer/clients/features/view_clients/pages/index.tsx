@@ -15,6 +15,7 @@ export default function ViewClientsPage() {
     <div className="w-full p-8">
       <CustomHeader
         title="Mis clientes"
+        description="Estos son los clientes que creaste en la plataforma o que te contactaron para que les ayudes en su caso, puedes editarlos o crear uno nuevo si es necesario."
         button={{
           label: "Nuevo cliente",
           url: ROUTES.Lawyer.CreateClient,
