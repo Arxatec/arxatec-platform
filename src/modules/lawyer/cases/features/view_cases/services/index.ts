@@ -6,7 +6,8 @@ export const getCases = async (
   page: number,
   search?: string,
   category?: string,
-  status?: string
+  status?: string,
+  urgency?: string
 ): Promise<GetCasesResponse> => {
   const params = new URLSearchParams();
   params.set("page", page.toString());
@@ -19,6 +20,9 @@ export const getCases = async (
   }
   if (status) {
     params.set("status", status);
+  }
+  if (urgency) {
+    params.set("urgency", urgency);
   }
   const { data } = await axiosInstance.get<Response<GetCasesResponse>>(
     `/cases/me?${params.toString()}`

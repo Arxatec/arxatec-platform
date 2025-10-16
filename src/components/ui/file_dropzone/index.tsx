@@ -170,7 +170,7 @@ export const FileDropZone: React.FC<FileDropZoneProps> = ({
 
   const buttonClasses = useMemo(() => {
     const baseClasses =
-      "relative block w-full border bg-card border-dashed p-12 text-center transition-all duration-200 ease-in-out focus:outline-2 focus:outline-offset-2 focus:outline-ring rounded-lg";
+      "relative block w-full border bg-card border-dashed p-12 text-center transition-all duration-200 ease-in-out focus:outline-2 focus:outline-offset-2 focus:outline-ring rounded";
     const stateClasses = disabled
       ? "border-border bg-muted cursor-not-allowed opacity-50"
       : isDragOver
@@ -234,7 +234,7 @@ export const FileDropZone: React.FC<FileDropZoneProps> = ({
       </button>
 
       {error && (
-        <div className="mt-2 py-2 px-4 rounded-lg bg-destructive/10 border border-destructive/20">
+        <div className="mt-2 py-2 px-4 rounded bg-destructive/10 border border-destructive/20">
           <p className="text-sm text-destructive">{error}</p>
         </div>
       )}

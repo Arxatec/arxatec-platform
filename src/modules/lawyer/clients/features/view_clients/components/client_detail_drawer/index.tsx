@@ -66,7 +66,7 @@ export const ClientDetailDrawer = ({
 
         {isError && (
           <div className="px-4 mt-4">
-            <div className="bg-rose-500/10 p-4 rounded-md">
+            <div className="bg-rose-500/10 p-4 rounded">
               <h2 className="text-lg font-serif font-bold text-rose-800">
                 Ocurrio un error
               </h2>

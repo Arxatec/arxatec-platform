@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DndContext,
   closestCenter,
@@ -16,7 +16,7 @@ import {
   groupEventsByCollisions,
   slotToTime,
 } from "../utils";
-import { CONTAINER_HEIGHT_PX, initialEvents } from "../constants";
+import { CONTAINER_HEIGHT_PX } from "../constants";
 import {
   HorizontalLines,
   TimeSlot,
@@ -24,14 +24,26 @@ import {
   MultipleEvent,
   SelectorDayCalendar,
 } from "../components";
+import { useQuery } from "@tanstack/react-query";
+import { getEvents } from "../../../services";
+import type { Events } from "@/types";
+import { toast } from "sonner";
 
 export const ViewDayView = () => {
   const [date, setDate] = useState<Date | undefined>(undefined);
+  const currentDate = date ? new Date(date) : new Date();
+  const start = new Date(currentDate.setHours(0, 0, 0, 0));
+  const end = new Date(currentDate.setHours(23, 59, 59, 999));
 
-  // Estado para manejar los eventos de forma dinámica
-  const [events, setEvents] = useState<CalendarEvent[]>(initialEvents);
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["calendar-events", start, end],
+    queryFn: () => getEvents(start!, end!),
+  });
 
-  // Configurar sensores para drag and drop
+  // State to handle events dynamically
+  const [events, setEvents] = useState<CalendarEvent[]>([]);
+
+  // Configure sensors for drag and drop
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -75,6 +87,37 @@ export const ViewDayView = () => {
     );
   };
 
+  useEffect(() => {
+    function getHour(dateParam: string) {
+      const date = new Date(dateParam);
+      const hours = date.getHours(); // local hour
+      const minutes = date.getMinutes().toString().padStart(2, "0");
+      const time = `${hours}:${minutes}`;
+      return time;
+    }
+    function convertEvents(events: Events[]): CalendarEvent[] {
+      return events.map((event) => ({
+        id: event.id,
+        title: event.title,
+        startTime: getHour(event.start_date),
+        endTime: getHour(event.end_date),
+        bgColor: "bg-muted-foreground",
+        hoverColor: "hover:bg-sidebar-ring",
+        textColor: "text-background",
+      }));
+    }
+    if (data && !isPending) {
+      const convertedEvents = convertEvents(data);
+      setEvents(convertedEvents);
+    }
+
+    if (isError) {
+      toast.error("Error al obtener los eventos", {
+        description:
+          "Error al obtener los eventos, intenta nuevamente, si el problema persiste, contacta al soporte.",
+      });
+    }
+  }, [data]);
   return (
     <div className="isolate flex flex-auto overflow-hidden bg-background">
       <div className="flex flex-auto flex-col overflow-auto pr-80">

@@ -61,7 +61,7 @@ export const SendMessage: React.FC<Props> = ({ id }) => {
     <div className="relative">
       <form
         className={twMerge(
-          "flex items-center gap-2 bg-accent transition-all border rounded-md py-1 px-1",
+          "flex items-center gap-2 bg-accent transition-all border rounded py-1 px-1",
           errors.content && "border-rose-500/10",
           onFocus && "ring-ring/50 ring-[3px]"
         )}

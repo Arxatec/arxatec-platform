@@ -1,8 +1,8 @@
 export const CaseStatus = {
-  OPEN: "abierto",
-  IN_PENDING: "en_progreso",
-  CLOSE: "cerrado",
-  ARCHIVED: "archivado",
+  OPEN: "open",
+  IN_PENDING: "in_progress",
+  CLOSE: "closed",
+  ARCHIVED: "archived",
 };
 
 export const CaseCategory = {

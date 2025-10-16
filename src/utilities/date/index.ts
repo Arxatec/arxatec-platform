@@ -12,3 +12,20 @@ export const getCurrentDay = () => {
     locale: es,
   });
 };
+
+export function combineDateAndTime(dateISO: string, time: string): string {
+  const date = new Date(dateISO);
+  const [hours, minutes] = time.split(":").map(Number);
+
+  const combined = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+    hours,
+    minutes,
+    0,
+    0
+  );
+
+  return combined.toISOString();
+}

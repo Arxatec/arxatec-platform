@@ -2,12 +2,12 @@ export const HorizontalLines = () => {
   const generateTimeSlots = () => {
     const slots = [];
 
-    // Primer slot vacío para el header
+    // First empty slot for the header
     slots.push(<div key="header" className="row-end-1 h-7" />);
 
     for (let hour = 0; hour < 24; hour++) {
       for (let quarter = 0; quarter < 4; quarter++) {
-        const isMainHour = quarter === 0; // Solo mostrar la hora en el primer slot de cada hora
+        const isMainHour = quarter === 0; // Show the hour in the first slot of each hour
 
         if (isMainHour) {
           const timeLabel =
@@ -27,7 +27,7 @@ export const HorizontalLines = () => {
             </div>
           );
         } else {
-          // Slots vacíos para los otros 15 minutos de la hora
+          // Empty slots for the other 15 minutes of the hour
           slots.push(<div key={`${hour}-${quarter}`} />);
         }
       }

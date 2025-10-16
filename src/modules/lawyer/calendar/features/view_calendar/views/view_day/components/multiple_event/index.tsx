@@ -9,6 +9,7 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui";
 import { EyeIcon, PencilIcon, Trash2Icon } from "lucide-react";
+import { twMerge } from "tailwind-merge";
 
 interface Props {
   eventGroup: CalendarEvent[];
@@ -16,7 +17,7 @@ interface Props {
   groupEndTime: string;
 }
 
-// Componente para renderizar múltiples eventos en columnas
+// Component to render multiple events in columns
 export const MultipleEvent: React.FC<Props> = ({
   eventGroup,
   groupStartTime,
@@ -73,7 +74,9 @@ export const MultipleEvent: React.FC<Props> = ({
                     >
                       {event.title}
                     </p>
-                    <p className={`${event.descriptionColor} text-sm`}>
+                    <p
+                      className={twMerge("text-sm opacity-70", event.textColor)}
+                    >
                       {event.startTime}-{event.endTime}
                     </p>
                   </div>

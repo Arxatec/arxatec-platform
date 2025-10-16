@@ -7,7 +7,9 @@ import {
   ContextMenuSeparator,
   ContextMenuTrigger,
 } from "@/components/ui";
-import { EyeIcon, PencilIcon, Trash2Icon } from "lucide-react";
+import { EyeIcon, Loader2, PencilIcon, Trash2Icon } from "lucide-react";
+import { twMerge } from "tailwind-merge";
+import { useRemoveEvent } from "../../../../hooks";
 
 interface Props {
   event: CalendarEvent;
@@ -19,6 +21,7 @@ interface Props {
   };
 }
 export const Event: React.FC<Props> = ({ event, position }) => {
+  const { handleRemoveEvent, isPending } = useRemoveEvent();
   return (
     <div
       key={event.id}
@@ -49,24 +52,34 @@ export const Event: React.FC<Props> = ({ event, position }) => {
               >
                 {event.title}
               </p>
-              <p className={`${event.descriptionColor} text-sm`}>
+              <p className={twMerge("text-sm opacity-70", event.textColor)}>
                 {event.startTime} - {event.endTime}
               </p>
             </div>
           </ContextMenuTrigger>
           <ContextMenuContent>
-            <ContextMenuItem>
+            <ContextMenuItem disabled={isPending}>
               <EyeIcon className="w-4 h-4" />
               <span>Ver detalle evento</span>
             </ContextMenuItem>
-            <ContextMenuItem>
+            <ContextMenuItem disabled={isPending}>
               <PencilIcon className="w-4 h-4" />
               <span>Editar evento</span>
             </ContextMenuItem>
             <ContextMenuSeparator />
-            <ContextMenuItem variant="destructive">
-              <Trash2Icon className="w-4 h-4" />
-              <span>Eliminar evento</span>
+            <ContextMenuItem
+              variant="destructive"
+              onClick={() => handleRemoveEvent(event.id)}
+              disabled={isPending}
+            >
+              {isPending ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Trash2Icon className="w-4 h-4" />
+              )}
+              <span>
+                {isPending ? "Eliminando evento..." : "Eliminar evento"}
+              </span>
             </ContextMenuItem>
           </ContextMenuContent>
         </ContextMenu>

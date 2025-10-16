@@ -6,13 +6,13 @@ import {
 } from "../constants";
 import type { CalendarEvent } from "../types";
 
-// Función para convertir tiempo (HH:MM) a minutos desde medianoche
+// Function to convert time (HH:MM) to minutes from midnight
 export const timeToMinutes = (time: string): number => {
   const [hours, minutes] = time.split(":").map(Number);
   return hours * 60 + minutes;
 };
 
-// Función para calcular el tiempo de inicio y fin de un grupo de eventos
+// Function to calculate the start and end time of a group of events
 export const getGroupTimeRange = (eventGroup: CalendarEvent[]) => {
   const startTimes = eventGroup.map((e) => timeToMinutes(e.startTime));
   const endTimes = eventGroup.map((e) => timeToMinutes(e.endTime));
@@ -35,7 +35,7 @@ export const getGroupTimeRange = (eventGroup: CalendarEvent[]) => {
   };
 };
 
-// Función para calcular la posición absoluta de un evento
+// Function to calculate the absolute position of an event
 export const calculateAbsolutePosition = (
   startTime: string,
   endTime: string
@@ -44,8 +44,8 @@ export const calculateAbsolutePosition = (
   const endMinutes = timeToMinutes(endTime);
   const duration = endMinutes - startMinutes;
 
-  // Calcular posición vertical (top y height en píxeles)
-  // Agregamos HEADER_HEIGHT_PX para compensar el header del grid
+  // Calculate vertical position (top and height in pixels)
+  // Add HEADER_HEIGHT_PX to compensate for the header of the grid
   const top =
     HEADER_HEIGHT_PX +
     (startMinutes / TOTAL_MINUTES_IN_DAY) * (TOTAL_SLOTS * SLOT_HEIGHT_PX);
@@ -56,11 +56,11 @@ export const calculateAbsolutePosition = (
     top: `${top}px`,
     height: `${height}px`,
     left: "0%",
-    width: "100%", // Por ahora 100%, después manejaremos colisiones
+    width: "100%", // For now 100%, later we will handle collisions
   };
 };
 
-// Función para detectar si dos eventos colisionan en tiempo
+// Function to detect if two events overlap in time
 export const eventsOverlap = (
   event1: CalendarEvent,
   event2: CalendarEvent
@@ -70,18 +70,18 @@ export const eventsOverlap = (
   const start2 = timeToMinutes(event2.startTime);
   const end2 = timeToMinutes(event2.endTime);
 
-  // Dos eventos colisionan si se superponen en tiempo
+  // Two events overlap if they overlap in time
   return start1 < end2 && start2 < end1;
 };
 
-// Función para agrupar eventos por colisiones SOLO directas (no transitivas)
+// Function to group events by direct collisions only (no transitive)
 export const groupEventsByCollisions = (
   events: CalendarEvent[]
 ): CalendarEvent[][] => {
   const groups: CalendarEvent[][] = [];
   const processed = new Set<string>();
 
-  // Ordenar eventos por hora de inicio para procesarlos cronológicamente
+  // Sort events by start time to process them chronologically
   const sortedEvents = [...events].sort(
     (a, b) => timeToMinutes(a.startTime) - timeToMinutes(b.startTime)
   );
@@ -89,7 +89,7 @@ export const groupEventsByCollisions = (
   sortedEvents.forEach((event) => {
     if (processed.has(event.id)) return;
 
-    // Encontrar SOLO los eventos que colisionan directamente con este
+    // Find only the events that directly collide with this one
     const directCollisions = sortedEvents.filter(
       (otherEvent) =>
         otherEvent.id !== event.id &&
@@ -98,15 +98,15 @@ export const groupEventsByCollisions = (
     );
 
     if (directCollisions.length > 0) {
-      // Crear grupo con el evento actual + sus colisiones directas
+      // Create group with the current event + its direct collisions
       const collisionGroup = [event, ...directCollisions];
 
-      // Marcar todos como procesados
+      // Mark all as processed
       collisionGroup.forEach((e) => processed.add(e.id));
 
       groups.push(collisionGroup);
     } else {
-      // Evento sin colisiones, va solo
+      // Event without collisions, goes alone
       groups.push([event]);
       processed.add(event.id);
     }
@@ -115,8 +115,8 @@ export const groupEventsByCollisions = (
   return groups;
 };
 
-// Componente para slots droppables (cada 15 minutos)
-// Función para convertir slot a tiempo (HH:MM)
+// Component to droppable slots (every 15 minutes)
+// Function to convert slot to time (HH:MM)
 export const slotToTime = (slot: number): string => {
   const totalMinutes = (slot - 1) * 15; // slot 1 = 00:00, slot 2 = 00:15, etc.
   const hours = Math.floor(totalMinutes / 60);

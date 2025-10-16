@@ -1,10 +1,10 @@
 import { getCurrentDate, getCurrentDay } from "@/utilities";
 import { CalendarPlus, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button, ButtonGroup, Separator } from "@/components/ui";
-import { CreateEventDialog } from "../create_event_dialog";
 import { useState } from "react";
+import { CreateEventSheet } from "../create_event_sheet";
 export const Header = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
     <header className="flex sticky top-0 w-full z-50 bg-background items-center justify-between border-b border-muted px-6 py-4">
@@ -38,7 +38,7 @@ export const Header = () => {
         </Button>
       </div>
 
-      <CreateEventDialog open={open} onOpenChange={setOpen} />
+      <CreateEventSheet open={open} onOpenChange={setOpen} />
     </header>
   );
 };

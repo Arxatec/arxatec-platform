@@ -31,7 +31,7 @@ export const Message: React.FC<Props> = ({
         )}
 
         <div className="flex-1 min-w-0">
-          <div className=" rounded-lg relative group">
+          <div className=" rounded relative group">
             <p className="text-muted-foreground text-sm leading-relaxed">
               {content}
             </p>

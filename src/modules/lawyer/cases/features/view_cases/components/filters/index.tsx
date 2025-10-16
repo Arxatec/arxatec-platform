@@ -7,7 +7,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui";
-import { CaseCategory, CaseStatus, CaseStatusLabel } from "@/types";
+import {
+  CaseCategory,
+  CaseStatus,
+  CaseStatusLabel,
+  CaseUrgency,
+  CaseUrgencyLabel,
+} from "@/types";
 
 interface Props {
   search: string;
@@ -16,6 +22,8 @@ interface Props {
   setCategory: (category: string | undefined) => void;
   status: string | undefined;
   setStatus: (status: string | undefined) => void;
+  urgency: string | undefined;
+  setUrgency: (urgency: string | undefined) => void;
 }
 
 export const Filters: React.FC<Props> = ({
@@ -25,6 +33,8 @@ export const Filters: React.FC<Props> = ({
   setCategory,
   status,
   setStatus,
+  urgency,
+  setUrgency,
 }) => {
   return (
     <div className="flex items-center justify-between gap-2 mb-4">
@@ -80,18 +90,18 @@ export const Filters: React.FC<Props> = ({
       </div>
 
       <div className="grid gap-2 w-[200px]">
-        <Label htmlFor="status">Urgencia</Label>
+        <Label htmlFor="urgency">Urgencia</Label>
         <Select
-          value={status === undefined ? "all" : status}
-          onValueChange={(val) => setStatus(val === "all" ? undefined : val)}
+          value={urgency === undefined ? "all" : urgency}
+          onValueChange={(val) => setUrgency(val === "all" ? undefined : val)}
         >
           <SelectTrigger className="w-[200px]">
-            <SelectValue placeholder="Seleccionar estado" />
+            <SelectValue placeholder="Seleccionar urgencia" />
           </SelectTrigger>
           <SelectContent className="w-[200px]">
-            {Object.values(CaseStatus).map((statusProp) => (
-              <SelectItem key={statusProp} value={statusProp}>
-                {CaseStatusLabel[statusProp]}
+            {Object.values(CaseUrgency).map((urgencyProp) => (
+              <SelectItem key={urgencyProp} value={urgencyProp}>
+                {CaseUrgencyLabel[urgencyProp]}
               </SelectItem>
             ))}
             <SelectItem value="all">Todas</SelectItem>

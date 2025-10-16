@@ -45,9 +45,11 @@ export const TableCases = () => {
   const [page, setPage] = useState(1);
   const [category, setCategory] = useState<string | undefined>(undefined);
   const [status, setStatus] = useState<string | undefined>(undefined);
+  const [urgency, setUrgency] = useState<string | undefined>(undefined);
+
   const { data, isPending, isError, error } = useQuery({
-    queryKey: ["cases", page, debouncedSearch, category, status],
-    queryFn: () => getCases(page, debouncedSearch, category, status),
+    queryKey: ["cases", page, debouncedSearch, category, status, urgency],
+    queryFn: () => getCases(page, debouncedSearch, category, status, urgency),
   });
 
   const handleViewCase = (id: string) => {
@@ -89,6 +91,8 @@ export const TableCases = () => {
         setCategory={setCategory}
         status={status}
         setStatus={setStatus}
+        urgency={urgency}
+        setUrgency={setUrgency}
       />
       <AsyncBoundary
         isLoading={isPending}

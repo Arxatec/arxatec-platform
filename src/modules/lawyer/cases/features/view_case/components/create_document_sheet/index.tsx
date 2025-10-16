@@ -153,9 +153,9 @@ export const CreateDocumentSheet: React.FC<Props> = ({
               )}
               <div>
                 {files && files.name && (
-                  <div className="bg-accent p-4 rounded-md flex items-center justify-between">
+                  <div className="bg-accent p-4 rounded flex items-center justify-between">
                     <div className=" flex items-center gap-2 ">
-                      <div className="bg-primary/10 rounded-md p-2">
+                      <div className="bg-primary/10 rounded p-2">
                         <FileTextIcon className="size-5" />
                       </div>
                       <div className="flex flex-col">

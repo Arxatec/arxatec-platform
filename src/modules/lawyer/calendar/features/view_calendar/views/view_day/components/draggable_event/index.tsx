@@ -6,7 +6,6 @@ interface Props {
   children: React.ReactNode;
 }
 
-// Componente draggable para eventos individuales
 export const DraggableEvent: React.FC<Props> = ({ event, children }) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({
