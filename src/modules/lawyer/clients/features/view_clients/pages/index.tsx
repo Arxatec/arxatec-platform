@@ -1,7 +1,7 @@
 import { CustomHeader } from "@/components/ui";
 import { useTitle } from "@/hooks";
 import { useEffect } from "react";
-import { TableClients } from "../components";
+import { DirectoryClients } from "../components";
 import { ROUTES } from "@/routes/routes";
 import { PlusIcon } from "lucide-react";
 
@@ -22,7 +22,7 @@ export default function ViewClientsPage() {
           icon: PlusIcon,
         }}
       />
-      <TableClients />
+      <DirectoryClients />
     </div>
   );
 }

@@ -78,6 +78,26 @@ export const Filters: React.FC<Props> = ({
           </SelectContent>
         </Select>
       </div>
+
+      <div className="grid gap-2 w-[200px]">
+        <Label htmlFor="status">Urgencia</Label>
+        <Select
+          value={status === undefined ? "all" : status}
+          onValueChange={(val) => setStatus(val === "all" ? undefined : val)}
+        >
+          <SelectTrigger className="w-[200px]">
+            <SelectValue placeholder="Seleccionar estado" />
+          </SelectTrigger>
+          <SelectContent className="w-[200px]">
+            {Object.values(CaseStatus).map((statusProp) => (
+              <SelectItem key={statusProp} value={statusProp}>
+                {CaseStatusLabel[statusProp]}
+              </SelectItem>
+            ))}
+            <SelectItem value="all">Todas</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
     </div>
   );
 };

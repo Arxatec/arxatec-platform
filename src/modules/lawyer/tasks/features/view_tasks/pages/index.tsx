@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DndContext,
   DragOverlay,
@@ -26,9 +26,11 @@ import {
   type Task,
   type Column,
 } from "../components";
+import { useTitle } from "@/hooks";
 
 // Componente Principal
 export default function ViewTasksPage() {
+  const { changeTitle } = useTitle();
   const [columns, setColumns] = useState<Column[]>([
     {
       id: "col-1",
@@ -233,6 +235,10 @@ export default function ViewTasksPage() {
       })
     );
   };
+
+  useEffect(() => {
+    changeTitle("Mis tareas - Arxatec");
+  }, []);
 
   return (
     <div className="h-full flex flex-col">
