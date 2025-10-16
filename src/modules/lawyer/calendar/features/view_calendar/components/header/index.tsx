@@ -7,7 +7,7 @@ export const Header = () => {
   const [open, setOpen] = useState(true);
 
   return (
-    <header className="flex flex-none sticky top-0 w-full z-50 bg-background items-center justify-between border-b border-muted px-6 py-4">
+    <header className="flex sticky top-0 w-full z-50 bg-background items-center justify-between border-b border-muted px-6 py-4">
       <div>
         <h1 className="text-xl font-bold font-serif text-primary">
           <time dateTime="2022-01-22" className="sm:hidden">

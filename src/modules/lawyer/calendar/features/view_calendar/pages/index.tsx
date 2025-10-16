@@ -10,7 +10,7 @@ export default function ViewCalendarPage() {
   }, []);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col relative w-full h-full overflow-visible">
       <Header />
       <ViewDayView />
     </div>

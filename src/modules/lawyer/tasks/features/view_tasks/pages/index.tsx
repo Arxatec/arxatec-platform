@@ -240,6 +240,18 @@ export default function ViewTasksPage() {
     changeTitle("Mis tareas - Arxatec");
   }, []);
 
+  useEffect(() => {
+    const sidebarInset = document.getElementById("sidebar-inset");
+    if (sidebarInset) {
+      sidebarInset.style.overflowX = "hidden";
+    }
+    return () => {
+      if (sidebarInset) {
+        sidebarInset.removeAttribute("style");
+      }
+    };
+  }, []);
+
   return (
     <div className="h-full flex flex-col">
       <div className="px-8 mt-8">

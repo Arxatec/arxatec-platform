@@ -183,7 +183,7 @@ export default function Sidebar() {
           </SidebarMenu>
         </SidebarFooter>
       </SidebarComponent>
-      <SidebarInset className="overflow-x-hidden">
+      <SidebarInset id="sidebar-inset" className="flex">
         <div className="mx-auto w-full">
           <Outlet />
         </div>
