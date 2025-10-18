@@ -5,6 +5,7 @@ import {
   CardContent,
   Skeleton,
   StatusMessage,
+  Badge,
 } from "@/components/ui";
 import { CaseStatusLabel, CaseUrgencyLabel } from "@/types";
 import { CaseCategoryLabel, type Case } from "@/types/cases";
@@ -100,7 +101,9 @@ export const Information: React.FC<Props> = ({ isPending, isError, data }) => {
                       Urgencia:
                     </span>
                     <span className="text-sm text-muted-foreground">
-                      {CaseUrgencyLabel[caseData.urgency]}
+                      <Badge variant="secondary">
+                        {CaseUrgencyLabel[caseData.urgency]}
+                      </Badge>
                     </span>
                   </div>
                 </div>
@@ -110,7 +113,9 @@ export const Information: React.FC<Props> = ({ isPending, isError, data }) => {
                       Estado:
                     </span>
                     <span className="text-sm text-muted-foreground">
-                      {CaseStatusLabel[caseData.status]}
+                      <Badge variant="secondary">
+                        {CaseStatusLabel[caseData.status]}
+                      </Badge>
                     </span>
                   </div>
                   <div className="flex items-center gap-2">

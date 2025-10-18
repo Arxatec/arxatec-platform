@@ -10,7 +10,7 @@ import {
   FormInput,
   FormTextarea,
 } from "@/components/ui";
-import { CalendarPlus, Loader2 } from "lucide-react";
+import { CalendarPlus, Loader2, Trash2Icon } from "lucide-react";
 import { ColorPicker } from "../color_picker";
 
 import { EventDateTimeFields } from "../event_date_time_fields";
@@ -107,6 +107,10 @@ export const UpdateEventSheet: React.FC<Props> = ({
               <CalendarPlus />
             )}
             {isUpdatingEvent ? "Actualizando evento..." : "Actualizar evento"}
+          </Button>
+          <Button variant="secondary">
+            <Trash2Icon />
+            Eliminar evento
           </Button>
         </SheetFooter>
       </SheetContent>

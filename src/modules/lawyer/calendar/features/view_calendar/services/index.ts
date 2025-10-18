@@ -29,19 +29,3 @@ export const getEvents = async (start: Date, end: Date): Promise<Events[]> => {
 export const deleteEvent = async (id: string) => {
   await axiosInstance.delete(`/calendar/events/delete/${id}`);
 };
-
-export const getSoonEvents = async (
-  start: Date,
-  end: Date
-): Promise<Events[]> => {
-  const queryParams = new URLSearchParams();
-  queryParams.append("start", start.toISOString());
-  queryParams.append("end", end.toISOString());
-  const { data } = await axiosInstance.get<Response<Events[]>>(
-    `/calendar/events/list?${queryParams.toString()}`
-  );
-  if (!data.data) {
-    throw new Error("No se pudo obtener los eventos");
-  }
-  return data.data;
-};

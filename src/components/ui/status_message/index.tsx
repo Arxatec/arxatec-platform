@@ -7,9 +7,9 @@ interface Props {
 }
 const colorVariants = {
   rose: {
-    background: "bg-destructive/10",
-    textPrimary: "text-destructive",
-    textSecondary: "text-destructive/80",
+    background: "bg-status-background-error",
+    textPrimary: "text-status-foreground-error",
+    textSecondary: "text-status-foreground-error opacity-80",
   },
   white: {
     background: "bg-accent",

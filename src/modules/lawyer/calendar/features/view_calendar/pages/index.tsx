@@ -1,6 +1,6 @@
 import { useTitle } from "@/hooks";
 import { useEffect, useState } from "react";
-import { Header, SelectorDayCalendar } from "../components";
+import { Header, PanelCalendar } from "../components";
 import { ViewDayView } from "../views";
 import { cn } from "@/utilities";
 
@@ -15,11 +15,7 @@ export default function ViewCalendarPage() {
   return (
     <div>
       <div className="isolate flex flex-auto bg-background">
-        <SelectorDayCalendar
-          date={date}
-          setDate={setDate}
-          panelOpen={panelOpen}
-        />
+        <PanelCalendar date={date} setDate={setDate} panelOpen={panelOpen} />
         <div
           className={cn(
             "w-full h-full relative transition-all duration-300",

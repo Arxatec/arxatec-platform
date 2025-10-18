@@ -1,8 +1,8 @@
 import type { CalendarEvent } from "../../types";
 import { calculateAbsolutePosition } from "../../utils";
-import { DraggableEvent, EventContextMenu } from "../";
-import { ContextMenu, ContextMenuTrigger } from "@/components/ui";
+import { DraggableEvent } from "../";
 import { twMerge } from "tailwind-merge";
+import { EventContextMenuWrapper } from "../../../../components";
 
 interface Props {
   eventGroup: CalendarEvent[];
@@ -50,31 +50,26 @@ export const MultipleEvent: React.FC<Props> = ({
             className="group/event"
           >
             <DraggableEvent event={event}>
-              <ContextMenu>
-                <ContextMenuTrigger asChild>
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: `${eventTop}px`,
-                      height: `${eventHeight}px`,
-                      width: "100%",
-                    }}
-                    className={`rounded border border-background ${event.bgColor} p-2 text-xs ${event.hoverColor} pointer-events-auto cursor-grab active:cursor-grabbing transition-all duration-200`}
+              <EventContextMenuWrapper eventId={event.id}>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: `${eventTop}px`,
+                    height: `${eventHeight}px`,
+                    width: "100%",
+                  }}
+                  className={`rounded border border-background ${event.bgColor} p-2 text-xs ${event.hoverColor} pointer-events-auto cursor-grab active:cursor-grabbing transition-all duration-200`}
+                >
+                  <p
+                    className={`font-bold font-serif text-base ${event.textColor} truncate`}
                   >
-                    <p
-                      className={`font-bold font-serif text-base ${event.textColor} truncate`}
-                    >
-                      {event.title}
-                    </p>
-                    <p
-                      className={twMerge("text-sm opacity-70", event.textColor)}
-                    >
-                      {event.startTime}-{event.endTime}
-                    </p>
-                  </div>
-                </ContextMenuTrigger>
-                <EventContextMenu event={event} />
-              </ContextMenu>
+                    {event.title}
+                  </p>
+                  <p className={twMerge("text-sm opacity-70", event.textColor)}>
+                    {event.startTime}-{event.endTime}
+                  </p>
+                </div>
+              </EventContextMenuWrapper>
             </DraggableEvent>
           </div>
         );

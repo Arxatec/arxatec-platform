@@ -1,5 +1,12 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui";
-import { BotIcon, FolderIcon, MessageCircleIcon, UserIcon } from "lucide-react";
+import {
+  BotIcon,
+  CalendarIcon,
+  CheckSquareIcon,
+  FolderIcon,
+  MessageCircleIcon,
+  UserIcon,
+} from "lucide-react";
 import {
   Client,
   Messages,
@@ -64,6 +71,14 @@ export const CaseDetail: React.FC<Props> = ({ id }) => {
               <BotIcon />
               Asistente
             </TabsTrigger>
+            <TabsTrigger value="calendar">
+              <CalendarIcon />
+              Calendario
+            </TabsTrigger>
+            <TabsTrigger value="tasks">
+              <CheckSquareIcon />
+              Tareas
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="documents">
@@ -86,6 +101,12 @@ export const CaseDetail: React.FC<Props> = ({ id }) => {
           )}
           <TabsContent value="assistant">
             <Assistant />
+          </TabsContent>
+          <TabsContent value="calendar">
+            <h2>Calendario</h2>
+          </TabsContent>
+          <TabsContent value="tasks">
+            <h2>Tareas</h2>
           </TabsContent>
         </Tabs>
       </div>

@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -43,6 +43,16 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Status colors */
+  --color-status-background-error: var(--status-background-error);
+  --color-status-foreground-error: var(--status-foreground-error);
+  --color-status-background-success: var(--status-background-success);
+  --color-status-foreground-success: var(--status-foreground-success);
+  --color-status-background-warning: var(--status-background-warning);
+  --color-status-foreground-warning: var(--status-foreground-warning);
+  --color-status-background-info: var(--status-background-info);
+  --color-status-foreground-info: var(--status-foreground-info);
 }
 
 :root {
@@ -78,6 +88,24 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Status colors */
+
+  /* Error */
+  --status-background-error: oklch(94.1% 0.03 12.58);
+  --status-foreground-error: oklch(64.5% 0.246 16.439);
+
+  /* Success */
+  --status-background-success: oklch(96.2% 0.044 156.743);
+  --status-foreground-success: oklch(72.3% 0.219 149.579);
+
+  /* Warning */
+  --status-background-warning: oklch(97.3% 0.071 103.193);
+  --status-foreground-warning: oklch(79.5% 0.184 86.047);
+
+  /* Info */
+  --status-background-info: oklch(95.1% 0.026 236.824);
+  --status-foreground-info: oklch(68.5% 0.169 237.323);
 }
 
 .dark {
@@ -112,6 +140,24 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* Status colors */
+
+  /* Error */
+  --status-background-error: oklch(27.1% 0.105 12.094);
+  --status-foreground-error: oklch(64.5% 0.246 16.439);
+
+  /* Success */
+  --status-background-success: oklch(26.6% 0.065 152.934);
+  --status-foreground-success: oklch(72.3% 0.219 149.579);
+
+  /* Warning */
+  --status-background-warning: oklch(28.6% 0.066 53.813);
+  --status-foreground-warning: oklch(79.5% 0.184 86.047);
+
+  /* Info */
+  --status-background-info: oklch(29.3% 0.066 243.157);
+  --status-foreground-info: oklch(68.5% 0.169 237.323);
 }
 
 @layer base {
@@ -126,12 +172,11 @@
 .EmojiPickerReact {
   --epr-text-color: var(--muted-foreground) !important;
   --epr-emoji-size: 24px !important;
-  font-family: 'Source Sans 3', sans-serif !important;
+  font-family: "Source Sans 3", sans-serif !important;
   font-size: 14px !important;
   font-weight: 400 !important;
 }
 .epr-emoji-category-label {
-
   font-size: 14px !important;
   font-weight: 700 !important;
 }
