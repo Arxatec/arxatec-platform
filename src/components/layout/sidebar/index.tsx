@@ -55,6 +55,7 @@ const clientNavigation = [
     title: "Calendario",
     url: ROUTES.Client.ViewCalendar,
     icon: CalendarIcon,
+    soon: true,
   },
 ];
 
@@ -83,8 +84,10 @@ const lawyerNavigation = [
     title: "Tareas",
     url: ROUTES.Lawyer.ViewTasks,
     icon: CheckSquare,
+    soon: true,
   },
 ];
+
 export default function Sidebar() {
   const { user, logout } = useAuth();
   const pathname = useLocation().pathname;
@@ -114,10 +117,17 @@ export default function Sidebar() {
                         asChild
                         isActive={pathname === item.url}
                       >
-                        <Link to={item.url}>
-                          <item.icon />
-                          <span>{item.title}</span>
-                        </Link>
+                        {!item.soon ? (
+                          <Link to={item.url}>
+                            <item.icon />
+                            <span>{item.title}</span>
+                          </Link>
+                        ) : (
+                          <button onClick={showSoonToast}>
+                            <item.icon />
+                            <span>{item.title}</span>
+                          </button>
+                        )}
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
@@ -128,10 +138,17 @@ export default function Sidebar() {
                         asChild
                         isActive={pathname === item.url}
                       >
-                        <Link to={item.url}>
-                          <item.icon />
-                          <span>{item.title}</span>
-                        </Link>
+                        {!item.soon ? (
+                          <Link to={item.url}>
+                            <item.icon />
+                            <span>{item.title}</span>
+                          </Link>
+                        ) : (
+                          <button onClick={showSoonToast}>
+                            <item.icon />
+                            <span>{item.title}</span>
+                          </button>
+                        )}
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}

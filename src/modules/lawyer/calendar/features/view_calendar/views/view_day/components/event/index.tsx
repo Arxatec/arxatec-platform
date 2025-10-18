@@ -1,15 +1,7 @@
-import { DraggableEvent } from "../draggable_event";
 import type { CalendarEvent } from "../../types";
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuSeparator,
-  ContextMenuTrigger,
-} from "@/components/ui";
-import { EyeIcon, Loader2, PencilIcon, Trash2Icon } from "lucide-react";
+import { ContextMenu, ContextMenuTrigger } from "@/components/ui";
 import { twMerge } from "tailwind-merge";
-import { useRemoveEvent } from "../../../../hooks";
+import { EventContextMenu, DraggableEvent } from "../";
 
 interface Props {
   event: CalendarEvent;
@@ -20,8 +12,8 @@ interface Props {
     width: string;
   };
 }
+
 export const Event: React.FC<Props> = ({ event, position }) => {
-  const { handleRemoveEvent, isPending } = useRemoveEvent();
   return (
     <div
       key={event.id}
@@ -57,31 +49,7 @@ export const Event: React.FC<Props> = ({ event, position }) => {
               </p>
             </div>
           </ContextMenuTrigger>
-          <ContextMenuContent>
-            <ContextMenuItem disabled={isPending}>
-              <EyeIcon className="w-4 h-4" />
-              <span>Ver detalle evento</span>
-            </ContextMenuItem>
-            <ContextMenuItem disabled={isPending}>
-              <PencilIcon className="w-4 h-4" />
-              <span>Editar evento</span>
-            </ContextMenuItem>
-            <ContextMenuSeparator />
-            <ContextMenuItem
-              variant="destructive"
-              onClick={() => handleRemoveEvent(event.id)}
-              disabled={isPending}
-            >
-              {isPending ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <Trash2Icon className="w-4 h-4" />
-              )}
-              <span>
-                {isPending ? "Eliminando evento..." : "Eliminar evento"}
-              </span>
-            </ContextMenuItem>
-          </ContextMenuContent>
+          <EventContextMenu event={event} />
         </ContextMenu>
       </DraggableEvent>
     </div>

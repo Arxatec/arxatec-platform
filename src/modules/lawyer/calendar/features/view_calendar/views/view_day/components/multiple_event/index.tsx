@@ -1,14 +1,7 @@
 import type { CalendarEvent } from "../../types";
 import { calculateAbsolutePosition } from "../../utils";
-import { DraggableEvent } from "../";
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuSeparator,
-  ContextMenuTrigger,
-} from "@/components/ui";
-import { EyeIcon, PencilIcon, Trash2Icon } from "lucide-react";
+import { DraggableEvent, EventContextMenu } from "../";
+import { ContextMenu, ContextMenuTrigger } from "@/components/ui";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
@@ -17,7 +10,6 @@ interface Props {
   groupEndTime: string;
 }
 
-// Component to render multiple events in columns
 export const MultipleEvent: React.FC<Props> = ({
   eventGroup,
   groupStartTime,
@@ -81,21 +73,7 @@ export const MultipleEvent: React.FC<Props> = ({
                     </p>
                   </div>
                 </ContextMenuTrigger>
-                <ContextMenuContent>
-                  <ContextMenuItem>
-                    <EyeIcon className="w-4 h-4" />
-                    <span>Ver detalle evento</span>
-                  </ContextMenuItem>
-                  <ContextMenuItem>
-                    <PencilIcon className="w-4 h-4" />
-                    <span>Editar evento</span>
-                  </ContextMenuItem>
-                  <ContextMenuSeparator />
-                  <ContextMenuItem variant="destructive">
-                    <Trash2Icon className="w-4 h-4" />
-                    <span>Eliminar evento</span>
-                  </ContextMenuItem>
-                </ContextMenuContent>
+                <EventContextMenu event={event} />
               </ContextMenu>
             </DraggableEvent>
           </div>

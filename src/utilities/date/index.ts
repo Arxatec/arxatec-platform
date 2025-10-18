@@ -29,3 +29,10 @@ export function combineDateAndTime(dateISO: string, time: string): string {
 
   return combined.toISOString();
 }
+
+export function getHour(dateParam: string) {
+  const date = new Date(dateParam);
+  const hours = date.getHours();
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  return `${hours}:${minutes}`;
+}

@@ -6,8 +6,10 @@ interface Props {
 export const Header: React.FC<Props> = ({ title, description }) => {
   return (
     <div>
-      <h1 className="text-xl font-extrabold font-serif">{title}</h1>
-      <p className="text-sm text-secondary-foreground">{description}</p>
+      <h1 className="text-2xl font-bold font-serif text-center">{title}</h1>
+      <p className="text-sm text-secondary-foreground text-center">
+        {description}
+      </p>
     </div>
   );
 };

@@ -4,13 +4,7 @@ import { getEvents } from "../../../../services";
 import { toast } from "sonner";
 import type { CalendarEvent } from "../../types";
 import type { Events } from "@/types";
-
-function getHour(dateParam: string) {
-  const date = new Date(dateParam);
-  const hours = date.getHours();
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-  return `${hours}:${minutes}`;
-}
+import { getHour } from "@/utilities";
 
 function convertEvents(events: Events[]): CalendarEvent[] {
   return events.map((event) => ({

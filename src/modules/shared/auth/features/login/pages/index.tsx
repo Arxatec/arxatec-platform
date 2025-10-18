@@ -13,8 +13,8 @@ export default function LoginPage() {
   return (
     <>
       <Header
-        title="Ingresar "
-        description="Ingresa tus credenciales para ingresar a tu cuenta"
+        title="Ingresar a mi cuenta"
+        description="Ingresa tus credenciales para ingresar a tu cuenta, si no tienes una cuenta, puedes registrarte."
       />
       <Form />
     </>

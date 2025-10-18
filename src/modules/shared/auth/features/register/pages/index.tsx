@@ -12,8 +12,8 @@ export default function RegisterPage() {
   return (
     <>
       <Header
-        title="Registrarse"
-        description="Ingresa tus datos para registrarte en la plataforma"
+        title="Crear cuenta"
+        description="Ingresa tus datos para crear una cuenta en la plataforma, si ya tienes una cuenta, puedes ingresar."
       />
       <Form />
     </>

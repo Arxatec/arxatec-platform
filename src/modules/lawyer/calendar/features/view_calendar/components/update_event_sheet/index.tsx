@@ -14,39 +14,44 @@ import { CalendarPlus, Loader2 } from "lucide-react";
 import { ColorPicker } from "../color_picker";
 
 import { EventDateTimeFields } from "../event_date_time_fields";
-import { useCreateEvent, useCreateEventForm } from "../../hooks";
-import type { CreateEventRequest, CreateEventType } from "../../types";
+import { useUpdateEvent, useUpdateEventForm } from "../../hooks";
+import type { UpdateEventRequest, UpdateEventType } from "../../types";
 import { combineDateAndTime } from "@/utilities";
 
 interface Props {
+  id: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export const CreateEventSheet: React.FC<Props> = ({ open, onOpenChange }) => {
-  const form = useCreateEventForm();
+export const UpdateEventSheet: React.FC<Props> = ({
+  id,
+  open,
+  onOpenChange,
+}) => {
+  const form = useUpdateEventForm();
   const watchedColor = form.watch("color");
 
-  const onSubmit = (data: CreateEventType) => {
-    const createEventRequest: CreateEventRequest = {
+  const onSubmit = (data: UpdateEventType) => {
+    const updateEventRequest: UpdateEventRequest = {
       title: data.title,
       start_date: combineDateAndTime(data.date.toISOString(), data.start_time),
       end_date: combineDateAndTime(data.date.toISOString(), data.end_time),
       location: data.location,
       description: data.description,
     };
-    createEventMutation(createEventRequest);
+    updateEventMutation(updateEventRequest);
   };
 
-  const { mutate: createEventMutation, isPending: isCreatingEvent } =
-    useCreateEvent(() => onOpenChange(false), form.reset);
+  const { mutate: updateEventMutation, isPending: isUpdatingEvent } =
+    useUpdateEvent(id, () => onOpenChange(false), form.reset);
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="w-[600px]! max-w-[600px]!">
         <SheetHeader>
-          <SheetTitle>Crear evento</SheetTitle>
+          <SheetTitle>Actualizar evento</SheetTitle>
           <SheetDescription>
-            Aquí puedes crear un nuevo evento para tu calendario.
+            Aquí puedes actualizar un evento de tu calendario.
           </SheetDescription>
         </SheetHeader>
         <ScrollArea className="h-[calc(100vh-200px)]">
@@ -93,15 +98,15 @@ export const CreateEventSheet: React.FC<Props> = ({ open, onOpenChange }) => {
           <Button
             className="w-full mt-4"
             type="submit"
-            disabled={isCreatingEvent}
+            disabled={isUpdatingEvent}
             onClick={form.handleSubmit(onSubmit)}
           >
-            {isCreatingEvent ? (
+            {isUpdatingEvent ? (
               <Loader2 className="w-4 h-4 animate-spin" />
             ) : (
               <CalendarPlus />
             )}
-            {isCreatingEvent ? "Creando evento..." : "Crear evento"}
+            {isUpdatingEvent ? "Actualizando evento..." : "Actualizar evento"}
           </Button>
         </SheetFooter>
       </SheetContent>
